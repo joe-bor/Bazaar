@@ -1,4 +1,4 @@
-const Shop = require('../models/shop');
+const Shop = require('../models/shop')
 
 // Create a new shop
 exports.createShop = async (req, res) => {
@@ -21,7 +21,7 @@ exports.updateShop = async (req, res) => {
         const shop = await Shop.findByIdAndUpdate(req.params.shopId)
 
         if (!shop) {
-            return res.status(404).json({ error: 'Shop not found' });
+            return res.status(404).json({ error: 'Shop not found' })
           } 
 
         shop.seller = req.user._id
@@ -39,7 +39,7 @@ exports.getShop = async (req, res) => {
         const shop = await Shop.findById(req.params.shopId)
         
         if (!shop) {
-            return res.status(404).json({ error: 'Shop not found' });
+            return res.status(404).json({ error: 'Shop not found' })
           }
         
         res.json(shop)
@@ -55,7 +55,7 @@ exports.deleteShop = async (req, res) => {
         const shop = await Shop.findById(req.params.shopId)
         
         if (!shop) {
-            return res.status(404).json({ error: 'Shop not found' });
+            return res.status(404).json({ error: 'Shop not found' })
           }
 
         res.json({ mesage: 'Shop Deleted'})
