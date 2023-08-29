@@ -1,5 +1,7 @@
 const Shop = require('../models/shop')
+
 /* -----shop controllers-----*/
+
 // Create a new shop
 exports.createShop = async (req, res) => {
   try {
@@ -9,6 +11,7 @@ exports.createShop = async (req, res) => {
         rating: 0,
         products: [],
     })
+
 
     res.status(200).json(newShop)
   } catch (error) {
@@ -28,7 +31,7 @@ exports.updateShop = async (req, res) => {
         shop.seller = req.user._id
         shop.heroImage = req.body.heroImage
         const updatedShop = await shop.save()
-        
+
         res.json(updatedShop)
     } catch (error) {
         res.status(400).json({ error: 'Could not update shop' })
@@ -65,6 +68,7 @@ exports.deleteShop = async (req, res) => {
         res.status(400).json({ error: 'Could not Delete Shop' })
     }
 }
+
 
 /* -----shop-item controllers-----*/
 // Add an item to a shop
@@ -131,4 +135,3 @@ exports.deleteItem = async (req, res) => {
         res.status(400).json({ error: 'Could not delete item' })
     }
 }
-
