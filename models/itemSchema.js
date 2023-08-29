@@ -1,11 +1,11 @@
 const Schema = require('mongoose').Schema
 
 const itemSchema = new Schema({ 
-    name: { require: true, type: String },
-    price: { require: true, type: Number },
+    name: { required: true, type: String },
+    price: { required: true, type: Number },
     reviews:[{ type: mongoose.Schema.Types.ObjectId, ref:'Review' }],
-    description: { require: true, type: String },
-    Category: { require: true, type: mongoose.Schema.Types.ObjectId, ref:'Category' }
+    description: { required: true, type: String },
+    Category: { required: true, type: mongoose.Schema.Types.ObjectId, ref:'Category' }
 }, {
     timestamps: true
 })
