@@ -1,3 +1,6 @@
+const Item = require('./item');
+const Shop = require('./shop');
+
 const mongoose = require('mongoose');
 const bcrypt = require('bcrypt');
 const Schema = mongoose.Schema;
@@ -30,12 +33,12 @@ const userSchema = new Schema({
     //favorties array
     favorites: {
         type: Array,
-        item: itemSchema,
+        item: Item,
     },
     //shop_id or null turnary
     shop: {
         type: Boolean,
-        shop: shopSchema
+        shop: Shop
     }
 });
 
