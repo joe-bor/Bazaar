@@ -17,7 +17,8 @@ lineItemSchema.virtual('extPrice').get(function() {
 const orderSchema = new Schema({
     user: { type: Schema.Types.ObjectId, ref: 'User' },
     lineItems: [lineItemSchema],
-    isPaid: { type: Boolean, default: false }
+    isPaid: { type: Boolean, default: false },
+    isFulfilled: { type: Boolean, default: false }
 }, {
     timestamps: true,
     toJSON: {virtuals: true }

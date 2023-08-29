@@ -52,6 +52,18 @@ async function checkout(req, res) {
     }
 }
 
+// isFulfilled updates the cart to true
+async function isFulfilled(req, res) {
+    try{
+        const cart = await Order.getCart(req.user._id);
+        cart.isFulfilled = true;
+        await cart.save();
+        res.status(200).json(cart);
+    }catch(e){
+        res.status(400).json({ msg: e.message });
+    }
+}
+
 // Return the logged in user's order history
 async function history(req, res) {
     // Sort most recent orders first
