@@ -9,15 +9,6 @@ async function create(req, res){
     }
 }
 
-async function show(req, res){
-    try {
-        const review = await Review.findById(req.params.id)
-        res.status(200).json(review)
-    } catch (error) {
-        res.status(400).json({ message: error.message })
-    }
-}
-
 async function index(req, res){
     try {
         const reviews = await Review.find({}).sort({ timestamps: -1 })
