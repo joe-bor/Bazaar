@@ -20,7 +20,7 @@ app.use('/api/items', ensureLoggedIn, require('./routes/api/items'));
 app.use('/api/orders', ensureLoggedIn, require('./routes/api/orders'));
 app.use('/api/reviews', ensureLoggedIn, require('./routes/api/reviews'));
 app.use('/api/shops', ensureLoggedIn, require('./routes/api/shops'));
-app.use('/api/users', ensureLoggedIn, require('/routes/api/users'));
+app.use('/api/users', ensureLoggedIn, require('./routes/api/users'));
 
 
 // catch all -> if url doesn't match with any routes; for react router
