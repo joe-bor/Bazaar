@@ -10,7 +10,7 @@ app.use((req, res, next) => {
 });
 app.use(express.static('public'));
 app.use(require('./config/checkToken'));
-app.use(morgan('combined'));
+app.use(logger('dev'));
 
 // Put API routes here, before the "catch all" route
 app.use('/api/users', require('./routes/api/users'));
