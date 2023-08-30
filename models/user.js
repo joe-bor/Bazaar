@@ -1,7 +1,3 @@
-
-const Item = require('./item');
-const Shop = require('./shop');
-
 const mongoose = require('mongoose');
 const bcrypt = require('bcrypt');
 const Schema = mongoose.Schema;
@@ -23,7 +19,9 @@ const userSchema = new Schema({
         trim: true,
         minlength: 3,
         required: true
-    }
+    },
+    favorites: [{ type: Schema.Types.ObjectId, ref: 'Item'}],
+    shop: { type: Schema.Types.ObjectId, ref: 'Shop' }
 },  {
     timestamps: true,
     toJSON: {
@@ -31,17 +29,8 @@ const userSchema = new Schema({
             delete ret.password;
             return ret;
         }
-    },
-    //favorties array
-    favorites: {
-        type: Array,
-        item: Item,
-    },
-    //shop_id or null turnary
-    shop: {
-        type: Boolean,
-        shop: Shop
     }
+
 });
 
 userSchema.pre('save', async function(next) {
