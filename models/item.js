@@ -9,4 +9,4 @@ const Item = model('Item', itemSchema)
 module.exports = {
     itemSchema, 
     Item: Item
-}
+} 

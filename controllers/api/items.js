@@ -6,7 +6,7 @@ module.exports = {
     create,
     update,
     destroy
-}
+} 
 
 async function index(req, res) {
     try {
