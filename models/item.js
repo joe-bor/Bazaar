@@ -4,9 +4,5 @@ require('./category')
 require('./review')
 
 const itemSchema = require('./itemSchema')
-const Item = model('Item', itemSchema)
 
-module.exports = {
-    itemSchema, 
-    Item: Item
-} 
+module.exports = model('Item', itemSchema)
