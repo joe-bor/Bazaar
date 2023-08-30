@@ -37,6 +37,27 @@ const dataController = {
         } catch (error) {
             res.status(400).json('Your credentials be whack')
         }
+    },
+
+    async update (req, res, next) {
+        try {
+            const user = await User.findByIdAndUpdate(req.params.id, req.body, { new: true })
+            if (!user) throw new Error('User not found')
+            res.locals.data.user = user
+            next()
+        } catch (error) {
+            res.status(400).json('Was not able to update user info')
+        }
+    },
+    async delete (req, res, next) {
+        try {
+            const user = await User.findByIdAndDelete(req.params.id)
+            if (!user) throw new Error('User not found')
+            res.local.data.user = user
+            next()
+        } catch (error) {
+            res.status(400).json('User NOT Deleted')
+        }
     }
 }
 

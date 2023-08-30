@@ -1,7 +1,7 @@
 const { model } = require('mongoose')
 
 require('./category')
-require('./review')
+// require('./review')
 
 const itemSchema = require('./itemSchema')
 

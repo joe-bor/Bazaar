@@ -30,7 +30,7 @@ const itemSchema = new Schema({
     },
     category: { 
         required: true, 
-        type: mongoose.Schema.Types.ObjectId, 
+        type: Schema.Types.ObjectId, 
         ref:'Category' }
 }, {
     timestamps: true
