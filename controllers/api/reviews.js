@@ -20,7 +20,7 @@ async function show(req, res){
 
 async function index(req, res){
     try {
-        const reviews = await Review.find({}).sort({ starRating: -1 })
+        const reviews = await Review.find({}).sort({ timestamps: -1 })
         res.status(200).json(reviews)
     } catch (error) {
         res.status(400).json({ message: error.message })

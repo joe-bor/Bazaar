@@ -1,4 +1,4 @@
-const { Item }  = require('../../models/item')
+const Item  = require('../../models/item')
 
 module.exports = {
     index, 
@@ -49,7 +49,7 @@ async function destroy(req, res) {
     try {
         const item = await Item.findOne({ _id: req.params.id })
         item.deleteOne()
-        res.status(200).json({ message: `${item.name} deleted`})
+        res.status(200).json({ message: `item deleted`})
     } catch (error) {
         res.status(400).json({ message: error.message })
     }
