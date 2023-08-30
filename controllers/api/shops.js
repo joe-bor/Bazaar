@@ -1,4 +1,5 @@
-const Shop = require('../models/shop')
+const Shop = require('../../models/shop')
+const Item = require('../../models/item')
 
 /* -----shop controllers-----*/
 
@@ -22,17 +23,13 @@ exports.createShop = async (req, res) => {
 // Update a shop
 exports.updateShop = async (req, res) => {
     try {
-        const shop = await Shop.findByIdAndUpdate(req.params.shopId)
+        const shop = await Shop.findByIdAndUpdate(req.params.shopId, req.body, { new: true })
 
         if (!shop) {
             return res.status(404).json({ error: 'Shop not found' })
           } 
 
-        shop.seller = req.user._id
-        shop.heroImage = req.body.heroImage
-        const updatedShop = await shop.save()
-
-        res.json(updatedShop)
+        res.json(shop)
     } catch (error) {
         res.status(400).json({ error: 'Could not update shop' })
     }
@@ -57,13 +54,13 @@ exports.getShop = async (req, res) => {
 // Delete a shop
 exports.deleteShop = async (req, res) => {
     try {
-        const shop = await Shop.findById(req.params.shopId)
+        const shop = await Shop.findByIdAndDelete(req.params.shopId)
         
         if (!shop) {
             return res.status(404).json({ error: 'Shop not found' })
           }
 
-        res.json({ mesage: 'Shop Deleted'})
+        res.json({ message: 'Shop Deleted'})
     } catch (error) {
         res.status(400).json({ error: 'Could not Delete Shop' })
     }
@@ -80,8 +77,8 @@ exports.addItem = async (req, res) => {
             return res.status(404).json({ error: 'Shop not found' })
           }
 
-        const newItem = req.body
-        shop.items.push(newItem)
+        const newItem = await Item.create(req.body)
+        shop.products.addToSet(newItem)
         await shop.save() 
 
         res.status(200).json(shop)
@@ -100,14 +97,14 @@ exports.updateItem = async (req, res) => {
           }
 
         const itemId = req.params.itemId
-        const updatedItemIndex = shop.items.findIndex(item => item._id.toString() === itemId)
+        const updatedItemIndex = shop.products.findIndex(item => item._id.toString() === itemId)
 
         if(updatedItemIndex === -1) {
             return res.status(404).json({ error: 'Item not found'})
         }
 
         const updatedItem = req.body
-        shop.items[updatedItemIndex] = { ... shop.items[updatedItemIndex], ...updatedItem }
+        shop.products[updatedItemIndex] = { ... shop.products[updatedItemIndex], ...updatedItem }
         await shop.save() 
 
         res.json(shop)
@@ -126,8 +123,8 @@ exports.deleteItem = async (req, res) => {
           }
 
         const itemId = req.params.itemId
-        const updatedItems = shop.items.filter(item => item._id.toString() !== itemId)
-        shop.items = updatedItems
+        const updatedItems = shop.products.filter(item => item._id.toString() !== itemId)
+        shop.products = updatedItems
         await shop.save() 
         
         res.json({ message: 'Item deleted from shop' })

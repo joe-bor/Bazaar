@@ -15,6 +15,7 @@ require('./database');
 const Category = require('../models/category');
 const User = require('../models/user');
 const Shop = require('../models/shop')
+const Item = require('../models/item')
 const { signUp } = require('../src/utilities/users-api')
 
 (async function() {
@@ -74,6 +75,7 @@ const { signUp } = require('../src/utilities/users-api')
 
 
   /* ----- Creating Shops for each Users ----- */
+  await Shop.deleteMany({})
   const signedUpUsers = await User.find({ email: { $in: ['test@user1', 'test@user2', 'test@user3', 'test@user4'] } })
   const signedUpUsersIds = [] // to be used for querying the shops
 
@@ -96,7 +98,7 @@ const { signUp } = require('../src/utilities/users-api')
   // now we fetch the items from the external api
   // clean it up to fit the shape of our models
   // push them into each of the user's shops
-
+  await Item.deleteMany({})
   const products = await fetchData('https://dummyjson.com/products?limit=100');
   
   const itemsForTheShops = products.map(product => {
@@ -110,11 +112,12 @@ const { signUp } = require('../src/utilities/users-api')
     };
   });
 
-  const shops = await Shop.find({ seller: { $in: signedUpUsersIds }}) // array of size 4
+  const shops = await Shop.find({ seller: { $in: signedUpUsersIds }})
 
   //! promise.all instead?
   for (let i = 0; i < itemsForTheShops.length; i++) {
-    shops[i % shops.length].products.push(itemsForTheShops[i])
+    const item = await Item.create(itemsForTheShops[i])
+    shops[i % shops.length].products.push(item)
   }
 
   for (const shop of shops){
