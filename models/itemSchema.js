@@ -34,6 +34,6 @@ const itemSchema = new Schema({
         ref:'Category' }
 }, {
     timestamps: true
-})
+}) 
 
 module.exports = itemSchema
