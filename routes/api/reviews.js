@@ -12,6 +12,6 @@ router.post('/', reviewsCtrl.create)
 router.put('/:id', reviewsCtrl.update)
 
 // DELETE -> /api/reviews/:id - delete a review
-router.delete('/:id', reviewsCtrl.delete)
+router.delete('/:id', reviewsCtrl.destroy)
 
 module.exports = router
