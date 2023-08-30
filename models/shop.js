@@ -8,4 +8,4 @@ const shopSchema = new mongoose.Schema({
     products: [{ type: mongoose.Schema.Types.ObjectId, ref: ' Item' }]
 })
 
-module.exports = mongoose.module('Shop', shopSchema)
+module.exports = mongoose.model('Shop', shopSchema)
