@@ -1,22 +1,10 @@
-/*
-Create Users
-    - check model for the shape
-
-For each user, create a shop
-    - check model for shape
-
-Populate their shops with items,
-    - use fetchData()
-*/
-
 require('dotenv').config();
 require('./database');
 
 const Category = require('../models/category');
 const User = require('../models/user');
 const Shop = require('../models/shop')
-const Item = require('../models/item')
-const { signUp } = require('../src/utilities/users-api')
+const Item = require('../models/item');
 
 (async function() {
 
@@ -68,30 +56,29 @@ const { signUp } = require('../src/utilities/users-api')
       password: 'testPass4'
     }
   ]
-  // Sign Up each user
+
   for (const user of users) {
-    await signUp(user)
+    await User.create(user)
   }
 
 
   /* ----- Creating Shops for each Users ----- */
   await Shop.deleteMany({})
   const signedUpUsers = await User.find({ email: { $in: ['test@user1', 'test@user2', 'test@user3', 'test@user4'] } })
+  
   const signedUpUsersIds = [] // to be used for querying the shops
 
   for (const user of signedUpUsers) {
     signedUpUsersIds.push(user._id)
     let shop = await Shop.create({
       name: `${user.name}'s shop`,
-      seller: user_id
+      seller: user._id,
+      heroImage: 'img path'
     })
-    console.log(shop) //!
+  
     user.shop = shop._id
     await user.save()
-    console.log(user) //!
   }
-
-  //! Once here, I am expecting to have 4 users that have their own shops
 
   /* ----- Populating the shops with items -----  */
 
@@ -102,12 +89,13 @@ const { signUp } = require('../src/utilities/users-api')
   const products = await fetchData('https://dummyjson.com/products?limit=100');
   
   const itemsForTheShops = products.map(product => {
+    const foundCategory = categories.find( category => category.name === product.category)       
+
     return {
       name: product.title,
       price: product.price,
-      comments: null,
       description: product.description,
-      category: product.category,
+      category: foundCategory._id,
       images: product.images //this is an array
     };
   });
@@ -116,8 +104,9 @@ const { signUp } = require('../src/utilities/users-api')
 
   //! promise.all instead?
   for (let i = 0; i < itemsForTheShops.length; i++) {
+
     const item = await Item.create(itemsForTheShops[i])
-    shops[i % shops.length].products.push(item)
+    shops[i % shops.length].products.push(item._id)
   }
 
   for (const shop of shops){
