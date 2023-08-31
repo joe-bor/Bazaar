@@ -1,33 +1,33 @@
 const Shop = require('../../models/shop')
 const Item = require('../../models/item')
+const Category = require('../../models/category')
 
 /* -----shop controllers-----*/
 
 // Create a new shop
 exports.createShop = async (req, res) => {
-  try {
-    const newShop = await Shop.create({
-        seller: req.user._id,
-        heroImage: req.body.heroImage,
-        rating: 0,
-        products: [],
-    })
-
-
-    res.status(200).json(newShop)
-  } catch (error) {
-    res.status(400).json({ error: 'Could not create Shop' })
-  }
+    try {
+        console.log(req.user)
+        const newShop = await Shop.create({
+            seller: req.user._id,
+            name: req.body.name,
+            heroImage: req.body.heroImage,
+            rating: null
+        })
+        res.status(200).json(newShop)
+    } catch (error) {
+        res.status(400).json({ error: error.message })
+    }
 }
 
 // Update a shop
 exports.updateShop = async (req, res) => {
     try {
-        const shop = await Shop.findByIdAndUpdate(req.params.shopId, req.body, { new: true })
+        const shop = await Shop.findByIdAndUpdate(req.params.id, req.body, { new: true })
 
         if (!shop) {
             return res.status(404).json({ error: 'Shop not found' })
-          } 
+        } 
 
         res.json(shop)
     } catch (error) {
@@ -38,11 +38,11 @@ exports.updateShop = async (req, res) => {
 // Get a single shop by id
 exports.getShop = async (req, res) => {
     try {
-        const shop = await Shop.findById(req.params.shopId)
+        const shop = await Shop.findById(req.params.id)
         
         if (!shop) {
             return res.status(404).json({ error: 'Shop not found' })
-          }
+        }
         
         res.json(shop)
     } catch (error) {
@@ -54,11 +54,11 @@ exports.getShop = async (req, res) => {
 // Delete a shop
 exports.deleteShop = async (req, res) => {
     try {
-        const shop = await Shop.findByIdAndDelete(req.params.shopId)
+        const shop = await Shop.findByIdAndDelete(req.params.id)
         
         if (!shop) {
             return res.status(404).json({ error: 'Shop not found' })
-          }
+        }
 
         res.json({ message: 'Shop Deleted'})
     } catch (error) {
@@ -71,19 +71,27 @@ exports.deleteShop = async (req, res) => {
 // Add an item to a shop
 exports.addItem = async (req, res) => {
     try {
-        const shop = await Shop.findById(req.params.ShopId)
+        const shop = await Shop.findById(req.params.id)
 
         if (!shop) {
             return res.status(404).json({ error: 'Shop not found' })
-          }
+        }
 
-        const newItem = await Item.create(req.body)
-        shop.products.addToSet(newItem)
+        const category = await Category.findOne({ name: req.body.category })
+        console.log('category = ' + category)
+        const item = await Item.create({
+            name: req.body.name,
+            price: req.body.price,
+            description: req.body.description,
+            category: category._id
+        })
+
+        shop.products.addToSet(item)
         await shop.save() 
 
         res.status(200).json(shop)
     } catch (error) {
-        res.status(400).json({ error: 'Could not add item to shop' })
+        res.status(400).json({ error: error.message })
     }
 }
 
@@ -116,16 +124,17 @@ exports.updateItem = async (req, res) => {
 // Delete item from shop
 exports.deleteItem = async (req, res) => {
     try {
-        const shop = await Shop.findById(req.params.ShopId)
+        const shop = await Shop.findById(req.params.id)
 
         if (!shop) {
             return res.status(404).json({ error: 'Shop not found' })
-          }
+        }
 
-        const itemId = req.params.itemId
-        const updatedItems = shop.products.filter(item => item._id.toString() !== itemId)
-        shop.products = updatedItems
+        shop.products.pull({ _id: req.params.itemid })
         await shop.save() 
+
+        const item = await Item.findOne({ _id: req.params.itemid })
+        await item.deleteOne()
         
         res.json({ message: 'Item deleted from shop' })
     } catch (error) {

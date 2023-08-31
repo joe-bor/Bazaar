@@ -6,7 +6,7 @@ const reviewsCtrl = require('../../controllers/api/reviews')
 router.get('/:itemId', reviewsCtrl.index)
 
 // POST -> /api/reviews - create a review
-router.post('/', reviewsCtrl.create)
+router.post('/:itemId', reviewsCtrl.create)
 
 // PUT -> /api/reviews/:id - update a review
 router.put('/:id', reviewsCtrl.update)

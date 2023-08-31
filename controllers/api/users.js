@@ -49,12 +49,12 @@ const dataController = {
             res.status(400).json('Was not able to update user info')
         }
     },
-    async delete (req, res, next) {
+    async destroy (req, res) {
         try {
-            const user = await User.findByIdAndDelete(req.params.id)
+            const user = await User.findOne({ _id: req.params.id })
+            await user.deleteOne()
             if (!user) throw new Error('User not found')
-            res.local.data.user = user
-            next()
+            res.status(200).json({ message: 'user deleted' })
         } catch (error) {
             res.status(400).json('User NOT Deleted')
         }

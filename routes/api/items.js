@@ -11,13 +11,4 @@ router.get('/:id', itemsCtrl.show)
 // GET -> /api/items/reviews - get all reviews for item
 router.get('/reviews/:id', itemsCtrl.index)
 
-// POST -> /api/items - create an item
-router.post('/', itemsCtrl.create)
-
-// PUT -> /api/items - update an item
-router.put('/:id', itemsCtrl.update)
-
-// DELETE -> /api/items/:id - delete an item
-router.delete('/:id', itemsCtrl.destroy)
-
 module.exports = router
