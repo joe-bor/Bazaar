@@ -1,4 +1,5 @@
 const Item  = require('../../models/item')
+const Category = require('../../models/category')
 
 module.exports = {
     index, 
@@ -29,8 +30,15 @@ async function show(req, res) {
 
 async function create(req, res) {
     try {
-        const item = await Item.create(req.body)
-        res.status(200).json(item)
+        const category = await Category.findOne({ name: req.body.category })
+        console.log('category = ' + category)
+        const item = await Item.create({
+            name: req.body.name,
+            price: req.body.price,
+            description: req.body.description,
+            category: category._id
+        })
+        return item
     } catch (error) {
         res.status(400).json({ message: error.message })
     }
