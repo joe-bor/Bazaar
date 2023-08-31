@@ -16,6 +16,6 @@ router.get('/check-token', ensureLoggedIn, checkToken)
 router.put('/:id', dataController.update, apiController.auth)
 
 // Delete -> /api/users/:id - delete user account
-router.delete('/:id', dataController.delete, apiController.auth)
+router.delete('/:id', dataController.destroy)
 
 module.exports = router

@@ -48,7 +48,7 @@ async function update(req, res) {
 async function destroy(req, res) {
     try {
         const item = await Item.findOne({ _id: req.params.id })
-        item.deleteOne()
+        await item.deleteOne()
         res.status(200).json({ message: `item deleted`})
     } catch (error) {
         res.status(400).json({ message: error.message })
