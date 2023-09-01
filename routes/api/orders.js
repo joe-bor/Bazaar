@@ -18,4 +18,7 @@ router.post('/cart/checkout', ensureLoggedIn, ordersCtrl.checkout)
 // PUT -> /api/orders/cart/qty - change item quantity
 router.put('/cart/qty', ordersCtrl.setItemQtyInCart)
 
+// PUT -> /api/orders/status/:id - change item quantity
+router.put('/status/:id', ordersCtrl.isFulfilled)
+
 module.exports = router

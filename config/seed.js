@@ -6,30 +6,30 @@ const User = require('../models/user');
 const Shop = require('../models/shop')
 const Item = require('../models/item');
 
-(async function() {
+(async function () {
 
   await Category.deleteMany({});
   const categories = await Category.create([
-    {name: 'smartphones', sortOrder: 10},
-    {name: 'fragrances', sortOrder: 20},
-    {name: 'groceries', sortOrder: 30},
-    {name: 'furniture', sortOrder: 40},
-    {name: 'womens-dresses', sortOrder: 50},
-    {name: 'mens-shirts', sortOrder: 60},
-    {name: 'mens-watches', sortOrder: 70},
-    {name: 'womens-bags', sortOrder: 80},
-    {name: 'sunglasses', sortOrder: 90},
-    {name: 'motorcycle', sortOrder: 100},
-    {name: 'laptops', sortOrder: 110},
-    {name: 'skincare', sortOrder: 120},
-    {name: 'home-decoration', sortOrder: 130},
-    {name: 'tops', sortOrder: 140},
-    {name: 'womens-shoes', sortOrder: 150},
-    {name: 'mens-shoes', sortOrder: 160},
-    {name: 'womens-watches', sortOrder: 170},
-    {name: 'womens-jewellery', sortOrder: 180},
-    {name: 'automotive', sortOrder: 190},
-    {name: 'lighting', sortOrder: 200},
+    { name: 'smartphones', sortOrder: 10 },
+    { name: 'fragrances', sortOrder: 20 },
+    { name: 'groceries', sortOrder: 30 },
+    { name: 'furniture', sortOrder: 40 },
+    { name: 'womens-dresses', sortOrder: 50 },
+    { name: 'mens-shirts', sortOrder: 60 },
+    { name: 'mens-watches', sortOrder: 70 },
+    { name: 'womens-bags', sortOrder: 80 },
+    { name: 'sunglasses', sortOrder: 90 },
+    { name: 'motorcycle', sortOrder: 100 },
+    { name: 'laptops', sortOrder: 110 },
+    { name: 'skincare', sortOrder: 120 },
+    { name: 'home-decoration', sortOrder: 130 },
+    { name: 'tops', sortOrder: 140 },
+    { name: 'womens-shoes', sortOrder: 150 },
+    { name: 'mens-shoes', sortOrder: 160 },
+    { name: 'womens-watches', sortOrder: 170 },
+    { name: 'womens-jewellery', sortOrder: 180 },
+    { name: 'automotive', sortOrder: 190 },
+    { name: 'lighting', sortOrder: 200 },
   ]);
 
   /* ----- Creating Users ----- */
@@ -65,7 +65,7 @@ const Item = require('../models/item');
   /* ----- Creating Shops for each Users ----- */
   await Shop.deleteMany({})
   const signedUpUsers = await User.find({ email: { $in: ['test@user1', 'test@user2', 'test@user3', 'test@user4'] } })
-  
+
   const signedUpUsersIds = [] // to be used for querying the shops
 
   for (const user of signedUpUsers) {
@@ -75,7 +75,7 @@ const Item = require('../models/item');
       seller: user._id,
       heroImage: 'img path'
     })
-  
+
     user.shop = shop._id
     await user.save()
   }
@@ -87,9 +87,9 @@ const Item = require('../models/item');
   // push them into each of the user's shops
   await Item.deleteMany({})
   const products = await fetchData('https://dummyjson.com/products?limit=100');
-  
+
   const itemsForTheShops = products.map(product => {
-    const foundCategory = categories.find( category => category.name === product.category)       
+    const foundCategory = categories.find(category => category.name === product.category)
 
     return {
       name: product.title,
@@ -100,16 +100,16 @@ const Item = require('../models/item');
     };
   });
 
-  const shops = await Shop.find({ seller: { $in: signedUpUsersIds }})
+  const shops = await Shop.find({ seller: { $in: signedUpUsersIds } })
 
   //! promise.all instead?
   for (let i = 0; i < itemsForTheShops.length; i++) {
 
-    const item = await Item.create(itemsForTheShops[i])
+    const item = await Item.create({ ...itemsForTheShops[i], shop: shops[i % shops.length]._id })
     shops[i % shops.length].products.push(item._id)
   }
 
-  for (const shop of shops){
+  for (const shop of shops) {
     await shop.save()
   }
 
@@ -119,18 +119,18 @@ const Item = require('../models/item');
 
 
 async function fetchData(url) {
-    try {
-      const response = await fetch(url);
-  
-      if (!response.ok) {
-        throw new Error(`Network response was not ok: ${response.status}`);
-      }
-  
-      const data = await response.json();
-      return data.products;
-  
-    } catch (error) {
-      console.error('Fetch error:', error);
-      throw error
+  try {
+    const response = await fetch(url);
+
+    if (!response.ok) {
+      throw new Error(`Network response was not ok: ${response.status}`);
     }
+
+    const data = await response.json();
+    return data.products;
+
+  } catch (error) {
+    console.error('Fetch error:', error);
+    throw error
   }
+}
