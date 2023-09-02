@@ -22,6 +22,10 @@ const itemSchema = new Schema({
         type: String,
         unique: true
     },
+    imageUrl: {
+        required: true,
+        type: String
+    },
     price: {
         required: true,
         type: Number,
