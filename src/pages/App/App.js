@@ -1,8 +1,12 @@
+import SignUpForm from '../../components/signUpForm/signUpForm'
+import styles from './App.module.scss'
 
 
 function App() {
+
   return (
-    <div>App Page</div>
+
+      <SignUpForm/>
   )
 }
 

@@ -3,52 +3,12 @@
 @import "reset";
 @import "grid";
 
-body {
-  font-size: 16px;
+*,
+*:before,
+*:after {
+    box-sizing: border-box;
 }
 
-.NavBar {
-  display: flex;
-  justify-content: space-around;
-  width: 100%;
-  background-color: #f0f0f0;
-  height: 2rem;
-  align-items: center;
-  font-size: 1.5rem;
-  color: orangered;
-  a {
-    color: orangered;
-    text-decoration: none;
-    &:link, &:visited {
-      color: orangered;
-      text-decoration: none;
-    }
-  }
-}
-
-.HomePage {
-  h1 {
-    font-size: 3rem;
-  }
-
-}
-
-.AboutPage {
-  h1 {
-    font-size: 3rem;
-  }
-}
-
-.ContactPage{
-  h1 {
-    font-size: 3rem;
-  }
-
-}
-
-.AppPage {
-  h1 {
-    font-size: 3rem;
-  }
-
+#app {
+  height: 100%;
 }
