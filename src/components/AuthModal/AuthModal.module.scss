@@ -4,6 +4,24 @@
     border-radius: .5rem;
     box-shadow: 3px 3px 5px 1px rgba(93, 128, 80, 0.99);
     overflow: hidden;
+
+
+    p {
+        text-align: center;
+        color: grey;
+        margin-top: .2rem;
+        margin-bottom: .5rem;
+    }
+
+    strong {
+        font-weight: bolder;
+        cursor: pointer;
+    }
+
+    strong:hover {
+        transform: scale(1.05);
+        color: forestgreen;
+    }
 }
 
 .dialog::backdrop {

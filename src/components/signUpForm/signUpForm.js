@@ -66,12 +66,9 @@ function SignUpForm() {
         <form className={styles.form}>
           {inputs.map( input => <FormInput key={input.id} {...input} value={values[input.name]} handleInputChange={handleInputChange} />)}
           <button formMethod='dialog'>Sign Up</button>
-          <p>Already a member? <span>Login</span></p>
         </form>
 
     </>
   )
 }
 export default SignUpForm
-
-//ADD: `login` on click render login form
