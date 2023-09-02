@@ -17,6 +17,7 @@
     flex-direction: column;
     width: 100%;
     padding: 3rem;
+    margin-bottom: -1.8rem;
 
     input {
         padding: .6rem;
@@ -49,5 +50,12 @@
     p {
         text-align: center;
         color: grey;
+        margin-top: .2rem;
+        margin-bottom: .5rem;
+    }
+
+    .error {
+        color: rgb(215, 5, 5);
+        font-style: italic;
     }
 }

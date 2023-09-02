@@ -20,6 +20,18 @@
 function SignUpForm() {
   const dialogRef = (0,react__WEBPACK_IMPORTED_MODULE_0__.useRef)();
   const [isModalOpen, setIsModalOpen] = (0,react__WEBPACK_IMPORTED_MODULE_0__.useState)(true);
+
+  /* --- Will most likely be prop */
+  const [user, setUser] = (0,react__WEBPACK_IMPORTED_MODULE_0__.useState)({
+    name: "",
+    nameError: "Name field can't contain special characters",
+    email: "",
+    emailError: "Must be a valid email address",
+    password: "",
+    passwordError: "Must be at least 3 characters long",
+    confirm: "",
+    confirmError: "Passwords don't match"
+  });
   const toggleModal = () => {
     if (isModalOpen) {
       dialogRef.current.close();
@@ -49,9 +61,12 @@ function SignUpForm() {
     placeholder: "First Name and Last Name",
     autoFocus: true,
     autoCapitalize: "word",
-    "aria-autocomplete": "list",
-    "aria-required": true
-  }), /*#__PURE__*/React.createElement("br", null), /*#__PURE__*/React.createElement("label", {
+    autoComplete: "list",
+    required: true,
+    pattern: "^[A-Za-z0-9]$"
+  }), /*#__PURE__*/React.createElement("p", {
+    className: _SignUpForm_module_scss__WEBPACK_IMPORTED_MODULE_1__["default"].error
+  }, user.nameError), /*#__PURE__*/React.createElement("label", {
     htmlFor: "email"
   }, "Email:"), /*#__PURE__*/React.createElement("input", {
     type: "email",
@@ -60,8 +75,10 @@ function SignUpForm() {
     autoComplete: "list",
     autoCapitalize: "none",
     placeholder: "example@email.com",
-    "aria-required": true
-  }), /*#__PURE__*/React.createElement("br", null), /*#__PURE__*/React.createElement("label", {
+    required: true
+  }), /*#__PURE__*/React.createElement("p", {
+    className: _SignUpForm_module_scss__WEBPACK_IMPORTED_MODULE_1__["default"].error
+  }, user.emailError), /*#__PURE__*/React.createElement("label", {
     htmlFor: "password"
   }, "Password:"), /*#__PURE__*/React.createElement("input", {
     type: "password",
@@ -69,8 +86,10 @@ function SignUpForm() {
     id: "password",
     placeholder: "Must be at least 3 characters",
     minLength: 3,
-    "aria-required": true
-  }), /*#__PURE__*/React.createElement("br", null), /*#__PURE__*/React.createElement("label", {
+    required: true
+  }), /*#__PURE__*/React.createElement("p", {
+    className: _SignUpForm_module_scss__WEBPACK_IMPORTED_MODULE_1__["default"].error
+  }, user.passwordError), /*#__PURE__*/React.createElement("label", {
     htmlFor: "confirm"
   }, "Confirm:"), /*#__PURE__*/React.createElement("input", {
     type: "password",
@@ -78,12 +97,30 @@ function SignUpForm() {
     id: "confirm",
     placeholder: "Re-type password",
     minLength: 3,
+    pattern: user.password,
     required: true
-  }), /*#__PURE__*/React.createElement("br", null), /*#__PURE__*/React.createElement("button", {
+  }), /*#__PURE__*/React.createElement("p", {
+    className: _SignUpForm_module_scss__WEBPACK_IMPORTED_MODULE_1__["default"].error
+  }, user.confirmError), /*#__PURE__*/React.createElement("button", {
     formMethod: "dialog"
   }, "Sign Up"), /*#__PURE__*/React.createElement("p", null, "Already a member? ", /*#__PURE__*/React.createElement("span", null, "Login")))));
 }
 /* harmony default export */ const __WEBPACK_DEFAULT_EXPORT__ = (SignUpForm);
+
+/**
+ * add error messages that describes the requirements for each input field
+ *  - should by rendered dynamically base on value of controlled inputs
+ * 
+ * right now modal only closes with ESC key or by submitting form,
+ * add a way to close dialog by clicking outside
+ * 
+ * clicking login at the bottom -> render the loginForm component
+ * 
+ * 
+ * STYLING:
+ * change focus color
+ * change modal background
+ */
 
 /***/ }),
 
@@ -165,6 +202,7 @@ ___CSS_LOADER_EXPORT___.push([module.id, `.PIwVArqehBtf7WgnmE44 {
   flex-direction: column;
   width: 100%;
   padding: 3rem;
+  margin-bottom: -1.8rem;
 }
 .kVMPi2tXBBAcM8SbbQ_R input {
   padding: 0.6rem;
@@ -194,12 +232,19 @@ ___CSS_LOADER_EXPORT___.push([module.id, `.PIwVArqehBtf7WgnmE44 {
 .kVMPi2tXBBAcM8SbbQ_R p {
   text-align: center;
   color: grey;
-}`, "",{"version":3,"sources":["webpack://./src/components/signUpForm/SignUpForm.module.scss"],"names":[],"mappings":"AAAA;EACI,UAAA;EACA,yBAAA;EACA,qBAAA;EACA,mDAAA;AACJ;;AAEA;EACI,kBAAA;EACA,iBAAA;EACA,WAAA;EACA,gBAAA;AACJ;;AAEA;EACI,aAAA;EACA,sBAAA;EACA,WAAA;EACA,aAAA;AACJ;AACI;EACI,eAAA;EACA,kBAAA;EACA,qBAAA;EACA,sBAAA;AACR;AAEI;EACI,gBAAA;EACA,WAAA;AAAR;AAGI;EACI,WAAA;EACA,cAAA;EACA,eAAA;EACA,YAAA;EACA,kCAAA;EACA,YAAA;EACA,qBAAA;EACA,iBAAA;EACA,iBAAA;EACA,eAAA;EACA,gBAAA;EACA,mBAAA;EACA,sBAAA;AADR;AAII;EACI,kBAAA;EACA,WAAA;AAFR","sourcesContent":[".dialog {\n    width: 35%;\n    border: .1rem solid grey;\n    border-radius: .5rem;\n    box-shadow: 3px 3px 5px 1px rgba(93, 128, 80, 0.99);\n}\n\n.h1 {\n    text-align: center;\n    font-size: 3.5rem;\n    color: gray;\n    margin: .8rem 0;\n}\n\n.form {\n    display: flex;\n    flex-direction: column;\n    width: 100%;\n    padding: 3rem;\n\n    input {\n        padding: .6rem;\n        margin: .5rem 0px;\n        border-radius: .2rem;\n        border: 1px solid gray;\n    }\n\n    label{\n        font-size: 1.5em;\n        color: gray;\n    }\n\n    button {\n        width: 100%;\n        height: 2.5rem;\n        padding: .5rem;\n        border: none;\n        background-color: rgb(12, 133, 12);\n        color: white;\n        border-radius: .2rem;\n        font-weight: bold;\n        font-size: 1.8rem;\n        cursor: pointer;\n        margin-top: 1rem;\n        margin-bottom: 1rem;\n        letter-spacing: .2rem;\n\n    }\n    p {\n        text-align: center;\n        color: grey;\n    }\n}"],"sourceRoot":""}]);
+  margin-top: 0.2rem;
+  margin-bottom: 0.5rem;
+}
+.kVMPi2tXBBAcM8SbbQ_R .fdK5vZW2ZEbrL2RJfTXS {
+  color: rgb(215, 5, 5);
+  font-style: italic;
+}`, "",{"version":3,"sources":["webpack://./src/components/signUpForm/SignUpForm.module.scss"],"names":[],"mappings":"AAAA;EACI,UAAA;EACA,yBAAA;EACA,qBAAA;EACA,mDAAA;AACJ;;AAEA;EACI,kBAAA;EACA,iBAAA;EACA,WAAA;EACA,gBAAA;AACJ;;AAEA;EACI,aAAA;EACA,sBAAA;EACA,WAAA;EACA,aAAA;EACA,sBAAA;AACJ;AACI;EACI,eAAA;EACA,kBAAA;EACA,qBAAA;EACA,sBAAA;AACR;AAEI;EACI,gBAAA;EACA,WAAA;AAAR;AAGI;EACI,WAAA;EACA,cAAA;EACA,eAAA;EACA,YAAA;EACA,kCAAA;EACA,YAAA;EACA,qBAAA;EACA,iBAAA;EACA,iBAAA;EACA,eAAA;EACA,gBAAA;EACA,mBAAA;EACA,sBAAA;AADR;AAII;EACI,kBAAA;EACA,WAAA;EACA,kBAAA;EACA,qBAAA;AAFR;AAKI;EACI,qBAAA;EACA,kBAAA;AAHR","sourcesContent":[".dialog {\n    width: 35%;\n    border: .1rem solid grey;\n    border-radius: .5rem;\n    box-shadow: 3px 3px 5px 1px rgba(93, 128, 80, 0.99);\n}\n\n.h1 {\n    text-align: center;\n    font-size: 3.5rem;\n    color: gray;\n    margin: .8rem 0;\n}\n\n.form {\n    display: flex;\n    flex-direction: column;\n    width: 100%;\n    padding: 3rem;\n    margin-bottom: -1.8rem;\n\n    input {\n        padding: .6rem;\n        margin: .5rem 0px;\n        border-radius: .2rem;\n        border: 1px solid gray;\n    }\n\n    label{\n        font-size: 1.5em;\n        color: gray;\n    }\n\n    button {\n        width: 100%;\n        height: 2.5rem;\n        padding: .5rem;\n        border: none;\n        background-color: rgb(12, 133, 12);\n        color: white;\n        border-radius: .2rem;\n        font-weight: bold;\n        font-size: 1.8rem;\n        cursor: pointer;\n        margin-top: 1rem;\n        margin-bottom: 1rem;\n        letter-spacing: .2rem;\n\n    }\n    p {\n        text-align: center;\n        color: grey;\n        margin-top: .2rem;\n        margin-bottom: .5rem;\n    }\n\n    .error {\n        color: rgb(215, 5, 5);\n        font-style: italic;\n    }\n}"],"sourceRoot":""}]);
 // Exports
 ___CSS_LOADER_EXPORT___.locals = {
 	"dialog": `PIwVArqehBtf7WgnmE44`,
 	"h1": `LGzRfMcDrKFKBEi9GZTa`,
-	"form": `kVMPi2tXBBAcM8SbbQ_R`
+	"form": `kVMPi2tXBBAcM8SbbQ_R`,
+	"error": `fdK5vZW2ZEbrL2RJfTXS`
 };
 /* harmony default export */ const __WEBPACK_DEFAULT_EXPORT__ = (___CSS_LOADER_EXPORT___);
 
