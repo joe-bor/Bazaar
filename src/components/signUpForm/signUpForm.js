@@ -4,9 +4,6 @@ import FormInput from '../FormInput/FormInput'
 
 function SignUpForm() {
 
-  const dialogRef = useRef()
-  const [isModalOpen, setIsModalOpen] = useState(false)
-
   const [values, setValues] = useState({
     name: "",
     email: "",
@@ -58,34 +55,6 @@ function SignUpForm() {
     },
 
   ]
-  
-  /* ----- Functions ----- */
-
-
-  //! when the modal is on, i cant trigger my document event listeners
-  // useEffect(() => {
-  //   const handleClickOutsideModal = (e) => {
-  //     console.log(e.target)
-  //     if (isModalOpen && e.currentTarget === dialogRef.current){
-  //       toggleModal()
-  //     } 
-  //   }
-
-  //   document.addEventListener('click', handleClickOutsideModal)
-
-  //   return () => document.removeEventListener('click', handleClickOutsideModal)
-  // }, [isModalOpen])
-
-  const toggleModal = () => {
-    if (isModalOpen){
-      dialogRef.current.close()
-      setIsModalOpen(false)
-    } else {
-      dialogRef.current.showModal()
-      setIsModalOpen(true)
-    }
-    console.log('Invoked toggleModal()')
-  }
 
   const handleInputChange = (e) => {
     setValues({...values, [e.target.name]:e.target.value  })
@@ -93,26 +62,16 @@ function SignUpForm() {
 
   return (
     <>
-      <button onClick={toggleModal}> {isModalOpen ? 'Close Modal' : 'Open Modal'} </button> //! DELETE when toggleModal has been anchored to the right element
-      <dialog className={styles.dialog} ref={dialogRef}  onClose={toggleModal}>
         <h1 className={styles.h1}>Register</h1>
         <form className={styles.form}>
-          
           {inputs.map( input => <FormInput key={input.id} {...input} value={values[input.name]} handleInputChange={handleInputChange} />)}
-
           <button formMethod='dialog'>Sign Up</button>
           <p>Already a member? <span>Login</span></p>
-
         </form>
-      </dialog>
+
     </>
   )
 }
 export default SignUpForm
 
-/*
- * add a way to close dialog by clicking outside / close button inside
-
- * clicking login at the bottom -> render the loginForm component
-
- */
+//ADD: `login` on click render login form

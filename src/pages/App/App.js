@@ -1,12 +1,11 @@
-import SignUpForm from '../../components/signUpForm/signUpForm'
+import AuthModal from '../../components/AuthModal/AuthModal'
 import styles from './App.module.scss'
 
 
 function App() {
 
   return (
-
-      <SignUpForm/>
+    <AuthModal/>
   )
 }
 
