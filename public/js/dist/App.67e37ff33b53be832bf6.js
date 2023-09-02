@@ -38,7 +38,7 @@ function AuthModal() {
     }
     console.log('Invoked toggleModal()');
   };
-  const toggleSignIn = () => {
+  const toggleModalContents = () => {
     setShowSignUp(!showSignUp);
   };
   return /*#__PURE__*/React.createElement(React.Fragment, null, /*#__PURE__*/React.createElement("button", {
@@ -48,9 +48,9 @@ function AuthModal() {
     ref: modalRef,
     onClose: toggleModal
   }, showSignUp ? /*#__PURE__*/React.createElement(React.Fragment, null, /*#__PURE__*/React.createElement(_signUpForm_signUpForm__WEBPACK_IMPORTED_MODULE_1__["default"], null), /*#__PURE__*/React.createElement("p", null, "Already a member? ", /*#__PURE__*/React.createElement("strong", {
-    onClick: toggleSignIn
+    onClick: toggleModalContents
   }, "Login"))) : /*#__PURE__*/React.createElement(React.Fragment, null, /*#__PURE__*/React.createElement(_LoginForm_loginForm__WEBPACK_IMPORTED_MODULE_3__["default"], null), /*#__PURE__*/React.createElement("p", null, "Don't have an account? ", /*#__PURE__*/React.createElement("strong", {
-    onClick: toggleSignIn
+    onClick: toggleModalContents
   }, "Sign Up")))));
 }
 
@@ -91,7 +91,11 @@ function FormInput(props) {
   };
   return /*#__PURE__*/React.createElement("div", {
     className: _FormInput_module_scss__WEBPACK_IMPORTED_MODULE_1__["default"].formInput
-  }, /*#__PURE__*/React.createElement("label", null, label), /*#__PURE__*/React.createElement("input", _extends({}, inputProps, {
+  }, /*#__PURE__*/React.createElement("label", {
+    htmlFor: id
+  }, label), /*#__PURE__*/React.createElement("input", _extends({
+    id: id
+  }, inputProps, {
     onChange: handleInputChange,
     onBlur: handleInputBlur,
     blurred: isBlur.toString(),
@@ -131,6 +135,7 @@ function LoginForm() {
     email: "",
     password: ""
   });
+  const [error, setError] = (0,react__WEBPACK_IMPORTED_MODULE_0__.useState)('');
   const inputs = [{
     id: 1,
     name: "email",
@@ -153,6 +158,7 @@ function LoginForm() {
     setValues(_objectSpread(_objectSpread({}, values), {}, {
       [e.target.name]: e.target.value
     }));
+    setError('');
   };
   return /*#__PURE__*/React.createElement(React.Fragment, null, /*#__PURE__*/React.createElement("h1", {
     className: _LoginForm_module_scss__WEBPACK_IMPORTED_MODULE_2__["default"].h1
@@ -162,7 +168,7 @@ function LoginForm() {
     key: input.id,
     value: values[input.name],
     handleInputChange: handleInputChange
-  }, input))), /*#__PURE__*/React.createElement("button", null, "Log In")));
+  }, input))), e, /*#__PURE__*/React.createElement("button", null, "Log In")));
 }
 /* harmony default export */ const __WEBPACK_DEFAULT_EXPORT__ = (LoginForm);
 
@@ -199,7 +205,7 @@ function SignUpForm() {
     confirm: ""
   });
   const inputs = [{
-    id: 1,
+    id: "name",
     name: "name",
     type: "text",
     placeholder: "First and Last name",
@@ -208,7 +214,7 @@ function SignUpForm() {
     pattern: "^[A-Za-z0-9]+$",
     required: true
   }, {
-    id: 2,
+    id: "email",
     name: "email",
     type: "email",
     placeholder: "Email@example.com",
@@ -216,7 +222,7 @@ function SignUpForm() {
     label: "Email",
     required: true
   }, {
-    id: 4,
+    id: "password",
     name: "password",
     type: "password",
     placeholder: "Password",
@@ -225,7 +231,7 @@ function SignUpForm() {
     pattern: "^[A-Za-z0-9]{3,}$",
     required: true
   }, {
-    id: 5,
+    id: "confirm",
     name: "confirm",
     type: "password",
     placeholder: "Re-type your password",

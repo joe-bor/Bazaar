@@ -12,8 +12,9 @@ export default function FormInput(props) {
 
   return (
     <div className={styles.formInput}>
-    <label>{label}</label>
+    <label htmlFor={id}>{label}</label>
     <input
+        id={id}
         {...inputProps}
         onChange={handleInputChange}
         onBlur={handleInputBlur}

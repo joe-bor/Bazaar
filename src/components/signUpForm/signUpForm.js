@@ -13,7 +13,7 @@ function SignUpForm() {
 
   const inputs = [
     {
-      id: 1,
+      id: "name",
       name: "name",
       type: "text",
       placeholder: "First and Last name",
@@ -24,7 +24,7 @@ function SignUpForm() {
       required: true,
     },
     {
-      id: 2,
+      id: "email",
       name: "email",
       type: "email",
       placeholder: "Email@example.com",
@@ -33,7 +33,7 @@ function SignUpForm() {
       required: true,
     },
     {
-      id: 4,
+      id: "password",
       name: "password",
       type: "password",
       placeholder: "Password",
@@ -44,7 +44,7 @@ function SignUpForm() {
       required: true,
     },
     {
-      id: 5,
+      id: "confirm",
       name: "confirm",
       type: "password",
       placeholder: "Re-type your password",

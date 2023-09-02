@@ -8,6 +8,7 @@ function LoginForm() {
         email:"",
         password:""
     })
+    const [error, setError] = useState('')
 
     const inputs = [
         {
@@ -33,6 +34,7 @@ function LoginForm() {
 
     const handleInputChange = (e) => {
         setValues({...values, [e.target.name]: e.target.value})
+        setError('')
     }
 
   return (
@@ -45,6 +47,7 @@ function LoginForm() {
             handleInputChange={handleInputChange}
             {...input}
             />)}
+            {e}
             <button>Log In</button>
         </form>
     

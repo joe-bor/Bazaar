@@ -22,7 +22,7 @@ export default function AuthModal() {
         console.log('Invoked toggleModal()')
       }
 
-    const toggleSignIn = () => {
+    const toggleModalContents = () => {
       setShowSignUp(!showSignUp)
     }
 
@@ -33,11 +33,11 @@ export default function AuthModal() {
             {showSignUp ? 
             <>
               <SignUpForm />
-              <p>Already a member? <strong onClick={toggleSignIn}>Login</strong></p>
+              <p>Already a member? <strong onClick={toggleModalContents}>Login</strong></p>
             </>  :
             <>
                <LoginForm />
-              <p>Don't have an account? <strong onClick={toggleSignIn}>Sign Up</strong></p> 
+              <p>Don't have an account? <strong onClick={toggleModalContents}>Sign Up</strong></p> 
             </>
             }
             
