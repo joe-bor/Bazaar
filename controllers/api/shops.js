@@ -1,7 +1,7 @@
 const Shop = require('../../models/shop')
 const Item = require('../../models/item')
 const Category = require('../../models/category')
-
+const cloudinary = require('../../src/utilities/cloudinary')
 /* -----shop controllers-----*/
 
 // Create a new shop
@@ -76,20 +76,24 @@ exports.addItem = async (req, res) => {
         if (!shop) {
             return res.status(404).json({ error: 'Shop not found' })
         }
-
+        
+        const cloudinaryImageData = await cloudinary.uploader.upload(req.body.imageUrl, { public_id: req.body.publicId }, function(error, result) { console.log('testing ' + error + result) })
         const category = await Category.findOne({ name: req.body.category })
         console.log('category = ' + category)
         const item = await Item.create({
             name: req.body.name,
+            imageUrl: cloudinaryImageData.secure_url,
+            publicId: req.body.publicId,
             price: req.body.price,
             description: req.body.description,
-            category: category._id
+            category: category._id,
+            shop: shop._id
         })
 
         shop.products.addToSet(item)
         await shop.save() 
 
-        res.status(200).json(shop)
+        res.status(200).json(item)
     } catch (error) {
         res.status(400).json({ error: error.message })
     }
@@ -102,7 +106,7 @@ exports.updateItem = async (req, res) => {
 
         if (!shop) {
             return res.status(404).json({ error: 'Shop not found' })
-          }
+        }
 
         const itemId = req.params.itemId
         const updatedItemIndex = shop.products.findIndex(item => item._id.toString() === itemId)
