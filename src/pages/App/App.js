@@ -1,3 +1,5 @@
+import AuthModal from '../../components/AuthModal/AuthModal'
+import styles from './App.module.scss'
 import React, { useState, useEffect } from 'react';
 import { Routes, Route, Navigate, useNavigate, useLocation } from 'react-router-dom';
 import styles from './App.module.scss';
@@ -14,6 +16,7 @@ import Account from '../Users/AccountPage';
 import ShopMgmt from '../Sellers/ShopManagement';
 import NavBar from '../../components/navbar/navbar';
 import { getUser, signUp } from '../../utilities/users-service';
+
 
 export default function App() {
   const [user, setUser] = useState(getUser())
@@ -51,6 +54,12 @@ export default function App() {
 
   // <Logo onClick={handleLogoClick}></Logo>
 
+
+function App() {
+
+  return (
+    <AuthModal/>
+
   return (
     <main className={styles.App}>
       <Logo className={styles.Logo} location={location} handleLogoClick={handleLogoClick} />
@@ -77,14 +86,3 @@ export default function App() {
     </main>
   )
 }
-
-
-
-
-// function App() {
-//   return (
-//     <div>App Page</div>
-//   )
-// }
-
-// export default App
