@@ -2,7 +2,7 @@ import React, { useEffect, useState } from 'react'
 import { Link } from 'react-router-dom'
 import catgorieSeed from './config/seed'
 
-const navBar = () => {
+const NavBar = () => {
     const categories = categorieSeed
     
     return (
@@ -65,4 +65,4 @@ const navBar = () => {
     )
 }
 
-export default navBar 
+export default NavBar
