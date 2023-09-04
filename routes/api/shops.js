@@ -16,7 +16,7 @@ router.put('/:id', ensureLoggedIn, checkToken, shopsCtrl.updateShop)
 // DELETE -> /api/shops/:id - delete a shop
 router.delete('/:id', ensureLoggedIn, checkToken, shopsCtrl.deleteShop)
 
-// POST -> /api/shops/items/:id - add an item to shop
+// POST -> /api/shops/items/:id (- add an item to shop
 router.post('/items/:id', ensureLoggedIn, checkToken, shopsCtrl.addItem)
 
 // PUT -> /api/shops/items/:id - update an item in shop
