@@ -2,7 +2,7 @@ const Item  = require('../../models/item')
 
 module.exports = {
     index, 
-    show
+    show, 
 }
 
 async function index(req, res) {
