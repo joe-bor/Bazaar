@@ -1,10 +1,11 @@
 import React, { useEffect, useState } from 'react'
 import { Link } from 'react-router-dom'
-import catgorieSeed from './config/seed'
+import categories from './config/seed'
+// import { isloggedIn, user} from 
+
+// need to import the islogged in and user varaibles but not sure 
 
 const NavBar = () => {
-    const categories = categorieSeed
-    
     return (
         <nav className="navbar">
             <div className="navbar-logo">         
