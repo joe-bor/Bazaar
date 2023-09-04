@@ -1,20 +1,9 @@
 import React, { useEffect, useState } from 'react'
 import { Link } from 'react-router-dom'
+import catgorieSeed from './config/seed'
 
 const navBar = () => {
-    const [categories, setCategories] = useState([])
-
-    // Fetch categories from the api 
-    useEffect(() => {
-        fetch('https://dummyjson.com/categories')
-        .then((response) => response.json())
-        .then((data) => {
-            setCategories(data)
-        })
-        .catch((error) => {
-            console.log('Error fetching categories', error)
-        })
-    }, [])
+    const categories = categorieSeed
     
     return (
         <nav className="navbar">
@@ -28,9 +17,9 @@ const navBar = () => {
             </div>
             <div className="navbar-categories">
                 <ul>
-                    {categories.map((category) => (
-                        <li key={category._id}>
-                            <Link to={`/category/${category.slug}`}>{category.name}</Link>
+                    {categories.map((category, index) => (
+                        <li key={index}>
+                            <Link to={`/category/${category.name}`}>{category.name}</Link>
                         </li>
                     ))}
                 </ul>
