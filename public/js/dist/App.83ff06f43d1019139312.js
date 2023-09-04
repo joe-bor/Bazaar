@@ -29,25 +29,38 @@ function AuthModal() {
 
   /* --- Functions --- */
   const toggleModal = () => {
-    if (isModalOpen) {
-      modalRef.current.close();
-      setIsModalOpen(false);
-    } else {
-      modalRef.current.showModal();
-      setIsModalOpen(true);
-    }
+    // if (isModalOpen){
+    //   modalRef.current.close()
+    //   setIsModalOpen(false)
+    // } else {
+    //   modalRef.current.showModal()
+    //   setIsModalOpen(true)
+    // }
+
+    setIsModalOpen(!isModalOpen);
     console.log('Invoked toggleModal()');
+    console.log(isModalOpen);
+  };
+  const handleCloseModal = () => {
+    setIsModalOpen(false);
+    console.log('handleCloseModal invoked');
   };
   const toggleModalContents = () => {
     setShowSignUp(!showSignUp);
   };
+  (0,react__WEBPACK_IMPORTED_MODULE_0__.useEffect)(() => {
+    isModalOpen ? modalRef.current.showModal() : modalRef.current.close();
+    console.log(isModalOpen);
+  }, [isModalOpen]);
   return /*#__PURE__*/React.createElement(React.Fragment, null, /*#__PURE__*/React.createElement("button", {
     onClick: toggleModal
   }, " ", isModalOpen ? 'Close Modal' : 'Open Modal', " "), " //! DELETE when toggleModal has been anchored to the right element", /*#__PURE__*/React.createElement("dialog", {
     className: _AuthModal_module_scss__WEBPACK_IMPORTED_MODULE_2__["default"].dialog,
     ref: modalRef,
-    onClose: toggleModal
-  }, showSignUp ? /*#__PURE__*/React.createElement(React.Fragment, null, /*#__PURE__*/React.createElement(_signUpForm_signUpForm__WEBPACK_IMPORTED_MODULE_1__["default"], null), /*#__PURE__*/React.createElement("p", null, "Already a member? ", /*#__PURE__*/React.createElement("strong", {
+    onClose: handleCloseModal
+  }, /*#__PURE__*/React.createElement("button", {
+    onClick: handleCloseModal
+  }, "X"), showSignUp ? /*#__PURE__*/React.createElement(React.Fragment, null, /*#__PURE__*/React.createElement(_signUpForm_signUpForm__WEBPACK_IMPORTED_MODULE_1__["default"], null), /*#__PURE__*/React.createElement("p", null, "Already a member? ", /*#__PURE__*/React.createElement("strong", {
     onClick: toggleModalContents
   }, "Login"))) : /*#__PURE__*/React.createElement(React.Fragment, null, /*#__PURE__*/React.createElement(_LoginForm_loginForm__WEBPACK_IMPORTED_MODULE_3__["default"], null), /*#__PURE__*/React.createElement("p", null, "Don't have an account? ", /*#__PURE__*/React.createElement("strong", {
     onClick: toggleModalContents
