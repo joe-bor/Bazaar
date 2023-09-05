@@ -1,16 +1,26 @@
-import React, { useEffect, useState } from 'react'
+import React from 'react'
 import { Link } from 'react-router-dom'
 import categories from './config/seed'
 import SearchBar from './SearchBar/SearchBar'
 
+ 
+
+
+
 const NavBar = ({ 
     user, 
+    setUser,
     cart, 
+    setCart,
     items, 
+    setItems,
     activeCat, 
+    setActiveCat,
     searchTerm, 
     setSearchTerm, 
+    setCategories, 
     isloggedIn
+
 }) => {
     return (
         <nav className="navbar">
