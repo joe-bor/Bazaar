@@ -1,5 +1,5 @@
 import AuthModal from '../../components/AuthModal/AuthModal'
-import styles from './App.module.scss'
+// import styles from './App.module.scss'
 import React, { useState, useEffect } from 'react';
 import { Routes, Route, Navigate, useNavigate, useLocation } from 'react-router-dom';
 import styles from './App.module.scss';
@@ -15,7 +15,7 @@ import Account from '../Users/AccountPage';
 // import UserProfile from '../Users/UserProfile;
 import ShopMgmt from '../Sellers/ShopManagement';
 import NavBar from '../../components/navbar/navbar';
-import { getUser, signUp } from '../../utilities/users-service';
+import { getUser, signUp } from '../../utilities/user-services';
 
 
 export default function App() {
@@ -58,9 +58,9 @@ export default function App() {
 function App() {
 
   return (
+    <div>
     <AuthModal/>
 
-  return (
     <main className={styles.App}>
       <Logo className={styles.Logo} location={location} handleLogoClick={handleLogoClick} />
       <NavBar 
@@ -84,5 +84,7 @@ function App() {
         <Route path="/*" element={<Navigate to="/home" />} />
       </Routes>
     </main>
+    </div>
   )
+}
 }

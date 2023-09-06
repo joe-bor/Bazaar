@@ -1,10 +1,12 @@
-import { useState } from "react"
+import { useState, useEffect } from "react"
 import styles from './ReviewList.module.scss'
 
 function ReviewList({
     item
 }) {
-    const reviews = fetch(`https://localhost:8000/routes/api/reviews/${item._id}`)
+    //useEffect
+    //useState([]) for const [reviews setReviews] = useState([])
+    const reviews = fetch(`/api/reviews/${item._id}`)
     .then(response => response.json())
     
     return (
