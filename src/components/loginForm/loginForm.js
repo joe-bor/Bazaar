@@ -47,7 +47,6 @@ function LoginForm() {
             handleInputChange={handleInputChange}
             {...input}
             />)}
-            {e}
             <button>Log In</button>
         </form>
     
