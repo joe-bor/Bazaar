@@ -2,7 +2,8 @@ const Item  = require('../../models/item')
 
 module.exports = {
     index, 
-    show, 
+    show,
+    returnReviews
 }
 
 async function index(req, res) {
@@ -19,6 +20,15 @@ async function show(req, res) {
     try {
         const item = await Item.findById(req.params.id)
         res.status(200).json(item)
+    } catch (error) {
+        res.status(400).json({ message: error.message })
+    }
+}
+
+async function returnReviews(req, res) {
+    try {
+        const item = await Item.findById(req.params.id)
+        res.status(200).json(item.reviews)
     } catch (error) {
         res.status(400).json({ message: error.message })
     }

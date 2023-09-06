@@ -2,9 +2,16 @@ const express = require('express');
 const app = express();
 const path = require('path'); // enables us to serve unix/windows w/o having to write multiple paths
 const logger = require('morgan');
+const  {v2} = require('cloudinary')
+const cloudinary = v2
 
 
 app.use(express.json());
+cloudinary.config({ 
+	cloud_name: process.env.cloud_name, 
+	api_key: process.env.api_key, 
+	api_secret: process.env.api_secret 
+});
 app.use((req, res, next) => {
 	res.locals.data = {};
 	next();

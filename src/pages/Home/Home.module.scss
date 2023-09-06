@@ -1,0 +1,28 @@
+.Home {
+    display: flex;
+    flex-direction: column;
+
+    .hero {
+        width: 98%;
+        background-color: grey;
+        height: 35vh;
+        align-self: center;
+        display: flex;
+        flex-direction: column;
+        justify-content: space-evenly;
+        align-items: flex-start;
+
+        p {
+            font-size: 6rem;
+            font-weight: 900;
+        }
+    }
+
+    .itemGrid {
+        width: 98%;
+        background-color: lightgray;
+        height: 75vh;
+        align-self: center;
+        margin: 1.5rem 0;
+    }
+}

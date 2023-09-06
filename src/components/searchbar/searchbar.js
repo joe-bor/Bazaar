@@ -7,6 +7,7 @@ export default function SearchBar({
 }) {
   const [searchTerm, setSearchTerm] = useState("");
 
+
   // properties to not include in search result
   const excludeProps = ["imageUrl", "publicId", "price", "reviews"];
 
@@ -21,6 +22,7 @@ export default function SearchBar({
     });
 
     // where would I place link to to shop page?
+
   }
 
   const handleChange = (evt) => {
@@ -49,3 +51,4 @@ export default function SearchBar({
     </div>
   );
 }
+
