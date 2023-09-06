@@ -52,10 +52,9 @@ export default function App() {
     navigate('/home')
   }
 
-  <Logo onClick={handleLogoClick}></Logo>
-    
-    return (
-      <main className={styles.App}>
+
+  return (
+    <main className={styles.App}>
       <Logo className={styles.Logo} location={location} handleLogoClick={handleLogoClick} />
       <AuthModal/>
       <Home />

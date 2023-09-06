@@ -1,6 +1,6 @@
 // this page relies on the users-service page for its functionality
 
-import { getToken } from './users-services';
+import { getToken } from './users-service';
 
 export default async function sendRequest(url, method = 'GET', payload = null) {
   // Fetch takes an optional options object as the 2nd argument

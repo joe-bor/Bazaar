@@ -1,0 +1,20 @@
+.ReviewList{
+    display:flex;
+    flex-direction:column;
+    background-color: darkgrey;
+    .Review{
+        display: flex;
+        flex-direction: row;
+        list-style-type: none;
+        .reviewer{
+            order: 1;
+        }
+        .starRating{
+            order: 2;
+        }
+        .review{
+            order: 3;
+            flex-grow: 3;
+        }
+    }
+}
