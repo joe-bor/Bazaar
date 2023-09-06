@@ -1,5 +1,7 @@
 import { useState } from 'react'
+import { createItem } from '../../utilities/items-api'
 // import update user function from user-service to update user's shop property
+// import image upload function from utilities
 
 export default function CreateProduct({ }) {
   const [productData, setProductData] = useState({
@@ -9,6 +11,11 @@ export default function CreateProduct({ }) {
     images: null // 🟥 add images to item schema 🟥
   })
   const [error, setError] = useState('')
+  const [showProductModal, setShowProductModal] = useState(false)
+
+  function toggleProductModal() {
+    setShowProductModal(!showProductModal)
+  }
 
   function handleChange(e) {
     setProductData({ ...productData, [e.target.name]: e.target.value })
@@ -21,9 +28,11 @@ export default function CreateProduct({ }) {
     e.preventDefault()
     try {
       const formData = { ...productData }
-      // 🟥 send request to create product 🟥
+      // send request to create product
+      createItem(formData)
       // 🟥 update shop's products property with product._id 🟥
       // 🟥 set user state to have updated user info 🟥
+      toggleProductModal()
     } catch {
       // an error happened on the server
       setError('product creation failed - try again')
@@ -32,6 +41,7 @@ export default function CreateProduct({ }) {
 
   return (
     <div className={styles.CreateProduct}>
+      <div className={styles.closeBtn} onClick={toggleProductModal}>X</div>
       <div className="form-container">
         <form autoComplete="off" onSubmit={handleSubmit}>
           <label>Product Name</label>
@@ -43,9 +53,10 @@ export default function CreateProduct({ }) {
           {/* 🟥 need to be able to upload images with express-fileupload and cloudinary 🟥 */}
           <label>Product Images</label>
           <input type="file" name="images" accept=".png, .jpg, .jpeg" value={productData.images} onChange={handleChange} multiple />
+          <button type="submit">Create Product</button>
         </form>
       </div>
-      <p className="error-message"></p>
+      <p className="error-message">{error}</p>
     </div>
   )
 }
