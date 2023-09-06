@@ -9,6 +9,6 @@ router.get('/', itemsCtrl.index)
 router.get('/:id', itemsCtrl.show)
 
 // GET -> /api/items/reviews - get all reviews for item
-router.get('/reviews/:id', itemsCtrl.index)
+router.get('/reviews/:id', itemsCtrl.returnReviews)
 
 module.exports = router
