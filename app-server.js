@@ -3,6 +3,7 @@ const app = express();
 const path = require('path'); // enables us to serve unix/windows w/o having to write multiple paths
 const logger = require('morgan');
 
+
 app.use(express.json());
 app.use((req, res, next) => {
 	res.locals.data = {};

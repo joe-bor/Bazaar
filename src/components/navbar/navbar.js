@@ -1,11 +1,8 @@
 import React from 'react'
 import { Link } from 'react-router-dom'
+
 import categories from './config/seed'
 import SearchBar from './SearchBar/SearchBar'
-
- 
-
-
 
 const NavBar = ({ 
     user, 

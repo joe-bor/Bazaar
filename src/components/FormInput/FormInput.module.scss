@@ -1,0 +1,45 @@
+.formInput {
+    display: flex;
+    flex-direction: column;
+    width: 100%;
+    margin: .5rem 0;
+
+    input {
+        padding: .6rem;
+        margin: .5rem 0px;
+        border-radius: .2rem;
+        border: 1px solid gray;
+    }
+
+    input:focus {
+        border-color: rgb(73, 106, 23);
+        box-shadow: 0 0 8px rgba(3, 111, 33, 0.5);
+        outline: none;
+    }
+
+    label{
+        font-size: 1.5em;
+        color: gray;
+    }
+
+    p {
+        text-align: center;
+        color: grey;
+        margin-top: .2rem;
+        margin-bottom: .5rem;
+    }
+
+    .error {
+        color: rgb(215, 5, 5);
+        font-style: italic;
+        display: none;
+    }
+
+    input:invalid[blurred="true"]{
+        border: 1px solid red;
+    }
+
+    input:invalid[blurred="true"] ~ .error {
+        display: block;
+    }
+}
