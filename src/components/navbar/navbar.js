@@ -1,6 +1,6 @@
 import React, { useEffect, useState } from 'react'
 import { Link } from 'react-router-dom'
-import categories from './config/seed'
+// import categories from './config/seed'
 // import { isloggedIn, user} from 
 
 // need to import the islogged in and user varaibles but not sure 

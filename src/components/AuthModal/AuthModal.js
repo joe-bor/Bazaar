@@ -1,7 +1,7 @@
 import { useEffect, useRef, useState } from "react"
 import SignUpForm from "../signUpForm/signUpForm"
 import styles from './AuthModal.module.scss'
-import LoginForm from "../LoginForm/loginForm"
+import LoginForm from "../LoginForm/LoginForm"
 
 export default function AuthModal() {
 
