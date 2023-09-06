@@ -1,6 +1,7 @@
 import * as itemsAPI from '../../utilities/items-api'
 import { Link } from 'react-router-dom'
 import ProductList from '../ProductList/ProductList'
+import styles from './CategorySection.module.scss'
 
 function CategorySection({ category, setActiveCat }) {
   // make an API call to the DB and query for all items that has the category === prop.category
@@ -91,7 +92,7 @@ function CategorySection({ category, setActiveCat }) {
   let firstFiveItems  = filteredItems.splice(0, 5)
 
   return (
-    <div>
+    <div className={styles.categoryRow}>
         {category}<Link to='/shop' onClick={e => setActiveCat(category)} >➡</Link>
         <ProductList productItems={firstFiveItems}/> 
     </div>

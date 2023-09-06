@@ -31,9 +31,11 @@ function Home() {
   /* --------------------------- */
 
   return (
-    <main>
+    <main className={styles.Home}>
       <div className={styles.hero}>
-        Shop now and explore <Link to='shop'>See More</Link>
+        <p>Shop now</p>
+        <p>and explore</p>
+        <Link to='shop'>See More</Link>
       </div>
       <div className={styles.itemGrid}>
         {categories.map(category => <CategorySection key={category} category={category} setActiveCat={setActiveCat}/> )}
