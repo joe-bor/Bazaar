@@ -1,11 +1,24 @@
-import React, { useEffect, useState } from 'react'
+import React from 'react'
 import { Link } from 'react-router-dom'
+
 import categories from './config/seed'
-// import { isloggedIn, user} from 
+import SearchBar from './SearchBar/SearchBar'
 
-// need to import the islogged in and user varaibles but not sure 
+const NavBar = ({ 
+    user, 
+    setUser,
+    cart, 
+    setCart,
+    items, 
+    setItems,
+    activeCat, 
+    setActiveCat,
+    searchTerm, 
+    setSearchTerm, 
+    setCategories, 
+    isloggedIn
 
-const NavBar = () => {
+}) => {
     return (
         <nav className="navbar">
             <div className="navbar-logo">         
@@ -14,7 +27,7 @@ const NavBar = () => {
                 </Link>
             </div> 
             <div className="navbar-search">
-                <input type="text" placeholder="Search for products..." />
+                <SearchBar searchTerm={searchTerm} setSearchTerm={setSearchTerm} />
             </div>
             <div className="navbar-categories">
                 <ul>
@@ -36,6 +49,10 @@ const NavBar = () => {
                     <div>
                         <i className="cart"></i>
                         <img src="public/img/Cart Icon.png" alt="cart" />
+                        {/* Display the cart count if items are in the cart */}
+                        {cart.length > 0 && (
+                            <span className="cart-count">{cart.length}</span>
+                        )}
                     </div> 
                 </Link>
                 <Link to="/store">
