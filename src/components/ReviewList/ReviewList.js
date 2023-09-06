@@ -7,7 +7,7 @@ function ReviewList({
     const [reviews, setReviews] = useState([])
     useEffect(() => {
         setReviews(fetch(`/api/reviews/${item._id}`).then(response => response.json()))
-    }, [reviews])
+    }, [])
     
     return (
         <div className={styles.ReviewList}> 
