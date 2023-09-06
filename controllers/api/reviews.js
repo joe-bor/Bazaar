@@ -1,4 +1,5 @@
 const Review = require('../../models/review')
+const Item = require('../../models/item')
 
 async function create(req, res){
     try {
@@ -8,6 +9,9 @@ async function create(req, res){
             starRating: req.body.starRating,
             review: req.body.review
         })
+        const item = await Item.findById(req.params.itemId)
+        item.reviews.addToSet(review)
+        await item.save()
         res.status(200).json(review)
     } catch (error) {
         res.status(400).json({ message: error.message })
