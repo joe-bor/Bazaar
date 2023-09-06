@@ -1,26 +1,41 @@
-import { useState } from 'react';
+import { useState } from "react";
 
-export default function SearchBar({onSearch}){
-const [searchTerm,setSearchTerm] = useState('')
+export default function SearchBar({
+  products,
+  filteredItems, // used for debugging
+  setfilteredItems
+}) {
+  const [searchTerm, setSearchTerm] = useState("");
 
-function handleChange(evt){
-    setSearchTerm(evt.target.value)
-}
+  function searchResults(product) {
+    return Object.values(product)
+      .join(" ")
+      .toLowerCase()
+      .includes(searchTerm.toLowerCase());
+  }
 
-function handleSubmit(evt){
+  const handleChange = (evt) => {
+    setSearchTerm(evt.target.value);
+  };
+
+  const handleSubmit = (evt) => {
+    // here is where the magic happens
     evt.preventDefault();
-    onSearch(searchTerm)
-     setSearchTerm('')
-}
+    //setfilteredItems(search(products, searchTerm));
+    let search = products.filter(searchResults);
+    setfilteredItems(search);
+  };
 
-    return(
-        <div>
-            <form onSubmit={handleSubmit}>
-                <input type='text' placeholder='Search for anything'value={searchTerm}
-                onChange={handleChange}></input>
-                <button type="submit">Search</button>
-            </form>
-        </div>
-    )
-    
-}
+  return (
+    <div>
+      <form onSubmit={handleSubmit}>
+        <input
+          onChange={handleChange}
+          type="text"
+          placeholder="Search for anything"
+          value={searchTerm}
+        ></input>
+        <button type="submit">Search</button>
+      </form>
+    </div>
+  );
