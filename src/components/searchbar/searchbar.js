@@ -7,11 +7,22 @@ export default function SearchBar({
 }) {
   const [searchTerm, setSearchTerm] = useState("");
 
+
+  // properties to not include in search result
+  const excludeProps = ["imageUrl", "publicId", "price", "reviews"];
+
   function searchResults(product) {
-    return Object.values(product)
-      .join(" ")
-      .toLowerCase()
-      .includes(searchTerm.toLowerCase());
+    return Object.keys(product).some((key) => {
+      return excludeProps.includes(key)
+        ? false
+        : product[key] // value
+            .toString() // convert to string
+            .toLowerCase() // lowercase string
+            .includes(searchTerm.toLowerCase());
+    });
+
+    // where would I place link to to shop page?
+
   }
 
   const handleChange = (evt) => {
@@ -39,3 +50,5 @@ export default function SearchBar({
       </form>
     </div>
   );
+}
+
