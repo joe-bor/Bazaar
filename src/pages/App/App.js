@@ -55,8 +55,6 @@ export default function App() {
   // <Logo onClick={handleLogoClick}></Logo>
 
 
-function App() {
-
   return (
     <div>
     <AuthModal/>
@@ -86,5 +84,4 @@ function App() {
     </main>
     </div>
   )
-}
 }

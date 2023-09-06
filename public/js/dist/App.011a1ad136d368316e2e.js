@@ -539,79 +539,77 @@ function App() {
 
   // <Logo onClick={handleLogoClick}></Logo>
 
-  function App() {
-    return /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_1___default().createElement("div", null, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_1___default().createElement(_components_AuthModal_AuthModal__WEBPACK_IMPORTED_MODULE_0__["default"], null), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_1___default().createElement("main", {
-      className: _App_module_scss__WEBPACK_IMPORTED_MODULE_2__["default"].App
-    }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_1___default().createElement(Logo, {
-      className: _App_module_scss__WEBPACK_IMPORTED_MODULE_2__["default"].Logo,
-      location: location,
-      handleLogoClick: handleLogoClick
-    }), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_1___default().createElement(_components_navbar_navbar__WEBPACK_IMPORTED_MODULE_3__["default"], {
-      className: _App_module_scss__WEBPACK_IMPORTED_MODULE_2__["default"].NavBar,
+  return /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_1___default().createElement("div", null, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_1___default().createElement(_components_AuthModal_AuthModal__WEBPACK_IMPORTED_MODULE_0__["default"], null), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_1___default().createElement("main", {
+    className: _App_module_scss__WEBPACK_IMPORTED_MODULE_2__["default"].App
+  }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_1___default().createElement(Logo, {
+    className: _App_module_scss__WEBPACK_IMPORTED_MODULE_2__["default"].Logo,
+    location: location,
+    handleLogoClick: handleLogoClick
+  }), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_1___default().createElement(_components_navbar_navbar__WEBPACK_IMPORTED_MODULE_3__["default"], {
+    className: _App_module_scss__WEBPACK_IMPORTED_MODULE_2__["default"].NavBar,
+    user: user,
+    cart: cart,
+    location: location
+  }), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_1___default().createElement(react_router_dom__WEBPACK_IMPORTED_MODULE_5__.Routes, null, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_1___default().createElement(react_router_dom__WEBPACK_IMPORTED_MODULE_5__.Route, {
+    path: "/home",
+    element: /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_1___default().createElement((_Users_Home__WEBPACK_IMPORTED_MODULE_6___default()), {
+      className: _App_module_scss__WEBPACK_IMPORTED_MODULE_2__["default"].Home,
+      setCart: setCart
+    })
+  }), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_1___default().createElement(react_router_dom__WEBPACK_IMPORTED_MODULE_5__.Route, {
+    path: "/main",
+    element: /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_1___default().createElement((_Users_Main__WEBPACK_IMPORTED_MODULE_7___default()), {
+      className: _App_module_scss__WEBPACK_IMPORTED_MODULE_2__["default"].Main
+    })
+  }), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_1___default().createElement(react_router_dom__WEBPACK_IMPORTED_MODULE_5__.Route, {
+    path: "/itemdetails",
+    element: /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_1___default().createElement((_Users_ItemDetails__WEBPACK_IMPORTED_MODULE_8___default()), null)
+  }), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_1___default().createElement(react_router_dom__WEBPACK_IMPORTED_MODULE_5__.Route, {
+    path: "/account",
+    element: /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_1___default().createElement((_Users_AccountPage__WEBPACK_IMPORTED_MODULE_9___default()), {
+      className: _App_module_scss__WEBPACK_IMPORTED_MODULE_2__["default"].AccountPage,
       user: user,
-      cart: cart,
+      setUser: setUser,
       location: location
-    }), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_1___default().createElement(react_router_dom__WEBPACK_IMPORTED_MODULE_5__.Routes, null, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_1___default().createElement(react_router_dom__WEBPACK_IMPORTED_MODULE_5__.Route, {
-      path: "/home",
-      element: /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_1___default().createElement((_Users_Home__WEBPACK_IMPORTED_MODULE_6___default()), {
-        className: _App_module_scss__WEBPACK_IMPORTED_MODULE_2__["default"].Home,
-        setCart: setCart
-      })
-    }), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_1___default().createElement(react_router_dom__WEBPACK_IMPORTED_MODULE_5__.Route, {
-      path: "/main",
-      element: /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_1___default().createElement((_Users_Main__WEBPACK_IMPORTED_MODULE_7___default()), {
-        className: _App_module_scss__WEBPACK_IMPORTED_MODULE_2__["default"].Main
-      })
-    }), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_1___default().createElement(react_router_dom__WEBPACK_IMPORTED_MODULE_5__.Route, {
-      path: "/itemdetails",
-      element: /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_1___default().createElement((_Users_ItemDetails__WEBPACK_IMPORTED_MODULE_8___default()), null)
-    }), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_1___default().createElement(react_router_dom__WEBPACK_IMPORTED_MODULE_5__.Route, {
-      path: "/account",
-      element: /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_1___default().createElement((_Users_AccountPage__WEBPACK_IMPORTED_MODULE_9___default()), {
-        className: _App_module_scss__WEBPACK_IMPORTED_MODULE_2__["default"].AccountPage,
-        user: user,
-        setUser: setUser,
-        location: location
-      })
-    }), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_1___default().createElement(react_router_dom__WEBPACK_IMPORTED_MODULE_5__.Route, {
-      path: "/favorites",
-      element: /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_1___default().createElement((_Users_Favorties__WEBPACK_IMPORTED_MODULE_10___default()), null)
-    }), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_1___default().createElement(react_router_dom__WEBPACK_IMPORTED_MODULE_5__.Route, {
-      path: "/cart",
-      element: /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_1___default().createElement((_Users_Cart__WEBPACK_IMPORTED_MODULE_11___default()), {
-        className: _App_module_scss__WEBPACK_IMPORTED_MODULE_2__["default"].Cart
-      })
-    }), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_1___default().createElement(react_router_dom__WEBPACK_IMPORTED_MODULE_5__.Route, {
-      path: "/checkout",
-      element: /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_1___default().createElement((_Users_Checkout__WEBPACK_IMPORTED_MODULE_12___default()), {
-        className: _App_module_scss__WEBPACK_IMPORTED_MODULE_2__["default"].Checkout
-      })
-    }), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_1___default().createElement(react_router_dom__WEBPACK_IMPORTED_MODULE_5__.Route, {
-      path: "/orderhistory",
-      element: /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_1___default().createElement((_Users_OrderHistory__WEBPACK_IMPORTED_MODULE_13___default()), {
-        user: user,
-        setUser: setUser,
-        location: location
-      })
-    }), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_1___default().createElement(react_router_dom__WEBPACK_IMPORTED_MODULE_5__.Route, {
-      path: "/sellershop",
-      element: /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_1___default().createElement(SellerShop, {
-        user: user,
-        setUser: setUser
-      })
-    }), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_1___default().createElement(react_router_dom__WEBPACK_IMPORTED_MODULE_5__.Route, {
-      path: "/shopmgmt",
-      element: /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_1___default().createElement((_Sellers_ShopManagement__WEBPACK_IMPORTED_MODULE_14___default()), {
-        user: user,
-        setUser: setUser
-      })
-    }), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_1___default().createElement(react_router_dom__WEBPACK_IMPORTED_MODULE_5__.Route, {
-      path: "/*",
-      element: /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_1___default().createElement(react_router_dom__WEBPACK_IMPORTED_MODULE_5__.Navigate, {
-        to: "/home"
-      })
-    }))));
-  }
+    })
+  }), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_1___default().createElement(react_router_dom__WEBPACK_IMPORTED_MODULE_5__.Route, {
+    path: "/favorites",
+    element: /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_1___default().createElement((_Users_Favorties__WEBPACK_IMPORTED_MODULE_10___default()), null)
+  }), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_1___default().createElement(react_router_dom__WEBPACK_IMPORTED_MODULE_5__.Route, {
+    path: "/cart",
+    element: /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_1___default().createElement((_Users_Cart__WEBPACK_IMPORTED_MODULE_11___default()), {
+      className: _App_module_scss__WEBPACK_IMPORTED_MODULE_2__["default"].Cart
+    })
+  }), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_1___default().createElement(react_router_dom__WEBPACK_IMPORTED_MODULE_5__.Route, {
+    path: "/checkout",
+    element: /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_1___default().createElement((_Users_Checkout__WEBPACK_IMPORTED_MODULE_12___default()), {
+      className: _App_module_scss__WEBPACK_IMPORTED_MODULE_2__["default"].Checkout
+    })
+  }), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_1___default().createElement(react_router_dom__WEBPACK_IMPORTED_MODULE_5__.Route, {
+    path: "/orderhistory",
+    element: /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_1___default().createElement((_Users_OrderHistory__WEBPACK_IMPORTED_MODULE_13___default()), {
+      user: user,
+      setUser: setUser,
+      location: location
+    })
+  }), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_1___default().createElement(react_router_dom__WEBPACK_IMPORTED_MODULE_5__.Route, {
+    path: "/sellershop",
+    element: /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_1___default().createElement(SellerShop, {
+      user: user,
+      setUser: setUser
+    })
+  }), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_1___default().createElement(react_router_dom__WEBPACK_IMPORTED_MODULE_5__.Route, {
+    path: "/shopmgmt",
+    element: /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_1___default().createElement((_Sellers_ShopManagement__WEBPACK_IMPORTED_MODULE_14___default()), {
+      user: user,
+      setUser: setUser
+    })
+  }), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_1___default().createElement(react_router_dom__WEBPACK_IMPORTED_MODULE_5__.Route, {
+    path: "/*",
+    element: /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_1___default().createElement(react_router_dom__WEBPACK_IMPORTED_MODULE_5__.Navigate, {
+      to: "/home"
+    })
+  }))));
 }
 
 /***/ }),
