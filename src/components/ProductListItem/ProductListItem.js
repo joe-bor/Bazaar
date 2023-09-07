@@ -1,5 +1,5 @@
-import styles from './productListItem.module.scss'
-import FavoriteButton from '../FavoriteButton/FavoriteButton.js'
+import FavoriteIcon from '../FavoriteIcon/FavoriteIcon'
+import styles from './ProductListItem.module.scss'
 
 export default function ProductListItem({ productItem }) {
 
@@ -9,9 +9,7 @@ export default function ProductListItem({ productItem }) {
         {/* 🟥 need a way to show multiple images 🟥 */}
         <img className={styles.itemImage}></img>
         {/* 🟥 add favorite button to show on hover 🟥 */}
-        <div className={styles.favBtnContainer}>
-          <FavoriteButton className={styles.FavoriteButton} />
-        </div>
+        <FavoriteIcon className={styles.FavoriteIcon} />
       </div>
       <div className={styles.itemInfo}>
         <div className={styles.name}>{productItem.name}</div>

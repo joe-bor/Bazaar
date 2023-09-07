@@ -1,8 +1,10 @@
 import { Link } from 'react-router-dom'
 import CategorySection from '../../components/CategorySection/CategorySection'
 import styles from './Home.module.scss'
+import { useState } from 'react'
 
-function Home() {
+function Home({ items }) {
+  console.log(items)
 
   /* --- Should be passed down as props --- */
   const categories = [  //iterate and create Component to for each category ( which will house the items of said category)
@@ -27,7 +29,7 @@ function Home() {
     "motorcycle",
     "lighting"
   ]
-  let setActiveCat //state setter - triggered when user clicks `see more` on the home page
+  const [activeCat, setActiveCat] = useState('') //state setter - triggered when user clicks `see more` on the home page
   /* --------------------------- */
 
   return (
@@ -38,7 +40,7 @@ function Home() {
         <Link to='shop'>See More</Link>
       </div>
       <div className={styles.itemGrid}>
-        {categories.map(category => <CategorySection key={category} category={category} setActiveCat={setActiveCat}/> )}
+        {categories.map(category => <CategorySection items={items} key={category} category={category} setActiveCat={setActiveCat}/> )}
       </div>
     </main>
   )

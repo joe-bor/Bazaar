@@ -1,26 +1,29 @@
-import AuthModal from '../../components/AuthModal/AuthModal'
 import React, { useState, useEffect } from 'react';
 import { Routes, Route, Navigate, useNavigate, useLocation } from 'react-router-dom';
 import styles from './App.module.scss';
 import Home from '../Home/Home';
-import Main from '../Users/Main';
-import ItemDetails from '../Users/ItemDetails';
-import Favorites from '../Users/Favorties';
-import Cart from '../Users/Cart';
-import Checkout from '../Users/Checkout';
-import OrderHistory from '../Users/OrderHistory';
-import Account from '../Users/AccountPage';
+import ShopPage from '../ShopPage/ShopPage';
+import SellerShop from '../SellerShop/SellerShop';
+import ItemDetails from '../ItemDetails/ItemDetails';
+import Favorites from '../Favorites/Favorites';
+import Cart from '../Cart/Cart';
+import Checkout from '../Checkout/Checkout';
+import OrderHistory from '../OrderHistory/OrderHistory';
+import AccountPage from '../AccountPage/AccountPage';
 // Wireframe calls it User Profile Page, VSCode file calls it AccountPage here's the alternative
 // import UserProfile from '../Users/UserProfile;
-import ShopMgmt from '../Sellers/ShopManagement';
-import NavBar from '../../components/navbar/navbar';
+import ShopMgmt from '../ShopManagement/ShopManagement';
+import NavBar from '../../components/NavBar/NavBar';
 import { getUser, signUp } from '../../utilities/users-service';
 import AuthModal from '../../components/AuthModal/AuthModal'
+import * as ItemsAPI from '../../utilities/items-api'
 
 
 export default function App() {
   const [user, setUser] = useState(getUser())
-  const [cart, setCart] = useState(null)
+  const [cart, setCart] = useState([])
+  const [items, setItems] = useState([])
+  const [filteredItems, setFilteredItems] = useState([])
   const navigate = useNavigate()
   let location = useLocation()
 
@@ -30,7 +33,16 @@ export default function App() {
     if (!user) {
       createGuestUser()
     }
+    async function getItems() {
+      const allItems = await ItemsAPI.getAll()
+      console.log(allItems)
+      setItems(allItems)
+    }
+    getItems()
   }, [])
+
+
+
 
   async function createGuestUser() {
     const guestUserData = {
@@ -55,21 +67,22 @@ export default function App() {
 
   return (
     <main className={styles.App}>
-      <Logo className={styles.Logo} location={location} handleLogoClick={handleLogoClick} />
-      <AuthModal/>
-      <Home />
-      <NavBar 
+      <AuthModal />
+      <NavBar
+        filteredItems={filteredItems}
+        setFilteredItems={setFilteredItems}
+        items={items}
         className={styles.NavBar}
         user={user}
         cart={cart}
         location={location} />
       <Routes>
         {/* client-side route that renders the component instance if the patch matches the url in the address bar */}
-        <Route path="/home" element={<Home className={styles.Home} setCart={setCart} />} />
-        <Route path="/main" element={<Main className={styles.Main} />} />
+        <Route path="/home" element={<Home items={items} className={styles.Home} setCart={setCart} />} />
+        <Route path="/shop" element={<ShopPage className={styles.ShopPage} items={items} />} />
         <Route path="/itemdetails" element={<ItemDetails />} />
-        <Route path="/account" element={<Account className={styles.AccountPage} user={user} setUser={setUser} location={location}  />} />
-        <Route path="/favorites" element={<Favorites /> } />
+        <Route path="/account" element={<AccountPage className={styles.AccountPage} user={user} setUser={setUser} location={location} />} />
+        <Route path="/favorites" element={<Favorites />} />
         <Route path="/cart" element={<Cart className={styles.Cart} />} />
         <Route path="/checkout" element={<Checkout className={styles.Checkout} />} />
         <Route path="/orderhistory" element={<OrderHistory user={user} setUser={setUser} location={location} />} />
