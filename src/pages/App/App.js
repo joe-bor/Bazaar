@@ -21,8 +21,9 @@ import * as ItemsAPI from '../../utilities/items-api'
 
 export default function App() {
   const [user, setUser] = useState(getUser())
-  const [cart, setCart] = useState(null)
-  const [items, setItems] = useState(null)
+  const [cart, setCart] = useState([])
+  const [items, setItems] = useState([])
+  const [filteredItems, setFilteredItems] = useState([])
   const navigate = useNavigate()
   let location = useLocation()
 
@@ -67,15 +68,17 @@ export default function App() {
   return (
     <main className={styles.App}>
       <AuthModal />
-      <Home />
       <NavBar
+        filteredItems={filteredItems}
+        setFilteredItems={setFilteredItems}
+        items={items}
         className={styles.NavBar}
         user={user}
         cart={cart}
         location={location} />
       <Routes>
         {/* client-side route that renders the component instance if the patch matches the url in the address bar */}
-        <Route path="/home" element={<Home className={styles.Home} setCart={setCart} />} />
+        <Route path="/home" element={<Home items={items} className={styles.Home} setCart={setCart} />} />
         <Route path="/shop" element={<ShopPage className={styles.ShopPage} items={items} />} />
         <Route path="/itemdetails" element={<ItemDetails />} />
         <Route path="/account" element={<AccountPage className={styles.AccountPage} user={user} setUser={setUser} location={location} />} />

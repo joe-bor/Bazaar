@@ -4,6 +4,8 @@ import { Link } from 'react-router-dom'
 import SearchBar from '../SearchBar/SearchBar.js'
 
 export default function NavBar({
+    setFilteredItems,
+    filteredItems,
     user,
     setUser,
     cart,
