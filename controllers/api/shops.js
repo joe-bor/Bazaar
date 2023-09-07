@@ -1,7 +1,7 @@
 const Shop = require('../../models/shop')
 const Item = require('../../models/item')
 const Category = require('../../models/category')
-const cloudinary = require('../../src/utilities/cloudinary')
+const cloudinary = require('../../config/cloudinary')
 /* -----shop controllers-----*/
 
 // Create a new shop

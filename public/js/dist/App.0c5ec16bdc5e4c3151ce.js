@@ -80,102 +80,39 @@ function AuthModal() {
 /* harmony export */ __webpack_require__.d(__webpack_exports__, {
 /* harmony export */   "default": () => (/* binding */ CategorySection)
 /* harmony export */ });
-/* harmony import */ var react_router_dom__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! react-router-dom */ "./node_modules/react-router-dom/dist/index.js");
+/* harmony import */ var react_router_dom__WEBPACK_IMPORTED_MODULE_3__ = __webpack_require__(/*! react-router-dom */ "./node_modules/react-router-dom/dist/index.js");
 /* harmony import */ var _ProductList_ProductList__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! ../ProductList/ProductList */ "./src/components/ProductList/ProductList.js");
 /* harmony import */ var _CategorySection_module_scss__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! ./CategorySection.module.scss */ "./src/components/CategorySection/CategorySection.module.scss");
+/* harmony import */ var react__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! react */ "./node_modules/react/index.js");
+/* harmony import */ var react__WEBPACK_IMPORTED_MODULE_2___default = /*#__PURE__*/__webpack_require__.n(react__WEBPACK_IMPORTED_MODULE_2__);
 /* provided dependency */ var React = __webpack_require__(/*! react */ "./node_modules/react/index.js");
+
 
 
 
 
 function CategorySection(_ref) {
   let {
+    items,
     category,
     setActiveCat
   } = _ref;
   // make an API call to the DB and query for all items that has the category === prop.category
-  let allItems = [{
-    "_id": "64f016dd23f32a31472821e0",
-    "name": "Huawei P30",
-    "price": 499,
-    "reviews": [],
-    "description": "Huawei’s re-badged P30 Pro New Edition was officially unveiled yesterday in Germany and now the device has made its way to the UK.",
-    "category": {
-      "_id": "64f016d923f32a3147282196",
-      "name": "smartphones",
-      "sortOrder": 10,
-      "__v": 0
-    },
-    "createdAt": "2023-08-31T04:28:13.224Z",
-    "updatedAt": "2023-08-31T04:28:13.224Z",
-    "__v": 0
-  }, {
-    "_id": "64f016dc23f32a31472821d8",
-    "name": "IPhone 9",
-    "price": 549,
-    "reviews": [],
-    "description": "An apple mobile which is nothing like apple",
-    "category": {
-      "_id": "64f016d923f32a3147282196",
-      "name": "smartphones",
-      "sortOrder": 10,
-      "__v": 0
-    },
-    "createdAt": "2023-08-31T04:28:12.798Z",
-    "updatedAt": "2023-08-31T04:28:12.798Z",
-    "__v": 0
-  }, {
-    "_id": "64f016dc23f32a31472821da",
-    "name": "IPhone X",
-    "price": 899,
-    "reviews": [],
-    "description": "SIM-Free, Model A19211 6.5-inch Super Retina HD display with OLED technology A12 Bionic chip with ...",
-    "category": {
-      "_id": "64f016d923f32a3147282196",
-      "name": "smartphones",
-      "sortOrder": 10,
-      "__v": 0
-    },
-    "createdAt": "2023-08-31T04:28:12.893Z",
-    "updatedAt": "2023-08-31T04:28:12.893Z",
-    "__v": 0
-  }, {
-    "_id": "64f016dd23f32a31472821de",
-    "name": "OPPOF19",
-    "price": 280,
-    "reviews": [],
-    "description": "OPPO F19 is officially announced on April 2021.",
-    "category": {
-      "_id": "64f016d923f32a3147282196",
-      "name": "smartphones",
-      "sortOrder": 10,
-      "__v": 0
-    },
-    "createdAt": "2023-08-31T04:28:13.092Z",
-    "updatedAt": "2023-08-31T04:28:13.092Z",
-    "__v": 0
-  }, {
-    "_id": "64f016dc23f32a31472821dc",
-    "name": "Samsung Universe 9",
-    "price": 1249,
-    "reviews": [],
-    "description": "Samsung's new variant which goes beyond Galaxy to the Universe",
-    "category": {
-      "_id": "64f016d923f32a3147282196",
-      "name": "smartphones",
-      "sortOrder": 10,
-      "__v": 0
-    },
-    "createdAt": "2023-08-31T04:28:12.995Z",
-    "updatedAt": "2023-08-31T04:28:12.995Z",
-    "__v": 0
-  }];
-  //   async () => allItems = await itemsAPI.getAll() //! uncomment and delete allItems init value
-  let filteredItems = allItems.filter(item => item.category.name === category);
-  let firstFiveItems = filteredItems.splice(0, 5);
+
+  const [firstFiveItems, setFirstFiveItems] = (0,react__WEBPACK_IMPORTED_MODULE_2__.useState)([]);
+  (0,react__WEBPACK_IMPORTED_MODULE_2__.useEffect)(() => {
+    if (items && Array.isArray(items)) {
+      const copy = [...items];
+      const filter = copy.filter(item => item.category.name === category);
+      console.log(filter);
+      setFirstFiveItems(copy.filter(item => item.category.name === category).slice(0, 5));
+      console.log(filter.slice(0, 5));
+    }
+    console.log(items);
+  }, [items]);
   return /*#__PURE__*/React.createElement("div", {
     className: _CategorySection_module_scss__WEBPACK_IMPORTED_MODULE_1__["default"].categoryRow
-  }, category, /*#__PURE__*/React.createElement(react_router_dom__WEBPACK_IMPORTED_MODULE_2__.Link, {
+  }, category, /*#__PURE__*/React.createElement(react_router_dom__WEBPACK_IMPORTED_MODULE_3__.Link, {
     to: "/shop",
     onClick: e => setActiveCat(category)
   }, "\u27A1"), /*#__PURE__*/React.createElement(_ProductList_ProductList__WEBPACK_IMPORTED_MODULE_0__["default"], {
@@ -318,6 +255,8 @@ function LoginForm() {
 
 function NavBar(_ref) {
   let {
+    setFilteredItems,
+    filteredItems,
     user,
     setUser,
     cart,
@@ -482,7 +421,6 @@ function ProductList(_ref) {
   let {
     productItems
   } = _ref;
-  console.log(productItems);
   const items = productItems.map(item => /*#__PURE__*/React.createElement(_productListItem_productListItem__WEBPACK_IMPORTED_MODULE_1__["default"], {
     className: _ProductList_module_scss__WEBPACK_IMPORTED_MODULE_0__["default"].ProductListItem,
     key: item._id,
@@ -765,8 +703,9 @@ function _asyncToGenerator(fn) { return function () { var self = this, args = ar
 
 function App() {
   const [user, setUser] = (0,react__WEBPACK_IMPORTED_MODULE_0__.useState)((0,_utilities_users_service__WEBPACK_IMPORTED_MODULE_14__.getUser)());
-  const [cart, setCart] = (0,react__WEBPACK_IMPORTED_MODULE_0__.useState)(null);
-  const [items, setItems] = (0,react__WEBPACK_IMPORTED_MODULE_0__.useState)(null);
+  const [cart, setCart] = (0,react__WEBPACK_IMPORTED_MODULE_0__.useState)([]);
+  const [items, setItems] = (0,react__WEBPACK_IMPORTED_MODULE_0__.useState)([]);
+  const [filteredItems, setFilteredItems] = (0,react__WEBPACK_IMPORTED_MODULE_0__.useState)([]);
   const navigate = (0,react_router_dom__WEBPACK_IMPORTED_MODULE_15__.useNavigate)();
   let location = (0,react_router_dom__WEBPACK_IMPORTED_MODULE_15__.useLocation)();
 
@@ -813,7 +752,10 @@ function App() {
   }
   return /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default().createElement("main", {
     className: _App_module_scss__WEBPACK_IMPORTED_MODULE_1__["default"].App
-  }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default().createElement(_components_AuthModal_AuthModal__WEBPACK_IMPORTED_MODULE_13__["default"], null), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default().createElement(_Home_Home__WEBPACK_IMPORTED_MODULE_2__["default"], null), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default().createElement(_components_NavBar_NavBar__WEBPACK_IMPORTED_MODULE_12__["default"], {
+  }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default().createElement(_components_AuthModal_AuthModal__WEBPACK_IMPORTED_MODULE_13__["default"], null), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default().createElement(_components_NavBar_NavBar__WEBPACK_IMPORTED_MODULE_12__["default"], {
+    filteredItems: filteredItems,
+    setFilteredItems: setFilteredItems,
+    items: items,
     className: _App_module_scss__WEBPACK_IMPORTED_MODULE_1__["default"].NavBar,
     user: user,
     cart: cart,
@@ -821,6 +763,7 @@ function App() {
   }), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default().createElement(react_router_dom__WEBPACK_IMPORTED_MODULE_15__.Routes, null, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default().createElement(react_router_dom__WEBPACK_IMPORTED_MODULE_15__.Route, {
     path: "/home",
     element: /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default().createElement(_Home_Home__WEBPACK_IMPORTED_MODULE_2__["default"], {
+      items: items,
       className: _App_module_scss__WEBPACK_IMPORTED_MODULE_1__["default"].Home,
       setCart: setCart
     })
@@ -940,30 +883,39 @@ function Favorites() {
 /* harmony export */ __webpack_require__.d(__webpack_exports__, {
 /* harmony export */   "default": () => (__WEBPACK_DEFAULT_EXPORT__)
 /* harmony export */ });
-/* harmony import */ var react_router_dom__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! react-router-dom */ "./node_modules/react-router-dom/dist/index.js");
+/* harmony import */ var react_router_dom__WEBPACK_IMPORTED_MODULE_3__ = __webpack_require__(/*! react-router-dom */ "./node_modules/react-router-dom/dist/index.js");
 /* harmony import */ var _components_CategorySection_CategorySection__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! ../../components/CategorySection/CategorySection */ "./src/components/CategorySection/CategorySection.js");
 /* harmony import */ var _Home_module_scss__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! ./Home.module.scss */ "./src/pages/Home/Home.module.scss");
+/* harmony import */ var react__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! react */ "./node_modules/react/index.js");
+/* harmony import */ var react__WEBPACK_IMPORTED_MODULE_2___default = /*#__PURE__*/__webpack_require__.n(react__WEBPACK_IMPORTED_MODULE_2__);
 /* provided dependency */ var React = __webpack_require__(/*! react */ "./node_modules/react/index.js");
 
 
 
-function Home() {
+
+function Home(_ref) {
+  let {
+    items
+  } = _ref;
+  console.log(items);
+
   /* --- Should be passed down as props --- */
   const categories = [
   //iterate and create Component to for each category ( which will house the items of said category)
   "smartphones", "laptops", "fragrances", "skincare", "groceries", "home-decoration", "furniture", "tops", "womens-dresses", "womens-shoes", "mens-shirts", "mens-shoes", "mens-watches", "womens-watches", "womens-bags", "womens-jewellery", "sunglasses", "automotive", "motorcycle", "lighting"];
-  let setActiveCat; //state setter - triggered when user clicks `see more` on the home page
+  const [activeCat, setActiveCat] = (0,react__WEBPACK_IMPORTED_MODULE_2__.useState)(''); //state setter - triggered when user clicks `see more` on the home page
   /* --------------------------- */
 
   return /*#__PURE__*/React.createElement("main", {
     className: _Home_module_scss__WEBPACK_IMPORTED_MODULE_1__["default"].Home
   }, /*#__PURE__*/React.createElement("div", {
     className: _Home_module_scss__WEBPACK_IMPORTED_MODULE_1__["default"].hero
-  }, /*#__PURE__*/React.createElement("p", null, "Shop now"), /*#__PURE__*/React.createElement("p", null, "and explore"), /*#__PURE__*/React.createElement(react_router_dom__WEBPACK_IMPORTED_MODULE_2__.Link, {
+  }, /*#__PURE__*/React.createElement("p", null, "Shop now"), /*#__PURE__*/React.createElement("p", null, "and explore"), /*#__PURE__*/React.createElement(react_router_dom__WEBPACK_IMPORTED_MODULE_3__.Link, {
     to: "shop"
   }, "See More")), /*#__PURE__*/React.createElement("div", {
     className: _Home_module_scss__WEBPACK_IMPORTED_MODULE_1__["default"].itemGrid
   }, categories.map(category => /*#__PURE__*/React.createElement(_components_CategorySection_CategorySection__WEBPACK_IMPORTED_MODULE_0__["default"], {
+    items: items,
     key: category,
     category: category,
     setActiveCat: setActiveCat
@@ -1166,10 +1118,10 @@ function _sendRequest() {
 /***/ ((__unused_webpack_module, __webpack_exports__, __webpack_require__) => {
 
 /* harmony export */ __webpack_require__.d(__webpack_exports__, {
+/* harmony export */   editUserInfo: () => (/* binding */ editUserInfo),
 /* harmony export */   login: () => (/* binding */ login),
 /* harmony export */   signUp: () => (/* binding */ signUp)
 /* harmony export */ });
-/* unused harmony export editUserInfo */
 /* harmony import */ var _send_request__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! ./send-request */ "./src/utilities/send-request.js");
 
 const BASE_URL = '/api/users';
@@ -1234,7 +1186,7 @@ export default async function sendRequest(url, method = 'GET', payload = null) {
 /* harmony export */   getUser: () => (/* binding */ getUser),
 /* harmony export */   signUp: () => (/* binding */ signUp)
 /* harmony export */ });
-/* unused harmony exports login, logOut */
+/* unused harmony exports updateUser, login, logOut */
 /* harmony import */ var _users_api__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! ./users-api */ "./src/utilities/users-api.js");
 function asyncGeneratorStep(gen, resolve, reject, _next, _throw, key, arg) { try { var info = gen[key](arg); var value = info.value; } catch (error) { reject(error); return; } if (info.done) { resolve(value); } else { Promise.resolve(value).then(_next, _throw); } }
 function _asyncToGenerator(fn) { return function () { var self = this, args = arguments; return new Promise(function (resolve, reject) { var gen = fn.apply(self, args); function _next(value) { asyncGeneratorStep(gen, resolve, reject, _next, _throw, "next", value); } function _throw(err) { asyncGeneratorStep(gen, resolve, reject, _next, _throw, "throw", err); } _next(undefined); }); }; }
@@ -1254,7 +1206,22 @@ function _signUp() {
   });
   return _signUp.apply(this, arguments);
 }
-function login(_x2) {
+function updateUser(_x2) {
+  return _updateUser.apply(this, arguments);
+}
+function _updateUser() {
+  _updateUser = _asyncToGenerator(function* (updatedUserData) {
+    // get a new token with updated user info
+    const token = yield _users_api__WEBPACK_IMPORTED_MODULE_0__.editUserInfo(updatedUserData);
+    // remove the current token from localStorage
+    localStorage.removeItem('token');
+    // save new token to localStorage
+    localStorage.setItem('token', token);
+    return getUser();
+  });
+  return _updateUser.apply(this, arguments);
+}
+function login(_x3) {
   return _login.apply(this, arguments);
 }
 function _login() {

@@ -10,6 +10,16 @@ export async function signUp(userData) {
   return getUser();
 }
 
+export async function updateUser(updatedUserData) {
+  // get a new token with updated user info
+  const token = await usersAPI.editUserInfo(updatedUserData)
+  // remove the current token from localStorage
+  localStorage.removeItem('token');
+  // save new token to localStorage
+  localStorage.setItem('token', token)
+  return getUser()
+}
+
 export async function login(credentials) {
   const token = await usersAPI.login(credentials);
   // Persist the token to localStorage
