@@ -2,6 +2,7 @@ import styles from './ProductList.module.scss'
 import ProductListItem from '../productListItem/productListItem'
 
 export default function ProductList({ productItems }) {
+  console.log(productItems)
   const items = productItems.map(item =>
     <ProductListItem
       className={styles.ProductListItem}
