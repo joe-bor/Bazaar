@@ -77,12 +77,11 @@ exports.addItem = async (req, res) => {
             return res.status(404).json({ error: 'Shop not found' })
         }
         
-        const cloudinaryImageData = await cloudinary.uploader.upload(req.body.imageUrl, { public_id: req.body.publicId }, function(error, result) { console.log('testing ' + error + result) })
         const category = await Category.findOne({ name: req.body.category })
         console.log('category = ' + category)
         const item = await Item.create({
             name: req.body.name,
-            imageUrl: cloudinaryImageData.secure_url,
+            imageUrl: req.body.imageUrl,
             publicId: req.body.publicId,
             price: req.body.price,
             description: req.body.description,
