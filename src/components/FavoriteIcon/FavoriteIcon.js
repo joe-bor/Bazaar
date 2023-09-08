@@ -1,11 +1,11 @@
 import styles from './FavoriteIcon.module.scss'
-import favIcon from '../../assets/images/fav-heart.svg'
+import favHeart from '../../assets/images/fav-heart.svg'
 
 
 export default function FavoriteIcon(props) {
   return (
     <div className={styles.FavoriteIcon}>
-      <img src={favIcon} alt="Favorite Icon" />
+      <img src={favHeart} alt="Favorite Icon" />
     </div>
   )
 }

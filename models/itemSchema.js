@@ -13,14 +13,15 @@ const itemSchema = new Schema({
             return toString
         }
     },
+    images: [{ type: String }],
     imageUrl: {
-        required: true,
+        // required: true,
         type: String
     },
     publicId: {
-        required: true,
+        // required: true,
         type: String,
-        unique: true
+        // unique: true
     },
     price: {
         required: true,

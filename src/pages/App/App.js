@@ -80,10 +80,10 @@ export default function App() {
         {/* client-side route that renders the component instance if the patch matches the url in the address bar */}
         <Route path="/home" element={<Home items={items} className={styles.Home} setCart={setCart} />} />
         <Route path="/shop" element={<ShopPage className={styles.ShopPage} items={items} />} />
-        <Route path="/itemdetails" element={<ItemDetails />} />
+        <Route path="/itemdetails/:itemId" element={<ItemDetails setCart={setCart} />} />
         <Route path="/account" element={<AccountPage className={styles.AccountPage} user={user} setUser={setUser} location={location} />} />
         <Route path="/favorites" element={<Favorites />} />
-        <Route path="/cart" element={<Cart className={styles.Cart} />} />
+        <Route path="/cart" element={<Cart className={styles.Cart} cart={cart} setCart={setCart} />} />
         <Route path="/checkout" element={<Checkout className={styles.Checkout} />} />
         <Route path="/orderhistory" element={<OrderHistory user={user} setUser={setUser} location={location} />} />
         <Route path="/sellershop" element={<SellerShop user={user} setUser={setUser} />} />
