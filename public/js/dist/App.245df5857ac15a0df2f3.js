@@ -21,53 +21,40 @@
 
 
 
-function AuthModal() {
+function AuthModal(_ref) {
+  let {
+    setUser,
+    isAuthModalOpen,
+    toggleAuthModal,
+    handleCloseAuthModal
+  } = _ref;
   /* --- State --- */
   const modalRef = (0,react__WEBPACK_IMPORTED_MODULE_0__.useRef)();
-  const [isModalOpen, setIsModalOpen] = (0,react__WEBPACK_IMPORTED_MODULE_0__.useState)(false);
   const [showSignUp, setShowSignUp] = (0,react__WEBPACK_IMPORTED_MODULE_0__.useState)(true);
-
-  /* --- Functions --- */
-  const toggleModal = () => {
-    // if (isModalOpen){
-    //   modalRef.current.close()
-    //   setIsModalOpen(false)
-    // } else {
-    //   modalRef.current.showModal()
-    //   setIsModalOpen(true)
-    // }
-
-    setIsModalOpen(!isModalOpen);
-    console.log('Invoked toggleModal()');
-    console.log(isModalOpen);
-  };
-  const handleCloseModal = () => {
-    setIsModalOpen(false);
-    console.log('handleCloseModal invoked');
-  };
   const toggleModalContents = () => {
     setShowSignUp(!showSignUp);
   };
   (0,react__WEBPACK_IMPORTED_MODULE_0__.useEffect)(() => {
-    isModalOpen ? modalRef.current.showModal() : modalRef.current.close();
-    console.log(isModalOpen);
-  }, [isModalOpen]);
+    isAuthModalOpen ? modalRef.current.showModal() : modalRef.current.close();
+  }, [isAuthModalOpen]);
   return /*#__PURE__*/React.createElement(React.Fragment, null, /*#__PURE__*/React.createElement("button", {
-    onClick: toggleModal
-  }, " ", isModalOpen ? 'Close Modal' : 'Open Modal', " "), " //! DELETE when toggleModal has been anchored to the right element", /*#__PURE__*/React.createElement("dialog", {
+    onClick: toggleAuthModal
+  }, " ", isAuthModalOpen ? 'Close Modal' : 'Open Modal', " "), " //! needs to be anchored on login button in nav", /*#__PURE__*/React.createElement("dialog", {
     className: _AuthModal_module_scss__WEBPACK_IMPORTED_MODULE_2__["default"].dialog,
     ref: modalRef,
-    onClose: handleCloseModal
+    onClose: handleCloseAuthModal
   }, /*#__PURE__*/React.createElement("button", {
-    onClick: handleCloseModal
-  }, "X"), showSignUp ? /*#__PURE__*/React.createElement(React.Fragment, null, /*#__PURE__*/React.createElement(_SignUpForm_SignUpForm__WEBPACK_IMPORTED_MODULE_1__["default"], null), /*#__PURE__*/React.createElement("p", null, "Already a member? ", /*#__PURE__*/React.createElement("strong", {
+    onClick: handleCloseAuthModal
+  }, "X"), showSignUp ? /*#__PURE__*/React.createElement(React.Fragment, null, /*#__PURE__*/React.createElement(_SignUpForm_SignUpForm__WEBPACK_IMPORTED_MODULE_1__["default"], {
+    setUser: setUser
+  }), /*#__PURE__*/React.createElement("p", null, "Already a member? ", /*#__PURE__*/React.createElement("strong", {
     onClick: toggleModalContents
-  }, "Login"))) : /*#__PURE__*/React.createElement(React.Fragment, null, /*#__PURE__*/React.createElement(_LoginForm_LoginForm__WEBPACK_IMPORTED_MODULE_3__["default"], null), /*#__PURE__*/React.createElement("p", null, "Don't have an account? ", /*#__PURE__*/React.createElement("strong", {
+  }, "Login"))) : /*#__PURE__*/React.createElement(React.Fragment, null, /*#__PURE__*/React.createElement(_LoginForm_LoginForm__WEBPACK_IMPORTED_MODULE_3__["default"], {
+    setUser: setUser
+  }), /*#__PURE__*/React.createElement("p", null, "Don't have an account? ", /*#__PURE__*/React.createElement("strong", {
     onClick: toggleModalContents
   }, "Sign Up")))));
 }
-
-//ADD: close dialog w/ button || click outside
 
 /***/ }),
 
@@ -828,7 +815,9 @@ function App() {
   }
   return /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default().createElement("main", {
     className: _App_module_scss__WEBPACK_IMPORTED_MODULE_1__["default"].App
-  }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default().createElement(_components_AuthModal_AuthModal__WEBPACK_IMPORTED_MODULE_13__["default"], null), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default().createElement(_components_NavBar_NavBar__WEBPACK_IMPORTED_MODULE_12__["default"], {
+  }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default().createElement(_components_AuthModal_AuthModal__WEBPACK_IMPORTED_MODULE_13__["default"], {
+    setUser: setUser
+  }), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default().createElement(_components_NavBar_NavBar__WEBPACK_IMPORTED_MODULE_12__["default"], {
     filteredItems: filteredItems,
     setFilteredItems: setFilteredItems,
     items: items,

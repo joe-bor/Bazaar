@@ -24,6 +24,33 @@ export default function App() {
   const [cart, setCart] = useState([])
   const [items, setItems] = useState([])
   const [filteredItems, setFilteredItems] = useState([])
+  const [isAuthModalOpen, setIsAuthModalOpen] = useState(false)
+  const [activeCat, setActiveCat] = useState('')
+
+  //! categories must either be derived from the items OR we can create a controller on the backend that fetches all categories
+  const categories = [
+    "smartphones",
+    "laptops",
+    "fragrances",
+    "skincare",
+    "groceries",
+    "home-decoration",
+    "furniture",
+    "tops",
+    "womens-dresses",
+    "womens-shoes",
+    "mens-shirts",
+    "mens-shoes",
+    "mens-watches",
+    "womens-watches",
+    "womens-bags",
+    "womens-jewellery",
+    "sunglasses",
+    "automotive",
+    "motorcycle",
+    "lighting"
+  ]
+
   const navigate = useNavigate()
   let location = useLocation()
 
@@ -42,7 +69,15 @@ export default function App() {
   }, [])
 
 
+  const toggleAuthModal = () => {
+    setIsAuthModalOpen(!isAuthModalOpen)
+    console.log('Invoked toggleModal()')
+  }
 
+  const handleCloseAuthModal = () => {
+    setIsAuthModalOpen(false)
+    console.log('handleCloseModal invoked')
+  }
 
   async function createGuestUser() {
     const guestUserData = {
@@ -67,7 +102,12 @@ export default function App() {
 
   return (
     <main className={styles.App}>
-      <AuthModal />
+      <AuthModal 
+      setUser={setUser}
+      isAuthModalOpen={isAuthModalOpen}
+      toggleAuthModal={toggleAuthModal}
+      handleCloseAuthModal={handleCloseAuthModal}
+       />
       <NavBar
         filteredItems={filteredItems}
         setFilteredItems={setFilteredItems}
@@ -78,7 +118,7 @@ export default function App() {
         location={location} />
       <Routes>
         {/* client-side route that renders the component instance if the patch matches the url in the address bar */}
-        <Route path="/home" element={<Home items={items} className={styles.Home} setCart={setCart} />} />
+        <Route path="/home" element={<Home items={items} className={styles.Home} categories={categories} setActiveCat={setActiveCat} setCart={setCart} />} />
         <Route path="/shop" element={<ShopPage className={styles.ShopPage} items={items} />} />
         <Route path="/itemdetails/:itemId" element={<ItemDetails setCart={setCart} />} />
         <Route path="/account" element={<AccountPage className={styles.AccountPage} user={user} setUser={setUser} location={location} />} />
