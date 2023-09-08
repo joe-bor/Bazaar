@@ -1,26 +1,27 @@
 import { useState, useEffect } from "react"
 import styles from './ReviewList.module.scss'
+import * as reviewsAPI from '../../utilities/reviews-api'
 
 function ReviewList({
-    item
+    itemId
 }) {
     const [reviews, setReviews] = useState([])
     useEffect(() => {
-        setReviews(fetch(`/api/reviews/${item._id}`).then(response => response.json()))
+        setReviews(reviewsAPI.getItemReviews(itemId))
     }, [])
-    
+
     return (
-        <div className={styles.ReviewList}> 
-            { reviews.length > 0 ? 
+        <div className={styles.ReviewList}>
+            {reviews.length > 0 ?
                 <>
-                {reviews.map(review => 
-                <ul className={styles.Review}>
-                    <li className={styles.reviewer}>{review.reviewer}</li>
-                    <li className={styles.starRating}>{review.starRating}</li>
-                    <li className={styles.review}>{review.review}</li>
-                </ul>)}
+                    {reviews.map(review =>
+                        <ul className={styles.Review}>
+                            <li className={styles.reviewer}>{review.reviewer}</li>
+                            <li className={styles.starRating}>{review.starRating}</li>
+                            <li className={styles.review}>{review.review}</li>
+                        </ul>)}
                 </>
-                : 
+                :
                 <p className={styles.empty}>There are no reviews for this product at this time.</p>
             }
         </div>
