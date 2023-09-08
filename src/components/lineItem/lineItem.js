@@ -1,10 +1,16 @@
 import styles from './LineItem.module.scss'
+import * as ordersAPI from '../../utilities/orders-api'
 
-export default function LineItem({ lineItem, isPaid, handleChangeQty }) {
+export default function LineItem({ lineItem, isPaid, setCart }) {
+  async function handleChangeQty(itemId, newQty) {
+    const updatedCart = await ordersAPI.setItemQtyInCart(itemId, newQty)
+    setCart(updatedCart)
+  }
+
   return (
     <div className={styles.LineItem}>
       <div className={styles.imgContainer}>
-        <img src={lineItem.item.imageURL} alt={lineItem.item.name} className={styles.itemImage} />
+        <img src={lineItem.item.images[0]} alt={lineItem.item.name} className={styles.itemImage} />
       </div>
       <div className={styles.itemDetails}>
         <div className={styles.itemInfo}>

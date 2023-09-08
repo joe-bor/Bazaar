@@ -39,11 +39,12 @@ orderSchema.virtual('orderId').get(function () {
 
 orderSchema.statics.getCart = function (userId) {
     // find all unpaid orders
-    const cart = this.find({ user: userId, isPaid: false })
+    const cart = this.find({ user: userId, isPaid: false }).populate({ path: 'shop', select: 'name' }).exec()
     // if no orders exist, create a new order
     if (!cart) {
         cart = this.create({ user: userId })
     }
+
 
     return cart
 }

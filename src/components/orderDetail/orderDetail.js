@@ -1,20 +1,21 @@
 import styles from './OrderDetail.module.scss'
 import LineItem from '../LineItem/LineItem'
 
-export default function OrderDetail({ order, handleChangeQty, location }) {
+export default function OrderDetail({ setCart, order, shopName, location }) {
   if (!order) return null
 
   const lineItems = order.lineItems.map(item =>
     <LineItem
       lineItem={item}
       isPaid={order.isPaid}
-      handleChangeQty={handleChangeQty}
       key={item._id}
+      setCart={setCart}
     />
   )
 
   return (
     <div className={styles.OrderDetail}>
+      <div>{shopName}</div>
       <div className='flex-ctr-ctr flex-col scroll-y'>
         {lineItems}
       </div>

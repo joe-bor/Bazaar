@@ -1,5 +1,10 @@
 import React from 'react'
 import { Link } from 'react-router-dom'
+import styles from './NavBar.module.scss'
+import userIcon from '../../assets/images/user-icon.svg'
+import cartIcon from '../../assets/images/cart-icon.svg'
+import favHeart from '../../assets/images/fav-heart.svg'
+
 
 import SearchBar from '../SearchBar/SearchBar.js'
 
@@ -49,19 +54,21 @@ export default function NavBar({
         { name: 'lighting', sortOrder: 200 }
     ]
     return (
-        <nav className="navbar">
-            <div className="navbar-logo">
-                <Link to="/">
-                    <img src="/img/logo.png" alt="logo" />
-                </Link>
+        <nav className={styles.NavBar}>
+            <div className={styles.topLine}>
+                <div className="navbar-logo">
+                    <Link to="/">
+                        <img src="./img/logo.png" alt="logo" />
+                    </Link>
+                </div>
+                <div className="navbar-search">
+                    <SearchBar searchTerm={searchTerm} setSearchTerm={setSearchTerm} />
+                </div>
             </div>
-            <div className="navbar-search">
-                <SearchBar searchTerm={searchTerm} setSearchTerm={setSearchTerm} />
-            </div>
-            <div className="navbar-categories">
+            <div className={styles.categories}>
                 <ul>
                     {categories.map((category, index) => (
-                        <li key={index}>
+                        <li key={index} className={styles.categoryName}>
                             <Link to={`/category/${category.name}`}>{category.name}</Link>
                         </li>
                     ))}
@@ -77,7 +84,7 @@ export default function NavBar({
                 <Link to="/cart">
                     <div>
                         <i className="cart"></i>
-                        <img src="public/img/Cart Icon.png" alt="cart" />
+                        <img src={cartIcon} alt="cart" />
                         {/* Display the cart count if items are in the cart */}
                         {cart?.length > 0 && (
                             <span className="cart-count">{cart.length}</span>
@@ -91,7 +98,7 @@ export default function NavBar({
                     </div>
                 </Link>
                 <div className="navbar-user">
-                    {isloggedIn ? (
+                    {user.name !== 'c186ec' ? (
                         //Display user profile info if logged in
                         <>
                             <img src={user.profileImage} alt="Profile" />
@@ -101,8 +108,7 @@ export default function NavBar({
                     ) : (
                         //Display "log in" if not logged in 
                         <>
-                            <img src="public/img/User Icon.png" alt="user" />
-                            <Link to="/login"></Link>
+                            <div>Log In</div>
                         </>
 
                     )}

@@ -1,0 +1,22 @@
+.NavBar {
+  display: flex;
+  width: 100vw;
+  flex-direction: column;
+  .topLine {
+    display: flex;
+    flex-direction: row;
+  }
+  .categories ul {
+    display: flex;
+    flex-direction: row;
+    justify-content: space-between;
+    align-items: flex-start;
+    flex-wrap: wrap;
+    margin: 0;
+    padding: 0;
+    .categoryName {
+      list-style: none;
+      padding: 0.2rem;
+    }
+  }
+}

@@ -17,6 +17,7 @@ import NavBar from '../../components/NavBar/NavBar';
 import { getUser, signUp } from '../../utilities/users-service';
 import AuthModal from '../../components/AuthModal/AuthModal'
 import * as ItemsAPI from '../../utilities/items-api'
+import * as ordersAPI from '../../utilities/orders-api'
 
 
 export default function App() {
@@ -42,7 +43,14 @@ export default function App() {
   }, [])
 
 
-
+  // automatically retreive cart
+  useEffect(() => {
+    async function getCartItems() {
+      const cart = await ordersAPI.getCart()
+      setCart(cart)
+    }
+    getCartItems()
+  }, [])
 
   async function createGuestUser() {
     const guestUserData = {
