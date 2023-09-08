@@ -4,6 +4,7 @@ import styles from './NavBar.module.scss'
 import userIcon from '../../assets/images/user-icon.svg'
 import cartIcon from '../../assets/images/cart-icon.svg'
 import favHeart from '../../assets/images/fav-heart.svg'
+import shopIcon from '../../assets/images/shop-icon.svg'
 
 
 import SearchBar from '../SearchBar/SearchBar.js'
@@ -22,7 +23,8 @@ export default function NavBar({
     searchTerm,
     setSearchTerm,
     setCategories,
-    isloggedIn
+    isloggedIn,
+    cartTotals
 
 
     // import { isloggedIn, user} from 
@@ -78,7 +80,7 @@ export default function NavBar({
                 <Link to="/favorites">
                     <div>
                         <i className="heart"></i>
-                        <img src="public/img/Favorite Heart.png" alt="heart" />
+                        <img src={favHeart} alt="heart" />
                     </div>
                 </Link>
                 <Link to="/cart">
@@ -87,21 +89,21 @@ export default function NavBar({
                         <img src={cartIcon} alt="cart" />
                         {/* Display the cart count if items are in the cart */}
                         {cart?.length > 0 && (
-                            <span className="cart-count">{cart.length}</span>
+                            <span className="cart-count">{cartTotals.totalItemQty}</span>
                         )}
                     </div>
                 </Link>
                 <Link to="/store">
                     <div>
                         <i className="store"></i>
-                        <img src="public/img/Store Icon.png" alt="store" />
+                        <img src={shopIcon} alt="store" />
                     </div>
                 </Link>
                 <div className="navbar-user">
                     {user.name !== 'c186ec' ? (
                         //Display user profile info if logged in
                         <>
-                            <img src={user.profileImage} alt="Profile" />
+                            <img src={user.profileImage ? user.profileImage : userIcon} alt="Profile" />
                             <span>{user.name}</span>
                             <Link to="/logout">Logout</Link>
                         </>

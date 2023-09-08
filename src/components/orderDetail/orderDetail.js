@@ -1,7 +1,7 @@
 import styles from './OrderDetail.module.scss'
 import LineItem from '../LineItem/LineItem'
 
-export default function OrderDetail({ setCart, order, shopName, location }) {
+export default function OrderDetail({ setCart, order, shopName }) {
   if (!order) return null
 
   const lineItems = order.lineItems.map(item =>

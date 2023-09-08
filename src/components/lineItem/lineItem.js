@@ -1,7 +1,10 @@
 import styles from './LineItem.module.scss'
+import { useLocation } from 'react-router-dom'
 import * as ordersAPI from '../../utilities/orders-api'
 
 export default function LineItem({ lineItem, isPaid, setCart }) {
+  const location = useLocation()
+
   async function handleChangeQty(itemId, newQty) {
     const updatedCart = await ordersAPI.setItemQtyInCart(itemId, newQty)
     setCart(updatedCart)
@@ -19,14 +22,14 @@ export default function LineItem({ lineItem, isPaid, setCart }) {
         </div>
         <div className={styles.qty} style={{ justifyContent: isPaid && 'center' }}>
           <div>
-            {!isPaid &&
+            {(!isPaid && location.pathname !== '/checkout') &&
               <button
                 className={styles.qtyBtn}
                 onClick={() => handleChangeQty(lineItem.item._id, lineItem.qty - 1)}
               >-</button>
             }
             <span className={isPaid ? styles.paid : ''}>{`${isPaid ? 'qty: ' : ''}${lineItem.qty}`}</span>
-            {!isPaid &&
+            {(!isPaid && location.pathname !== '/checkout') &&
               <button
                 className={styles.qtyBtn}
                 onClick={() => handleChangeQty(lineItem.item._id, lineItem.qty + 1)}
