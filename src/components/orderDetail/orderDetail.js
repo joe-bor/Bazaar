@@ -20,7 +20,7 @@ export default function OrderDetail({ setCart, order, shopName }) {
         {lineItems}
       </div>
       <div className={styles.totalQty}>{`Qty: ${order.totalQty}`}</div>
-      <div className={styles.totalPrice}>{`Total: ${order.orderTotal}`}</div>
+      <div className={styles.totalPrice}>{`Total: $${order.orderTotal}`}</div>
     </div >
   )
 }

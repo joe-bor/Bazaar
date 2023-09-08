@@ -109,7 +109,7 @@ export default function App() {
         <Route path="/favorites" element={<Favorites />} />
         <Route path="/cart" element={<Cart className={styles.Cart} cart={cart} setCart={setCart} cartTotals={cartTotals} />} />
         <Route path="/checkout" element={<Checkout className={styles.Checkout} cart={cart} setCart={setCart} cartTotals={cartTotals} />} />
-        <Route path="/orderhistory" element={<OrderHistory user={user} setUser={setUser} location={location} cartTotals={cartTotals} />} />
+        <Route path="/orderhistory" element={<OrderHistory user={user} setUser={setUser} />} />
         <Route path="/sellershop" element={<SellerShop user={user} setUser={setUser} />} />
         <Route path="/shopmgmt" element={<ShopMgmt user={user} setUser={setUser} />} />
         {/* redirect to /home if path in address bar hasn't matched a <Route> above */}
