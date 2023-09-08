@@ -534,7 +534,11 @@ function OrderDetail(_ref) {
     className: _OrderDetail_module_scss__WEBPACK_IMPORTED_MODULE_0__["default"].OrderDetail
   }, /*#__PURE__*/React.createElement("div", null, shopName), /*#__PURE__*/React.createElement("div", {
     className: "flex-ctr-ctr flex-col scroll-y"
-  }, lineItems));
+  }, lineItems), /*#__PURE__*/React.createElement("div", {
+    className: _OrderDetail_module_scss__WEBPACK_IMPORTED_MODULE_0__["default"].totalQty
+  }, "Qty: ".concat(order.totalQty)), /*#__PURE__*/React.createElement("div", {
+    className: _OrderDetail_module_scss__WEBPACK_IMPORTED_MODULE_0__["default"].totalPrice
+  }, "Total: ".concat(order.orderTotal)));
 }
 
 /***/ }),
@@ -1043,9 +1047,19 @@ function App() {
 /* harmony export */ __webpack_require__.d(__webpack_exports__, {
 /* harmony export */   "default": () => (/* binding */ Cart)
 /* harmony export */ });
-/* harmony import */ var _components_OrderDetail_OrderDetail__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! ../../components/OrderDetail/OrderDetail */ "./src/components/OrderDetail/OrderDetail.js");
-/* harmony import */ var _Cart_module_scss__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! ./Cart.module.scss */ "./src/pages/Cart/Cart.module.scss");
+/* harmony import */ var react__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! react */ "./node_modules/react/index.js");
+/* harmony import */ var react__WEBPACK_IMPORTED_MODULE_0___default = /*#__PURE__*/__webpack_require__.n(react__WEBPACK_IMPORTED_MODULE_0__);
+/* harmony import */ var _components_OrderDetail_OrderDetail__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! ../../components/OrderDetail/OrderDetail */ "./src/components/OrderDetail/OrderDetail.js");
+/* harmony import */ var _Cart_module_scss__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! ./Cart.module.scss */ "./src/pages/Cart/Cart.module.scss");
+/* harmony import */ var react_router_dom__WEBPACK_IMPORTED_MODULE_3__ = __webpack_require__(/*! react-router-dom */ "./node_modules/react-router/dist/index.js");
 /* provided dependency */ var React = __webpack_require__(/*! react */ "./node_modules/react/index.js");
+function ownKeys(object, enumerableOnly) { var keys = Object.keys(object); if (Object.getOwnPropertySymbols) { var symbols = Object.getOwnPropertySymbols(object); enumerableOnly && (symbols = symbols.filter(function (sym) { return Object.getOwnPropertyDescriptor(object, sym).enumerable; })), keys.push.apply(keys, symbols); } return keys; }
+function _objectSpread(target) { for (var i = 1; i < arguments.length; i++) { var source = null != arguments[i] ? arguments[i] : {}; i % 2 ? ownKeys(Object(source), !0).forEach(function (key) { _defineProperty(target, key, source[key]); }) : Object.getOwnPropertyDescriptors ? Object.defineProperties(target, Object.getOwnPropertyDescriptors(source)) : ownKeys(Object(source)).forEach(function (key) { Object.defineProperty(target, key, Object.getOwnPropertyDescriptor(source, key)); }); } return target; }
+function _defineProperty(obj, key, value) { key = _toPropertyKey(key); if (key in obj) { Object.defineProperty(obj, key, { value: value, enumerable: true, configurable: true, writable: true }); } else { obj[key] = value; } return obj; }
+function _toPropertyKey(arg) { var key = _toPrimitive(arg, "string"); return typeof key === "symbol" ? key : String(key); }
+function _toPrimitive(input, hint) { if (typeof input !== "object" || input === null) return input; var prim = input[Symbol.toPrimitive]; if (prim !== undefined) { var res = prim.call(input, hint || "default"); if (typeof res !== "object") return res; throw new TypeError("@@toPrimitive must return a primitive value."); } return (hint === "string" ? String : Number)(input); }
+
+
 
 
 function Cart(_ref) {
@@ -1053,20 +1067,42 @@ function Cart(_ref) {
     cart,
     setCart
   } = _ref;
+  const navigate = (0,react_router_dom__WEBPACK_IMPORTED_MODULE_3__.useNavigate)();
   if (!cart) return null;
-  const orders = cart.map(order => /*#__PURE__*/React.createElement(_components_OrderDetail_OrderDetail__WEBPACK_IMPORTED_MODULE_0__["default"], {
+  const [cartTotals, setCartTotals] = (0,react__WEBPACK_IMPORTED_MODULE_0__.useState)({
+    totalItemQty: 0,
+    totalPrice: 0
+  });
+  const orders = cart.map(order => /*#__PURE__*/React.createElement(_components_OrderDetail_OrderDetail__WEBPACK_IMPORTED_MODULE_1__["default"], {
     order: order,
     setCart: setCart,
     key: order._id,
     shopName: order.shop.name
   }));
+  (0,react__WEBPACK_IMPORTED_MODULE_0__.useEffect)(() => {
+    let totals = _objectSpread({}, cartTotals);
+    cart.forEach(order => {
+      totals.totalItemQty += order.totalQty;
+      totals.totalPrice += order.orderTotal;
+    });
+    setCartTotals(totals);
+  }, [cart]);
+  function handleGoToCheckout() {
+    navigate('/checkout');
+  }
   return /*#__PURE__*/React.createElement("div", {
-    className: _Cart_module_scss__WEBPACK_IMPORTED_MODULE_1__["default"].Cart
+    className: _Cart_module_scss__WEBPACK_IMPORTED_MODULE_2__["default"].Cart
   }, /*#__PURE__*/React.createElement("div", {
-    className: "".concat(_Cart_module_scss__WEBPACK_IMPORTED_MODULE_1__["default"].cartOrders, " flex-ctr-ctr flex-col scroll-y")
+    className: "".concat(_Cart_module_scss__WEBPACK_IMPORTED_MODULE_2__["default"].cartOrders, " flex-ctr-ctr flex-col scroll-y")
   }, orders), /*#__PURE__*/React.createElement("div", {
-    className: _Cart_module_scss__WEBPACK_IMPORTED_MODULE_1__["default"].cartSummary
-  }, /*#__PURE__*/React.createElement("button", null, "Go To Checkout")));
+    className: _Cart_module_scss__WEBPACK_IMPORTED_MODULE_2__["default"].cartSummary
+  }, /*#__PURE__*/React.createElement("div", {
+    className: _Cart_module_scss__WEBPACK_IMPORTED_MODULE_2__["default"].totalItemQty
+  }, "Qty: ".concat(cartTotals === null || cartTotals === void 0 ? void 0 : cartTotals.totalItemQty)), /*#__PURE__*/React.createElement("div", {
+    className: _Cart_module_scss__WEBPACK_IMPORTED_MODULE_2__["default"].totalPrice
+  }, "Total: ".concat(cartTotals === null || cartTotals === void 0 ? void 0 : cartTotals.totalPrice)), /*#__PURE__*/React.createElement("button", {
+    onClick: handleGoToCheckout
+  }, "Go To Checkout")));
 }
 
 /***/ }),

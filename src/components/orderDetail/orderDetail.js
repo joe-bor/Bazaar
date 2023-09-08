@@ -19,6 +19,8 @@ export default function OrderDetail({ setCart, order, shopName, location }) {
       <div className='flex-ctr-ctr flex-col scroll-y'>
         {lineItems}
       </div>
+      <div className={styles.totalQty}>{`Qty: ${order.totalQty}`}</div>
+      <div className={styles.totalPrice}>{`Total: ${order.orderTotal}`}</div>
     </div >
   )
 }
