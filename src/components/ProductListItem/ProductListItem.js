@@ -1,8 +1,10 @@
 import FavoriteIcon from '../FavoriteIcon/FavoriteIcon'
 import styles from './ProductListItem.module.scss'
 import { useNavigate } from 'react-router-dom'
+import { addItemToFavorites } from '../../utilities/users-service';
+import favHeart from '../../assets/images/fav-heart.svg'
 
-export default function ProductListItem({ productItem }) {
+export default function ProductListItem({ productItem, user, setUser }) {
 
   const navigate = useNavigate()
 
@@ -10,17 +12,23 @@ export default function ProductListItem({ productItem }) {
     navigate(`/itemdetails/${productItem._id}`)
   }
 
+  async function handleFavClick() {
+    const updatedUser = await addItemToFavorites(user._id, productItem._id)
+    setUser(updatedUser)
+  }
+
   return (
-    <div className={styles.ProductListItem} onClick={handleClick}>
+    <div className={styles.ProductListItem} >
       <div className={styles.imageContainer}>
         {/* 🟥 need a way to show multiple images 🟥 */}
-        <img className={styles.itemImage} src={productItem.images[0]}></img>
+        <img className={styles.itemImage} src={productItem.images[0]} onClick={handleClick}></img>
         {/* 🟥 add favorite button to show on hover 🟥 */}
-        <FavoriteIcon className={styles.FavoriteIcon} />
+        <button onClick={handleFavClick}><img src={favHeart} /></button>
+        <FavoriteIcon className={styles.FavoriteIcon} onClick={handleFavClick} />
       </div>
       <div className={styles.itemInfo}>
-        <div className={styles.name}>{productItem.name}</div>
-        <div className={styles.price}>${productItem.price.toFixed(2)}</div>
+        <div className={styles.name} onClick={handleClick}>{productItem.name} </div>
+        <div className={styles.price} onClick={handleClick}>${productItem.price.toFixed(2)}</div>
       </div>
     </div>
   )

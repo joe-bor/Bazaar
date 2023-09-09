@@ -28,8 +28,7 @@ async function addToCart(req, res) {
         // find the item being added to the cart
         const item = await Item.findById(req.params.id)
         // filter orders -> order shop = item shop
-        let order = cart.find((order) => order.shop === item.shop)
-        console.log(order)
+        let order = cart.find((order) => order.shop._id.equals(item.shop))
         // if order from shop doesn't exist, create one
         if (!order) {
             order = await Order.create({ user: req.user._id, shop: item.shop })
@@ -48,11 +47,13 @@ async function setItemQtyInCart(req, res) {
         // find all the user's unpaid orders
         const cart = await Order.getCart(req.user._id);
         // find the item being adjusted
-        const item = await Item.findById(req.params.id)
+        const item = await Item.findById(req.body.itemId)
         // filter orders -> order shop = item shop
-        const order = cart.find((order) => order.shop === item.shop)
-
+        const order = cart.find((order) => order.shop._id.equals(item.shop))
         await order.setItemQty(req.body.itemId, req.body.newQty);
+        if (order.lineItems.length <= 0) {
+            order.deleteOne()
+        }
         res.status(200).json(cart);
     } catch (e) {
         res.status(400).json({ msg: e.message });

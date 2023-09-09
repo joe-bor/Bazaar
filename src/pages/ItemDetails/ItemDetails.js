@@ -27,7 +27,6 @@ export default function ItemDetails({ setCart }) {
 
   return (
     <>
-      <p>This is the ItemDetails Page</p>
       <div className={styles.ItemContainer}>
         <div className={styles.imageContainer}>
           {/* 🟥 need a way to show multiple images 🟥 */}
