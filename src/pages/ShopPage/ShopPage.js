@@ -1,10 +1,9 @@
 import ProductList from "../../components/ProductList/ProductList"
 
-export default function ShopPage({ items }) {
+export default function ShopPage({ items, user, setUser }) {
   return (
     <div>
-      <p>This is the Shop Page</p>
-      <ProductList productItems={items} />
+      <ProductList productItems={items} user={user} setUser={setUser} />
     </div>
   )
 }

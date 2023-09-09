@@ -635,12 +635,16 @@ function OrderListItem(_ref) {
 
 function ProductList(_ref) {
   let {
-    productItems
+    productItems,
+    user,
+    setUser
   } = _ref;
   const items = productItems.map(item => /*#__PURE__*/React.createElement(_productListItem_productListItem__WEBPACK_IMPORTED_MODULE_1__["default"], {
     className: _ProductList_module_scss__WEBPACK_IMPORTED_MODULE_0__["default"].ProductListItem,
     key: item._id,
-    productItem: item
+    productItem: item,
+    user: user,
+    setUser: setUser
   }));
   return /*#__PURE__*/React.createElement("main", {
     className: _ProductList_module_scss__WEBPACK_IMPORTED_MODULE_0__["default"].ProductList
@@ -850,35 +854,60 @@ function SignUpForm() {
 /* harmony export */ });
 /* harmony import */ var _FavoriteIcon_FavoriteIcon__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! ../FavoriteIcon/FavoriteIcon */ "./src/components/FavoriteIcon/FavoriteIcon.js");
 /* harmony import */ var _ProductListItem_module_scss__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! ./ProductListItem.module.scss */ "./src/components/productListItem/ProductListItem.module.scss");
-/* harmony import */ var react_router_dom__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! react-router-dom */ "./node_modules/react-router/dist/index.js");
+/* harmony import */ var react_router_dom__WEBPACK_IMPORTED_MODULE_3__ = __webpack_require__(/*! react-router-dom */ "./node_modules/react-router/dist/index.js");
+/* harmony import */ var _utilities_users_service__WEBPACK_IMPORTED_MODULE_4__ = __webpack_require__(/*! ../../utilities/users-service */ "./src/utilities/users-service.js");
+/* harmony import */ var _assets_images_fav_heart_svg__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! ../../assets/images/fav-heart.svg */ "./src/assets/images/fav-heart.svg");
 /* provided dependency */ var React = __webpack_require__(/*! react */ "./node_modules/react/index.js");
+function asyncGeneratorStep(gen, resolve, reject, _next, _throw, key, arg) { try { var info = gen[key](arg); var value = info.value; } catch (error) { reject(error); return; } if (info.done) { resolve(value); } else { Promise.resolve(value).then(_next, _throw); } }
+function _asyncToGenerator(fn) { return function () { var self = this, args = arguments; return new Promise(function (resolve, reject) { var gen = fn.apply(self, args); function _next(value) { asyncGeneratorStep(gen, resolve, reject, _next, _throw, "next", value); } function _throw(err) { asyncGeneratorStep(gen, resolve, reject, _next, _throw, "throw", err); } _next(undefined); }); }; }
+
+
 
 
 
 function ProductListItem(_ref) {
   let {
-    productItem
+    productItem,
+    user,
+    setUser
   } = _ref;
-  const navigate = (0,react_router_dom__WEBPACK_IMPORTED_MODULE_2__.useNavigate)();
+  const navigate = (0,react_router_dom__WEBPACK_IMPORTED_MODULE_3__.useNavigate)();
   function handleClick(e) {
     navigate("/itemdetails/".concat(productItem._id));
   }
+  function handleFavClick() {
+    return _handleFavClick.apply(this, arguments);
+  }
+  function _handleFavClick() {
+    _handleFavClick = _asyncToGenerator(function* () {
+      const updatedUser = yield (0,_utilities_users_service__WEBPACK_IMPORTED_MODULE_4__.addItemToFavorites)(user._id, productItem._id);
+      setUser(updatedUser);
+    });
+    return _handleFavClick.apply(this, arguments);
+  }
   return /*#__PURE__*/React.createElement("div", {
-    className: _ProductListItem_module_scss__WEBPACK_IMPORTED_MODULE_1__["default"].ProductListItem,
-    onClick: handleClick
+    className: _ProductListItem_module_scss__WEBPACK_IMPORTED_MODULE_1__["default"].ProductListItem
   }, /*#__PURE__*/React.createElement("div", {
     className: _ProductListItem_module_scss__WEBPACK_IMPORTED_MODULE_1__["default"].imageContainer
   }, /*#__PURE__*/React.createElement("img", {
     className: _ProductListItem_module_scss__WEBPACK_IMPORTED_MODULE_1__["default"].itemImage,
-    src: productItem.images[0]
-  }), /*#__PURE__*/React.createElement(_FavoriteIcon_FavoriteIcon__WEBPACK_IMPORTED_MODULE_0__["default"], {
-    className: _ProductListItem_module_scss__WEBPACK_IMPORTED_MODULE_1__["default"].FavoriteIcon
+    src: productItem.images[0],
+    onClick: handleClick
+  }), /*#__PURE__*/React.createElement("button", {
+    onClick: handleFavClick
+  }, /*#__PURE__*/React.createElement("img", {
+    src: _assets_images_fav_heart_svg__WEBPACK_IMPORTED_MODULE_2__
+  })), /*#__PURE__*/React.createElement(_FavoriteIcon_FavoriteIcon__WEBPACK_IMPORTED_MODULE_0__["default"], {
+    className: _ProductListItem_module_scss__WEBPACK_IMPORTED_MODULE_1__["default"].FavoriteIcon,
+    onClick: handleFavClick
   })), /*#__PURE__*/React.createElement("div", {
     className: _ProductListItem_module_scss__WEBPACK_IMPORTED_MODULE_1__["default"].itemInfo
   }, /*#__PURE__*/React.createElement("div", {
-    className: _ProductListItem_module_scss__WEBPACK_IMPORTED_MODULE_1__["default"].name
-  }, productItem.name), /*#__PURE__*/React.createElement("div", {
-    className: _ProductListItem_module_scss__WEBPACK_IMPORTED_MODULE_1__["default"].price
+    className: _ProductListItem_module_scss__WEBPACK_IMPORTED_MODULE_1__["default"].name,
+    onClick: handleClick
+  }, productItem.name, " "), /*#__PURE__*/React.createElement("div", {
+    className: _ProductListItem_module_scss__WEBPACK_IMPORTED_MODULE_1__["default"].price,
+    onClick: handleClick
   }, "$", productItem.price.toFixed(2))));
 }
 
@@ -1070,7 +1099,9 @@ function App() {
     path: "/shop",
     element: /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default().createElement(_ShopPage_ShopPage__WEBPACK_IMPORTED_MODULE_3__["default"], {
       className: _App_module_scss__WEBPACK_IMPORTED_MODULE_1__["default"].ShopPage,
-      items: items
+      items: items,
+      user: user,
+      setUser: setUser
     })
   }), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default().createElement(react_router_dom__WEBPACK_IMPORTED_MODULE_15__.Route, {
     path: "/itemdetails/:itemId",
@@ -1533,10 +1564,14 @@ function ShopManagement() {
 
 function ShopPage(_ref) {
   let {
-    items
+    items,
+    user,
+    setUser
   } = _ref;
-  return /*#__PURE__*/React.createElement("div", null, /*#__PURE__*/React.createElement("p", null, "This is the Shop Page"), /*#__PURE__*/React.createElement(_components_ProductList_ProductList__WEBPACK_IMPORTED_MODULE_0__["default"], {
-    productItems: items
+  return /*#__PURE__*/React.createElement("div", null, /*#__PURE__*/React.createElement(_components_ProductList_ProductList__WEBPACK_IMPORTED_MODULE_0__["default"], {
+    productItems: items,
+    user: user,
+    setUser: setUser
   }));
 }
 
@@ -1755,6 +1790,7 @@ function _sendRequest() {
 /***/ ((__unused_webpack_module, __webpack_exports__, __webpack_require__) => {
 
 /* harmony export */ __webpack_require__.d(__webpack_exports__, {
+/* harmony export */   addItemToFavorites: () => (/* binding */ addItemToFavorites),
 /* harmony export */   editUserInfo: () => (/* binding */ editUserInfo),
 /* harmony export */   login: () => (/* binding */ login),
 /* harmony export */   signUp: () => (/* binding */ signUp)
@@ -1771,14 +1807,19 @@ function login(credentials) {
 function editUserInfo(id, newInfo) {
   return (0,_send_request__WEBPACK_IMPORTED_MODULE_0__["default"])("".concat(BASE_URL, "/").concat(id), 'PUT', newInfo);
 }
+function addItemToFavorites(id, itemId) {
+  return (0,_send_request__WEBPACK_IMPORTED_MODULE_0__["default"])("".concat(BASE_URL, "/").concat(id, "/favorites"), 'PUT', {
+    itemId: itemId
+  });
+}
 
 /* 
  User = {
-     Name
-     Email (unique)
-     Password (hashed)
-     Favorites: array of item._ids
-     Shop: shop._id or null (defaults to null)
+		 Name
+		 Email (unique)
+		 Password (hashed)
+		 Favorites: array of item._ids
+		 Shop: shop._id or null (defaults to null)
  }
 
 
@@ -1819,6 +1860,7 @@ export default async function sendRequest(url, method = 'GET', payload = null) {
 /***/ ((__unused_webpack_module, __webpack_exports__, __webpack_require__) => {
 
 /* harmony export */ __webpack_require__.d(__webpack_exports__, {
+/* harmony export */   addItemToFavorites: () => (/* binding */ addItemToFavorites),
 /* harmony export */   getToken: () => (/* binding */ getToken),
 /* harmony export */   getUser: () => (/* binding */ getUser),
 /* harmony export */   signUp: () => (/* binding */ signUp)
@@ -1858,7 +1900,22 @@ function _updateUser() {
   });
   return _updateUser.apply(this, arguments);
 }
-function login(_x3) {
+function addItemToFavorites(_x3, _x4) {
+  return _addItemToFavorites.apply(this, arguments);
+}
+function _addItemToFavorites() {
+  _addItemToFavorites = _asyncToGenerator(function* (userId, itemId) {
+    // get a new token with updated user favorites
+    const token = yield _users_api__WEBPACK_IMPORTED_MODULE_0__.addItemToFavorites(userId, itemId);
+    // remove the current token from localStorage
+    localStorage.removeItem('token');
+    // save new token to localStorage
+    localStorage.setItem('token', token);
+    return getUser();
+  });
+  return _addItemToFavorites.apply(this, arguments);
+}
+function login(_x5) {
   return _login.apply(this, arguments);
 }
 function _login() {

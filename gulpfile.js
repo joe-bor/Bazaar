@@ -28,32 +28,32 @@ var exec = require('child_process').exec;
 
 gulp.task('default', (cb) => {
 	// Compile Styles
-	exec('npm run styles', function(err, stdout, stderr) {
+	exec('npm run styles', function (err, stdout, stderr) {
 		console.log(stdout);
 		console.log(stderr);
 		cb(err);
 	});
 	// Compile REACT
-	exec('npm run dev:webpack', function(err, stdout, stderr) {
+	exec('npm run dev:webpack', function (err, stdout, stderr) {
 		console.log(stdout);
 		console.log(stderr);
 		cb(err);
 	});
 	// SERVE BACKEND
 	nodemon({
-	 script: 'server.js',
-	 env: { 'NODE_ENV': 'development'}
- });
- // SERVE  FRONT END WITH PROXY TO BACKEND
+		script: 'server.js',
+		env: { 'NODE_ENV': 'development' }
+	});
+	// SERVE  FRONT END WITH PROXY TO BACKEND
 	browserSync.init({
-	 proxy: {
-		 target: 'http://localhost:8000',
-		 ws: true
-	 },
-	 serveStatic: ['./public']
+		proxy: {
+			target: 'http://localhost:8000',
+			ws: true
+		},
+		serveStatic: ['./public']
 	});
 	// SET UP WATCJERS TO LISTEN TO CHANGES IN FILES
-	gulp.watch('./src/scss/**/*',  gulp.task('styles'));
+	gulp.watch('./src/scss/**/*', gulp.task('styles'));
 	gulp.watch('./src/components/**/*', gulp.task('webpack'));
 	gulp.watch('./src/**/*.js', gulp.task('webpack'));
 	gulp.watch('./src/*', gulp.task('webpack'));
@@ -67,7 +67,7 @@ gulp.task('default', (cb) => {
 			'./src/**/*'
 		])
 		.on('change', reload);
-		cb()
+	cb()
 });
 
 // Explanation for Students ---- This is compiles our styles
@@ -86,13 +86,13 @@ gulp.task('styles', (cb) => {
 		)
 		.pipe(gulp.dest('./public/css'))
 		.pipe(browserSync.stream());
-		cb()
+	cb()
 });
 
 
 // Explanation for Students ---- This is for the development build
 gulp.task('webpack', cb => {
-	exec('npm run dev:webpack', function(err, stdout, stderr) {
+	exec('npm run dev:webpack', function (err, stdout, stderr) {
 		console.log(stdout);
 		console.log(stderr);
 		cb(err);
@@ -101,7 +101,7 @@ gulp.task('webpack', cb => {
 
 // Explanation for Students ---- This is for the production build
 gulp.task('build', cb => {
-	exec('npm run build:webpack', function(err, stdout, stderr) {
+	exec('npm run build:webpack', function (err, stdout, stderr) {
 		console.log(stdout);
 		console.log(stderr);
 		cb(err);

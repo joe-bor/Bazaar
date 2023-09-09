@@ -19,4 +19,7 @@ router.put('/:id', upload, dataController.update, apiController.auth)
 // Delete -> /api/users/:id - delete user account
 router.delete('/:id', dataController.destroy)
 
+// PUT -> /api/users/:id/favorites - add an item to favorites
+router.put('/:id/favorites', dataController.addToFavorites, apiController.auth)
+
 module.exports = router

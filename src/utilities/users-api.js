@@ -11,18 +11,20 @@ export function login(credentials) {
 }
 
 export function editUserInfo(id, newInfo) {
-    return sendRequest(`${BASE_URL}/${id}`, 'PUT', newInfo)
+	return sendRequest(`${BASE_URL}/${id}`, 'PUT', newInfo)
 }
 
-
+export function addItemToFavorites(id, itemId) {
+	return sendRequest(`${BASE_URL}/${id}/favorites`, 'PUT', { itemId: itemId })
+}
 
 /* 
  User = {
-     Name
-     Email (unique)
-     Password (hashed)
-     Favorites: array of item._ids
-     Shop: shop._id or null (defaults to null)
+		 Name
+		 Email (unique)
+		 Password (hashed)
+		 Favorites: array of item._ids
+		 Shop: shop._id or null (defaults to null)
  }
 
 

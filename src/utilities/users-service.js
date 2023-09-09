@@ -1,4 +1,4 @@
-import * as usersAPI  from './users-api';
+import * as usersAPI from './users-api';
 
 export async function signUp(userData) {
   // Delete the network request code to the
@@ -13,6 +13,16 @@ export async function signUp(userData) {
 export async function updateUser(updatedUserData) {
   // get a new token with updated user info
   const token = await usersAPI.editUserInfo(updatedUserData)
+  // remove the current token from localStorage
+  localStorage.removeItem('token');
+  // save new token to localStorage
+  localStorage.setItem('token', token)
+  return getUser()
+}
+
+export async function addItemToFavorites(userId, itemId) {
+  // get a new token with updated user favorites
+  const token = await usersAPI.addItemToFavorites(userId, itemId)
   // remove the current token from localStorage
   localStorage.removeItem('token');
   // save new token to localStorage
