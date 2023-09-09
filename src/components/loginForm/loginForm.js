@@ -1,8 +1,9 @@
 import { useState } from "react"
 import FormInput from "../FormInput/FormInput"
 import styles from './LoginForm.module.scss'
+import { login } from '../../utilities/users-service'
 
-export default function LoginForm() {
+export default function LoginForm({ setUser }) {
 
     const [values, setValues] = useState({
         email: "",
@@ -37,17 +38,23 @@ export default function LoginForm() {
         setError('')
     }
 
+    const handleSubmit = async (e) => {
+        e.preventDefault()
+        const loggedInUser = await login(values)
+        setUser(loggedInUser)
+    }
+
     return (
         <>
             <h1 className={styles.h1}>Login</h1>
-            <form className={styles.form}>
+            <form className={styles.form} onSubmit={handleSubmit}>
                 {inputs.map(input => <FormInput
                     key={input.id}
                     value={values[input.name]}
                     handleInputChange={handleInputChange}
                     {...input}
                 />)}
-                <button>Log In</button>
+                <button formMethod='dialog'>Log In</button>
             </form>
 
         </>

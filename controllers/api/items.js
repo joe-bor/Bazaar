@@ -1,7 +1,7 @@
-const Item  = require('../../models/item')
+const Item = require('../../models/item')
 
 module.exports = {
-    index, 
+    index,
     show,
     returnReviews
 }
@@ -18,7 +18,7 @@ async function index(req, res) {
 
 async function show(req, res) {
     try {
-        const item = await Item.findById(req.params.id)
+        const item = await Item.findById(req.params.id).populate({ path: 'shop', select: 'name' }).exec()
         res.status(200).json(item)
     } catch (error) {
         res.status(400).json({ message: error.message })

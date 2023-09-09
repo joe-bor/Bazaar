@@ -1,9 +1,9 @@
-import sendRequest from './send-request';
+import sendRequest, { sendUrlFormData } from './send-request';
 
 const BASE_URL = '/api/users';
 
 export function signUp(userData) {
-	return sendRequest(BASE_URL, 'POST', userData);
+	return sendUrlFormData(BASE_URL, 'POST', userData);
 }
 
 export function login(credentials) {
@@ -11,11 +11,19 @@ export function login(credentials) {
 }
 
 export function editUserInfo(id, newInfo) {
-	return sendRequest(`${BASE_URL}/${id}`, 'PUT', newInfo)
+	return sendUrlFormData(`${BASE_URL}/${id}`, 'PUT', newInfo)
 }
 
-export function addItemToFavorites(id, itemId) {
+export function toggleFavorites(id, itemId) {
 	return sendRequest(`${BASE_URL}/${id}/favorites`, 'PUT', { itemId: itemId })
+}
+
+export function deleteUser(id) {
+	return sendRequest(`${BASE_URL}/${id}`, 'DELETE')
+}
+
+export function getFavorites(id) {
+	return sendRequest(`${BASE_URL}/${id}/favorites`)
 }
 
 /* 

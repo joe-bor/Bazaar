@@ -4,7 +4,6 @@ import styles from './Home.module.scss'
 
 function Home({ items, categories, setActiveCat }) {
 
-
   return (
     <main className={styles.Home}>
       <div className={styles.hero}>
@@ -13,7 +12,7 @@ function Home({ items, categories, setActiveCat }) {
         <Link to='/shop'>See More</Link>
       </div>
       <div className={styles.itemGrid}>
-        {categories.map(category => <CategorySection items={items} key={category} category={category} setActiveCat={setActiveCat}/> )}
+        {categories.map(category => <CategorySection items={items} key={category} category={category} setActiveCat={setActiveCat} />)}
       </div>
     </main>
   )

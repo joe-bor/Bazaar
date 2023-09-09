@@ -2,15 +2,22 @@ const cloudinary = require('../../config/cloudinary')
 
 async function upload(req, res, next) {
     try {
-        if (!file) { next() } 
-        const cloudinaryImageData = await cloudinary.uploader.upload(
-            file, 
-            { public_id: req.body.publicId }, 
-            (result) =>  result 
+        // console.log(req)
+        console.log(req.files)
+        if (!req.files) { return next() }
+        await cloudinary.uploader.upload(
+            req.files.file,
+            {},
+            (err, result) => {
+                if (err) {
+                    return res.status(400).json({ message: err.message })
+                } else {
+                    console.log(result.secure_url)
+                    res.locals.imageData = result
+                    return next()
+                }
+            }
         )
-        console.log(cloudinaryImageData)
-        req.body.imageUrl = cloudinaryImageData.secure_url
-        next()
     } catch (error) {
         res.status(400).json({ message: error.message })
     }

@@ -1,7 +1,7 @@
 import FavoriteIcon from '../FavoriteIcon/FavoriteIcon'
 import styles from './ProductListItem.module.scss'
 import { useNavigate } from 'react-router-dom'
-import { addItemToFavorites } from '../../utilities/users-service';
+import { toggleFavorites } from '../../utilities/users-service';
 import favHeart from '../../assets/images/fav-heart.svg'
 
 export default function ProductListItem({ productItem, user, setUser }) {
@@ -13,7 +13,7 @@ export default function ProductListItem({ productItem, user, setUser }) {
   }
 
   async function handleFavClick() {
-    const updatedUser = await addItemToFavorites(user._id, productItem._id)
+    const updatedUser = await toggleFavorites(user._id, productItem._id)
     setUser(updatedUser)
   }
 

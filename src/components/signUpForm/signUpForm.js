@@ -1,14 +1,15 @@
 import { useEffect, useRef, useState } from 'react'
 import styles from './SignUpForm.module.scss'
 import FormInput from '../FormInput/FormInput'
+import { signUp } from '../../utilities/users-service'
 
-function SignUpForm() {
+function SignUpForm({ setUser }) {
 
   const [values, setValues] = useState({
     name: "",
     email: "",
-    password:"",
-    confirm:"",
+    password: "",
+    confirm: "",
   })
 
   const inputs = [
@@ -57,16 +58,24 @@ function SignUpForm() {
   ]
 
   const handleInputChange = (e) => {
-    setValues({...values, [e.target.name]:e.target.value  })
+    setValues({ ...values, [e.target.name]: e.target.value })
+  }
+
+  const handleSubmit = async (e) => {
+    e.preventDefault()
+    const formData = { ...values }
+    delete formData.confirm
+    const newUser = await signUp(formData)
+    setUser(newUser)
   }
 
   return (
     <>
-        <h1 className={styles.h1}>Register</h1>
-        <form className={styles.form}>
-          {inputs.map( input => <FormInput key={input.id} {...input} value={values[input.name]} handleInputChange={handleInputChange} />)}
-          <button formMethod='dialog'>Sign Up</button>
-        </form>
+      <h1 className={styles.h1}>Register</h1>
+      <form className={styles.form} onSubmit={handleSubmit}>
+        {inputs.map(input => <FormInput key={input.id} {...input} value={values[input.name]} handleInputChange={handleInputChange} />)}
+        <button formMethod='dialog'>Sign Up</button>
+      </form>
 
     </>
   )

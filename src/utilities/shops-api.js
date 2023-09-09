@@ -14,6 +14,9 @@ export function deleteShop(id) {
     return sendRequest(`${BASE_URL}/${id}`, 'DELETE')
 }
 
+export function getShop(id) {
+    return sendRequest(`${BASE_URL}/${id}`)
+}
 
 //! Double check this when ShopModel has been implemented
 export function addItemToShop(itemId) {
