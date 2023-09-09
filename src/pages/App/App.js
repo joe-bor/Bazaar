@@ -58,7 +58,7 @@ export default function App() {
   // auto log-in as guest user
   useEffect(() => {
     if (!user) {
-      createGuestUser()
+       createGuestUser()
     }
     async function getItems() {
       const allItems = await ItemsAPI.getAll()
@@ -109,10 +109,12 @@ export default function App() {
       handleCloseAuthModal={handleCloseAuthModal}
        />
       <NavBar
+        className={styles.NavBar}
+        categories={categories}
+        toggleAuthModal={toggleAuthModal}
         filteredItems={filteredItems}
         setFilteredItems={setFilteredItems}
         items={items}
-        className={styles.NavBar}
         user={user}
         cart={cart}
         location={location} />

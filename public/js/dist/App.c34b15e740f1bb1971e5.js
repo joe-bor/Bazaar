@@ -267,86 +267,22 @@ function LoginForm() {
 
 function NavBar(_ref) {
   let {
-    setFilteredItems,
+    categories,
+    toggleAuthModal,
     filteredItems,
+    setFilteredItems,
+    items,
     user,
     setUser,
     cart,
     setCart,
-    items,
     setItems,
     activeCat,
     setActiveCat,
     searchTerm,
     setSearchTerm,
-    setCategories,
-    isloggedIn
-
-    // import { isloggedIn, user} from 
-
-    // need to import the islogged in and user varaibles but not sure 
+    setCategories
   } = _ref;
-  const categories = [{
-    name: 'smartphones',
-    sortOrder: 10
-  }, {
-    name: 'fragrances',
-    sortOrder: 20
-  }, {
-    name: 'groceries',
-    sortOrder: 30
-  }, {
-    name: 'furniture',
-    sortOrder: 40
-  }, {
-    name: 'womens-dresses',
-    sortOrder: 50
-  }, {
-    name: 'mens-shirts',
-    sortOrder: 60
-  }, {
-    name: 'mens-watches',
-    sortOrder: 70
-  }, {
-    name: 'womens-bags',
-    sortOrder: 80
-  }, {
-    name: 'sunglasses',
-    sortOrder: 90
-  }, {
-    name: 'motorcycle',
-    sortOrder: 100
-  }, {
-    name: 'laptops',
-    sortOrder: 110
-  }, {
-    name: 'skincare',
-    sortOrder: 120
-  }, {
-    name: 'home-decoration',
-    sortOrder: 130
-  }, {
-    name: 'tops',
-    sortOrder: 140
-  }, {
-    name: 'womens-shoes',
-    sortOrder: 150
-  }, {
-    name: 'mens-shoes',
-    sortOrder: 160
-  }, {
-    name: 'womens-watches',
-    sortOrder: 170
-  }, {
-    name: 'womens-jewellery',
-    sortOrder: 180
-  }, {
-    name: 'automotive',
-    sortOrder: 190
-  }, {
-    name: 'lighting',
-    sortOrder: 200
-  }];
   return /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default().createElement("nav", {
     className: "navbar"
   }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default().createElement("div", {
@@ -365,9 +301,7 @@ function NavBar(_ref) {
     className: "navbar-categories"
   }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default().createElement("ul", null, categories.map((category, index) => /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default().createElement("li", {
     key: index
-  }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default().createElement(react_router_dom__WEBPACK_IMPORTED_MODULE_2__.Link, {
-    to: "/category/".concat(category.name)
-  }, category.name))))), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default().createElement("div", {
+  }, category)))), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default().createElement("div", {
     className: "navbar-icons"
   }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default().createElement(react_router_dom__WEBPACK_IMPORTED_MODULE_2__.Link, {
     to: "/favorites"
@@ -394,23 +328,23 @@ function NavBar(_ref) {
     alt: "store"
   }))), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default().createElement("div", {
     className: "navbar-user"
-  }, isloggedIn ?
+  }, user && user.name === "c186ec" ?
   /*#__PURE__*/
-  //Display user profile info if logged in
-  react__WEBPACK_IMPORTED_MODULE_0___default().createElement((react__WEBPACK_IMPORTED_MODULE_0___default().Fragment), null, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default().createElement("img", {
-    src: user.profileImage,
-    alt: "Profile"
-  }), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default().createElement("span", null, user.name), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default().createElement(react_router_dom__WEBPACK_IMPORTED_MODULE_2__.Link, {
-    to: "/logout"
-  }, "Logout")) :
-  /*#__PURE__*/
-  //Display "log in" if not logged in 
+  //Display "log in" if logged in as guest 
   react__WEBPACK_IMPORTED_MODULE_0___default().createElement((react__WEBPACK_IMPORTED_MODULE_0___default().Fragment), null, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default().createElement("img", {
     src: "public/img/User Icon.png",
     alt: "user"
-  }), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default().createElement(react_router_dom__WEBPACK_IMPORTED_MODULE_2__.Link, {
-    to: "/login"
-  })))));
+  }), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default().createElement("span", {
+    onClick: toggleAuthModal
+  }, "Login")) :
+  /*#__PURE__*/
+  //Display user profile info if logged in
+  react__WEBPACK_IMPORTED_MODULE_0___default().createElement((react__WEBPACK_IMPORTED_MODULE_0___default().Fragment), null, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default().createElement("img", {
+    src: user === null || user === void 0 ? void 0 : user.profileImage,
+    alt: "Profile"
+  }), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default().createElement("span", null, user === null || user === void 0 ? void 0 : user.name), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default().createElement(react_router_dom__WEBPACK_IMPORTED_MODULE_2__.Link, {
+    to: "/logout"
+  }, "Logout")))));
 }
 
 /***/ }),
@@ -769,6 +703,11 @@ function App() {
   const [cart, setCart] = (0,react__WEBPACK_IMPORTED_MODULE_0__.useState)([]);
   const [items, setItems] = (0,react__WEBPACK_IMPORTED_MODULE_0__.useState)([]);
   const [filteredItems, setFilteredItems] = (0,react__WEBPACK_IMPORTED_MODULE_0__.useState)([]);
+  const [isAuthModalOpen, setIsAuthModalOpen] = (0,react__WEBPACK_IMPORTED_MODULE_0__.useState)(false);
+  const [activeCat, setActiveCat] = (0,react__WEBPACK_IMPORTED_MODULE_0__.useState)('');
+
+  //! categories must either be derived from the items OR we can create a controller on the backend that fetches all categories
+  const categories = ["smartphones", "laptops", "fragrances", "skincare", "groceries", "home-decoration", "furniture", "tops", "womens-dresses", "womens-shoes", "mens-shirts", "mens-shoes", "mens-watches", "womens-watches", "womens-bags", "womens-jewellery", "sunglasses", "automotive", "motorcycle", "lighting"];
   const navigate = (0,react_router_dom__WEBPACK_IMPORTED_MODULE_15__.useNavigate)();
   let location = (0,react_router_dom__WEBPACK_IMPORTED_MODULE_15__.useLocation)();
 
@@ -790,6 +729,14 @@ function App() {
     }
     getItems();
   }, []);
+  const toggleAuthModal = () => {
+    setIsAuthModalOpen(!isAuthModalOpen);
+    console.log('Invoked toggleModal()');
+  };
+  const handleCloseAuthModal = () => {
+    setIsAuthModalOpen(false);
+    console.log('handleCloseModal invoked');
+  };
   function createGuestUser() {
     return _createGuestUser.apply(this, arguments);
   } // clicking on logo takes you home
@@ -816,12 +763,17 @@ function App() {
   return /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default().createElement("main", {
     className: _App_module_scss__WEBPACK_IMPORTED_MODULE_1__["default"].App
   }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default().createElement(_components_AuthModal_AuthModal__WEBPACK_IMPORTED_MODULE_13__["default"], {
-    setUser: setUser
+    setUser: setUser,
+    isAuthModalOpen: isAuthModalOpen,
+    toggleAuthModal: toggleAuthModal,
+    handleCloseAuthModal: handleCloseAuthModal
   }), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default().createElement(_components_NavBar_NavBar__WEBPACK_IMPORTED_MODULE_12__["default"], {
+    className: _App_module_scss__WEBPACK_IMPORTED_MODULE_1__["default"].NavBar,
+    categories: categories,
+    toggleAuthModal: toggleAuthModal,
     filteredItems: filteredItems,
     setFilteredItems: setFilteredItems,
     items: items,
-    className: _App_module_scss__WEBPACK_IMPORTED_MODULE_1__["default"].NavBar,
     user: user,
     cart: cart,
     location: location
@@ -830,6 +782,8 @@ function App() {
     element: /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default().createElement(_Home_Home__WEBPACK_IMPORTED_MODULE_2__["default"], {
       items: items,
       className: _App_module_scss__WEBPACK_IMPORTED_MODULE_1__["default"].Home,
+      categories: categories,
+      setActiveCat: setActiveCat,
       setCart: setCart
     })
   }), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default().createElement(react_router_dom__WEBPACK_IMPORTED_MODULE_15__.Route, {
@@ -969,35 +923,25 @@ function Favorites() {
 /* harmony export */ __webpack_require__.d(__webpack_exports__, {
 /* harmony export */   "default": () => (__WEBPACK_DEFAULT_EXPORT__)
 /* harmony export */ });
-/* harmony import */ var react_router_dom__WEBPACK_IMPORTED_MODULE_3__ = __webpack_require__(/*! react-router-dom */ "./node_modules/react-router-dom/dist/index.js");
+/* harmony import */ var react_router_dom__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! react-router-dom */ "./node_modules/react-router-dom/dist/index.js");
 /* harmony import */ var _components_CategorySection_CategorySection__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! ../../components/CategorySection/CategorySection */ "./src/components/CategorySection/CategorySection.js");
 /* harmony import */ var _Home_module_scss__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! ./Home.module.scss */ "./src/pages/Home/Home.module.scss");
-/* harmony import */ var react__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! react */ "./node_modules/react/index.js");
-/* harmony import */ var react__WEBPACK_IMPORTED_MODULE_2___default = /*#__PURE__*/__webpack_require__.n(react__WEBPACK_IMPORTED_MODULE_2__);
 /* provided dependency */ var React = __webpack_require__(/*! react */ "./node_modules/react/index.js");
-
 
 
 
 function Home(_ref) {
   let {
-    items
+    items,
+    categories,
+    setActiveCat
   } = _ref;
-  console.log(items);
-
-  /* --- Should be passed down as props --- */
-  const categories = [
-  //iterate and create Component to for each category ( which will house the items of said category)
-  "smartphones", "laptops", "fragrances", "skincare", "groceries", "home-decoration", "furniture", "tops", "womens-dresses", "womens-shoes", "mens-shirts", "mens-shoes", "mens-watches", "womens-watches", "womens-bags", "womens-jewellery", "sunglasses", "automotive", "motorcycle", "lighting"];
-  const [activeCat, setActiveCat] = (0,react__WEBPACK_IMPORTED_MODULE_2__.useState)(''); //state setter - triggered when user clicks `see more` on the home page
-  /* --------------------------- */
-
   return /*#__PURE__*/React.createElement("main", {
     className: _Home_module_scss__WEBPACK_IMPORTED_MODULE_1__["default"].Home
   }, /*#__PURE__*/React.createElement("div", {
     className: _Home_module_scss__WEBPACK_IMPORTED_MODULE_1__["default"].hero
-  }, /*#__PURE__*/React.createElement("p", null, "Shop now"), /*#__PURE__*/React.createElement("p", null, "and explore"), /*#__PURE__*/React.createElement(react_router_dom__WEBPACK_IMPORTED_MODULE_3__.Link, {
-    to: "shop"
+  }, /*#__PURE__*/React.createElement("p", null, "Shop now"), /*#__PURE__*/React.createElement("p", null, "and explore"), /*#__PURE__*/React.createElement(react_router_dom__WEBPACK_IMPORTED_MODULE_2__.Link, {
+    to: "/shop"
   }, "See More")), /*#__PURE__*/React.createElement("div", {
     className: _Home_module_scss__WEBPACK_IMPORTED_MODULE_1__["default"].itemGrid
   }, categories.map(category => /*#__PURE__*/React.createElement(_components_CategorySection_CategorySection__WEBPACK_IMPORTED_MODULE_0__["default"], {

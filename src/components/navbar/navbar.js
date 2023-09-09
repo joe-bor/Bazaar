@@ -4,50 +4,23 @@ import { Link } from 'react-router-dom'
 import SearchBar from '../SearchBar/SearchBar.js'
 
 export default function NavBar({
-    setFilteredItems,
+    categories,
+    toggleAuthModal,
     filteredItems,
+    setFilteredItems,
+    items,
     user,
     setUser,
     cart,
     setCart,
-    items,
     setItems,
     activeCat,
     setActiveCat,
     searchTerm,
     setSearchTerm,
     setCategories,
-    isloggedIn
-
-
-    // import { isloggedIn, user} from 
-
-    // need to import the islogged in and user varaibles but not sure 
-
-
 }) {
-    const categories = [
-        { name: 'smartphones', sortOrder: 10 },
-        { name: 'fragrances', sortOrder: 20 },
-        { name: 'groceries', sortOrder: 30 },
-        { name: 'furniture', sortOrder: 40 },
-        { name: 'womens-dresses', sortOrder: 50 },
-        { name: 'mens-shirts', sortOrder: 60 },
-        { name: 'mens-watches', sortOrder: 70 },
-        { name: 'womens-bags', sortOrder: 80 },
-        { name: 'sunglasses', sortOrder: 90 },
-        { name: 'motorcycle', sortOrder: 100 },
-        { name: 'laptops', sortOrder: 110 },
-        { name: 'skincare', sortOrder: 120 },
-        { name: 'home-decoration', sortOrder: 130 },
-        { name: 'tops', sortOrder: 140 },
-        { name: 'womens-shoes', sortOrder: 150 },
-        { name: 'mens-shoes', sortOrder: 160 },
-        { name: 'womens-watches', sortOrder: 170 },
-        { name: 'womens-jewellery', sortOrder: 180 },
-        { name: 'automotive', sortOrder: 190 },
-        { name: 'lighting', sortOrder: 200 }
-    ]
+  
     return (
         <nav className="navbar">
             <div className="navbar-logo">
@@ -62,7 +35,7 @@ export default function NavBar({
                 <ul>
                     {categories.map((category, index) => (
                         <li key={index}>
-                            <Link to={`/category/${category.name}`}>{category.name}</Link>
+                           {category}
                         </li>
                     ))}
                 </ul>
@@ -91,18 +64,18 @@ export default function NavBar({
                     </div>
                 </Link>
                 <div className="navbar-user">
-                    {isloggedIn ? (
-                        //Display user profile info if logged in
-                        <>
-                            <img src={user.profileImage} alt="Profile" />
-                            <span>{user.name}</span>
-                            <Link to="/logout">Logout</Link>
-                        </>
-                    ) : (
-                        //Display "log in" if not logged in 
+                    {user && user.name === "c186ec" ? (
+                        //Display "log in" if logged in as guest 
                         <>
                             <img src="public/img/User Icon.png" alt="user" />
-                            <Link to="/login"></Link>
+                            <span onClick={toggleAuthModal}>Login</span>
+                        </>
+                    ) : (
+                        //Display user profile info if logged in
+                        <>
+                            <img src={user?.profileImage} alt="Profile" />
+                            <span>{user?.name}</span>
+                            <Link to="/logout">Logout</Link>
                         </>
 
                     )}
