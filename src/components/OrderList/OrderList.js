@@ -1,16 +1,23 @@
-import styles from './OrderListItem.module.scss'
+import OrderListItem from '../OrderListItem/OrderListItem'
+import styles from './OrderList.module.scss'
 
-export default function OrderListItem({ order, isSelected, handleSelectOrder }) {
+export default function OrderList({ orders, activeOrder, handleSelectOrder }) {
+  const orderItems = orders.map(order =>
+    <OrderListItem
+      order={order}
+      isSelected={order === activeOrder}
+      handleSelectOrder={handleSelectOrder}
+      key={order._id}
+    />
+  )
+
   return (
-    <div className={`${styles.OrderListItem} ${isSelected ? styles.selected : ''} `} onClick={() => handleSelectOrder(order)}>
-      <div>
-        <div>Order Id: <span className={styles.orderId}>{order.orderId}</span></div>
-        <div className={styles.orderDate}>{new Date(order.updatedAt).toLocaleDateString()}</div>
-      </div>
-      <div className="align-rt">
-        <div className={styles.orderTotal}>${order.orderTotal.toFixed(2)}</div>
-        <div className={styles.orderOty}>{order.totalQty} item{order.totalQty > 1 ? 's' : ''}</div>
-      </div>
-    </div>
+    <main className={styles.OrderList}>
+      {orderItems.length ?
+        orderItems
+        :
+        <span className={styles.noOrders}>No Previous Orders</span>
+      }
+    </main>
   )
 }

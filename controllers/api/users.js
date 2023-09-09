@@ -1,6 +1,7 @@
 const User = require('../../models/user')
 const jwt = require('jsonwebtoken')
 const bcrypt = require('bcrypt')
+const Item = require('../../models/item')
 
 const checkToken = (req, res) => {
     console.log('req.user', req.user)
@@ -8,7 +9,7 @@ const checkToken = (req, res) => {
 }
 
 const dataController = {
-    async create (req, res, next) {
+    async create(req, res, next) {
         try {
             const user = await User.create(req.body)
             //token will be a string
@@ -24,7 +25,7 @@ const dataController = {
             res.status(400).json(e)
         }
     },
-    async login (req, res, next ) {
+    async login(req, res, next) {
         try {
             const user = await User.findOne({ email: req.body.email })
             if (!user) throw new Error()
@@ -38,17 +39,18 @@ const dataController = {
         }
     },
 
-    async update (req, res, next) {
+    async update(req, res, next) {
         try {
             const user = await User.findByIdAndUpdate(req.params.id, req.body, { new: true })
             if (!user) throw new Error('User not found')
             res.locals.data.user = user
+            res.locals.data.token = createJWT(user)
             next()
         } catch (error) {
             res.status(400).json('Was not able to update user info')
         }
     },
-    async destroy (req, res) {
+    async destroy(req, res) {
         try {
             const user = await User.findOne({ _id: req.params.id })
             await user.deleteOne()
@@ -57,11 +59,26 @@ const dataController = {
         } catch (error) {
             res.status(400).json('User NOT Deleted')
         }
+    },
+    async addToFavorites(req, res) {
+        try {
+            console.log(req.params.id)
+            const user = await User.findOne({ _id: req.params.id })
+            console.log(user)
+            const item = await Item.findOne({ _id: req.body.itemId })
+            user.favorites.addToSet(item._id)
+            await user.save()
+            res.locals.data.user = user
+            res.locals.data.token = createJWT(user)
+            next()
+        } catch (error) {
+            res.status(400).json({ message: error.message })
+        }
     }
 }
 
 const apiController = {
-    auth (req, res) {
+    auth(req, res) {
         res.json(res.locals.data.token)
     }
 }
@@ -73,11 +90,11 @@ module.exports = {
 }
 
 // helper functions
-function createJWT (user) {
+function createJWT(user) {
     return jwt.sign(
         //data payload
         { user },
         process.env.SECRET,
-        { expiresIn: '72h'}
+        { expiresIn: '72h' }
     )
 }
