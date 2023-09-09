@@ -18,6 +18,14 @@ export function addItemToFavorites(id, itemId) {
 	return sendRequest(`${BASE_URL}/${id}/favorites`, 'PUT', { itemId: itemId })
 }
 
+export function deleteUser(id) {
+	return sendRequest(`${BASE_URL}/${id}`, 'DELETE')
+}
+
+export function getFavorites(id) {
+	return sendRequest(`${BASE_URL}/${id}/favorites`)
+}
+
 /* 
  User = {
 		 Name

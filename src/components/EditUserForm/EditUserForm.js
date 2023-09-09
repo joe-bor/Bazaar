@@ -1,23 +1,24 @@
 import { useEffect, useRef, useState } from 'react'
-import styles from './SignUpForm.module.scss'
+import styles from './EditUserForm.module.scss'
 import FormInput from '../FormInput/FormInput'
-import { signUp } from '../../utilities/users-service'
+import { updateUser } from '../../utilities/users-service'
 
-function SignUpForm({ setUser }) {
+function EditUserForm({ user, setUser }) {
 
   const [values, setValues] = useState({
-    name: "",
-    email: "",
+    name: user.name,
+    email: user.email,
     password: "",
     confirm: "",
   })
 
   const inputs = [
     {
-      id: "name",
+      id: "edit-name",
       name: "name",
       type: "text",
       placeholder: "First and Last name",
+      value: user.name,
       errorMessage:
         "Required and can't include special characters",
       label: "Name",
@@ -25,16 +26,17 @@ function SignUpForm({ setUser }) {
       required: true,
     },
     {
-      id: "email",
+      id: "edit-email",
       name: "email",
       type: "email",
       placeholder: "Email@example.com",
+      value: user.email,
       errorMessage: "It should be a valid email address!",
       label: "Email",
       required: true,
     },
     {
-      id: "password",
+      id: "edit-password",
       name: "password",
       type: "password",
       placeholder: "Password",
@@ -42,17 +44,15 @@ function SignUpForm({ setUser }) {
         "Password should be at least 3 characters long",
       label: "Password",
       pattern: "^[A-Za-z0-9]{3,}$",
-      required: true,
     },
     {
-      id: "confirm",
+      id: "edit-confirm",
       name: "confirm",
       type: "password",
       placeholder: "Re-type your password",
       errorMessage: "Passwords don't match!",
       label: "Confirm Password",
       pattern: values.password,
-      required: true,
     },
 
   ]
@@ -65,19 +65,19 @@ function SignUpForm({ setUser }) {
     e.preventDefault()
     const formData = { ...values }
     delete formData.confirm
-    const newUser = await signUp(formData)
-    setUser(newUser)
+    const updatedUser = await updateUser(user._id, formData)
+    setUser(updatedUser)
   }
 
   return (
     <>
-      <h1 className={styles.h1}>Register</h1>
+      <h1 className={styles.h1}>Edit User Info</h1>
       <form className={styles.form} onSubmit={handleSubmit}>
         {inputs.map(input => <FormInput key={input.id} {...input} value={values[input.name]} handleInputChange={handleInputChange} />)}
-        <button formMethod='dialog'>Sign Up</button>
+        <button formMethod='dialog'>Update</button>
       </form>
 
     </>
   )
 }
-export default SignUpForm
+export default EditUserForm

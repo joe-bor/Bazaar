@@ -5,8 +5,6 @@ import userIcon from '../../assets/images/user-icon.svg'
 import cartIcon from '../../assets/images/cart-icon.svg'
 import favHeart from '../../assets/images/fav-heart.svg'
 import shopIcon from '../../assets/images/shop-icon.svg'
-
-
 import SearchBar from '../SearchBar/SearchBar.js'
 
 export default function NavBar({
@@ -28,7 +26,7 @@ export default function NavBar({
     cartTotals
 
 }) {
-  
+
     return (
         <nav className={styles.NavBar}>
             <div className={styles.topLine}>
@@ -45,7 +43,7 @@ export default function NavBar({
                 <ul>
                     {categories.map((category, index) => (
                         <li key={index}>
-                           {category}
+                            {category}
                         </li>
                     ))}
                 </ul>
@@ -74,12 +72,11 @@ export default function NavBar({
                     </div>
                 </Link>
                 <div className="navbar-user">
-                    {user.name !== 'c186ec' ? (
+                    {user?.name !== 'c186ec' ? (
                         //Display user profile info if logged in
                         <>
-                            <img src={user.profileImage ? user.profileImage : userIcon} alt="Profile" />
-                            <span>{user.name}</span>
-                            <Link to="/logout">Logout</Link>
+                            <img src={user?.imageUrl ? user.imageUrl : userIcon} alt="Profile" />
+                            <Link to='/account'><span>{user?.name}</span></Link>
                         </>
                     ) : (
                         //Display user profile info if logged in

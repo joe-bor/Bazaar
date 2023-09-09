@@ -65,11 +65,10 @@ export default function App() {
   // auto log-in as guest user
   useEffect(() => {
     if (!user) {
-       createGuestUser()
+      createGuestUser()
     }
     async function getItems() {
       const allItems = await ItemsAPI.getAll()
-      console.log(allItems)
       setItems(allItems)
     }
     getItems()
@@ -130,12 +129,12 @@ export default function App() {
 
   return (
     <main className={styles.App}>
-      <AuthModal 
-      setUser={setUser}
-      isAuthModalOpen={isAuthModalOpen}
-      toggleAuthModal={toggleAuthModal}
-      handleCloseAuthModal={handleCloseAuthModal}
-       />
+      <AuthModal
+        setUser={setUser}
+        isAuthModalOpen={isAuthModalOpen}
+        toggleAuthModal={toggleAuthModal}
+        handleCloseAuthModal={handleCloseAuthModal}
+      />
       <NavBar
         className={styles.NavBar}
         categories={categories}
@@ -146,14 +145,15 @@ export default function App() {
         user={user}
         cart={cart}
         location={location}
-        cartTotals={cartTotals} />
+        cartTotals={cartTotals}
+        createGuestUser={createGuestUser} />
       <Routes>
         {/* client-side route that renders the component instance if the patch matches the url in the address bar */}
         <Route path="/home" element={<Home items={items} className={styles.Home} categories={categories} setActiveCat={setActiveCat} setCart={setCart} />} />
         <Route path="/shop" element={<ShopPage className={styles.ShopPage} items={items} user={user} setUser={setUser} />} />
         <Route path="/itemdetails/:itemId" element={<ItemDetails setCart={setCart} />} />
-        <Route path="/account" element={<AccountPage className={styles.AccountPage} user={user} setUser={setUser} location={location} />} />
-        <Route path="/favorites" element={<Favorites />} />
+        <Route path="/account" element={<AccountPage className={styles.AccountPage} user={user} setUser={setUser} createGuestUser={createGuestUser} />} />
+        <Route path="/favorites" element={<Favorites user={user} />} />
         <Route path="/cart" element={<Cart className={styles.Cart} cart={cart} setCart={setCart} cartTotals={cartTotals} />} />
         <Route path="/checkout" element={<Checkout className={styles.Checkout} cart={cart} setCart={setCart} cartTotals={cartTotals} />} />
         <Route path="/orderhistory" element={<OrderHistory user={user} setUser={setUser} />} />

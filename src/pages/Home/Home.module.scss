@@ -9,12 +9,14 @@
         align-self: center;
         display: flex;
         flex-direction: column;
-        justify-content: space-evenly;
+        justify-content: center;
         align-items: flex-start;
 
         p {
             font-size: 6rem;
             font-weight: 900;
+            margin: 0;
+            padding: 0;
         }
     }
 

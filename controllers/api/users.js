@@ -47,7 +47,7 @@ const dataController = {
             res.locals.data.token = createJWT(user)
             next()
         } catch (error) {
-            res.status(400).json('Was not able to update user info')
+            res.status(400).json({ message: error.message })
         }
     },
     async destroy(req, res) {
@@ -60,7 +60,7 @@ const dataController = {
             res.status(400).json('User NOT Deleted')
         }
     },
-    async addToFavorites(req, res) {
+    async addToFavorites(req, res, next) {
         try {
             console.log(req.params.id)
             const user = await User.findOne({ _id: req.params.id })
@@ -71,6 +71,18 @@ const dataController = {
             res.locals.data.user = user
             res.locals.data.token = createJWT(user)
             next()
+        } catch (error) {
+            res.status(400).json({ message: error.message })
+        }
+    },
+    async getFavorites(req, res) {
+        try {
+            // find user
+            const user = await User.findById(req.params.id).populate('favorites').exec()
+            // find all items in the user's favorites
+            const items = user.favorites
+            // return the items
+            res.json(items)
         } catch (error) {
             res.status(400).json({ message: error.message })
         }

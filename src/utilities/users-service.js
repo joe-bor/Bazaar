@@ -10,9 +10,9 @@ export async function signUp(userData) {
   return getUser();
 }
 
-export async function updateUser(updatedUserData) {
+export async function updateUser(id, updatedUserData) {
   // get a new token with updated user info
-  const token = await usersAPI.editUserInfo(updatedUserData)
+  const token = await usersAPI.editUserInfo(id, updatedUserData)
   // remove the current token from localStorage
   localStorage.removeItem('token');
   // save new token to localStorage
@@ -32,6 +32,8 @@ export async function addItemToFavorites(userId, itemId) {
 
 export async function login(credentials) {
   const token = await usersAPI.login(credentials);
+  // remove the current token from localStorage
+  localStorage.removeItem('token');
   // Persist the token to localStorage
   localStorage.setItem('token', token);
   return getUser();
@@ -58,4 +60,12 @@ export function getUser() {
 
 export function logOut() {
   localStorage.removeItem('token');
+}
+
+export async function deleteUser(id) {
+  // get a new token with updated user info
+  const token = await usersAPI.deleteUser(id)
+  // remove the current token from localStorage
+  localStorage.removeItem('token');
+  return getUser()
 }
