@@ -5,7 +5,7 @@ const ensureLoggedIn = require('../../config/ensureLoggedIn')
 const { upload } = require('../../controllers/api/cloudinary')
 
 // POST -> /api/users - Create a user
-router.post('/', /* upload, */ dataController.create, apiController.auth)
+router.post('/', upload, dataController.create, apiController.auth)
 
 // POST -> /api/users/login - Login User
 router.post('/login', dataController.login, apiController.auth)
@@ -14,7 +14,7 @@ router.post('/login', dataController.login, apiController.auth)
 router.get('/check-token', ensureLoggedIn, checkToken)
 
 // PUT -> /api/users/:id - update User info
-router.put('/:id', /* upload, */ dataController.update, apiController.auth)
+router.put('/:id', upload, dataController.update, apiController.auth)
 
 // Delete -> /api/users/:id - delete user account
 router.delete('/:id', dataController.destroy)
@@ -23,6 +23,6 @@ router.delete('/:id', dataController.destroy)
 router.get('/:id/favorites', dataController.getFavorites)
 
 // PUT -> /api/users/:id/favorites - add an item to favorites
-router.put('/:id/favorites', dataController.addToFavorites, apiController.auth)
+router.put('/:id/favorites', dataController.toggleFavorites, apiController.auth)
 
 module.exports = router

@@ -1,5 +1,5 @@
 import { useEffect, useState } from "react"
-import { useParams } from "react-router-dom"
+import { Link, useParams } from "react-router-dom"
 import * as itemsAPI from '../../utilities/items-api'
 import * as ordersAPI from '../../utilities/orders-api'
 import FavoriteIcon from "../../components/FavoriteIcon/FavoriteIcon"
@@ -9,7 +9,6 @@ import ReviewList from '../../components/ReviewList/ReviewList'
 export default function ItemDetails({ setCart }) {
   const [item, setItem] = useState(null)
   let { itemId } = useParams()
-  console.log(typeof itemId)
 
   useEffect(() => {
     async function getItem() {
@@ -35,6 +34,7 @@ export default function ItemDetails({ setCart }) {
         </div>
         <div className={styles.itemInfo}>
           <div className={styles.name}>{item?.name}</div>
+          <Link to={`/sellershop/${item?.shop._id}`}><div className={styles.shopName}>{item?.shop.name}</div></Link>
           <div className={styles.description}>{item?.description}</div>
           <div className={styles.price}>${item?.price.toFixed(2)}</div>
           <FavoriteIcon className={styles.FavoriteIcon} />

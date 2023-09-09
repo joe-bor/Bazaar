@@ -6,12 +6,13 @@ import { updateUser } from '../../utilities/users-service'
 function EditUserForm({ user, setUser }) {
 
   const [values, setValues] = useState({
-    name: user.name,
-    email: user.email,
-    password: "",
-    confirm: "",
+
   })
 
+  // name: user.name,
+  // email: user.email,
+  // password: "",
+  // confirm: "",
   const inputs = [
     {
       id: "edit-name",
@@ -57,14 +58,38 @@ function EditUserForm({ user, setUser }) {
 
   ]
 
+  const imageInputProps = {
+    id: "edit-photo",
+    name: "file",
+    type: "file",
+    accept: ".png, .jpg, .jpeg",
+    errorMessage:
+      "File type must be .png, .jpeg, or .jpg",
+    label: "Profile Image"
+  }
+
   const handleInputChange = (e) => {
     setValues({ ...values, [e.target.name]: e.target.value })
   }
 
+  const handleImageChange = (e) => {
+    e.preventDefault()
+    let reader = new FileReader()
+    let file = e.target.files[0]
+    reader.onloadend = () => {
+      setValues({ ...values, file: reader.result })
+    }
+    reader.readAsDataURL(file)
+  }
+
   const handleSubmit = async (e) => {
     e.preventDefault()
-    const formData = { ...values }
-    delete formData.confirm
+    const formData = new FormData()
+    for (let key in values) {
+      if (key !== 'confirm') {
+        formData.append(key, values[key])
+      }
+    }
     const updatedUser = await updateUser(user._id, formData)
     setUser(updatedUser)
   }
@@ -73,7 +98,8 @@ function EditUserForm({ user, setUser }) {
     <>
       <h1 className={styles.h1}>Edit User Info</h1>
       <form className={styles.form} onSubmit={handleSubmit}>
-        {inputs.map(input => <FormInput key={input.id} {...input} value={values[input.name]} handleInputChange={handleInputChange} />)}
+        <FormInput {...imageInputProps} handleInputChange={handleImageChange} />
+        {/* {inputs.map(input => <FormInput key={input.id} {...input} value={values[input.name]} handleInputChange={handleInputChange} />)} */}
         <button formMethod='dialog'>Update</button>
       </form>
 
@@ -81,3 +107,4 @@ function EditUserForm({ user, setUser }) {
   )
 }
 export default EditUserForm
+

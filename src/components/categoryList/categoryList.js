@@ -9,7 +9,6 @@ export default function CategoryList({ categories, activeCat, setActiveCat }) {
       className={cat === activeCat ? styles.active : ''}
       onClick={() => {
         setActiveCat(cat)
-        hideHoverMenu()
       }}
     >
       {cat}

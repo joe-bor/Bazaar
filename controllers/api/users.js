@@ -11,6 +11,9 @@ const checkToken = (req, res) => {
 const dataController = {
     async create(req, res, next) {
         try {
+            if (res.locals.imageData) {
+                req.body.imageUrl = res.locals.imageData.secure_url
+            }
             const user = await User.create(req.body)
             //token will be a string
             const token = createJWT(user)
@@ -41,6 +44,9 @@ const dataController = {
 
     async update(req, res, next) {
         try {
+            if (res.locals.imageData) {
+                req.body.imageUrl = res.locals.imageData.secure_url
+            }
             const user = await User.findByIdAndUpdate(req.params.id, req.body, { new: true })
             if (!user) throw new Error('User not found')
             res.locals.data.user = user
@@ -60,13 +66,11 @@ const dataController = {
             res.status(400).json('User NOT Deleted')
         }
     },
-    async addToFavorites(req, res, next) {
+    async toggleFavorites(req, res, next) {
         try {
-            console.log(req.params.id)
             const user = await User.findOne({ _id: req.params.id })
-            console.log(user)
             const item = await Item.findOne({ _id: req.body.itemId })
-            user.favorites.addToSet(item._id)
+            user.favorites.includes(item._id) ? user.favorites.pull(item._id) : user.favorites.addToSet(item._id)
             await user.save()
             res.locals.data.user = user
             res.locals.data.token = createJWT(user)

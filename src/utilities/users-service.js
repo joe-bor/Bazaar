@@ -20,9 +20,9 @@ export async function updateUser(id, updatedUserData) {
   return getUser()
 }
 
-export async function addItemToFavorites(userId, itemId) {
+export async function toggleFavorites(userId, itemId) {
   // get a new token with updated user favorites
-  const token = await usersAPI.addItemToFavorites(userId, itemId)
+  const token = await usersAPI.toggleFavorites(userId, itemId)
   // remove the current token from localStorage
   localStorage.removeItem('token');
   // save new token to localStorage
