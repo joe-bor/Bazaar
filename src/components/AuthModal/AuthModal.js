@@ -3,54 +3,33 @@ import SignUpForm from "../SignUpForm/SignUpForm"
 import styles from './AuthModal.module.scss'
 import LoginForm from "../LoginForm/LoginForm"
 
-export default function AuthModal() {
+export default function AuthModal({ setUser, isAuthModalOpen, toggleAuthModal, handleCloseAuthModal }) {
 
   /* --- State --- */
   const modalRef = useRef()
-  const [isModalOpen, setIsModalOpen] = useState(false)
   const [showSignUp, setShowSignUp] = useState(true)
 
-  /* --- Functions --- */
-  const toggleModal = () => {
-    // if (isModalOpen){
-    //   modalRef.current.close()
-    //   setIsModalOpen(false)
-    // } else {
-    //   modalRef.current.showModal()
-    //   setIsModalOpen(true)
-    // }
-
-    setIsModalOpen(!isModalOpen)
-    console.log('Invoked toggleModal()')
-    console.log(isModalOpen)
-  }
-
-  const handleCloseModal = () => {
-    setIsModalOpen(false)
-    console.log('handleCloseModal invoked')
-  }
 
   const toggleModalContents = () => {
     setShowSignUp(!showSignUp)
   }
 
   useEffect(() => {
-    isModalOpen ? modalRef.current.showModal() : modalRef.current.close()
-    console.log(isModalOpen)
-  }, [isModalOpen])
+    isAuthModalOpen ? modalRef.current.showModal() : modalRef.current.close()
+  }, [isAuthModalOpen])
 
   return (
     <>
-      <button onClick={toggleModal}> {isModalOpen ? 'Close Modal' : 'Open Modal'} </button> //! DELETE when toggleModal has been anchored to the right element
-      <dialog className={styles.dialog} ref={modalRef} onClose={handleCloseModal}>
-        <button onClick={handleCloseModal}>X</button>
+      <button onClick={toggleAuthModal}> {isAuthModalOpen ? 'Close Modal' : 'Open Modal'} </button> //! needs to be anchored on login button in nav
+      <dialog className={styles.dialog} ref={modalRef} onClose={handleCloseAuthModal}>
+        <button onClick={handleCloseAuthModal}>X</button>
         {showSignUp ?
           <>
-            <SignUpForm />
+            <SignUpForm setUser={setUser}/>
             <p>Already a member? <strong onClick={toggleModalContents}>Login</strong></p>
           </> :
           <>
-            <LoginForm />
+            <LoginForm setUser={setUser}/>
             <p>Don't have an account? <strong onClick={toggleModalContents}>Sign Up</strong></p>
           </>
         }
@@ -59,5 +38,3 @@ export default function AuthModal() {
     </>
   )
 }
-
-//ADD: close dialog w/ button || click outside
