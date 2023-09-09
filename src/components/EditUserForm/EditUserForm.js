@@ -74,6 +74,7 @@ function EditUserForm({ user, setUser }) {
 
   const handleImageChange = (e) => {
     e.preventDefault()
+    console.log(e.target.files)
     let reader = new FileReader()
     let file = e.target.files[0]
     reader.onloadend = () => {
@@ -84,6 +85,7 @@ function EditUserForm({ user, setUser }) {
 
   const handleSubmit = async (e) => {
     e.preventDefault()
+    console.log(e.target.files)
     const formData = new FormData()
     for (let key in values) {
       if (key !== 'confirm') {
@@ -97,7 +99,7 @@ function EditUserForm({ user, setUser }) {
   return (
     <>
       <h1 className={styles.h1}>Edit User Info</h1>
-      <form className={styles.form} onSubmit={handleSubmit}>
+      <form className={styles.form} onSubmit={handleSubmit} >
         <FormInput {...imageInputProps} handleInputChange={handleImageChange} />
         {/* {inputs.map(input => <FormInput key={input.id} {...input} value={values[input.name]} handleInputChange={handleInputChange} />)} */}
         <button formMethod='dialog'>Update</button>

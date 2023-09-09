@@ -8,7 +8,7 @@ const fileUpload = require('express-fileupload')
 
 
 app.use(express.json());
-app.use(express.urlencoded({ extended: false }));
+// app.use(express.urlencoded({ extended: false }));
 app.use(fileUpload({
 	limits: { fileSize: 40 * 1024 * 1024 }
 }))

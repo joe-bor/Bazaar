@@ -229,6 +229,7 @@ function EditUserForm(_ref) {
   };
   const handleImageChange = e => {
     e.preventDefault();
+    console.log(e.target.files);
     let reader = new FileReader();
     let file = e.target.files[0];
     reader.onloadend = () => {
@@ -241,6 +242,7 @@ function EditUserForm(_ref) {
   const handleSubmit = /*#__PURE__*/function () {
     var _ref2 = _asyncToGenerator(function* (e) {
       e.preventDefault();
+      console.log(e.target.files);
       const formData = new FormData();
       for (let key in values) {
         if (key !== 'confirm') {
