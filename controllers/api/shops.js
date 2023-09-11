@@ -1,21 +1,24 @@
 const Shop = require('../../models/shop')
 const Item = require('../../models/item')
+const User = require('../../models/user')
 const Category = require('../../models/category')
 const cloudinary = require('../../config/cloudinary')
 const category = require('../../models/category')
+const shop = require('../../models/shop')
 /* -----shop controllers-----*/
 
 // Create a new shop
 exports.createShop = async (req, res) => {
     try {
-        console.log(req.user)
         const newShop = await Shop.create({
             seller: req.user._id,
             name: req.body.name,
             heroImage: req.body.heroImage,
             rating: null
         })
-        res.status(200).json(newShop)
+        const user = await User.findOneAndUpdate({ _id: req.user._id }, { shop: newShop._id }, { new: true })
+        console.log(user)
+        res.status(200).json({ user, newShop })
     } catch (error) {
         res.status(400).json({ error: error.message })
     }
@@ -30,7 +33,7 @@ exports.updateShop = async (req, res) => {
             return res.status(404).json({ error: 'Shop not found' })
         }
 
-        res.json(shop)
+        res.status(200).json(shop)
     } catch (error) {
         res.status(400).json({ error: 'Could not update shop' })
     }
@@ -52,7 +55,7 @@ exports.getShop = async (req, res) => {
             return res.status(404).json({ error: 'Shop not found' })
         }
 
-        res.json(shop)
+        res.status(200).json(shop)
     } catch (error) {
         res.status(400).json({ error: 'Could not find shop' })
     }
