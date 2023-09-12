@@ -16,14 +16,14 @@
 - We proudly present our rendition of Etsy, [Bazaar](INSERT_LIVE_LINK_HERE).
 
 ## SERVICES AND TECHNOLOGYIES USED
-- react: 
 - digitalOcean: developer-ready site hosting service
 - cloudinary: online image hosting api
 - mongoDb: backend database for storing user, shop, item, category, review, and order documents
-- Node Package Manager (npm): 
 - favicon: design a website's 'thumbnail' tab image
 
 ### DEPENDENCIES
+[![My Skills](https://skillicons.dev/icons?i=express,mongodb)](https://skillicons.dev)
+
 - bcrypt: 
 - cloudinary: 
 - cors: 
@@ -37,13 +37,14 @@
 
 
 ### DEV DEPENDENCIES
+[![My Skills](https://skillicons.dev/icons?i=babel,bootstrap,css,gulp,html,js,nodejs,react,sass,webpack)](https://skillicons.dev)
 - auto-prefixer: 
 - babel-loader: 
 - bootstrap: 
 - browser-sync: 
 - clean-webpack-plugin: 
 - css-loader: 
-- [![My Skills](https://skillicons.dev/icons?i=gulp)](https://skillicons.dev) gulp: 
+- gulp: 
 - gulp-autoprefixer: 
 - gulp-nodemon: 
 - gulp-sass: 
