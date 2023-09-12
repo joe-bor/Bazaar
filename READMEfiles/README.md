@@ -13,12 +13,15 @@
     - Michael Terry | [github](https://github.com/m-j-terry) | [linkedIn](https://www.linkedin.com/in/michaeljterry/)
     - Nick Daly | [github](https://github.com/ndaly94) | [linkedIn](https://www.linkedin.com/in/nickdaly94/)
 - Project Scope: Using all of the skills you have gained over the ()span of your Software Engineering Intensive, create a fullstack application that functions like Etsy. 
+- We proudly present our rendition of Etsy, [Bazaar](INSERT_LIVE_LINK_HERE).
 
 ## SERVICES AND TECHNOLOGYIES USED
 - react: 
+- digitalOcean: developer-ready site hosting service
 - cloudinary: online image hosting api
-- mongoDb: backend database
+- mongoDb: backend database for storing user, shop, item, category, review, and order documents
 - Node Package Manager (npm): 
+- favicon: design a website's 'thumbnail' tab image
 
 ### DEPENDENCIES
     - bcrypt: 
@@ -62,4 +65,5 @@
 
 ## WIREFRAMES
 
-## 
+## FIGMA
+To view our planning board, [click here](https://www.figma.com/file/Eh7AufNdAxLPeFjIagL5ta/Etsy-Planning?type=whiteboard&node-id=0-1&t=jBGSAW68tShpsCj9-0)!
