@@ -10,7 +10,7 @@ module.exports = {
     history
 };
 
-// cart is the unpaid order for a user
+// Cart is the unpaid order for a user
 async function cart(req, res) {
     try {
         const cart = await Order.getCart(req.user._id);

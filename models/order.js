@@ -2,6 +2,7 @@ const mongoose = require('mongoose')
 const Schema = mongoose.Schema
 const itemSchema = require('./itemSchema')
 
+// Define the line item Schema
 const lineItemSchema = new Schema({
     qty: { type: Number, default: 1 },
     item: itemSchema
@@ -10,10 +11,12 @@ const lineItemSchema = new Schema({
     toJSON: { virtuals: true }
 })
 
+// Virtural field to calculate the extended price of a line item
 lineItemSchema.virtual('extPrice').get(function () {
     return this.qty * this.item.price
 })
 
+// Define the order Schema
 const orderSchema = new Schema({
     user: { type: Schema.Types.ObjectId, ref: 'User' },
     shop: { type: Schema.Types.ObjectId, ref: 'Shop' },
@@ -25,22 +28,27 @@ const orderSchema = new Schema({
     toJSON: { virtuals: true }
 })
 
+// Virtual field to calculate the total order amount
 orderSchema.virtual('orderTotal').get(function () {
     return this.lineItems.reduce((total, item) => total + item.extPrice, 0)
 })
 
+
+// Virtual field to calculate the total quantity of items in order
 orderSchema.virtual('totalQty').get(function () {
     return this.lineItems.reduce((total, item) => total + item.qty, 0)
 })
 
+// Virtual field to generate a custom order ID
 orderSchema.virtual('orderId').get(function () {
     return this.id.slice(-6).toUpperCase()
 })
 
+// Static method to get the users shopping cart
 orderSchema.statics.getCart = function (userId) {
-    // find all unpaid orders
+    // Find all unpaid orders
     const cart = this.find({ user: userId, isPaid: false }).populate({ path: 'shop', select: 'name' }).exec()
-    // if no orders exist, create a new order
+    // If no car exists, create a new order
     if (!cart) {
         cart = this.create({ user: userId })
     }
@@ -56,20 +64,19 @@ orderSchema.methods.addItemToCart = async function (itemId) {
     if (lineItem) {
         lineItem.qty += 1
     } else {
+        // Find the item by its ID and add it to the cart
         const item = await mongoose.model('Item').findById(itemId)
         order.lineItems.push({ item })
     }
     return order.save()
 }
 
-// method to set an item's quantity within the cart (adds an item if it doesn't exist)
+// Method to set an item's quantity within the cart (adds an item if it doesn't exist)
 orderSchema.methods.setItemQty = function (itemId, newQty) {
-    // this is attached to the cart (order doc)
     const order = this
-    // Finds the line item in the cart for the item
     const lineItem = order.lineItems.find(lineItem => lineItem.item._id.equals(itemId))
     if (lineItem && newQty <= 0) {
-        // Calling deleteOne(), deletes itself from the cart.lineItems array
+        // If new qty is 0 or negative, remove it from the cart
         lineItem.deleteOne()
     } else if (lineItem) {
         // Set new qty
