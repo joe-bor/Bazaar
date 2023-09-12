@@ -5,8 +5,7 @@ import styles from './ShopManagement.module.scss'
 import CreateShop from "../../components/CreateShop/CreateShop";
 import CreateProduct from "../../components/CreateProduct/CreateProduct";
 
-export default function ShopManagement({ user, setUser }) {
-  const [userShop, setUserShop] = useState(null)
+export default function ShopManagement({ user, setUser,userShop, setUserShop }) {
   const [productModalOpen, setProductModalOpen] = useState(false)
   const [shopEditModalOpen, setShopEditModalOpen] = useState(false)
   const productModalRef = useRef()
@@ -46,6 +45,9 @@ export default function ShopManagement({ user, setUser }) {
   }
 
   return (
+    <>
+    {userShop ?
+
     <div className={styles.ShopManagement}>
       <div className={styles.shopImage}>
         {/* <img src={userShop.heroImage} /> */}
@@ -69,5 +71,7 @@ export default function ShopManagement({ user, setUser }) {
       <dialog ref={shopEditModalRef} onClose={toggleEditShop}><CreateShop user={user} setUser={setUser} location={location} shop={userShop} setShop={setUserShop} /></dialog>
       <dialog ref={productModalRef} onClose={toggleCreateProduct}><CreateProduct user={user} setUser={setUser} location={location} /></dialog>
     </div>
+     : 'Fetching...'}
+    </>
   )
 }

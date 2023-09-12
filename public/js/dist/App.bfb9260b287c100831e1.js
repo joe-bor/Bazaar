@@ -282,6 +282,7 @@ function CreateProduct(_ref) {
 /* harmony import */ var _CreateShop_module_scss__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! ./CreateShop.module.scss */ "./src/components/CreateShop/CreateShop.module.scss");
 /* harmony import */ var _FormInput_FormInput__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! ../FormInput/FormInput */ "./src/components/FormInput/FormInput.js");
 /* harmony import */ var react_router_dom__WEBPACK_IMPORTED_MODULE_3__ = __webpack_require__(/*! react-router-dom */ "./node_modules/react-router/dist/index.js");
+/* harmony import */ var _utilities_users_service__WEBPACK_IMPORTED_MODULE_5__ = __webpack_require__(/*! ../../utilities/users-service */ "./src/utilities/users-service.js");
 /* provided dependency */ var React = __webpack_require__(/*! react */ "./node_modules/react/index.js");
 function _extends() { _extends = Object.assign ? Object.assign.bind() : function (target) { for (var i = 1; i < arguments.length; i++) { var source = arguments[i]; for (var key in source) { if (Object.prototype.hasOwnProperty.call(source, key)) { target[key] = source[key]; } } } return target; }; return _extends.apply(this, arguments); }
 function asyncGeneratorStep(gen, resolve, reject, _next, _throw, key, arg) { try { var info = gen[key](arg); var value = info.value; } catch (error) { reject(error); return; } if (info.done) { resolve(value); } else { Promise.resolve(value).then(_next, _throw); } }
@@ -296,13 +297,14 @@ function _toPrimitive(input, hint) { if (typeof input !== "object" || input === 
 
 
 
+
 function CreateShop(_ref) {
   let {
     user,
     setUser,
     location,
-    shop,
-    setShop
+    userShop,
+    setUserShop
   } = _ref;
   const [shopValues, setShopValues] = (0,react__WEBPACK_IMPORTED_MODULE_0__.useState)({
     name: '',
@@ -316,7 +318,7 @@ function CreateShop(_ref) {
     name: "name",
     type: "text",
     placeholder: "Shop Name",
-    value: location.pathname === './account' ? shopValues.name : shop === null || shop === void 0 ? void 0 : shop.name,
+    value: location.pathname === './account' ? shopValues.name : userShop === null || userShop === void 0 ? void 0 : userShop.name,
     errorMessage: "Shop name is required and can't include special characters",
     label: "Shop Name",
     pattern: "^[A-Za-z0-9 ']+$",
@@ -326,7 +328,7 @@ function CreateShop(_ref) {
     name: "description",
     type: "text",
     placeholder: "Shop Description",
-    value: location.pathname === './account' ? shopValues.description : shop === null || shop === void 0 ? void 0 : shop.description,
+    value: location.pathname === './account' ? shopValues.description : userShop === null || userShop === void 0 ? void 0 : userShop.description,
     errorMessage: "Shop description is required",
     label: "Shop Description",
     required: true
@@ -359,10 +361,18 @@ function CreateShop(_ref) {
         setShop(updatedShop);
       } else {
         // send request to create shop
-        const newData = yield (0,_utilities_shops_api__WEBPACK_IMPORTED_MODULE_4__.createShop)(formData);
+        const {
+          shopOwner,
+          shop
+        } = yield (0,_utilities_shops_api__WEBPACK_IMPORTED_MODULE_4__.createShop)({
+          seller: user._id,
+          name: shopValues.name,
+          description: shopValues.description
+        });
         // set user state to have shop info
-        console.log(newData.user);
-        setUser(newData.user);
+        const updatedUser = yield (0,_utilities_users_service__WEBPACK_IMPORTED_MODULE_5__.updateUser)(user._id, shopOwner);
+        setUser(updatedUser);
+        setUserShop(shop);
         // navigate('/shopmgmt')
       }
     });
@@ -374,7 +384,7 @@ function CreateShop(_ref) {
     className: "form-container"
   }, /*#__PURE__*/React.createElement("h1", {
     className: _CreateShop_module_scss__WEBPACK_IMPORTED_MODULE_1__["default"].h1
-  }, location.pathname === './account' ? 'Create A Shop' : 'Edit Shop Details'), /*#__PURE__*/React.createElement("form", {
+  }, location.pathname === '/account' ? 'Create A Shop' : 'Edit Shop Details'), /*#__PURE__*/React.createElement("form", {
     autoComplete: "off",
     onSubmit: handleShopSubmit
   }, shopInputs.map(input => /*#__PURE__*/React.createElement(_FormInput_FormInput__WEBPACK_IMPORTED_MODULE_2__["default"], _extends({
@@ -1260,18 +1270,22 @@ function SignUpForm(_ref) {
 /* harmony export */   "default": () => (/* binding */ UserLogOut)
 /* harmony export */ });
 /* harmony import */ var _UserLogOut_module_scss__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! ./UserLogOut.module.scss */ "./src/components/UserLogOut/UserLogOut.module.scss");
-/* harmony import */ var _utilities_users_service__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! ../../utilities/users-service */ "./src/utilities/users-service.js");
+/* harmony import */ var _utilities_users_service__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! ../../utilities/users-service */ "./src/utilities/users-service.js");
+/* harmony import */ var react_router_dom__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! react-router-dom */ "./node_modules/react-router/dist/index.js");
 /* provided dependency */ var React = __webpack_require__(/*! react */ "./node_modules/react/index.js");
+
 
 
 function UserLogOut(_ref) {
   let {
     createGuestUser
   } = _ref;
+  const navigate = (0,react_router_dom__WEBPACK_IMPORTED_MODULE_1__.useNavigate)();
   function handleLogOut() {
-    (0,_utilities_users_service__WEBPACK_IMPORTED_MODULE_1__.logOut)();
+    (0,_utilities_users_service__WEBPACK_IMPORTED_MODULE_2__.logOut)();
     // create a new guest user
     createGuestUser();
+    navigate('/');
   }
   return /*#__PURE__*/React.createElement("div", {
     className: _UserLogOut_module_scss__WEBPACK_IMPORTED_MODULE_0__["default"].UserLogOut
@@ -1407,7 +1421,9 @@ function AccountPage(_ref) {
   let {
     user,
     setUser,
-    createGuestUser
+    createGuestUser,
+    userShop,
+    setUserShop
   } = _ref;
   const [editModalOpen, setEditModalOpen] = (0,react__WEBPACK_IMPORTED_MODULE_3__.useState)(false);
   const [shopModalOpen, setShopModalOpen] = (0,react__WEBPACK_IMPORTED_MODULE_3__.useState)(false);
@@ -1462,17 +1478,21 @@ function AccountPage(_ref) {
     onClick: () => navigate('favorites')
   }, "See All")), /*#__PURE__*/React.createElement("dialog", {
     ref: editModalRef,
-    onClose: toggleEditModal
+    onClose: toggleEditModal,
+    onSubmit: toggleEditModal
   }, /*#__PURE__*/React.createElement(_components_EditUserForm_EditUserForm__WEBPACK_IMPORTED_MODULE_1__["default"], {
     user: user,
     setUser: setUser
   })), /*#__PURE__*/React.createElement("dialog", {
     ref: shopModalRef,
-    onClose: toggleCreateShop
+    onClose: toggleCreateShop,
+    onSubmit: toggleCreateShop
   }, /*#__PURE__*/React.createElement(_components_CreateShop_CreateShop__WEBPACK_IMPORTED_MODULE_5__["default"], {
     user: user,
     setUser: setUser,
-    location: location
+    location: location,
+    userShop: userShop,
+    setUserShop: setUserShop
   })));
 }
 
@@ -1539,6 +1559,7 @@ function App() {
     totalItemQty: 0,
     totalPrice: 0
   });
+  const [userShop, setUserShop] = (0,react__WEBPACK_IMPORTED_MODULE_0__.useState)(null);
   const categoriesRef = (0,react__WEBPACK_IMPORTED_MODULE_0__.useRef)([]);
   const navigate = (0,react_router_dom__WEBPACK_IMPORTED_MODULE_15__.useNavigate)();
   let location = (0,react_router_dom__WEBPACK_IMPORTED_MODULE_15__.useLocation)();
@@ -1664,7 +1685,9 @@ function App() {
       className: _App_module_scss__WEBPACK_IMPORTED_MODULE_1__["default"].AccountPage,
       user: user,
       setUser: setUser,
-      createGuestUser: createGuestUser
+      createGuestUser: createGuestUser,
+      userShop: userShop,
+      setUserShop: setUserShop
     })
   }), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default().createElement(react_router_dom__WEBPACK_IMPORTED_MODULE_15__.Route, {
     path: "/favorites",
@@ -1704,7 +1727,8 @@ function App() {
     path: "/shopmgmt",
     element: /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default().createElement(_ShopManagement_ShopManagement__WEBPACK_IMPORTED_MODULE_11__["default"], {
       user: user,
-      setUser: setUser
+      setUser: setUser,
+      userShop: userShop
     })
   }), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default().createElement(react_router_dom__WEBPACK_IMPORTED_MODULE_15__.Route, {
     path: "/*",
@@ -2227,9 +2251,10 @@ function _asyncToGenerator(fn) { return function () { var self = this, args = ar
 function ShopManagement(_ref) {
   let {
     user,
-    setUser
+    setUser,
+    userShop,
+    setUserShop
   } = _ref;
-  const [userShop, setUserShop] = (0,react__WEBPACK_IMPORTED_MODULE_0__.useState)(null);
   const [productModalOpen, setProductModalOpen] = (0,react__WEBPACK_IMPORTED_MODULE_0__.useState)(false);
   const [shopEditModalOpen, setShopEditModalOpen] = (0,react__WEBPACK_IMPORTED_MODULE_0__.useState)(false);
   const productModalRef = (0,react__WEBPACK_IMPORTED_MODULE_0__.useRef)();
@@ -2273,7 +2298,7 @@ function ShopManagement(_ref) {
     });
     return _deleteUserShop.apply(this, arguments);
   }
-  return /*#__PURE__*/React.createElement("div", {
+  return /*#__PURE__*/React.createElement(React.Fragment, null, userShop ? /*#__PURE__*/React.createElement("div", {
     className: _ShopManagement_module_scss__WEBPACK_IMPORTED_MODULE_1__["default"].ShopManagement
   }, /*#__PURE__*/React.createElement("div", {
     className: _ShopManagement_module_scss__WEBPACK_IMPORTED_MODULE_1__["default"].shopImage
@@ -2303,7 +2328,7 @@ function ShopManagement(_ref) {
     user: user,
     setUser: setUser,
     location: location
-  })));
+  }))) : 'Fetching...');
 }
 
 /***/ }),

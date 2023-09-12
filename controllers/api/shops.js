@@ -15,7 +15,8 @@ exports.createShop = async (req, res) => {
             seller: req.user._id,
             name: req.body.name,
             heroImage: req.body.heroImage,
-            rating: null
+            rating: null,
+            description: req.body.description
         })
 
         // Update the user document with the new shop ID
