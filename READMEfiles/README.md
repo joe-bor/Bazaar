@@ -1,4 +1,4 @@
-![GeneralAssemblyImage](https://cdn.cookielaw.org/logos/8940117c-e735-4010-9984-0b12ad7dc7fc/cec765fd-1887-4e23-8fe2-24147842eac8/7748ce35-3f26-4dc4-8748-08e679425095/CMYK-Red-Black_Small_GeneralAssembly-Stacked.png)
+![GeneralAssemblyImage](https://ga-website-production-herokuapp-com.global.ssl.fastly.net/packs/media/assets/images/logo_1200_by_627-e2f4e80d2e8073fa1b8c0a2bb36f2d46.jpg)
 
 # General Assembly Group Capstone Project (Donna/Frances Cohort)
 - Instructor: Arthur Bernier Jr
@@ -15,12 +15,50 @@
 - Project Scope: Using all of the skills you have gained over the ()span of your Software Engineering Intensive, create a fullstack application that functions like Etsy. 
 
 ## SERVICES AND TECHNOLOGYIES USED
+- react: 
+- cloudinary: online image hosting api
+- mongoDb: backend database
+- Node Package Manager (npm): 
 
+### DEPENDENCIES
+    - bcrypt: 
+    - cloudinary: 
+    - cors: 
+    - dotenv: 
+    - express: 
+    - express-fileupload: 
+    - jsonwebtoken: 
+    - mongoose: 
+    - morgan: 
+    - serve-favicon:
 
-## DEPENDENCIES
-- gulp, 
+### DEV DEPENDENCIES
+    - auto-prefixer: 
+    - babel-loader: 
+    - bootstrap: 
+    - browser-sync: 
+    - clean-webpack-plugin: 
+    - css-loader: 
+    - gulp: 
+    - gulp-autoprefixer: 
+    - gulp-nodemon: 
+    - gulp-sass: 
+    - html-webpack-plugin: 
+    - mini-css-extract-plugin: 
+    - postcss-loader: 
+    - prettier-loader: 
+    - react: 
+    - react-dom: 
+    - react-router-dom: 
+    - sass: 
+    - sass-loader: 
+    - source-map-loader: 
+    - style-loader: 
+    - webpack: 
+    - webpack-cli:
 
 ## ERD
+![](ERD.pdf)
 
 ## WIREFRAMES
 
