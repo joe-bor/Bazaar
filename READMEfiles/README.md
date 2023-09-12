@@ -43,7 +43,7 @@
 - browser-sync: 
 - clean-webpack-plugin: 
 - css-loader: 
-- ![](https://skillicons.dev/icons?i=gulp) gulp: 
+- [![My Skills](https://skillicons.dev/icons?i=gulp)](https://skillicons.dev) gulp: 
 - gulp-autoprefixer: 
 - gulp-nodemon: 
 - gulp-sass: 
