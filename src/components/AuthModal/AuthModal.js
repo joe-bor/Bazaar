@@ -20,7 +20,6 @@ export default function AuthModal({ setUser, isAuthModalOpen, toggleAuthModal, h
 
   return (
     <>
-      <button onClick={toggleAuthModal}> {isAuthModalOpen ? 'Close Modal' : 'Open Modal'} </button> //! needs to be anchored on login button in nav
       <dialog className={styles.dialog} ref={modalRef} onClose={handleCloseAuthModal}>
         <button onClick={handleCloseAuthModal}>X</button>
         {showSignUp ?
