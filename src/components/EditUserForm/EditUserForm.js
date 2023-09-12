@@ -85,6 +85,10 @@ function EditUserForm({ user, setUser }) {
 
   const handleSubmit = async (e) => {
     e.preventDefault()
+    // once you have the file from the user's comupter, call set file and then save that to the state variable
+    // then send the file from state to the upload route - need separate function to handle upload function (need utility)
+    // then use a .then to senf the request to update user
+
     console.log(e.target.files)
     const formData = new FormData()
     for (let key in values) {
