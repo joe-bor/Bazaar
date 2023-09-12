@@ -2614,7 +2614,7 @@ function removeItemFromShop(itemId) {
 
 const BASE_URL = '/api/users';
 function signUp(userData) {
-  return (0,_send_request__WEBPACK_IMPORTED_MODULE_0__.sendUrlFormData)(BASE_URL, 'POST', userData);
+  return (0,_send_request__WEBPACK_IMPORTED_MODULE_0__["default"])(BASE_URL, 'POST', userData);
 }
 function login(credentials) {
   return (0,_send_request__WEBPACK_IMPORTED_MODULE_0__["default"])("".concat(BASE_URL, "/login"), 'POST', credentials);
@@ -2703,6 +2703,7 @@ function _signUp() {
     // users-api.js module which will ultimately
     // return the JWT
     const token = yield _users_api__WEBPACK_IMPORTED_MODULE_0__.signUp(userData);
+
     // Persist the token to localStorage
     localStorage.setItem('token', token);
     return getUser();
