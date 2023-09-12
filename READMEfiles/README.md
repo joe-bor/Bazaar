@@ -64,6 +64,32 @@
 ![](ERD.png)
 
 ## WIREFRAMES
+### Home Page
+![](HomePage.png)
 
-## FIGMA
-To view our planning board, [click here](https://www.figma.com/file/Eh7AufNdAxLPeFjIagL5ta/Etsy-Planning?type=whiteboard&node-id=0-1&t=jBGSAW68tShpsCj9-0)!
+### Shop Page
+![](ShopPage.png)
+
+### Seller Shop Page
+![](SellerShop.png)
+
+### Item Detail Page
+![](ItemDetail.png)
+
+### Cart Page
+![](Cart.png)
+
+### Checkout Page
+![](Checkout.png)
+
+### Order History Page
+![](OrderHistory.png)
+
+### User Profile Page
+![](UserProfile.png)
+
+### Favorites Page
+![](Favorites.png)
+
+### Shop Management Page
+![](ShopManagement.png)
