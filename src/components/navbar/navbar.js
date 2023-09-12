@@ -6,6 +6,7 @@ import cartIcon from '../../assets/images/cart-icon.svg'
 import favHeart from '../../assets/images/fav-heart.svg'
 import shopIcon from '../../assets/images/shop-icon.svg'
 import SearchBar from '../SearchBar/SearchBar.js'
+import Logo from '../Logo/Logo'
 
 export default function NavBar({
     categories,
@@ -27,13 +28,17 @@ export default function NavBar({
 
 }) {
 
+
+    // clicking on logo takes you home
+    function handleLogoClick() {
+        navigate('/home')
+    }
+
     return (
         <nav className={styles.NavBar}>
             <div className={styles.topLine}>
                 <div className="navbar-logo">
-                    <Link to="/">
-                        <img src="./img/logo.png" alt="logo" />
-                    </Link>
+                    <Logo className={styles.Logo} onClick={handleLogoClick} />
                 </div>
                 <div className="navbar-search">
                     <SearchBar searchTerm={searchTerm} setSearchTerm={setSearchTerm} />
@@ -48,7 +53,7 @@ export default function NavBar({
                     ))}
                 </ul>
             </div>
-            <div className="navbar-icons">
+            <div className={styles.icons}>
                 <Link to="/favorites">
                     <div>
                         <i className="heart"></i>

@@ -103,11 +103,6 @@ export default function App() {
     setUser(guestUser)
   }
 
-  // clicking on logo takes you home
-  function handleLogoClick() {
-    navigate('/home')
-  }
-
 
   return (
     <main className={styles.App}>
