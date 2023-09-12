@@ -24,42 +24,42 @@
 - favicon: design a website's 'thumbnail' tab image
 
 ### DEPENDENCIES
-    - bcrypt: 
-    - cloudinary: 
-    - cors: 
-    - dotenv: 
-    - express: 
-    - express-fileupload: 
-    - jsonwebtoken: 
-    - mongoose: 
-    - morgan: 
-    - serve-favicon:
+- bcrypt: 
+- cloudinary: 
+- cors: 
+- dotenv: 
+- express: 
+- express-fileupload: 
+- jsonwebtoken: 
+- mongoose: 
+- morgan: 
+- serve-favicon:
 
 
 ### DEV DEPENDENCIES
-    - auto-prefixer: 
-    - babel-loader: 
-    - bootstrap: 
-    - browser-sync: 
-    - clean-webpack-plugin: 
-    - css-loader: 
-    ![](https://skillicons.dev/icons?i=gulp) gulp: 
-    - gulp-autoprefixer: 
-    - gulp-nodemon: 
-    - gulp-sass: 
-    - html-webpack-plugin: 
-    - mini-css-extract-plugin: 
-    - postcss-loader: 
-    - prettier-loader: 
-    - react: 
-    - react-dom: 
-    - react-router-dom: 
-    - sass: 
-    - sass-loader: 
-    - source-map-loader: 
-    - style-loader: 
-    - webpack: 
-    - webpack-cli:
+- auto-prefixer: 
+- babel-loader: 
+- bootstrap: 
+- browser-sync: 
+- clean-webpack-plugin: 
+- css-loader: 
+- ![](https://skillicons.dev/icons?i=gulp) gulp: 
+- gulp-autoprefixer: 
+- gulp-nodemon: 
+- gulp-sass: 
+- html-webpack-plugin: 
+- mini-css-extract-plugin: 
+- postcss-loader: 
+- prettier-loader: 
+- react: 
+- react-dom: 
+- react-router-dom: 
+- sass: 
+- sass-loader: 
+- source-map-loader: 
+- style-loader: 
+- webpack: 
+- webpack-cli:
 
 ## ERD
 ![](ERD.png)
