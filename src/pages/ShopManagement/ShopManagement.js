@@ -4,8 +4,9 @@ import * as shopsAPI from '../../utilities/shops-api'
 import styles from './ShopManagement.module.scss'
 import CreateShop from "../../components/CreateShop/CreateShop";
 import CreateProduct from "../../components/CreateProduct/CreateProduct";
+import ProductListItem from '../../components/productListItem/productListItem';
 
-export default function ShopManagement({ user, setUser,userShop, setUserShop }) {
+export default function ShopManagement({ user, setUser, userShop, setUserShop, categories }) {
   const [productModalOpen, setProductModalOpen] = useState(false)
   const [shopEditModalOpen, setShopEditModalOpen] = useState(false)
   const productModalRef = useRef()
@@ -45,9 +46,6 @@ export default function ShopManagement({ user, setUser,userShop, setUserShop }) 
   }
 
   return (
-    <>
-    {userShop ?
-
     <div className={styles.ShopManagement}>
       <div className={styles.shopImage}>
         {/* <img src={userShop.heroImage} /> */}
@@ -66,12 +64,10 @@ export default function ShopManagement({ user, setUser,userShop, setUserShop }) 
       </div>
       <div>
         <h2>Products</h2>
-        {/* 🟥 Products Section Here 🟥 */}
+        { userShop && userShop.products ? userShop.products.map( product => <ProductListItem key={product._id} productItem={product} user={user} setUser={setUser} />) : null  }
       </div>
-      <dialog ref={shopEditModalRef} onClose={toggleEditShop}><CreateShop user={user} setUser={setUser} location={location} shop={userShop} setShop={setUserShop} /></dialog>
-      <dialog ref={productModalRef} onClose={toggleCreateProduct}><CreateProduct user={user} setUser={setUser} location={location} /></dialog>
+      <dialog ref={shopEditModalRef} onClose={toggleEditShop}><CreateShop user={user} setUser={setUser} location={location} userShop={userShop} setUserShop={setUserShop} /></dialog>
+      <dialog ref={productModalRef} onClose={toggleCreateProduct}><CreateProduct user={user} setUser={setUser} location={location} userShop={userShop} setUserShop={setUserShop} categories={categories} /></dialog>
     </div>
-     : 'Fetching...'}
-    </>
   )
 }

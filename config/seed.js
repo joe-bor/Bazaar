@@ -113,6 +113,7 @@ const Item = require('../models/item');
     await shop.save()
   }
 
+  console.log('DONE SEEDING 🌱')
   process.exit();
 
 })();

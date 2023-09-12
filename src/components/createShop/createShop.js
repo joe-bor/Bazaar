@@ -21,7 +21,7 @@ export default function CreateShop({ user, setUser, location, userShop, setUserS
       name: "name",
       type: "text",
       placeholder: "Shop Name",
-      value: location.pathname === './account' ? shopValues.name : userShop?.name,
+      value: location.pathname === '/account' ? shopValues.name : userShop?.name,
       errorMessage:
         "Shop name is required and can't include special characters",
       label: "Shop Name",
@@ -33,7 +33,7 @@ export default function CreateShop({ user, setUser, location, userShop, setUserS
       name: "description",
       type: "text",
       placeholder: "Shop Description",
-      value: location.pathname === './account' ? shopValues.description : userShop?.description,
+      value: location.pathname === '/account' ? shopValues.description : userShop?.description,
       errorMessage: "Shop description is required",
       label: "Shop Description",
       required: true,
@@ -61,8 +61,8 @@ export default function CreateShop({ user, setUser, location, userShop, setUserS
     const formData = { ...shopValues }
     if (location.pathname === '/shopmgmt') {
       // send request to update shop
-      const updatedShop = await editShopInfo(formData)
-      setShop(updatedShop)
+      const updatedShop = await editShopInfo(userShop._id, formData)
+      setUserShop(updatedShop)
 
     } else {
       // send request to create shop

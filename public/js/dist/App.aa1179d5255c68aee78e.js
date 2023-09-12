@@ -151,10 +151,10 @@ function CategorySection(_ref) {
 /* harmony export */ });
 /* harmony import */ var react__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! react */ "./node_modules/react/index.js");
 /* harmony import */ var react__WEBPACK_IMPORTED_MODULE_0___default = /*#__PURE__*/__webpack_require__.n(react__WEBPACK_IMPORTED_MODULE_0__);
-/* harmony import */ var _utilities_items_api__WEBPACK_IMPORTED_MODULE_4__ = __webpack_require__(/*! ../../utilities/items-api */ "./src/utilities/items-api.js");
 /* harmony import */ var _CreateProduct_module_scss__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! ./CreateProduct.module.scss */ "./src/components/CreateProduct/CreateProduct.module.scss");
 /* harmony import */ var _FormInput_FormInput__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! ../FormInput/FormInput */ "./src/components/FormInput/FormInput.js");
 /* harmony import */ var react_router_dom__WEBPACK_IMPORTED_MODULE_3__ = __webpack_require__(/*! react-router-dom */ "./node_modules/react-router/dist/index.js");
+/* harmony import */ var _utilities_shops_api__WEBPACK_IMPORTED_MODULE_4__ = __webpack_require__(/*! ../../utilities/shops-api */ "./src/utilities/shops-api.js");
 /* provided dependency */ var React = __webpack_require__(/*! react */ "./node_modules/react/index.js");
 function _extends() { _extends = Object.assign ? Object.assign.bind() : function (target) { for (var i = 1; i < arguments.length; i++) { var source = arguments[i]; for (var key in source) { if (Object.prototype.hasOwnProperty.call(source, key)) { target[key] = source[key]; } } } return target; }; return _extends.apply(this, arguments); }
 function asyncGeneratorStep(gen, resolve, reject, _next, _throw, key, arg) { try { var info = gen[key](arg); var value = info.value; } catch (error) { reject(error); return; } if (info.done) { resolve(value); } else { Promise.resolve(value).then(_next, _throw); } }
@@ -170,15 +170,19 @@ function _toPrimitive(input, hint) { if (typeof input !== "object" || input === 
 
 
 function CreateProduct(_ref) {
+  var _shop, _shop2, _shop3;
   let {
     user,
-    shop,
-    setShop
+    setUser,
+    userShop,
+    setUserShop,
+    categories
   } = _ref;
   const [productValues, setProductValues] = (0,react__WEBPACK_IMPORTED_MODULE_0__.useState)({
     name: '',
     description: '',
-    price: ''
+    price: '',
+    category: ''
     // images:
   });
 
@@ -188,9 +192,9 @@ function CreateProduct(_ref) {
     name: "name",
     type: "text",
     placeholder: "Product Name",
-    value: location.pathname === './shopmgmt' ? productValues.name : shop === null || shop === void 0 ? void 0 : shop.name,
+    value: location.pathname === '/shopmgmt' ? productValues.name : (_shop = shop) === null || _shop === void 0 ? void 0 : _shop.name,
     errorMessage: "Product name is required and can't include special characters",
-    label: "Shop Name",
+    label: "Product Name",
     pattern: "^[A-Za-z0-9 ']+$",
     required: true
   }, {
@@ -198,7 +202,7 @@ function CreateProduct(_ref) {
     name: "description",
     type: "text",
     placeholder: "Product Description",
-    value: location.pathname === './shopmgmt' ? productValues.description : shop === null || shop === void 0 ? void 0 : shop.description,
+    value: location.pathname === '/shopmgmt' ? productValues.description : (_shop2 = shop) === null || _shop2 === void 0 ? void 0 : _shop2.description,
     errorMessage: "Product description is required",
     label: "Product Description",
     required: true
@@ -207,7 +211,7 @@ function CreateProduct(_ref) {
     name: "price",
     type: "text",
     placeholder: "00.00",
-    value: location.pathname === './shopmgmt' ? productValues.price : shop === null || shop === void 0 ? void 0 : shop.price,
+    value: location.pathname === '/shopmgmt' ? productValues.price : (_shop3 = shop) === null || _shop3 === void 0 ? void 0 : _shop3.price,
     errorMessage: "Product price is required",
     label: "Product Price",
     required: true
@@ -233,18 +237,18 @@ function CreateProduct(_ref) {
   function _handleProductSubmit() {
     _handleProductSubmit = _asyncToGenerator(function* (e) {
       e.preventDefault();
-      const formData = _objectSpread({}, shopValues);
-      if (location.pathname === '/shopmgmt') {
-        // send request to create shop
-        const newData = yield (0,_utilities_items_api__WEBPACK_IMPORTED_MODULE_4__.createItem)(formData);
-        // set user state to have shop info
-        console.log(newData.user);
-        setUser(newData.user);
-      } else {
-        // send request to update shop
-        const updatedShop = yield editShopInfo(formData);
-        setShop(updatedShop);
-      }
+
+      // Create an item
+      // save to db
+      // add to shop (state) - i want it to show up
+      const newItem = {
+        name: productValues.name,
+        price: productValues.price,
+        description: productValues.description,
+        category: productValues.category
+      };
+      const shop = yield (0,_utilities_shops_api__WEBPACK_IMPORTED_MODULE_4__.addItemToShop)(userShop._id, newItem);
+      setUserShop(shop);
     });
     return _handleProductSubmit.apply(this, arguments);
   }
@@ -254,7 +258,7 @@ function CreateProduct(_ref) {
     className: "form-container"
   }, /*#__PURE__*/React.createElement("h1", {
     className: _CreateProduct_module_scss__WEBPACK_IMPORTED_MODULE_1__["default"].h1
-  }, location.pathname === './shopmgmt' ? 'Create A Product' : 'Edit Product Details'), /*#__PURE__*/React.createElement("form", {
+  }, location.pathname === '/shopmgmt' ? 'Create A Product' : 'Edit Product Details'), /*#__PURE__*/React.createElement("form", {
     autoComplete: "off",
     onSubmit: handleProductSubmit
   }, productInputs.map(input => /*#__PURE__*/React.createElement(_FormInput_FormInput__WEBPACK_IMPORTED_MODULE_2__["default"], _extends({
@@ -262,7 +266,19 @@ function CreateProduct(_ref) {
   }, input, {
     value: productValues[input.name],
     handleInputChange: handleProductInputChange
-  }))), /*#__PURE__*/React.createElement("button", {
+  }))), /*#__PURE__*/React.createElement("label", {
+    htmlFor: "product-category"
+  }, "Product Category:"), /*#__PURE__*/React.createElement("select", {
+    id: "product-category",
+    name: "category",
+    value: productValues.category,
+    onChange: handleProductInputChange
+  }, categories.slice(1).map(category => {
+    return /*#__PURE__*/React.createElement("option", {
+      key: category,
+      value: category
+    }, category);
+  })), /*#__PURE__*/React.createElement("button", {
     formMethod: "dialog"
   }, location.pathname === '/shopmgmt' ? 'Create Product' : 'Update Product'))));
 }
@@ -320,7 +336,7 @@ function CreateShop(_ref) {
     name: "name",
     type: "text",
     placeholder: "Shop Name",
-    value: location.pathname === './account' ? shopValues.name : userShop === null || userShop === void 0 ? void 0 : userShop.name,
+    value: location.pathname === '/account' ? shopValues.name : userShop === null || userShop === void 0 ? void 0 : userShop.name,
     errorMessage: "Shop name is required and can't include special characters",
     label: "Shop Name",
     pattern: "^[A-Za-z0-9 ']+$",
@@ -330,7 +346,7 @@ function CreateShop(_ref) {
     name: "description",
     type: "text",
     placeholder: "Shop Description",
-    value: location.pathname === './account' ? shopValues.description : userShop === null || userShop === void 0 ? void 0 : userShop.description,
+    value: location.pathname === '/account' ? shopValues.description : userShop === null || userShop === void 0 ? void 0 : userShop.description,
     errorMessage: "Shop description is required",
     label: "Shop Description",
     required: true
@@ -359,8 +375,8 @@ function CreateShop(_ref) {
       const formData = _objectSpread({}, shopValues);
       if (location.pathname === '/shopmgmt') {
         // send request to update shop
-        const updatedShop = yield (0,_utilities_shops_api__WEBPACK_IMPORTED_MODULE_4__.editShopInfo)(formData);
-        setShop(updatedShop);
+        const updatedShop = yield (0,_utilities_shops_api__WEBPACK_IMPORTED_MODULE_4__.editShopInfo)(userShop._id, formData);
+        setUserShop(updatedShop);
       } else {
         // send request to create shop
         const {
@@ -1728,9 +1744,11 @@ function App() {
   }), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default().createElement(react_router_dom__WEBPACK_IMPORTED_MODULE_15__.Route, {
     path: "/shopmgmt",
     element: /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default().createElement(_ShopManagement_ShopManagement__WEBPACK_IMPORTED_MODULE_11__["default"], {
+      categories: categoriesRef.current,
       user: user,
       setUser: setUser,
-      userShop: userShop
+      userShop: userShop,
+      setUserShop: setUserShop
     })
   }), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default().createElement(react_router_dom__WEBPACK_IMPORTED_MODULE_15__.Route, {
     path: "/*",
@@ -2236,14 +2254,16 @@ function SellerShop(_ref) {
 /* harmony export */ });
 /* harmony import */ var react__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! react */ "./node_modules/react/index.js");
 /* harmony import */ var react__WEBPACK_IMPORTED_MODULE_0___default = /*#__PURE__*/__webpack_require__.n(react__WEBPACK_IMPORTED_MODULE_0__);
-/* harmony import */ var react_router_dom__WEBPACK_IMPORTED_MODULE_4__ = __webpack_require__(/*! react-router-dom */ "./node_modules/react-router/dist/index.js");
-/* harmony import */ var _utilities_shops_api__WEBPACK_IMPORTED_MODULE_5__ = __webpack_require__(/*! ../../utilities/shops-api */ "./src/utilities/shops-api.js");
+/* harmony import */ var react_router_dom__WEBPACK_IMPORTED_MODULE_5__ = __webpack_require__(/*! react-router-dom */ "./node_modules/react-router/dist/index.js");
+/* harmony import */ var _utilities_shops_api__WEBPACK_IMPORTED_MODULE_6__ = __webpack_require__(/*! ../../utilities/shops-api */ "./src/utilities/shops-api.js");
 /* harmony import */ var _ShopManagement_module_scss__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! ./ShopManagement.module.scss */ "./src/pages/ShopManagement/ShopManagement.module.scss");
 /* harmony import */ var _components_CreateShop_CreateShop__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! ../../components/CreateShop/CreateShop */ "./src/components/CreateShop/CreateShop.js");
 /* harmony import */ var _components_CreateProduct_CreateProduct__WEBPACK_IMPORTED_MODULE_3__ = __webpack_require__(/*! ../../components/CreateProduct/CreateProduct */ "./src/components/CreateProduct/CreateProduct.js");
+/* harmony import */ var _components_productListItem_productListItem__WEBPACK_IMPORTED_MODULE_4__ = __webpack_require__(/*! ../../components/productListItem/productListItem */ "./src/components/productListItem/productListItem.js");
 /* provided dependency */ var React = __webpack_require__(/*! react */ "./node_modules/react/index.js");
 function asyncGeneratorStep(gen, resolve, reject, _next, _throw, key, arg) { try { var info = gen[key](arg); var value = info.value; } catch (error) { reject(error); return; } if (info.done) { resolve(value); } else { Promise.resolve(value).then(_next, _throw); } }
 function _asyncToGenerator(fn) { return function () { var self = this, args = arguments; return new Promise(function (resolve, reject) { var gen = fn.apply(self, args); function _next(value) { asyncGeneratorStep(gen, resolve, reject, _next, _throw, "next", value); } function _throw(err) { asyncGeneratorStep(gen, resolve, reject, _next, _throw, "throw", err); } _next(undefined); }); }; }
+
 
 
 
@@ -2255,14 +2275,15 @@ function ShopManagement(_ref) {
     user,
     setUser,
     userShop,
-    setUserShop
+    setUserShop,
+    categories
   } = _ref;
   const [productModalOpen, setProductModalOpen] = (0,react__WEBPACK_IMPORTED_MODULE_0__.useState)(false);
   const [shopEditModalOpen, setShopEditModalOpen] = (0,react__WEBPACK_IMPORTED_MODULE_0__.useState)(false);
   const productModalRef = (0,react__WEBPACK_IMPORTED_MODULE_0__.useRef)();
   const shopEditModalRef = (0,react__WEBPACK_IMPORTED_MODULE_0__.useRef)();
-  const navigate = (0,react_router_dom__WEBPACK_IMPORTED_MODULE_4__.useNavigate)();
-  const location = (0,react_router_dom__WEBPACK_IMPORTED_MODULE_4__.useLocation)();
+  const navigate = (0,react_router_dom__WEBPACK_IMPORTED_MODULE_5__.useNavigate)();
+  const location = (0,react_router_dom__WEBPACK_IMPORTED_MODULE_5__.useLocation)();
   (0,react__WEBPACK_IMPORTED_MODULE_0__.useEffect)(() => {
     if (user.shop) {
       function getUserShop() {
@@ -2270,7 +2291,7 @@ function ShopManagement(_ref) {
       }
       function _getUserShop() {
         _getUserShop = _asyncToGenerator(function* () {
-          const userShopInfo = yield _utilities_shops_api__WEBPACK_IMPORTED_MODULE_5__.getShop(user.shop);
+          const userShopInfo = yield _utilities_shops_api__WEBPACK_IMPORTED_MODULE_6__.getShop(user.shop);
           setUserShop(userShopInfo);
         });
         return _getUserShop.apply(this, arguments);
@@ -2295,12 +2316,12 @@ function ShopManagement(_ref) {
   }
   function _deleteUserShop() {
     _deleteUserShop = _asyncToGenerator(function* () {
-      yield _utilities_shops_api__WEBPACK_IMPORTED_MODULE_5__.deleteShop(userShop._id);
+      yield _utilities_shops_api__WEBPACK_IMPORTED_MODULE_6__.deleteShop(userShop._id);
       navigate('/account');
     });
     return _deleteUserShop.apply(this, arguments);
   }
-  return /*#__PURE__*/React.createElement(React.Fragment, null, userShop ? /*#__PURE__*/React.createElement("div", {
+  return /*#__PURE__*/React.createElement("div", {
     className: _ShopManagement_module_scss__WEBPACK_IMPORTED_MODULE_1__["default"].ShopManagement
   }, /*#__PURE__*/React.createElement("div", {
     className: _ShopManagement_module_scss__WEBPACK_IMPORTED_MODULE_1__["default"].shopImage
@@ -2314,23 +2335,31 @@ function ShopManagement(_ref) {
     onClick: toggleCreateProduct
   }, "Add A Product"), /*#__PURE__*/React.createElement("button", {
     onClick: deleteUserShop
-  }, "Delete Shop")), /*#__PURE__*/React.createElement("div", null, /*#__PURE__*/React.createElement("h2", null, "Products")), /*#__PURE__*/React.createElement("dialog", {
+  }, "Delete Shop")), /*#__PURE__*/React.createElement("div", null, /*#__PURE__*/React.createElement("h2", null, "Products"), userShop && userShop.products ? userShop.products.map(product => /*#__PURE__*/React.createElement(_components_productListItem_productListItem__WEBPACK_IMPORTED_MODULE_4__["default"], {
+    key: product._id,
+    productItem: product,
+    user: user,
+    setUser: setUser
+  })) : null), /*#__PURE__*/React.createElement("dialog", {
     ref: shopEditModalRef,
     onClose: toggleEditShop
   }, /*#__PURE__*/React.createElement(_components_CreateShop_CreateShop__WEBPACK_IMPORTED_MODULE_2__["default"], {
     user: user,
     setUser: setUser,
     location: location,
-    shop: userShop,
-    setShop: setUserShop
+    userShop: userShop,
+    setUserShop: setUserShop
   })), /*#__PURE__*/React.createElement("dialog", {
     ref: productModalRef,
     onClose: toggleCreateProduct
   }, /*#__PURE__*/React.createElement(_components_CreateProduct_CreateProduct__WEBPACK_IMPORTED_MODULE_3__["default"], {
     user: user,
     setUser: setUser,
-    location: location
-  }))) : 'Fetching...');
+    location: location,
+    userShop: userShop,
+    setUserShop: setUserShop,
+    categories: categories
+  })));
 }
 
 /***/ }),
@@ -2369,11 +2398,10 @@ function ShopPage(_ref) {
 /***/ ((__unused_webpack_module, __webpack_exports__, __webpack_require__) => {
 
 /* harmony export */ __webpack_require__.d(__webpack_exports__, {
-/* harmony export */   createItem: () => (/* binding */ createItem),
 /* harmony export */   getAll: () => (/* binding */ getAll),
 /* harmony export */   getById: () => (/* binding */ getById)
 /* harmony export */ });
-/* unused harmony exports editItemInfo, deleteItem, getItemReviews */
+/* unused harmony exports createItem, editItemInfo, deleteItem, getItemReviews */
 /* harmony import */ var _send_request__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! ./send-request */ "./src/utilities/send-request.js");
 
 const BASE_URL = '/api/items';
@@ -2600,12 +2628,13 @@ function _sendUrlFormData() {
 /***/ ((__unused_webpack_module, __webpack_exports__, __webpack_require__) => {
 
 /* harmony export */ __webpack_require__.d(__webpack_exports__, {
+/* harmony export */   addItemToShop: () => (/* binding */ addItemToShop),
 /* harmony export */   createShop: () => (/* binding */ createShop),
 /* harmony export */   deleteShop: () => (/* binding */ deleteShop),
 /* harmony export */   editShopInfo: () => (/* binding */ editShopInfo),
 /* harmony export */   getShop: () => (/* binding */ getShop)
 /* harmony export */ });
-/* unused harmony exports addItemToShop, removeItemFromShop */
+/* unused harmony export removeItemFromShop */
 /* harmony import */ var _send_request__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! ./send-request */ "./src/utilities/send-request.js");
 
 const BASE_URL = '/api/shops';
@@ -2623,8 +2652,8 @@ function getShop(id) {
 }
 
 //! Double check this when ShopModel has been implemented
-function addItemToShop(itemId) {
-  return (0,_send_request__WEBPACK_IMPORTED_MODULE_0__["default"])("".concat(BASE_URL, "/items/").concat(itemId), 'POST');
+function addItemToShop(shopId, itemInfo) {
+  return (0,_send_request__WEBPACK_IMPORTED_MODULE_0__["default"])("".concat(BASE_URL, "/items/").concat(shopId), 'POST', itemInfo);
 }
 
 //! Double check this when ShopModel has been implemented

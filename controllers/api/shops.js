@@ -79,6 +79,8 @@ exports.deleteShop = async (req, res) => {
     try {
         // Find and delete the shop iwth the provided ID
         const shop = await Shop.findByIdAndDelete(req.params.id)
+        req.user.shop = null
+        await req.user.save()
 
         // Check if the shop was not found
         if (!shop) {
@@ -107,13 +109,12 @@ exports.addItem = async (req, res) => {
 
         // Find the cateogry by name 
         const category = await Category.findOne({ name: req.body.category })
-        console.log('category = ' + category)
 
         // Create a new item in the database
         const item = await Item.create({
             name: req.body.name,
-            imageUrl: req.body.imageUrl,
-            publicId: req.body.publicId,
+            // imageUrl: req.body.imageUrl,
+            // publicId: req.body.publicId,
             price: req.body.price,
             description: req.body.description,
             category: category._id,
@@ -121,11 +122,11 @@ exports.addItem = async (req, res) => {
         })
 
         // Add the created item to the shop's products
-        shop.products.addToSet(item)
+        shop.products.addToSet(item._id)
         await shop.save()
 
         // Respond with the created item 
-        res.status(200).json(item)
+        res.status(200).json(shop)
     } catch (error) {
         res.status(400).json({ error: error.message })
     }

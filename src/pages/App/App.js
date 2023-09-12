@@ -134,7 +134,7 @@ export default function App() {
         <Route path="/checkout" element={<Checkout className={styles.Checkout} cart={cart} setCart={setCart} cartTotals={cartTotals} />} />
         <Route path="/orderhistory" element={<OrderHistory user={user} setUser={setUser} />} />
         <Route path="/sellershop/:shopId" element={<SellerShop user={user} setUser={setUser} />} />
-        <Route path="/shopmgmt" element={<ShopMgmt user={user} setUser={setUser} userShop={userShop} />} />
+        <Route path="/shopmgmt" element={<ShopMgmt categories={categoriesRef.current} user={user} setUser={setUser} userShop={userShop} setUserShop={setUserShop} />} />
         {/* redirect to /home if path in address bar hasn't matched a <Route> above */}
         <Route path="/*" element={<Navigate to="/home" />} />
       </Routes>
