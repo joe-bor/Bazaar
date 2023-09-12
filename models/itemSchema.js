@@ -1,10 +1,12 @@
 const Schema = require('mongoose').Schema
 
+// Define the Mongoose Schema for the 'item' model
 const itemSchema = new Schema({
     name: {
         required: true,
         type: String,
         set: function (value) {
+            // Capitalize the first letter of each word in the name
             let split = value.split(' ')
             if (split.length === 1) return value.charAt(0).toUpperCase() + value.slice(1)
 

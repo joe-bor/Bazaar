@@ -6,6 +6,7 @@ module.exports = {
     returnReviews
 }
 
+// Finds the list of items and populates by category
 async function index(req, res) {
     try {
         const items = await Item.find({}).sort('name').populate('category').exec()
@@ -16,6 +17,7 @@ async function index(req, res) {
     }
 }
 
+//Shows a specific item
 async function show(req, res) {
     try {
         const item = await Item.findById(req.params.id).populate({ path: 'shop', select: 'name' }).exec()
@@ -25,6 +27,7 @@ async function show(req, res) {
     }
 }
 
+//Returns reviews associated with the item
 async function returnReviews(req, res) {
     try {
         const item = await Item.findById(req.params.id)
