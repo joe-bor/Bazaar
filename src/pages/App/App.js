@@ -60,7 +60,6 @@ export default function App() {
 
   const toggleAuthModal = () => {
     setIsAuthModalOpen(!isAuthModalOpen)
-    console.log('Invoked toggleModal()')
   }
 
   // automatically retreive cart
@@ -85,7 +84,6 @@ export default function App() {
 
   const handleCloseAuthModal = () => {
     setIsAuthModalOpen(false)
-    console.log('handleCloseModal invoked')
   }
 
   async function createGuestUser() {

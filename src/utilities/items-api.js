@@ -26,14 +26,3 @@ export function getItemReviews(id) {
     return sendRequest(`${BASE_URL}/reviews/${id}`)
 }
 
-/*
-
-itemShape = {
-    Name 
-    Price
-    Comments: comments array
-    Description
-    Category - used for displaying ‘similar items’
-}
-
- */

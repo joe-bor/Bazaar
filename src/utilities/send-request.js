@@ -32,14 +32,14 @@ export async function sendUrlFormData(url, method = 'GET', payload = null) {
     options.headers = { 'Content-Type': 'multipart/form-data' };
     options.body = payload;
   }
-  const token = getToken();
-  if (token) {
-    // Ensure headers object exists
-    options.headers = options.headers || {};
-    // Add token to an Authorization header
-    // Prefacing with 'Bearer' is recommended in the HTTP specification
-    options.headers.Authorization = `Bearer ${token}`;
-  }
+  // const token = getToken();
+  // if (token) {
+  //   // Ensure headers object exists
+  //   options.headers = options.headers || {};
+  //   // Add token to an Authorization header
+  //   // Prefacing with 'Bearer' is recommended in the HTTP specification
+  //   options.headers.Authorization = `Bearer ${token}`;
+  // }
   const res = await fetch(url, options);
   // res.ok will be false if the status code set to 4xx in the controller action
   if (res.ok) return res.json();

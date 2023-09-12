@@ -1186,7 +1186,7 @@ function SignUpForm(_ref) {
     placeholder: "First and Last name",
     errorMessage: "Required and can't include special characters",
     label: "Name",
-    pattern: "^[A-Za-z0-9]+$",
+    pattern: "^[A-Za-z0-9 ]+$",
     required: true
   }, {
     id: "email",
@@ -1568,7 +1568,6 @@ function App() {
   }, []);
   const toggleAuthModal = () => {
     setIsAuthModalOpen(!isAuthModalOpen);
-    console.log('Invoked toggleModal()');
   };
 
   // automatically retreive cart
@@ -1597,7 +1596,6 @@ function App() {
   }, [cart]);
   const handleCloseAuthModal = () => {
     setIsAuthModalOpen(false);
-    console.log('handleCloseModal invoked');
   };
   function createGuestUser() {
     return _createGuestUser.apply(this, arguments);
@@ -2371,18 +2369,6 @@ function getItemReviews(id) {
   return (0,_send_request__WEBPACK_IMPORTED_MODULE_0__["default"])("".concat(BASE_URL, "/reviews/").concat(id));
 }
 
-/*
-
-itemShape = {
-    Name 
-    Price
-    Comments: comments array
-    Description
-    Category - used for displaying ‘similar items’
-}
-
- */
-
 /***/ }),
 
 /***/ "./src/utilities/orders-api.js":
@@ -2561,14 +2547,14 @@ function _sendUrlFormData() {
         };
         options.body = payload;
       }
-      const token = (0,_users_service__WEBPACK_IMPORTED_MODULE_0__.getToken)();
-      if (token) {
-        // Ensure headers object exists
-        options.headers = options.headers || {};
-        // Add token to an Authorization header
-        // Prefacing with 'Bearer' is recommended in the HTTP specification
-        options.headers.Authorization = "Bearer ".concat(token);
-      }
+      // const token = getToken();
+      // if (token) {
+      //   // Ensure headers object exists
+      //   options.headers = options.headers || {};
+      //   // Add token to an Authorization header
+      //   // Prefacing with 'Bearer' is recommended in the HTTP specification
+      //   options.headers.Authorization = `Bearer ${token}`;
+      // }
       const res = yield fetch(url, options);
       // res.ok will be false if the status code set to 4xx in the controller action
       if (res.ok) return res.json();
