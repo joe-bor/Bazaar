@@ -24,12 +24,12 @@ export default function AuthModal({ setUser, isAuthModalOpen, toggleAuthModal, h
         <button onClick={handleCloseAuthModal}>X</button>
         {showSignUp ?
           <>
-            <SignUpForm setUser={setUser}/>
+            <SignUpForm setUser={setUser} onSubmit={toggleAuthModal}/>
             <p>Already a member? <strong onClick={toggleModalContents}>Login</strong></p>
           </> :
           <>
             <LoginForm setUser={setUser}/>
-            <p>Don't have an account? <strong onClick={toggleModalContents}>Sign Up</strong></p>
+            <p>Don't have an account? <strong onClick={toggleModalContents} onSubmit={toggleAuthModal}>Sign Up</strong></p>
           </>
         }
 

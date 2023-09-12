@@ -44,13 +44,15 @@ function AuthModal(_ref) {
   }, /*#__PURE__*/React.createElement("button", {
     onClick: handleCloseAuthModal
   }, "X"), showSignUp ? /*#__PURE__*/React.createElement(React.Fragment, null, /*#__PURE__*/React.createElement(_SignUpForm_SignUpForm__WEBPACK_IMPORTED_MODULE_1__["default"], {
-    setUser: setUser
+    setUser: setUser,
+    onSubmit: toggleAuthModal
   }), /*#__PURE__*/React.createElement("p", null, "Already a member? ", /*#__PURE__*/React.createElement("strong", {
     onClick: toggleModalContents
   }, "Login"))) : /*#__PURE__*/React.createElement(React.Fragment, null, /*#__PURE__*/React.createElement(_LoginForm_LoginForm__WEBPACK_IMPORTED_MODULE_3__["default"], {
     setUser: setUser
   }), /*#__PURE__*/React.createElement("p", null, "Don't have an account? ", /*#__PURE__*/React.createElement("strong", {
-    onClick: toggleModalContents
+    onClick: toggleModalContents,
+    onSubmit: toggleAuthModal
   }, "Sign Up")))));
 }
 
