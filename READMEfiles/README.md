@@ -35,6 +35,7 @@
     - morgan: 
     - serve-favicon:
 
+
 ### DEV DEPENDENCIES
     - auto-prefixer: 
     - babel-loader: 
@@ -42,7 +43,7 @@
     - browser-sync: 
     - clean-webpack-plugin: 
     - css-loader: 
-    - gulp: 
+    - [![My Skills](https://skillicons.dev/icons?i=js,html,css,wasm)](https://skillicons.dev) gulp: 
     - gulp-autoprefixer: 
     - gulp-nodemon: 
     - gulp-sass: 
