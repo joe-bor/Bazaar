@@ -58,7 +58,7 @@
     - webpack-cli:
 
 ## ERD
-![](ERD.pdf)
+![](ERD.png)
 
 ## WIREFRAMES
 
