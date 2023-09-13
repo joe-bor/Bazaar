@@ -38,28 +38,32 @@ export default function AccountPage({ user, setUser, createGuestUser, userShop, 
   }
 
   return (
-    <div>
-      <div className={styles.userImage}>
-        <img src={user.name === 'c186ec' || !user.imageUrl ? userIcon : user.imageUrl} />
-      </div>
-      <div className={styles.userInfo}>
-        <h1>{user.name}</h1>
-        <p>{`Email: ${user.email}`}</p>
-        <p>Password: ********</p>
-      </div>
-      <div className={styles.links}>
-        <button onClick={toggleEditModal}>Edit Profile</button>
-        <Link to='/orderhistory'><p>Order History</p></Link>
-        {user.shop ? <Link to='/shopmgmt'><p>Manage Shop</p></Link> : <button onClick={toggleCreateShop}>Create a Shop</button>}
-        <button onClick={deleteUserAcc}>Delete Account</button>
-        <UserLogOut createGuestUser={createGuestUser} />
-      </div>
-      <div>
-        <h2>Favorites</h2><button onClick={() => navigate('favorites')}>See All</button>
+    <div className={`${styles.AccountPage} flex-ctr-ctr flex-col`}>
+      <section className={styles.header}>
+        <div className={styles.infoSection}>
+          <img src={user.name === 'c186ec' || !user.imageUrl ? userIcon : user.imageUrl} />
+          <div className={styles.infoDetails}>
+            <h1>{user.name}</h1>
+            <p>{`Email: ${user.email}`}</p>
+            <p>Password: ********</p>
+          </div>
+        </div>
+        <div className={`${styles.links} flex-col`}>
+          <button onClick={toggleEditModal}>Edit Profile</button>
+          <Link to='/orderhistory'>Order History</Link>
+          {user.shop ? <Link to='/shopmgmt'>Manage Shop</Link> : <button onClick={toggleCreateShop}>Create a Shop</button>}
+          <button onClick={deleteUserAcc}>Delete Account</button>
+          <UserLogOut createGuestUser={createGuestUser} />
+        </div>
+      </section>
+      <div className={styles.favorites}>
+        <div className={styles.favsHeading}>
+          <h2>Favorites</h2><button className="small" onClick={() => navigate('favorites')}>See All</button>
+        </div>
         {/* 🟥 Favorites Section Here 🟥 */}
       </div>
       <dialog ref={editModalRef} onClose={toggleEditModal} onSubmit={toggleEditModal}><EditUserForm user={user} setUser={setUser} /></dialog>
       <dialog ref={shopModalRef} onClose={toggleCreateShop} onSubmit={toggleCreateShop}><CreateShop user={user} setUser={setUser} location={location} userShop={userShop} setUserShop={setUserShop} /></dialog>
-    </div>
+    </div >
   )
 }

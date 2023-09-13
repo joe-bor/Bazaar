@@ -1,0 +1,48 @@
+.AccountPage {
+  width: 100%;
+  .header {
+    width: 100%;
+    display: flex;
+    justify-content: space-between;
+    padding: 1rem 2rem;
+    .infoSection {
+      display: flex;
+      justify-content: flex-start;
+      img {
+        height: 36vmin;
+        border-radius: 50%;
+      }
+    }
+    .links {
+      display: flex;
+      align-items: flex-start;
+      button {
+        margin: 0;
+        padding: 0.25rem;
+        background: none;
+        color: var(--black);
+        border: none;
+        font-size: 1rem;
+        font-weight: 600;
+      }
+      a {
+        margin: 0;
+        padding: 0.25rem;
+        text-decoration: none;
+        color: var(--black);
+        font-size: 1rem;
+        font-weight: 600;
+      }
+    }
+  }
+ .favorites {
+  padding: 1rem 2rem;
+  width: 100%;
+ }
+  .favsHeading {
+    display: flex;
+    flex-direction: row;
+    justify-content: flex-start;
+    align-items: center;
+  }
+}
