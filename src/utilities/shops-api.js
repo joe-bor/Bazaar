@@ -19,8 +19,8 @@ export function getShop(id) {
 }
 
 //! Double check this when ShopModel has been implemented
-export function addItemToShop(itemId) {
-    return sendRequest(`${BASE_URL}/items/${itemId}`, 'POST')
+export function addItemToShop(shopId, itemInfo) {
+    return sendRequest(`${BASE_URL}/items/${shopId}`, 'POST', itemInfo)
 }
 
 //! Double check this when ShopModel has been implemented

@@ -21,7 +21,7 @@ module.exports = (env) => {
 				process.env.NODE_ENV === 'dev'
 					? '[name].js.map'
 					: '[name].[contenthash].js.map',
-			publicPath: '/js/dist'
+			publicPath: '/js/dist/'
 		},
 		devtool: 'source-map',
 		module: {
