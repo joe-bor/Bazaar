@@ -4,7 +4,7 @@ import styles from "./FormInput.module.scss"
 export default function FormInput(props) {
     
   const [isBlur, setIsBlur] = useState(false)
-  const { label, errorMessage, handleInputChange, id, ...inputProps } = props
+  const { label, errorMessage, handleInputChange, id, type, ...inputProps } = props
 
   const handleInputBlur = (e) => {
     setIsBlur(true)
@@ -15,6 +15,7 @@ export default function FormInput(props) {
     <label htmlFor={id}>{label}</label>
     <input
         id={id}
+        type={type}
         {...inputProps}
         onChange={handleInputChange}
         onBlur={handleInputBlur}

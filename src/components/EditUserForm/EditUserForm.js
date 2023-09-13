@@ -2,17 +2,20 @@ import { useEffect, useRef, useState } from 'react'
 import styles from './EditUserForm.module.scss'
 import FormInput from '../FormInput/FormInput'
 import { updateUser } from '../../utilities/users-service'
+import axiosFetch from '../../utilities/image-upload'
+
 
 function EditUserForm({ user, setUser }) {
 
   const [values, setValues] = useState({
-
+    name: user.name,
+    email: user.email,
+    password: "",
+    confirm: "",
   })
+  const [file, setFile] = useState(null)
+  const [photoUrl, setPhotoUrl] = useState('')
 
-  // name: user.name,
-  // email: user.email,
-  // password: "",
-  // confirm: "",
   const inputs = [
     {
       id: "edit-name",
@@ -78,10 +81,11 @@ function EditUserForm({ user, setUser }) {
     let reader = new FileReader()
     let file = e.target.files[0]
     reader.onloadend = () => {
-      setValues({ ...values, file: reader.result })
+      setFile(file)
     }
     reader.readAsDataURL(file)
   }
+
 
   const handleSubmit = async (e) => {
     e.preventDefault()
@@ -89,15 +93,21 @@ function EditUserForm({ user, setUser }) {
     // then send the file from state to the upload route - need separate function to handle upload function (need utility)
     // then use a .then to senf the request to update user
 
-    console.log(e.target.files)
     const formData = new FormData()
-    for (let key in values) {
-      if (key !== 'confirm') {
-        formData.append(key, values[key])
-      }
-    }
-    const updatedUser = await updateUser(user._id, formData)
-    setUser(updatedUser)
+    formData.append('file', file)
+  
+    // for (let key in values) {
+    //   if (key !== 'confirm') {
+    //     formData.append(key, values[key])
+    //   }
+    // }
+   
+    const data = axiosFetch(formData)
+    setPhotoUrl(data.secure_url)
+
+
+    // const updatedUser = await updateUser(user._id, formData)
+    // setUser(updatedUser)
   }
 
   return (

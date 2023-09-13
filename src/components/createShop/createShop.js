@@ -5,7 +5,7 @@ import FormInput from '../FormInput/FormInput'
 import { useNavigate } from 'react-router-dom'
 import { updateUser } from '../../utilities/users-service'
 
-export default function CreateShop({ user, setUser, location, userShop, setUserShop }) {
+export default function CreateShop({ user, setUser, location, userShop, setUserShop, toggleEditShop }) {
   const [shopValues, setShopValues] = useState({
     name: '',
     description: '',
@@ -63,7 +63,7 @@ export default function CreateShop({ user, setUser, location, userShop, setUserS
       // send request to update shop
       const updatedShop = await editShopInfo(userShop._id, formData)
       setUserShop(updatedShop)
-
+      toggleEditShop()
     } else {
       // send request to create shop
       const { shopOwner, shop } = await createShop({
@@ -75,7 +75,7 @@ export default function CreateShop({ user, setUser, location, userShop, setUserS
       const updatedUser = await updateUser(user._id, shopOwner)      
       setUser(updatedUser)
       setUserShop(shop)
-      // navigate('/shopmgmt')
+      navigate('/shopmgmt')
     }
   }
 
