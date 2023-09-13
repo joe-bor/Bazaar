@@ -42,20 +42,22 @@ export default function App() {
   useEffect(() => {
     if (!user) {
       createGuestUser()
+
+    } else {
+      getItems()
     }
-    async function getItems() {
-      const allItems = await ItemsAPI.getAll()
-      categoriesRef.current = allItems.reduce((cats, item) => {
-        const cat = item.category.name
-        return cats.includes(cat) ? cats : [...cats, cat]
-      }, [])
-      categoriesRef.current.unshift('Show All')
-      setItems(allItems)
-      setActiveCat(categoriesRef.current[0])
-    }
-    getItems()
   }, [])
 
+  async function getItems() {
+    const allItems = await ItemsAPI.getAll()
+    categoriesRef.current = allItems.reduce((cats, item) => {
+      const cat = item.category.name
+      return cats.includes(cat) ? cats : [...cats, cat]
+    }, [])
+    categoriesRef.current.unshift('Show All')
+    setItems(allItems)
+    setActiveCat(categoriesRef.current[0])
+  }
 
 
   const toggleAuthModal = () => {
@@ -100,6 +102,7 @@ export default function App() {
     localStorage.setItem('guest', guestUserData.email)
     const guestUser = await signUp(guestUserData)
     // set user to newly created guest user
+    items.length > 0 ? null : getItems()
     setUser(guestUser)
   }
 

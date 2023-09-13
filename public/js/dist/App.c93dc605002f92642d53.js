@@ -1519,25 +1519,26 @@ function App() {
   (0,react__WEBPACK_IMPORTED_MODULE_0__.useEffect)(() => {
     if (!user) {
       createGuestUser();
+    } else {
+      getItems();
     }
-    function getItems() {
-      return _getItems.apply(this, arguments);
-    }
-    function _getItems() {
-      _getItems = _asyncToGenerator(function* () {
-        const allItems = yield _utilities_items_api__WEBPACK_IMPORTED_MODULE_16__.getAll();
-        categoriesRef.current = allItems.reduce((cats, item) => {
-          const cat = item.category.name;
-          return cats.includes(cat) ? cats : [...cats, cat];
-        }, []);
-        categoriesRef.current.unshift('Show All');
-        setItems(allItems);
-        setActiveCat(categoriesRef.current[0]);
-      });
-      return _getItems.apply(this, arguments);
-    }
-    getItems();
   }, []);
+  function getItems() {
+    return _getItems.apply(this, arguments);
+  }
+  function _getItems() {
+    _getItems = _asyncToGenerator(function* () {
+      const allItems = yield _utilities_items_api__WEBPACK_IMPORTED_MODULE_16__.getAll();
+      categoriesRef.current = allItems.reduce((cats, item) => {
+        const cat = item.category.name;
+        return cats.includes(cat) ? cats : [...cats, cat];
+      }, []);
+      categoriesRef.current.unshift('Show All');
+      setItems(allItems);
+      setActiveCat(categoriesRef.current[0]);
+    });
+    return _getItems.apply(this, arguments);
+  }
   const toggleAuthModal = () => {
     setIsAuthModalOpen(!isAuthModalOpen);
     console.log('Invoked toggleModal()');
@@ -1587,6 +1588,7 @@ function App() {
       localStorage.setItem('guest', guestUserData.email);
       const guestUser = yield (0,_utilities_users_service__WEBPACK_IMPORTED_MODULE_14__.signUp)(guestUserData);
       // set user to newly created guest user
+      items.length > 0 ? null : getItems();
       setUser(guestUser);
     });
     return _createGuestUser.apply(this, arguments);
@@ -2614,7 +2616,7 @@ function removeItemFromShop(itemId) {
 
 const BASE_URL = '/api/users';
 function signUp(userData) {
-  return (0,_send_request__WEBPACK_IMPORTED_MODULE_0__.sendUrlFormData)(BASE_URL, 'POST', userData);
+  return (0,_send_request__WEBPACK_IMPORTED_MODULE_0__["default"])(BASE_URL, 'POST', userData);
 }
 function login(credentials) {
   return (0,_send_request__WEBPACK_IMPORTED_MODULE_0__["default"])("".concat(BASE_URL, "/login"), 'POST', credentials);
