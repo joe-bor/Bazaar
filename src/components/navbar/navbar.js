@@ -41,7 +41,11 @@ export default function NavBar({
                     <Logo className={styles.Logo} onClick={handleLogoClick} />
                 </div>
                 <div className="navbar-search">
-                    <SearchBar searchTerm={searchTerm} setSearchTerm={setSearchTerm} />
+                    <SearchBar searchTerm={searchTerm} 
+                    setSearchTerm={setSearchTerm} 
+                    items={items}
+                    filteredItems={filteredItems}
+                    setFilteredItems={setFilteredItems} />
                 </div>
             </div>
             <div className={styles.categories}>

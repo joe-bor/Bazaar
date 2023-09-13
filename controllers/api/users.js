@@ -27,7 +27,9 @@ const dataController = {
             next()
         } catch (error) {
             console.log('you got a database problem')
+
             res.status(400).json({message: error.message})
+
         }
     },
     async login(req, res, next) {

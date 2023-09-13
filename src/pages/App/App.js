@@ -43,20 +43,23 @@ export default function App() {
   useEffect(() => {
     if (!user) {
       createGuestUser()
+
+    } else {
+      getItems()
     }
-    async function getItems() {
-      const allItems = await ItemsAPI.getAll()
-      categoriesRef.current = allItems.reduce((cats, item) => {
-        const cat = item.category.name
-        return cats.includes(cat) ? cats : [...cats, cat]
-      }, [])
-      categoriesRef.current.unshift('Show All')
-      setItems(allItems)
-      setActiveCat(categoriesRef.current[0])
-    }
-    getItems()
   }, [])
 
+  async function getItems() {
+    const allItems = await ItemsAPI.getAll()
+    categoriesRef.current = allItems.reduce((cats, item) => {
+      const cat = item.category.name
+      return cats.includes(cat) ? cats : [...cats, cat]
+    }, [])
+    categoriesRef.current.unshift('Show All')
+    setItems(allItems)
+    setActiveCat(categoriesRef.current[0])
+    setFilteredItems(allItems) // for search bar
+  }
 
 
   const toggleAuthModal = () => {
@@ -99,6 +102,7 @@ export default function App() {
     localStorage.setItem('guest', guestUserData.email)
     const guestUser = await signUp(guestUserData)
     // set user to newly created guest user
+    items.length > 0 ? null : getItems()
     setUser(guestUser)
   }
 
@@ -126,7 +130,7 @@ export default function App() {
       <Routes>
         {/* client-side route that renders the component instance if the patch matches the url in the address bar */}
         <Route path="/home" element={<Home items={items} className={styles.Home} categories={categoriesRef.current} setActiveCat={setActiveCat} setCart={setCart} />} />
-        <Route path="/shop" element={<ShopPage className={styles.ShopPage} items={items} user={user} setUser={setUser} />} />
+        <Route path="/shop" element={<ShopPage className={styles.ShopPage} items={filteredItems} user={user} setUser={setUser} />} />
         <Route path="/itemdetails/:itemId" element={<ItemDetails setCart={setCart} />} />
         <Route path="/account" element={<AccountPage className={styles.AccountPage} user={user} setUser={setUser} createGuestUser={createGuestUser} userShop={userShop} setUserShop={setUserShop} />} />
         <Route path="/favorites" element={<Favorites user={user} setUser={setUser} />} />
