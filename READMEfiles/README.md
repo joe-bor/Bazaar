@@ -15,9 +15,10 @@
 - Project Scope: Using all of the skills you have gained over the ()span of your Software Engineering Intensive, create a fullstack application that functions like Etsy. 
 
 # Live Link
-- We proudly present our rendition of Etsy, ✨[Bazaar](INSERT_LIVE_LINK_HERE)✨.
+- We proudly present our rendition of Etsy: 
+## ✨[Bazaar](INSERT_LIVE_LINK_HERE)✨.
 
-# ______________________________________________________________
+# ________________________________________________________
 
 ## SERVICES AND TECHNOLOGYIES USED
 [![My Skills](https://skillicons.dev/icons?i=css,html,js)](https://skillicons.dev)
