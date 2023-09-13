@@ -1,3 +1,14 @@
+.productImage {
+  height: 20vm;
+  width: 20vm;
+  object-fit: cover;
+}
+
+.productList {
+  display: grid;
+  grid-template-columns: 20vm 1fr;
+  grid-gap: 10px;
+}
 .imageContainer button img {
   height: 3vmin;
 }
