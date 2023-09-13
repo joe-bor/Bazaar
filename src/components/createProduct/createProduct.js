@@ -4,7 +4,7 @@ import FormInput from '../FormInput/FormInput'
 import { useNavigate } from 'react-router-dom'
 import { addItemToShop } from '../../utilities/shops-api'
 
-export default function CreateProduct({ user, setUser, userShop, setUserShop, categories }) {
+export default function CreateProduct({ user, setUser, userShop, setUserShop, categories, setShopProducts, shopProducts }) {
   const [productValues, setProductValues] = useState({
     name: '',
     description: '',
@@ -73,12 +73,15 @@ export default function CreateProduct({ user, setUser, userShop, setUserShop, ca
     // add to shop (state) - i want it to show up
     const newItem = {
       name: productValues.name,
-      price: productValues.price,
+      price: parseInt(productValues.price, 10),
       description: productValues.description,
       category: productValues.category,
     }
-    const shop = await addItemToShop(userShop._id, newItem)
+    console.log(newItem)
+    const { shop, item } = await addItemToShop(userShop._id, newItem)
+    console.log(item)
     setUserShop(shop)
+    setShopProducts( [...shopProducts, item])
   }
 
   return (

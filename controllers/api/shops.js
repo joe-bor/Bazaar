@@ -78,9 +78,10 @@ exports.getShop = async (req, res) => {
 exports.deleteShop = async (req, res) => {
     try {
         // Find and delete the shop iwth the provided ID
+        const user = await User.findById(req.user._id)
         const shop = await Shop.findByIdAndDelete(req.params.id)
-        req.user.shop = null
-        await req.user.save()
+        user.shop = null
+        await user.save()
 
         // Check if the shop was not found
         if (!shop) {
@@ -88,9 +89,9 @@ exports.deleteShop = async (req, res) => {
         }
 
         // Respond with a success message
-        res.json({ message: 'Shop Deleted' })
+        res.status(200).json(user)
     } catch (error) {
-        res.status(400).json({ error: 'Could not Delete Shop' })
+        res.status(400).json({ error: error.message })
     }
 }
 
@@ -126,7 +127,7 @@ exports.addItem = async (req, res) => {
         await shop.save()
 
         // Respond with the created item 
-        res.status(200).json(shop)
+        res.status(200).json({shop, item})
     } catch (error) {
         res.status(400).json({ error: error.message })
     }

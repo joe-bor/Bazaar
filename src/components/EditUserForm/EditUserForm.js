@@ -2,7 +2,6 @@ import { useEffect, useRef, useState } from 'react'
 import styles from './EditUserForm.module.scss'
 import FormInput from '../FormInput/FormInput'
 import { updateUser } from '../../utilities/users-service'
-import axios from 'axios'
 import axiosFetch from '../../utilities/image-upload'
 
 
@@ -97,7 +96,6 @@ function EditUserForm({ user, setUser }) {
     const formData = new FormData()
     formData.append('file', file)
   
-
     // for (let key in values) {
     //   if (key !== 'confirm') {
     //     formData.append(key, values[key])

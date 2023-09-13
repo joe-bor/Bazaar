@@ -179,7 +179,9 @@ function CreateProduct(_ref) {
     setUser,
     userShop,
     setUserShop,
-    categories
+    categories,
+    setShopProducts,
+    shopProducts
   } = _ref;
   const [productValues, setProductValues] = (0,react__WEBPACK_IMPORTED_MODULE_0__.useState)({
     name: '',
@@ -246,12 +248,18 @@ function CreateProduct(_ref) {
       // add to shop (state) - i want it to show up
       const newItem = {
         name: productValues.name,
-        price: productValues.price,
+        price: parseInt(productValues.price, 10),
         description: productValues.description,
         category: productValues.category
       };
-      const shop = yield (0,_utilities_shops_api__WEBPACK_IMPORTED_MODULE_4__.addItemToShop)(userShop._id, newItem);
+      console.log(newItem);
+      const {
+        shop,
+        item
+      } = yield (0,_utilities_shops_api__WEBPACK_IMPORTED_MODULE_4__.addItemToShop)(userShop._id, newItem);
+      console.log(item);
       setUserShop(shop);
+      setShopProducts([...shopProducts, item]);
     });
     return _handleProductSubmit.apply(this, arguments);
   }
@@ -326,7 +334,8 @@ function CreateShop(_ref) {
     setUser,
     location,
     userShop,
-    setUserShop
+    setUserShop,
+    toggleEditShop
   } = _ref;
   const [shopValues, setShopValues] = (0,react__WEBPACK_IMPORTED_MODULE_0__.useState)({
     name: '',
@@ -381,6 +390,7 @@ function CreateShop(_ref) {
         // send request to update shop
         const updatedShop = yield (0,_utilities_shops_api__WEBPACK_IMPORTED_MODULE_4__.editShopInfo)(userShop._id, formData);
         setUserShop(updatedShop);
+        toggleEditShop();
       } else {
         // send request to create shop
         const {
@@ -395,7 +405,7 @@ function CreateShop(_ref) {
         const updatedUser = yield (0,_utilities_users_service__WEBPACK_IMPORTED_MODULE_5__.updateUser)(user._id, shopOwner);
         setUser(updatedUser);
         setUserShop(shop);
-        // navigate('/shopmgmt')
+        navigate('/shopmgmt');
       }
     });
     return _handleShopSubmit.apply(this, arguments);
@@ -446,7 +456,6 @@ function _objectSpread(target) { for (var i = 1; i < arguments.length; i++) { va
 function _defineProperty(obj, key, value) { key = _toPropertyKey(key); if (key in obj) { Object.defineProperty(obj, key, { value: value, enumerable: true, configurable: true, writable: true }); } else { obj[key] = value; } return obj; }
 function _toPropertyKey(arg) { var key = _toPrimitive(arg, "string"); return typeof key === "symbol" ? key : String(key); }
 function _toPrimitive(input, hint) { if (typeof input !== "object" || input === null) return input; var prim = input[Symbol.toPrimitive]; if (prim !== undefined) { var res = prim.call(input, hint || "default"); if (typeof res !== "object") return res; throw new TypeError("@@toPrimitive must return a primitive value."); } return (hint === "string" ? String : Number)(input); }
-
 
 
 
@@ -1391,11 +1400,11 @@ function ProductListItem(_ref) {
     className: _ProductListItem_module_scss__WEBPACK_IMPORTED_MODULE_1__["default"].ProductListItem
   }, /*#__PURE__*/React.createElement("div", {
     className: _ProductListItem_module_scss__WEBPACK_IMPORTED_MODULE_1__["default"].imageContainer
-  }, /*#__PURE__*/React.createElement("img", {
+  }, (productItem === null || productItem === void 0 ? void 0 : productItem.images.length) > 0 ? /*#__PURE__*/React.createElement("img", {
     className: _ProductListItem_module_scss__WEBPACK_IMPORTED_MODULE_1__["default"].itemImage,
     src: productItem.images[0],
     onClick: handleClick
-  }), /*#__PURE__*/React.createElement("button", {
+  }) : /*#__PURE__*/React.createElement("p", null, "No images available"), /*#__PURE__*/React.createElement("button", {
     onClick: handleFavClick
   }, /*#__PURE__*/React.createElement("img", {
     src: _assets_images_fav_heart_svg__WEBPACK_IMPORTED_MODULE_2__
@@ -1404,13 +1413,13 @@ function ProductListItem(_ref) {
     onClick: handleFavClick
   })), /*#__PURE__*/React.createElement("div", {
     className: _ProductListItem_module_scss__WEBPACK_IMPORTED_MODULE_1__["default"].itemInfo
-  }, /*#__PURE__*/React.createElement("div", {
+  }, productItem && /*#__PURE__*/React.createElement(React.Fragment, null, /*#__PURE__*/React.createElement("div", {
     className: _ProductListItem_module_scss__WEBPACK_IMPORTED_MODULE_1__["default"].name,
     onClick: handleClick
   }, productItem.name, " "), /*#__PURE__*/React.createElement("div", {
     className: _ProductListItem_module_scss__WEBPACK_IMPORTED_MODULE_1__["default"].price,
     onClick: handleClick
-  }, "$", productItem.price.toFixed(2))));
+  }, "$", productItem === null || productItem === void 0 ? void 0 : productItem.price.toFixed(2)), " ")));
 }
 
 /***/ }),
@@ -2300,7 +2309,7 @@ function SellerShop(_ref) {
 /* harmony import */ var _ShopManagement_module_scss__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! ./ShopManagement.module.scss */ "./src/pages/ShopManagement/ShopManagement.module.scss");
 /* harmony import */ var _components_CreateShop_CreateShop__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! ../../components/CreateShop/CreateShop */ "./src/components/CreateShop/CreateShop.js");
 /* harmony import */ var _components_CreateProduct_CreateProduct__WEBPACK_IMPORTED_MODULE_3__ = __webpack_require__(/*! ../../components/CreateProduct/CreateProduct */ "./src/components/CreateProduct/CreateProduct.js");
-/* harmony import */ var _components_productListItem_productListItem__WEBPACK_IMPORTED_MODULE_4__ = __webpack_require__(/*! ../../components/productListItem/productListItem */ "./src/components/productListItem/productListItem.js");
+/* harmony import */ var _components_ProductList_ProductList__WEBPACK_IMPORTED_MODULE_4__ = __webpack_require__(/*! ../../components/ProductList/ProductList */ "./src/components/ProductList/ProductList.js");
 /* provided dependency */ var React = __webpack_require__(/*! react */ "./node_modules/react/index.js");
 function asyncGeneratorStep(gen, resolve, reject, _next, _throw, key, arg) { try { var info = gen[key](arg); var value = info.value; } catch (error) { reject(error); return; } if (info.done) { resolve(value); } else { Promise.resolve(value).then(_next, _throw); } }
 function _asyncToGenerator(fn) { return function () { var self = this, args = arguments; return new Promise(function (resolve, reject) { var gen = fn.apply(self, args); function _next(value) { asyncGeneratorStep(gen, resolve, reject, _next, _throw, "next", value); } function _throw(err) { asyncGeneratorStep(gen, resolve, reject, _next, _throw, "throw", err); } _next(undefined); }); }; }
@@ -2321,6 +2330,7 @@ function ShopManagement(_ref) {
   } = _ref;
   const [productModalOpen, setProductModalOpen] = (0,react__WEBPACK_IMPORTED_MODULE_0__.useState)(false);
   const [shopEditModalOpen, setShopEditModalOpen] = (0,react__WEBPACK_IMPORTED_MODULE_0__.useState)(false);
+  const [shopProducts, setShopProducts] = (0,react__WEBPACK_IMPORTED_MODULE_0__.useState)([]);
   const productModalRef = (0,react__WEBPACK_IMPORTED_MODULE_0__.useRef)();
   const shopEditModalRef = (0,react__WEBPACK_IMPORTED_MODULE_0__.useRef)();
   const navigate = (0,react_router_dom__WEBPACK_IMPORTED_MODULE_5__.useNavigate)();
@@ -2341,6 +2351,11 @@ function ShopManagement(_ref) {
     }
   }, [user]);
   (0,react__WEBPACK_IMPORTED_MODULE_0__.useEffect)(() => {
+    if (userShop && userShop.products.length > 0 && shopProducts.length === 0) {
+      setShopProducts(userShop.products);
+    }
+  }, [userShop]);
+  (0,react__WEBPACK_IMPORTED_MODULE_0__.useEffect)(() => {
     productModalOpen ? productModalRef.current.showModal() : productModalRef.current.close();
   }, [productModalOpen]);
   (0,react__WEBPACK_IMPORTED_MODULE_0__.useEffect)(() => {
@@ -2357,7 +2372,9 @@ function ShopManagement(_ref) {
   }
   function _deleteUserShop() {
     _deleteUserShop = _asyncToGenerator(function* () {
-      yield _utilities_shops_api__WEBPACK_IMPORTED_MODULE_6__.deleteShop(userShop._id);
+      const user = yield _utilities_shops_api__WEBPACK_IMPORTED_MODULE_6__.deleteShop(userShop._id);
+      setUserShop(null);
+      setUser(user);
       navigate('/account');
     });
     return _deleteUserShop.apply(this, arguments);
@@ -2376,15 +2393,15 @@ function ShopManagement(_ref) {
     onClick: toggleCreateProduct
   }, "Add A Product"), /*#__PURE__*/React.createElement("button", {
     onClick: deleteUserShop
-  }, "Delete Shop")), /*#__PURE__*/React.createElement("div", null, /*#__PURE__*/React.createElement("h2", null, "Products"), userShop && userShop.products ? userShop.products.map(product => /*#__PURE__*/React.createElement(_components_productListItem_productListItem__WEBPACK_IMPORTED_MODULE_4__["default"], {
-    key: product._id,
-    productItem: product,
+  }, "Delete Shop")), /*#__PURE__*/React.createElement("div", null, /*#__PURE__*/React.createElement("h2", null, "Products"), shopProducts.length > 0 ? /*#__PURE__*/React.createElement(_components_ProductList_ProductList__WEBPACK_IMPORTED_MODULE_4__["default"], {
+    productItems: shopProducts,
     user: user,
     setUser: setUser
-  })) : null), /*#__PURE__*/React.createElement("dialog", {
+  }) : null), /*#__PURE__*/React.createElement("dialog", {
     ref: shopEditModalRef,
     onClose: toggleEditShop
   }, /*#__PURE__*/React.createElement(_components_CreateShop_CreateShop__WEBPACK_IMPORTED_MODULE_2__["default"], {
+    toggleEditShop: toggleEditShop,
     user: user,
     setUser: setUser,
     location: location,
@@ -2394,6 +2411,9 @@ function ShopManagement(_ref) {
     ref: productModalRef,
     onClose: toggleCreateProduct
   }, /*#__PURE__*/React.createElement(_components_CreateProduct_CreateProduct__WEBPACK_IMPORTED_MODULE_3__["default"], {
+    toggleCreateProduct: toggleCreateProduct,
+    shopProducts: shopProducts,
+    setShopProducts: setShopProducts,
     user: user,
     setUser: setUser,
     location: location,
@@ -2439,7 +2459,6 @@ function ShopPage(_ref) {
   \***************************************/
 /***/ ((module, __unused_webpack_exports, __webpack_require__) => {
 
-// import axios from "axios"
 const axios = __webpack_require__(/*! axios */ "./node_modules/axios/dist/browser/axios.cjs");
 const axiosFetch = imageData => {
   return axios.post('https://api.apiserver.me/upload', imageData, {
