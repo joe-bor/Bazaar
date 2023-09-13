@@ -21,14 +21,14 @@ export default function ProductListItem({ productItem, user, setUser }) {
     <div className={styles.ProductListItem} >
       <div className={styles.imageContainer}>
         {/* 🟥 need a way to show multiple images 🟥 */}
-        <img className={styles.itemImage} src={productItem.images[0]} onClick={handleClick}></img>
+        {productItem?.images.length > 0 ? <img className={styles.itemImage} src={productItem.images[0]} onClick={handleClick}></img> : <p>No images available</p> }
         {/* 🟥 add favorite button to show on hover 🟥 */}
         <button onClick={handleFavClick}><img src={favHeart} /></button>
         <FavoriteIcon className={styles.FavoriteIcon} onClick={handleFavClick} />
       </div>
       <div className={styles.itemInfo}>
-        <div className={styles.name} onClick={handleClick}>{productItem.name} </div>
-        <div className={styles.price} onClick={handleClick}>${productItem.price.toFixed(2)}</div>
+        {productItem && <><div className={styles.name} onClick={handleClick}>{productItem.name} </div>
+        <div className={styles.price} onClick={handleClick}>${productItem?.price.toFixed(2)}</div> </>} 
       </div>
     </div>
   )

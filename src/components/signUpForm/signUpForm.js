@@ -21,7 +21,7 @@ function SignUpForm({ setUser }) {
       errorMessage:
         "Required and can't include special characters",
       label: "Name",
-      pattern: "^[A-Za-z0-9]+$",
+      pattern: "^[A-Za-z0-9 ]+$",
       required: true,
     },
     {

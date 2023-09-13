@@ -7,7 +7,7 @@ import { deleteUser } from "../../utilities/users-service";
 import styles from './AccountPage.module.scss'
 import CreateShop from "../../components/CreateShop/CreateShop";
 
-export default function AccountPage({ user, setUser, createGuestUser }) {
+export default function AccountPage({ user, setUser, createGuestUser, userShop, setUserShop }) {
   const [editModalOpen, setEditModalOpen] = useState(false)
   const [shopModalOpen, setShopModalOpen] = useState(false)
   const editModalRef = useRef()
@@ -58,8 +58,8 @@ export default function AccountPage({ user, setUser, createGuestUser }) {
         <h2>Favorites</h2><button onClick={() => navigate('favorites')}>See All</button>
         {/* 🟥 Favorites Section Here 🟥 */}
       </div>
-      <dialog ref={editModalRef} onClose={toggleEditModal}><EditUserForm user={user} setUser={setUser} /></dialog>
-      <dialog ref={shopModalRef} onClose={toggleCreateShop}><CreateShop user={user} setUser={setUser} location={location} /></dialog>
+      <dialog ref={editModalRef} onClose={toggleEditModal} onSubmit={toggleEditModal}><EditUserForm user={user} setUser={setUser} /></dialog>
+      <dialog ref={shopModalRef} onClose={toggleCreateShop} onSubmit={toggleCreateShop}><CreateShop user={user} setUser={setUser} location={location} userShop={userShop} setUserShop={setUserShop} /></dialog>
     </div>
   )
 }

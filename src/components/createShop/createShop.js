@@ -3,13 +3,15 @@ import { createShop, editShopInfo } from '../../utilities/shops-api'
 import styles from './CreateShop.module.scss'
 import FormInput from '../FormInput/FormInput'
 import { useNavigate } from 'react-router-dom'
+import { updateUser } from '../../utilities/users-service'
 
-export default function CreateShop({ user, setUser, location, shop, setShop }) {
+export default function CreateShop({ user, setUser, location, userShop, setUserShop, toggleEditShop }) {
   const [shopValues, setShopValues] = useState({
     name: '',
     description: '',
     // logoImage: null
   })
+
   const navigate = useNavigate()
 
 
@@ -19,7 +21,7 @@ export default function CreateShop({ user, setUser, location, shop, setShop }) {
       name: "name",
       type: "text",
       placeholder: "Shop Name",
-      value: location.pathname === './account' ? shopValues.name : shop?.name,
+      value: location.pathname === '/account' ? shopValues.name : userShop?.name,
       errorMessage:
         "Shop name is required and can't include special characters",
       label: "Shop Name",
@@ -31,7 +33,7 @@ export default function CreateShop({ user, setUser, location, shop, setShop }) {
       name: "description",
       type: "text",
       placeholder: "Shop Description",
-      value: location.pathname === './account' ? shopValues.description : shop?.description,
+      value: location.pathname === '/account' ? shopValues.description : userShop?.description,
       errorMessage: "Shop description is required",
       label: "Shop Description",
       required: true,
@@ -59,23 +61,28 @@ export default function CreateShop({ user, setUser, location, shop, setShop }) {
     const formData = { ...shopValues }
     if (location.pathname === '/shopmgmt') {
       // send request to update shop
-      const updatedShop = await editShopInfo(formData)
-      setShop(updatedShop)
-
+      const updatedShop = await editShopInfo(userShop._id, formData)
+      setUserShop(updatedShop)
+      toggleEditShop()
     } else {
       // send request to create shop
-      const newData = await createShop(formData)
+      const { shopOwner, shop } = await createShop({
+        seller: user._id,
+        name: shopValues.name,
+        description: shopValues.description
+      })
       // set user state to have shop info
-      console.log(newData.user)
-      setUser(newData.user)
-      // navigate('/shopmgmt')
+      const updatedUser = await updateUser(user._id, shopOwner)      
+      setUser(updatedUser)
+      setUserShop(shop)
+      navigate('/shopmgmt')
     }
   }
 
   return (
     <div className={styles.CreateShop}>
       <div className="form-container">
-        <h1 className={styles.h1}>{location.pathname === './account' ? 'Create A Shop' : 'Edit Shop Details'}</h1>
+        <h1 className={styles.h1}>{location.pathname === '/account' ? 'Create A Shop' : 'Edit Shop Details'}</h1>
         <form autoComplete="off" onSubmit={handleShopSubmit}>
           {/* <FormInput {...logoInputProps} handleInputChange={handleImageChange} /> */}
           {shopInputs.map(input => <FormInput key={input.id} {...input} value={shopValues[input.name]} handleInputChange={handleShopInputChange} />)}
