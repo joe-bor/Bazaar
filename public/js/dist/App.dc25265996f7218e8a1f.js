@@ -128,6 +128,7 @@ function CategorySection(_ref) {
     if (items && Array.isArray(items)) {
       const copy = [...items];
       setFirstFiveItems(category === 'Show All' ? copy.slice(-5) : copy.filter(item => item.category.name === category).slice(0, 5));
+      console.log(firstFiveItems);
     }
   }, [items]);
   return /*#__PURE__*/React.createElement("div", {
@@ -445,6 +446,7 @@ function CreateShop(_ref) {
 /* harmony import */ var react__WEBPACK_IMPORTED_MODULE_0___default = /*#__PURE__*/__webpack_require__.n(react__WEBPACK_IMPORTED_MODULE_0__);
 /* harmony import */ var _EditUserForm_module_scss__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! ./EditUserForm.module.scss */ "./src/components/EditUserForm/EditUserForm.module.scss");
 /* harmony import */ var _FormInput_FormInput__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! ../FormInput/FormInput */ "./src/components/FormInput/FormInput.js");
+/* harmony import */ var _utilities_users_service__WEBPACK_IMPORTED_MODULE_4__ = __webpack_require__(/*! ../../utilities/users-service */ "./src/utilities/users-service.js");
 /* harmony import */ var _utilities_image_upload__WEBPACK_IMPORTED_MODULE_3__ = __webpack_require__(/*! ../../utilities/image-upload */ "./src/utilities/image-upload.js");
 /* harmony import */ var _utilities_image_upload__WEBPACK_IMPORTED_MODULE_3___default = /*#__PURE__*/__webpack_require__.n(_utilities_image_upload__WEBPACK_IMPORTED_MODULE_3__);
 /* provided dependency */ var React = __webpack_require__(/*! react */ "./node_modules/react/index.js");
@@ -482,7 +484,7 @@ function EditUserForm(_ref) {
     value: user.name,
     errorMessage: "Required and can't include special characters",
     label: "Name",
-    pattern: "^[A-Za-z0-9]+$",
+    pattern: "^[A-Za-z0-9 ]+$",
     required: true
   }, {
     id: "edit-email",
@@ -536,24 +538,20 @@ function EditUserForm(_ref) {
   const handleSubmit = /*#__PURE__*/function () {
     var _ref2 = _asyncToGenerator(function* (e) {
       e.preventDefault();
-      // once you have the file from the user's comupter, call set file and then save that to the state variable
-      // then send the file from state to the upload route - need separate function to handle upload function (need utility)
-      // then use a .then to senf the request to update user
-
       const formData = new FormData();
       formData.append('file', file);
-
-      // for (let key in values) {
-      //   if (key !== 'confirm') {
-      //     formData.append(key, values[key])
-      //   }
-      // }
-
-      const data = _utilities_image_upload__WEBPACK_IMPORTED_MODULE_3___default()(formData);
-      setPhotoUrl(data.secure_url);
-
-      // const updatedUser = await updateUser(user._id, formData)
-      // setUser(updatedUser)
+      const data = yield _utilities_image_upload__WEBPACK_IMPORTED_MODULE_3___default()(formData);
+      setPhotoUrl(data);
+      console.log(data);
+      console.log(photoUrl);
+      const updatedUserInfo = _objectSpread(_objectSpread({}, values), {}, {
+        imageUrl: data
+      });
+      delete updatedUserInfo.confirm;
+      console.log(updatedUserInfo); //!
+      const updatedUser = yield (0,_utilities_users_service__WEBPACK_IMPORTED_MODULE_4__.updateUser)(user._id, updatedUserInfo);
+      console.log(updatedUser); //! returned object doesnt have the imageUrl property
+      setUser(updatedUser);
     });
     return function handleSubmit(_x) {
       return _ref2.apply(this, arguments);
@@ -566,7 +564,12 @@ function EditUserForm(_ref) {
     onSubmit: handleSubmit
   }, /*#__PURE__*/React.createElement(_FormInput_FormInput__WEBPACK_IMPORTED_MODULE_2__["default"], _extends({}, imageInputProps, {
     handleInputChange: handleImageChange
-  })), /*#__PURE__*/React.createElement("button", {
+  })), inputs.map(input => /*#__PURE__*/React.createElement(_FormInput_FormInput__WEBPACK_IMPORTED_MODULE_2__["default"], _extends({
+    key: input.id
+  }, input, {
+    value: values[input.name],
+    handleInputChange: handleInputChange
+  }))), /*#__PURE__*/React.createElement("button", {
     formMethod: "dialog"
   }, "Update")));
 }
@@ -903,7 +906,10 @@ function NavBar(_ref) {
     className: "navbar-search"
   }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default().createElement(_SearchBar_SearchBar_js__WEBPACK_IMPORTED_MODULE_6__["default"], {
     searchTerm: searchTerm,
-    setSearchTerm: setSearchTerm
+    setSearchTerm: setSearchTerm,
+    items: items,
+    filteredItems: filteredItems,
+    setFilteredItems: setFilteredItems
   }))), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default().createElement("div", {
     className: _NavBar_module_scss__WEBPACK_IMPORTED_MODULE_1__["default"].categories
   }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default().createElement("ul", null, categories.map((category, index) => /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default().createElement("li", {
@@ -1158,39 +1164,40 @@ function ReviewList(_ref) {
 /* harmony export */ });
 /* harmony import */ var react__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! react */ "./node_modules/react/index.js");
 /* harmony import */ var react__WEBPACK_IMPORTED_MODULE_0___default = /*#__PURE__*/__webpack_require__.n(react__WEBPACK_IMPORTED_MODULE_0__);
+/* harmony import */ var react_router_dom__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! react-router-dom */ "./node_modules/react-router/dist/index.js");
 /* provided dependency */ var React = __webpack_require__(/*! react */ "./node_modules/react/index.js");
+
 
 function SearchBar(_ref) {
   let {
-    products,
-    filteredItems,
-    // used for debugging
-    setfilteredItems
+    items,
+    setFilteredItems
   } = _ref;
   const [searchTerm, setSearchTerm] = (0,react__WEBPACK_IMPORTED_MODULE_0__.useState)("");
+  const navigate = (0,react_router_dom__WEBPACK_IMPORTED_MODULE_1__.useNavigate)();
 
   // properties to not include in search result
   const excludeProps = ["imageUrl", "publicId", "price", "reviews"];
-  function searchResults(product) {
-    return Object.keys(product).some(key => {
-      return excludeProps.includes(key) ? false : product[key] // value
+  function searchFilter(item) {
+    return Object.keys(item).some(key => {
+      return excludeProps.includes(key) ? false : item[key] // value
       .toString() // convert to string
       .toLowerCase() // lowercase string
       .includes(searchTerm.toLowerCase());
     });
-
-    // where would I place link to to shop page?
   }
-
   const handleChange = evt => {
     setSearchTerm(evt.target.value);
   };
   const handleSubmit = evt => {
     // here is where the magic happens
     evt.preventDefault();
-    //setfilteredItems(search(products, searchTerm));
-    let search = products.filter(searchResults);
-    setfilteredItems(search);
+    navigate('/shop', {
+      replace: true
+    });
+    let search = items.filter(searchFilter);
+    setFilteredItems(search);
+    console.log(evt.target.value);
   };
   return /*#__PURE__*/React.createElement("div", null, /*#__PURE__*/React.createElement("form", {
     onSubmit: handleSubmit
@@ -1628,25 +1635,27 @@ function App() {
   (0,react__WEBPACK_IMPORTED_MODULE_0__.useEffect)(() => {
     if (!user) {
       createGuestUser();
+    } else {
+      getItems();
     }
-    function getItems() {
-      return _getItems.apply(this, arguments);
-    }
-    function _getItems() {
-      _getItems = _asyncToGenerator(function* () {
-        const allItems = yield _utilities_items_api__WEBPACK_IMPORTED_MODULE_16__.getAll();
-        categoriesRef.current = allItems.reduce((cats, item) => {
-          const cat = item.category.name;
-          return cats.includes(cat) ? cats : [...cats, cat];
-        }, []);
-        categoriesRef.current.unshift('Show All');
-        setItems(allItems);
-        setActiveCat(categoriesRef.current[0]);
-      });
-      return _getItems.apply(this, arguments);
-    }
-    getItems();
   }, []);
+  function getItems() {
+    return _getItems.apply(this, arguments);
+  }
+  function _getItems() {
+    _getItems = _asyncToGenerator(function* () {
+      const allItems = yield _utilities_items_api__WEBPACK_IMPORTED_MODULE_16__.getAll();
+      categoriesRef.current = allItems.reduce((cats, item) => {
+        const cat = item.category.name;
+        return cats.includes(cat) ? cats : [...cats, cat];
+      }, []);
+      categoriesRef.current.unshift('Show All');
+      setItems(allItems);
+      setActiveCat(categoriesRef.current[0]);
+      setFilteredItems(allItems); // for search bar
+    });
+    return _getItems.apply(this, arguments);
+  }
   const toggleAuthModal = () => {
     setIsAuthModalOpen(!isAuthModalOpen);
   };
@@ -1694,6 +1703,7 @@ function App() {
       localStorage.setItem('guest', guestUserData.email);
       const guestUser = yield (0,_utilities_users_service__WEBPACK_IMPORTED_MODULE_14__.signUp)(guestUserData);
       // set user to newly created guest user
+      items.length > 0 ? null : getItems();
       setUser(guestUser);
     });
     return _createGuestUser.apply(this, arguments);
@@ -1730,7 +1740,7 @@ function App() {
     path: "/shop",
     element: /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default().createElement(_ShopPage_ShopPage__WEBPACK_IMPORTED_MODULE_3__["default"], {
       className: _App_module_scss__WEBPACK_IMPORTED_MODULE_1__["default"].ShopPage,
-      items: items,
+      items: filteredItems,
       user: user,
       setUser: setUser
     })
@@ -2465,6 +2475,9 @@ const axiosFetch = imageData => {
     headers: new Headers({
       'Content-Type': "multipart/form-data"
     })
+  }).then(res => {
+    console.log(res.data.secure_url);
+    return res.data.secure_url;
   });
 };
 module.exports = axiosFetch;
@@ -2623,9 +2636,9 @@ function getOrderHistory() {
 
 "use strict";
 /* harmony export */ __webpack_require__.d(__webpack_exports__, {
-/* harmony export */   "default": () => (/* binding */ sendRequest),
-/* harmony export */   sendUrlFormData: () => (/* binding */ sendUrlFormData)
+/* harmony export */   "default": () => (/* binding */ sendRequest)
 /* harmony export */ });
+/* unused harmony export sendUrlFormData */
 /* harmony import */ var _users_service__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! ./users-service */ "./src/utilities/users-service.js");
 function asyncGeneratorStep(gen, resolve, reject, _next, _throw, key, arg) { try { var info = gen[key](arg); var value = info.value; } catch (error) { reject(error); return; } if (info.done) { resolve(value); } else { Promise.resolve(value).then(_next, _throw); } }
 function _asyncToGenerator(fn) { return function () { var self = this, args = arguments; return new Promise(function (resolve, reject) { var gen = fn.apply(self, args); function _next(value) { asyncGeneratorStep(gen, resolve, reject, _next, _throw, "next", value); } function _throw(err) { asyncGeneratorStep(gen, resolve, reject, _next, _throw, "throw", err); } _next(undefined); }); }; }
@@ -2773,7 +2786,7 @@ function login(credentials) {
   return (0,_send_request__WEBPACK_IMPORTED_MODULE_0__["default"])("".concat(BASE_URL, "/login"), 'POST', credentials);
 }
 function editUserInfo(id, newInfo) {
-  return (0,_send_request__WEBPACK_IMPORTED_MODULE_0__.sendUrlFormData)("".concat(BASE_URL, "/").concat(id), 'PUT', newInfo);
+  return (0,_send_request__WEBPACK_IMPORTED_MODULE_0__["default"])("".concat(BASE_URL, "/").concat(id), 'PUT', newInfo);
 }
 function toggleFavorites(id, itemId) {
   return (0,_send_request__WEBPACK_IMPORTED_MODULE_0__["default"])("".concat(BASE_URL, "/").concat(id, "/favorites"), 'PUT', {
