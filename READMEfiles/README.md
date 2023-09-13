@@ -34,7 +34,7 @@
 - cloudinary: Image hosting api
 - cors: Cross-origin request handler
 - dotenv: Processes .env variables
-- express: connects frontend application with backend api
+- express: manages http server/connects frontend application with backend api
 - express-fileupload: middleware that enables file uploads (used with cloudinary to host uploaded images)
 - jsonwebtoken: enables jwt authentication
 - mongoose: creates models for backend documents
