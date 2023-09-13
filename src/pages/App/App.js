@@ -57,6 +57,7 @@ export default function App() {
     categoriesRef.current.unshift('Show All')
     setItems(allItems)
     setActiveCat(categoriesRef.current[0])
+    setFilteredItems(allItems) // for search bar
   }
 
 
@@ -135,7 +136,7 @@ export default function App() {
       <Routes>
         {/* client-side route that renders the component instance if the patch matches the url in the address bar */}
         <Route path="/home" element={<Home items={items} className={styles.Home} categories={categoriesRef.current} setActiveCat={setActiveCat} setCart={setCart} />} />
-        <Route path="/shop" element={<ShopPage className={styles.ShopPage} items={items} user={user} setUser={setUser} />} />
+        <Route path="/shop" element={<ShopPage className={styles.ShopPage} items={filteredItems} user={user} setUser={setUser} />} />
         <Route path="/itemdetails/:itemId" element={<ItemDetails setCart={setCart} />} />
         <Route path="/account" element={<AccountPage className={styles.AccountPage} user={user} setUser={setUser} createGuestUser={createGuestUser} />} />
         <Route path="/favorites" element={<Favorites user={user} setUser={setUser} />} />

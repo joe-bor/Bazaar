@@ -126,6 +126,7 @@ function CategorySection(_ref) {
     if (items && Array.isArray(items)) {
       const copy = [...items];
       setFirstFiveItems(category === 'Show All' ? copy.slice(-5) : copy.filter(item => item.category.name === category).slice(0, 5));
+      console.log(firstFiveItems);
     }
   }, [items]);
   return /*#__PURE__*/React.createElement("div", {
@@ -817,7 +818,10 @@ function NavBar(_ref) {
     className: "navbar-search"
   }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default().createElement(_SearchBar_SearchBar_js__WEBPACK_IMPORTED_MODULE_6__["default"], {
     searchTerm: searchTerm,
-    setSearchTerm: setSearchTerm
+    setSearchTerm: setSearchTerm,
+    items: items,
+    filteredItems: filteredItems,
+    setFilteredItems: setFilteredItems
   }))), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default().createElement("div", {
     className: _NavBar_module_scss__WEBPACK_IMPORTED_MODULE_1__["default"].categories
   }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default().createElement("ul", null, categories.map((category, index) => /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default().createElement("li", {
@@ -1066,39 +1070,40 @@ function ReviewList(_ref) {
 /* harmony export */ });
 /* harmony import */ var react__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! react */ "./node_modules/react/index.js");
 /* harmony import */ var react__WEBPACK_IMPORTED_MODULE_0___default = /*#__PURE__*/__webpack_require__.n(react__WEBPACK_IMPORTED_MODULE_0__);
+/* harmony import */ var react_router_dom__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! react-router-dom */ "./node_modules/react-router/dist/index.js");
 /* provided dependency */ var React = __webpack_require__(/*! react */ "./node_modules/react/index.js");
+
 
 function SearchBar(_ref) {
   let {
-    products,
-    filteredItems,
-    // used for debugging
-    setfilteredItems
+    items,
+    setFilteredItems
   } = _ref;
   const [searchTerm, setSearchTerm] = (0,react__WEBPACK_IMPORTED_MODULE_0__.useState)("");
+  const navigate = (0,react_router_dom__WEBPACK_IMPORTED_MODULE_1__.useNavigate)();
 
   // properties to not include in search result
   const excludeProps = ["imageUrl", "publicId", "price", "reviews"];
-  function searchResults(product) {
-    return Object.keys(product).some(key => {
-      return excludeProps.includes(key) ? false : product[key] // value
+  function searchFilter(item) {
+    return Object.keys(item).some(key => {
+      return excludeProps.includes(key) ? false : item[key] // value
       .toString() // convert to string
       .toLowerCase() // lowercase string
       .includes(searchTerm.toLowerCase());
     });
-
-    // where would I place link to to shop page?
   }
-
   const handleChange = evt => {
     setSearchTerm(evt.target.value);
   };
   const handleSubmit = evt => {
     // here is where the magic happens
     evt.preventDefault();
-    //setfilteredItems(search(products, searchTerm));
-    let search = products.filter(searchResults);
-    setfilteredItems(search);
+    navigate('/shop', {
+      replace: true
+    });
+    let search = items.filter(searchFilter);
+    setFilteredItems(search);
+    console.log(evt.target.value);
   };
   return /*#__PURE__*/React.createElement("div", null, /*#__PURE__*/React.createElement("form", {
     onSubmit: handleSubmit
@@ -1535,7 +1540,9 @@ function App() {
       }, []);
       categoriesRef.current.unshift('Show All');
       setItems(allItems);
+      console.log(categoriesRef.current);
       setActiveCat(categoriesRef.current[0]);
+      setFilteredItems(allItems); // for search bar
     });
     return _getItems.apply(this, arguments);
   }
@@ -1628,7 +1635,7 @@ function App() {
     path: "/shop",
     element: /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default().createElement(_ShopPage_ShopPage__WEBPACK_IMPORTED_MODULE_3__["default"], {
       className: _App_module_scss__WEBPACK_IMPORTED_MODULE_1__["default"].ShopPage,
-      items: items,
+      items: filteredItems,
       user: user,
       setUser: setUser
     })

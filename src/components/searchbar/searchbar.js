@@ -1,28 +1,26 @@
-import { useState } from "react";
+import { useEffect, useState } from "react";
+import { useNavigate } from 'react-router-dom';
+
 
 export default function SearchBar({
-  products,
-  filteredItems, // used for debugging
-  setfilteredItems
+  items,
+  setFilteredItems
 }) {
   const [searchTerm, setSearchTerm] = useState("");
-
+  const navigate = useNavigate();
 
   // properties to not include in search result
   const excludeProps = ["imageUrl", "publicId", "price", "reviews"];
 
-  function searchResults(product) {
-    return Object.keys(product).some((key) => {
+  function searchFilter(item) {
+    return Object.keys(item).some((key) => {
       return excludeProps.includes(key)
         ? false
-        : product[key] // value
+        : item[key] // value
             .toString() // convert to string
             .toLowerCase() // lowercase string
             .includes(searchTerm.toLowerCase());
     });
-
-    // where would I place link to to shop page?
-
   }
 
   const handleChange = (evt) => {
@@ -32,9 +30,10 @@ export default function SearchBar({
   const handleSubmit = (evt) => {
     // here is where the magic happens
     evt.preventDefault();
-    //setfilteredItems(search(products, searchTerm));
-    let search = products.filter(searchResults);
-    setfilteredItems(search);
+    navigate('/shop', { replace: true });
+    let search = items.filter(searchFilter);
+    setFilteredItems(search);
+    console.log(evt.target.value)
   };
 
   return (

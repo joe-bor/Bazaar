@@ -14,6 +14,7 @@ export default function CategorySection({ items, category, setActiveCat }) {
         if (items && Array.isArray(items)) {
             const copy = [...items]
             setFirstFiveItems(category === 'Show All' ? copy.slice(-5) : copy.filter(item => item.category.name === category).slice(0, 5))
+            console.log(firstFiveItems)
         }
     }, [items])
 
