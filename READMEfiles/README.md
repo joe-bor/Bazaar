@@ -13,9 +13,14 @@
     - Michael Terry | [github](https://github.com/m-j-terry) | [linkedIn](https://www.linkedin.com/in/michaeljterry/)
     - Nick Daly | [github](https://github.com/ndaly94) | [linkedIn](https://www.linkedin.com/in/nickdaly94/)
 - Project Scope: Using all of the skills you have gained over the ()span of your Software Engineering Intensive, create a fullstack application that functions like Etsy. 
-- We proudly present our rendition of Etsy, [Bazaar](INSERT_LIVE_LINK_HERE).
+
+# Live Link
+- We proudly present our rendition of Etsy, ✨[Bazaar](INSERT_LIVE_LINK_HERE)✨.
+
+# ______________________________________________________________
 
 ## SERVICES AND TECHNOLOGYIES USED
+[![My Skills](https://skillicons.dev/icons?i=css,html,js)](https://skillicons.dev)
 - digitalOcean: developer-ready site hosting service
 - cloudinary: online image hosting api
 - mongoDb: backend database for storing user, shop, item, category, review, and order documents
@@ -24,46 +29,38 @@
 ### DEPENDENCIES
 [![My Skills](https://skillicons.dev/icons?i=express,mongodb)](https://skillicons.dev)
 
-- bcrypt: 
-- cloudinary: 
-- cors: 
-- dotenv: 
-- express: 
-- express-fileupload: 
-- jsonwebtoken: 
-- mongoose: 
-- morgan: 
-- serve-favicon:
+- bcrypt: Password encryption
+- cloudinary: Image hosting api
+- cors: Cross-origin request handler
+- dotenv: Processes .env variables
+- express: connects frontend application with backend api
+- express-fileupload: middleware that enables file uploads (used with cloudinary to host uploaded images)
+- jsonwebtoken: enables jwt authentication
+- mongoose: creates models for backend documents
+- morgan: http request logger
+- serve-favicon: enables personalized thumbnail favicons to be used in browser tab
 
 
 ### DEV DEPENDENCIES
-[![My Skills](https://skillicons.dev/icons?i=babel,bootstrap,css,gulp,html,js,nodejs,react,sass,webpack)](https://skillicons.dev)
-- auto-prefixer: 
-- babel-loader: 
-- bootstrap: 
-- browser-sync: 
-- clean-webpack-plugin: 
-- css-loader: 
-- gulp: 
-- gulp-autoprefixer: 
-- gulp-nodemon: 
-- gulp-sass: 
-- html-webpack-plugin: 
-- mini-css-extract-plugin: 
-- postcss-loader: 
-- prettier-loader: 
-- react: 
-- react-dom: 
-- react-router-dom: 
-- sass: 
-- sass-loader: 
-- source-map-loader: 
-- style-loader: 
-- webpack: 
-- webpack-cli:
+[![My Skills](https://skillicons.dev/icons?i=babel,bootstrap,gulp,nodejs,react,sass,webpack)](https://skillicons.dev)
+- auto-prefixer: automatically adds CSS prefixes
+- babel: translates between jsx and es5 or es6
+- bootstrap: frontend framework
+- browser-sync: live css reload for ease in styling
+- gulp: task optimizer 
+- react: state-based frontend development tool
+- react-router-dom: enables page routing in react applications
+- sass: modulated stylesheets 
+- webpack: compiles modules to be served in the browser
 
 ## ERD
 ![](ERD.png)
+
+## USER STORIES
+- Click [here](https://github.com/users/MoHanSolo/projects/2/views/1) to view our user stories.
+
+## TASKS
+- Click [here](https://github.com/users/hlysllrs/projects/2/views/1) to see the division of tasks.
 
 ## WIREFRAMES
 ### Home Page
