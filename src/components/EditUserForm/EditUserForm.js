@@ -14,7 +14,6 @@ function EditUserForm({ user, setUser }) {
     confirm: "",
   })
   const [file, setFile] = useState(null)
-  const [photoUrl, setPhotoUrl] = useState('')
 
   const inputs = [
     {
