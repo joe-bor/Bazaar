@@ -97,8 +97,17 @@ function EditUserForm({ user, setUser }) {
       }
     }
 
+
     const data = await axiosPut(user._id, formData)
-    setUser(data)
+    console.log(data.data) // JWT of updated user
+    // clear current token in localstorage
+    localStorage.removeItem('token');
+    // replace with data.data
+    localStorage.setItem('token', data.data);
+    // extract user from token
+    const newUser = JSON.parse(atob(data.data.split('.')[1])).user
+    setUser(newUser)
+
    
   }
 
