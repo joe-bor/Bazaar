@@ -12,18 +12,21 @@
         height: 36vmin;
         border-radius: 50%;
       }
-      h1 {
-        margin: 0 0 2rem 0;
-      }
-      table {
-        text-align: left;
-        font-size: 1.25rem;
-        th {
-          padding-right: 1.5rem;
-          padding-bottom: 0.5rem;
+      .infoDetails {
+        margin-left: 1rem;
+        h1 {
+          margin: 0 0 2rem 0;
         }
-        td {
-          padding-bottom: 0.5rem;
+        table {
+          text-align: left;
+          font-size: 1.25rem;
+          th {
+            padding-right: 1.5rem;
+            padding-bottom: 0.5rem;
+          }
+          td {
+            padding-bottom: 0.5rem;
+          }
         }
       }
     }

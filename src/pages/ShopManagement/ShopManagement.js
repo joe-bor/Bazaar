@@ -5,6 +5,7 @@ import styles from './ShopManagement.module.scss'
 import CreateShop from "../../components/CreateShop/CreateShop";
 import CreateProduct from "../../components/CreateProduct/CreateProduct";
 import ProductList from '../../components/ProductList/ProductList';
+import shopIcon from '../../assets/images/shop-icon.svg'
 
 export default function ShopManagement({ user, setUser, userShop, setUserShop, categories }) {
   const [productModalOpen, setProductModalOpen] = useState(false)
@@ -27,12 +28,12 @@ export default function ShopManagement({ user, setUser, userShop, setUserShop, c
   }, [user])
 
   useEffect(() => {
-    if (userShop && userShop.products.length > 0 && shopProducts.length === 0){
+    if (userShop && userShop.products.length > 0 && shopProducts.length === 0) {
       setShopProducts(userShop.products)
     }
 
-  },[userShop])
-  
+  }, [userShop])
+
 
   useEffect(() => {
     productModalOpen ? productModalRef.current.showModal() : productModalRef.current.close()
@@ -61,24 +62,24 @@ export default function ShopManagement({ user, setUser, userShop, setUserShop, c
 
   return (
     <div className={styles.ShopManagement}>
-      <div className={styles.shopImage}>
-        {/* <img src={userShop.heroImage} /> */}
-      </div>
-      <div className={styles.shopInfo}>
+      <section className={styles.header}>
         {userShop &&
-          <>
-            <h1>{userShop.name}</h1>
-            <p>{userShop.description}</p>
-          </>}
-      </div>
-      <div className={styles.links}>
-        <button onClick={toggleEditShop}>Edit Shop</button>
-        <button onClick={toggleCreateProduct}>Add A Product</button>
-        <button onClick={deleteUserShop}>Delete Shop</button>
-      </div>
-      <div>
-        <h2>Products</h2>
-        {shopProducts.length > 0 ?  <ProductList productItems={shopProducts} user={user} setUser={setUser} /> : null}
+          <div className={styles.infoSection}>
+            <img className={userShop.heroImage ? styles.circle : ''} src={userShop.heroImage ? userShop.heroImage : shopIcon} />
+            <div className={styles.shopInfo}>
+              <h1 className="title">{userShop.name}</h1>
+              <p className={styles.description}>{userShop.description}</p>
+            </div>
+          </div>}
+        <div className={`${styles.links} flex-col`}>
+          <button onClick={toggleEditShop}>Edit Shop Info</button>
+          <button onClick={toggleCreateProduct}>Add A Product</button>
+          <button onClick={deleteUserShop}>Delete Shop</button>
+        </div>
+      </section>
+      <div className={styles.products}>
+        <h2 className={styles.productsHeading}>Products</h2>
+        {shopProducts.length > 0 ? <ProductList productItems={shopProducts} user={user} setUser={setUser} /> : null}
       </div>
       <dialog ref={shopEditModalRef} onClose={toggleEditShop}><CreateShop toggleEditShop={toggleEditShop} user={user} setUser={setUser} location={location} userShop={userShop} setUserShop={setUserShop} /></dialog>
       <dialog ref={productModalRef} onClose={toggleCreateProduct}><CreateProduct toggleCreateProduct={toggleCreateProduct} shopProducts={shopProducts} setShopProducts={setShopProducts} user={user} setUser={setUser} location={location} userShop={userShop} setUserShop={setUserShop} categories={categories} /></dialog>
