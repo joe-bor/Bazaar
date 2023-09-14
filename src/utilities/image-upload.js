@@ -16,6 +16,7 @@ export function axiosPost(id, imageData) {
     headers: new Headers({ 
       'Content-Type': "multipart/form-data", 
       'Authorization': `Bearer ${getToken()}`
+
     })
   })
 }
