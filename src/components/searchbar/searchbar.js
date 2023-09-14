@@ -1,8 +1,12 @@
+import styles from '../searchbar/Searchbar.module.scss'
+import searchIcon from '../../assets/images/search-icon.svg'
+
 import { useEffect, useState } from "react";
 import { useNavigate } from 'react-router-dom';
 
 
 export default function SearchBar({
+  className,
   items,
   setFilteredItems
 }) {
@@ -17,9 +21,9 @@ export default function SearchBar({
       return excludeProps.includes(key)
         ? false
         : item[key] // value
-            .toString() // convert to string
-            .toLowerCase() // lowercase string
-            .includes(searchTerm.toLowerCase());
+          .toString() // convert to string
+          .toLowerCase() // lowercase string
+          .includes(searchTerm.toLowerCase().replace(/\s+/g, ''));
     });
   }
 
@@ -37,17 +41,26 @@ export default function SearchBar({
   };
 
   return (
-    <div>
-      <form onSubmit={handleSubmit}>
-        <input
-          onChange={handleChange}
-          type="text"
-          placeholder="Search for anything"
-          value={searchTerm}
-        ></input>
-        <button type="submit">Search</button>
-      </form>
-    </div>
+    <form 
+    className={styles.searchForm}
+    onSubmit={handleSubmit}>
+      <input
+        className={styles.input}
+        onChange={handleChange}
+        type="text"
+        placeholder="Search for anything"
+        value={searchTerm}
+      ></input>
+      <button
+        className={styles.searchBtn}
+        type="submit"
+      >
+        <img 
+        className={styles.searchIcon}
+        src={searchIcon} 
+        alt="search" />
+      </button>
+    </form>
   );
 }
 

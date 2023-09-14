@@ -37,63 +37,54 @@ export default function NavBar({
     return (
         <nav className={styles.NavBar}>
             <div className={styles.topLine}>
-                <div className="navbar-logo">
-                    <Logo className={styles.Logo} onClick={handleLogoClick} />
+                <div className={styles.logoContainer}>
+                    <Logo
+                        className={styles.Logo}
+                        onClick={handleLogoClick} />
                 </div>
-                <div className="navbar-search">
-                    <SearchBar searchTerm={searchTerm} 
-                    setSearchTerm={setSearchTerm} 
-                    items={items}
-                    filteredItems={filteredItems}
-                    setFilteredItems={setFilteredItems} />
+                <div className={styles.searchbarContainer}>
+                    <SearchBar
+                        searchTerm={searchTerm}
+                        setSearchTerm={setSearchTerm}
+                        items={items}
+                        filteredItems={filteredItems}
+                        setFilteredItems={setFilteredItems} />
                 </div>
             </div>
-            <div className={styles.categories}>
-                <ul>
-                    {categories.map((category, index) => (
-                        <li key={index}>
-                            {category}
-                        </li>
-                    ))}
-                </ul>
-            </div>
-            <div className={styles.icons}>
-                <Link to="/favorites">
-                    <div>
-                        <i className="heart"></i>
-                        <img src={favHeart} alt="heart" />
-                    </div>
-                </Link>
-                <Link to="/cart">
-                    <div>
-                        <i className="cart"></i>
-                        <img src={cartIcon} alt="cart" />
-                        {/* Display the cart count if items are in the cart */}
-                        {cart?.length > 0 && (
-                            <span className="cart-count">{cartTotals.totalItemQty}</span>
-                        )}
-                    </div>
-                </Link>
-                <Link to="/store">
-                    <div>
-                        <i className="store"></i>
-                        <img src={shopIcon} alt="store" />
-                    </div>
-                </Link>
-                <div className="navbar-user">
-                    {user?.name !== 'c186ec' ? (
-                        //Display user profile info if logged in
-                        <>
-                            <img src={user?.imageUrl ? user.imageUrl : userIcon} alt="Profile" />
-                            <Link to='/account'><span>{user?.name}</span></Link>
-                        </>
-                    ) : (
-                        //Display user profile info if logged in
-                        <>
-                            <div onClick={toggleAuthModal}>Log In</div>
-                        </>
+            <div className={styles.catsAndIcons}>
+                <div className={styles.categories}>
+                    <ul>
+                        {categories.map((category, index) => (
+                            <li className={styles.li} key={index}>
+                                {category}
+                            </li>
+                        ))}
+                    </ul>
+                </div>
+                <div className={styles.icons}>
+                    <Link to="/favorites">
+                        <div>
+                            <i className="heart"></i>
+                            <img src={favHeart} alt="heart" />
+                        </div>
+                    </Link>
+                    <Link to="/cart">
+                        <div>
+                            <i className="cart"></i>
+                            <img src={cartIcon} alt="cart" />
+                            {/* Display the cart count if items are in the cart */}
+                            {cart?.length > 0 && (
+                                <span className="cart-count">{cartTotals.totalItemQty}</span>
+                            )}
+                        </div>
+                    </Link>
+                    <Link to="/store">
+                        <div>
+                            <i className="store"></i>
+                            <img src={shopIcon} alt="store" />
+                        </div>
+                    </Link>
 
-                    )}
                 </div>
             </div>
         </nav>

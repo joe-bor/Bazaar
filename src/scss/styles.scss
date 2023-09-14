@@ -41,6 +41,11 @@ body {
   height: 100%;
 }
 
+.title {
+  font-weight: 600;
+  font-size: 2.5rem;
+}
+
 .heading {
   font-weight: 600;
   font-size: 2rem;
@@ -48,7 +53,7 @@ body {
 
 .subheading {
   font-weight: 600;
-  font-size: 1.5;
+  font-size: 1.5rem;
 }
 
 .category {
@@ -157,7 +162,9 @@ button.med {
 }
 
 button.small {
-  font-size: 1vmin;
+  width: 10vmin;
+  height: 3.5vmin;
+  font-size: 1.25vmin;
   padding: .4vmin .5vmin;
 }
 
