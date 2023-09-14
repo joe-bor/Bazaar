@@ -11,7 +11,7 @@ export function login(credentials) {
 }
 
 export function editUserInfo(id, newInfo) {
-	return sendUrlFormData(`${BASE_URL}/${id}`, 'PUT', newInfo)
+	return sendRequest(`${BASE_URL}/${id}`, 'PUT', newInfo)
 }
 
 export function toggleFavorites(id, itemId) {

@@ -2,7 +2,7 @@ import { useEffect, useRef, useState } from 'react'
 import styles from './EditUserForm.module.scss'
 import FormInput from '../FormInput/FormInput'
 import { updateUser } from '../../utilities/users-service'
-import axiosFetch from '../../utilities/image-upload'
+import { axiosPut } from '../../utilities/image-upload'
 
 
 function EditUserForm({ user, setUser }) {
@@ -26,7 +26,7 @@ function EditUserForm({ user, setUser }) {
       errorMessage:
         "Required and can't include special characters",
       label: "Name",
-      pattern: "^[A-Za-z0-9]+$",
+      pattern: "^[A-Za-z0-9 ]+$",
       required: true,
     },
     {
@@ -89,25 +89,17 @@ function EditUserForm({ user, setUser }) {
 
   const handleSubmit = async (e) => {
     e.preventDefault()
-    // once you have the file from the user's comupter, call set file and then save that to the state variable
-    // then send the file from state to the upload route - need separate function to handle upload function (need utility)
-    // then use a .then to senf the request to update user
-
     const formData = new FormData()
     formData.append('file', file)
-  
-    // for (let key in values) {
-    //   if (key !== 'confirm') {
-    //     formData.append(key, values[key])
-    //   }
-    // }
+    for (let key in values) {
+      if (key !== 'confirm') {
+        formData.append(key, values[key])
+      }
+    }
+
+    const data = await axiosPut(user._id, formData)
+    setUser(data)
    
-    const data = axiosFetch(formData)
-    setPhotoUrl(data.secure_url)
-
-
-    // const updatedUser = await updateUser(user._id, formData)
-    // setUser(updatedUser)
   }
 
   return (
@@ -115,7 +107,7 @@ function EditUserForm({ user, setUser }) {
       <h1 className={styles.h1}>Edit User Info</h1>
       <form className={styles.form} onSubmit={handleSubmit} >
         <FormInput {...imageInputProps} handleInputChange={handleImageChange} />
-        {/* {inputs.map(input => <FormInput key={input.id} {...input} value={values[input.name]} handleInputChange={handleInputChange} />)} */}
+        {inputs.map(input => <FormInput key={input.id} {...input} value={values[input.name]} handleInputChange={handleInputChange} />)}
         <button formMethod='dialog'>Update</button>
       </form>
 
