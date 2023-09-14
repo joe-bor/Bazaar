@@ -2,7 +2,7 @@ import { useEffect, useRef, useState } from 'react'
 import styles from './EditUserForm.module.scss'
 import FormInput from '../FormInput/FormInput'
 import { updateUser } from '../../utilities/users-service'
-import axiosFetch from '../../utilities/image-upload'
+import { axiosPut } from '../../utilities/image-upload'
 
 
 function EditUserForm({ user, setUser }) {
@@ -91,19 +91,15 @@ function EditUserForm({ user, setUser }) {
     e.preventDefault()
     const formData = new FormData()
     formData.append('file', file)
-  
-    const data = await axiosFetch(formData)
-    setPhotoUrl(data) 
+    for (let key in values) {
+      if (key !== 'confirm') {
+        formData.append(key, values[key])
+      }
+    }
 
-    console.log(data)
-    console.log(photoUrl)
-
-    const updatedUserInfo = {...values, imageUrl: data}
-    delete updatedUserInfo.confirm
-    console.log(updatedUserInfo) //!
-    const updatedUser = await updateUser(user._id, updatedUserInfo)
-    console.log(updatedUser) //! returned object doesnt have the imageUrl property
-    setUser(updatedUser)
+    const data = await axiosPut(user._id, formData)
+    setUser(data)
+   
   }
 
   return (
