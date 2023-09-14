@@ -1465,14 +1465,16 @@ root.render( /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default().createEle
 /* harmony import */ var _assets_images_user_icon_svg__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! ../../assets/images/user-icon.svg */ "./src/assets/images/user-icon.svg");
 /* harmony import */ var react__WEBPACK_IMPORTED_MODULE_3__ = __webpack_require__(/*! react */ "./node_modules/react/index.js");
 /* harmony import */ var react__WEBPACK_IMPORTED_MODULE_3___default = /*#__PURE__*/__webpack_require__.n(react__WEBPACK_IMPORTED_MODULE_3__);
-/* harmony import */ var react_router_dom__WEBPACK_IMPORTED_MODULE_6__ = __webpack_require__(/*! react-router-dom */ "./node_modules/react-router/dist/index.js");
-/* harmony import */ var react_router_dom__WEBPACK_IMPORTED_MODULE_8__ = __webpack_require__(/*! react-router-dom */ "./node_modules/react-router-dom/dist/index.js");
-/* harmony import */ var _utilities_users_service__WEBPACK_IMPORTED_MODULE_7__ = __webpack_require__(/*! ../../utilities/users-service */ "./src/utilities/users-service.js");
+/* harmony import */ var react_router_dom__WEBPACK_IMPORTED_MODULE_7__ = __webpack_require__(/*! react-router-dom */ "./node_modules/react-router/dist/index.js");
+/* harmony import */ var react_router_dom__WEBPACK_IMPORTED_MODULE_9__ = __webpack_require__(/*! react-router-dom */ "./node_modules/react-router-dom/dist/index.js");
+/* harmony import */ var _utilities_users_service__WEBPACK_IMPORTED_MODULE_8__ = __webpack_require__(/*! ../../utilities/users-service */ "./src/utilities/users-service.js");
 /* harmony import */ var _AccountPage_module_scss__WEBPACK_IMPORTED_MODULE_4__ = __webpack_require__(/*! ./AccountPage.module.scss */ "./src/pages/AccountPage/AccountPage.module.scss");
 /* harmony import */ var _components_CreateShop_CreateShop__WEBPACK_IMPORTED_MODULE_5__ = __webpack_require__(/*! ../../components/CreateShop/CreateShop */ "./src/components/CreateShop/CreateShop.js");
+/* harmony import */ var _components_ProductList_ProductList__WEBPACK_IMPORTED_MODULE_6__ = __webpack_require__(/*! ../../components/ProductList/ProductList */ "./src/components/ProductList/ProductList.js");
 /* provided dependency */ var React = __webpack_require__(/*! react */ "./node_modules/react/index.js");
 function asyncGeneratorStep(gen, resolve, reject, _next, _throw, key, arg) { try { var info = gen[key](arg); var value = info.value; } catch (error) { reject(error); return; } if (info.done) { resolve(value); } else { Promise.resolve(value).then(_next, _throw); } }
 function _asyncToGenerator(fn) { return function () { var self = this, args = arguments; return new Promise(function (resolve, reject) { var gen = fn.apply(self, args); function _next(value) { asyncGeneratorStep(gen, resolve, reject, _next, _throw, "next", value); } function _throw(err) { asyncGeneratorStep(gen, resolve, reject, _next, _throw, "throw", err); } _next(undefined); }); }; }
+
 
 
 
@@ -1487,20 +1489,36 @@ function AccountPage(_ref) {
     setUser,
     createGuestUser,
     userShop,
-    setUserShop
+    setUserShop,
+    favItems
   } = _ref;
   const [editModalOpen, setEditModalOpen] = (0,react__WEBPACK_IMPORTED_MODULE_3__.useState)(false);
   const [shopModalOpen, setShopModalOpen] = (0,react__WEBPACK_IMPORTED_MODULE_3__.useState)(false);
+  const [favPreviewItems, setFavPreviewItems] = (0,react__WEBPACK_IMPORTED_MODULE_3__.useState)([]);
   const editModalRef = (0,react__WEBPACK_IMPORTED_MODULE_3__.useRef)();
   const shopModalRef = (0,react__WEBPACK_IMPORTED_MODULE_3__.useRef)();
-  const navigate = (0,react_router_dom__WEBPACK_IMPORTED_MODULE_6__.useNavigate)();
-  const location = (0,react_router_dom__WEBPACK_IMPORTED_MODULE_6__.useLocation)();
+  const navigate = (0,react_router_dom__WEBPACK_IMPORTED_MODULE_7__.useNavigate)();
+  const location = (0,react_router_dom__WEBPACK_IMPORTED_MODULE_7__.useLocation)();
+
+  // when editModalOpen state changes, update the editModalRef to open / close modal
   (0,react__WEBPACK_IMPORTED_MODULE_3__.useEffect)(() => {
     editModalOpen ? editModalRef.current.showModal() : editModalRef.current.close();
   }, [editModalOpen]);
+
+  // when shopModalOpen state changes, update the shopModalRef to open / close modal
   (0,react__WEBPACK_IMPORTED_MODULE_3__.useEffect)(() => {
     shopModalOpen ? shopModalRef.current.showModal() : shopModalRef.current.close();
   }, [shopModalOpen]);
+
+  // when favItems state changes, update to display the first 10 items
+  (0,react__WEBPACK_IMPORTED_MODULE_3__.useEffect)(() => {
+    if (favItems.length > 10) {
+      const copy = [...favItems];
+      setFavPreviewItems(copy.slice(0, 10));
+    } else {
+      setFavPreviewItems(favItems);
+    }
+  }, [favItems]);
   function toggleEditModal() {
     setEditModalOpen(!editModalOpen);
   }
@@ -1512,7 +1530,7 @@ function AccountPage(_ref) {
   }
   function _deleteUserAcc() {
     _deleteUserAcc = _asyncToGenerator(function* () {
-      yield (0,_utilities_users_service__WEBPACK_IMPORTED_MODULE_7__.deleteUser)(user._id);
+      yield (0,_utilities_users_service__WEBPACK_IMPORTED_MODULE_8__.deleteUser)(user._id);
       createGuestUser();
       navigate('/home');
     });
@@ -1528,13 +1546,19 @@ function AccountPage(_ref) {
     src: user.name === 'c186ec' || !user.imageUrl ? _assets_images_user_icon_svg__WEBPACK_IMPORTED_MODULE_2__ : user.imageUrl
   }), /*#__PURE__*/React.createElement("div", {
     className: _AccountPage_module_scss__WEBPACK_IMPORTED_MODULE_4__["default"].infoDetails
-  }, /*#__PURE__*/React.createElement("h1", null, user.name), /*#__PURE__*/React.createElement("p", null, "Email: ".concat(user.email)), /*#__PURE__*/React.createElement("p", null, "Password: ********"))), /*#__PURE__*/React.createElement("div", {
+  }, /*#__PURE__*/React.createElement("h1", {
+    className: "title"
+  }, user.name), /*#__PURE__*/React.createElement("table", null, /*#__PURE__*/React.createElement("tbody", null, /*#__PURE__*/React.createElement("tr", null, /*#__PURE__*/React.createElement("th", {
+    scope: "row"
+  }, "Email:"), /*#__PURE__*/React.createElement("td", null, user.email)), /*#__PURE__*/React.createElement("tr", null, /*#__PURE__*/React.createElement("th", {
+    scope: "row"
+  }, "Password:"), /*#__PURE__*/React.createElement("td", null, "********")))))), /*#__PURE__*/React.createElement("div", {
     className: "".concat(_AccountPage_module_scss__WEBPACK_IMPORTED_MODULE_4__["default"].links, " flex-col")
   }, /*#__PURE__*/React.createElement("button", {
     onClick: toggleEditModal
-  }, "Edit Profile"), /*#__PURE__*/React.createElement(react_router_dom__WEBPACK_IMPORTED_MODULE_8__.Link, {
+  }, "Edit Profile"), /*#__PURE__*/React.createElement(react_router_dom__WEBPACK_IMPORTED_MODULE_9__.Link, {
     to: "/orderhistory"
-  }, "Order History"), user.shop ? /*#__PURE__*/React.createElement(react_router_dom__WEBPACK_IMPORTED_MODULE_8__.Link, {
+  }, "Order History"), user.shop ? /*#__PURE__*/React.createElement(react_router_dom__WEBPACK_IMPORTED_MODULE_9__.Link, {
     to: "/shopmgmt"
   }, "Manage Shop") : /*#__PURE__*/React.createElement("button", {
     onClick: toggleCreateShop
@@ -1546,10 +1570,14 @@ function AccountPage(_ref) {
     className: _AccountPage_module_scss__WEBPACK_IMPORTED_MODULE_4__["default"].favorites
   }, /*#__PURE__*/React.createElement("div", {
     className: _AccountPage_module_scss__WEBPACK_IMPORTED_MODULE_4__["default"].favsHeading
-  }, /*#__PURE__*/React.createElement("h2", null, "Favorites"), /*#__PURE__*/React.createElement("button", {
+  }, /*#__PURE__*/React.createElement("h2", {
+    className: "heading"
+  }, "Favorites"), /*#__PURE__*/React.createElement("button", {
     className: "small",
-    onClick: () => navigate('favorites')
-  }, "See All"))), /*#__PURE__*/React.createElement("dialog", {
+    onClick: () => navigate('/favorites')
+  }, "See All")), /*#__PURE__*/React.createElement(_components_ProductList_ProductList__WEBPACK_IMPORTED_MODULE_6__["default"], {
+    productItems: favPreviewItems
+  })), /*#__PURE__*/React.createElement("dialog", {
     ref: editModalRef,
     onClose: toggleEditModal,
     onSubmit: toggleEditModal
@@ -1600,6 +1628,7 @@ function AccountPage(_ref) {
 /* harmony import */ var _components_AuthModal_AuthModal__WEBPACK_IMPORTED_MODULE_13__ = __webpack_require__(/*! ../../components/AuthModal/AuthModal */ "./src/components/AuthModal/AuthModal.js");
 /* harmony import */ var _utilities_items_api__WEBPACK_IMPORTED_MODULE_16__ = __webpack_require__(/*! ../../utilities/items-api */ "./src/utilities/items-api.js");
 /* harmony import */ var _utilities_orders_api__WEBPACK_IMPORTED_MODULE_17__ = __webpack_require__(/*! ../../utilities/orders-api */ "./src/utilities/orders-api.js");
+/* harmony import */ var _utilities_users_api__WEBPACK_IMPORTED_MODULE_18__ = __webpack_require__(/*! ../../utilities/users-api */ "./src/utilities/users-api.js");
 function asyncGeneratorStep(gen, resolve, reject, _next, _throw, key, arg) { try { var info = gen[key](arg); var value = info.value; } catch (error) { reject(error); return; } if (info.done) { resolve(value); } else { Promise.resolve(value).then(_next, _throw); } }
 function _asyncToGenerator(fn) { return function () { var self = this, args = arguments; return new Promise(function (resolve, reject) { var gen = fn.apply(self, args); function _next(value) { asyncGeneratorStep(gen, resolve, reject, _next, _throw, "next", value); } function _throw(err) { asyncGeneratorStep(gen, resolve, reject, _next, _throw, "throw", err); } _next(undefined); }); }; }
 
@@ -1614,8 +1643,7 @@ function _asyncToGenerator(fn) { return function () { var self = this, args = ar
 
 
 
-// Wireframe calls it User Profile Page, VSCode file calls it AccountPage here's the alternative
-// import UserProfile from '../Users/UserProfile;
+
 
 
 
@@ -1634,6 +1662,7 @@ function App() {
     totalPrice: 0
   });
   const [userShop, setUserShop] = (0,react__WEBPACK_IMPORTED_MODULE_0__.useState)(null);
+  const [favItems, setFavItems] = (0,react__WEBPACK_IMPORTED_MODULE_0__.useState)([]);
   const categoriesRef = (0,react__WEBPACK_IMPORTED_MODULE_0__.useRef)([]);
   const navigate = (0,react_router_dom__WEBPACK_IMPORTED_MODULE_15__.useNavigate)();
   let location = (0,react_router_dom__WEBPACK_IMPORTED_MODULE_15__.useLocation)();
@@ -1691,6 +1720,19 @@ function App() {
     }, {});
     setCartTotals(totals);
   }, [cart]);
+  (0,react__WEBPACK_IMPORTED_MODULE_0__.useEffect)(() => {
+    function getFavItems() {
+      return _getFavItems.apply(this, arguments);
+    }
+    function _getFavItems() {
+      _getFavItems = _asyncToGenerator(function* () {
+        const favorites = yield _utilities_users_api__WEBPACK_IMPORTED_MODULE_18__.getFavorites(user._id);
+        setFavItems(favorites);
+      });
+      return _getFavItems.apply(this, arguments);
+    }
+    getFavItems();
+  }, [user]);
   const handleCloseAuthModal = () => {
     setIsAuthModalOpen(false);
   };
@@ -1764,13 +1806,17 @@ function App() {
       setUser: setUser,
       createGuestUser: createGuestUser,
       userShop: userShop,
-      setUserShop: setUserShop
+      setUserShop: setUserShop,
+      favItems: favItems,
+      setFavItems: setFavItems
     })
   }), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default().createElement(react_router_dom__WEBPACK_IMPORTED_MODULE_15__.Route, {
     path: "/favorites",
     element: /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default().createElement(_Favorites_Favorites__WEBPACK_IMPORTED_MODULE_6__["default"], {
       user: user,
-      setUser: setUser
+      setUser: setUser,
+      favItems: favItems,
+      setFavItems: setFavItems
     })
   }), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default().createElement(react_router_dom__WEBPACK_IMPORTED_MODULE_15__.Route, {
     path: "/cart",
@@ -1960,39 +2006,20 @@ function Checkout(_ref) {
 /* harmony export */   "default": () => (/* binding */ Favorites)
 /* harmony export */ });
 /* harmony import */ var _Favorites_module_scss__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! ./Favorites.module.scss */ "./src/pages/Favorites/Favorites.module.scss");
-/* harmony import */ var _utilities_users_api__WEBPACK_IMPORTED_MODULE_3__ = __webpack_require__(/*! ../../utilities/users-api */ "./src/utilities/users-api.js");
-/* harmony import */ var react__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! react */ "./node_modules/react/index.js");
-/* harmony import */ var react__WEBPACK_IMPORTED_MODULE_1___default = /*#__PURE__*/__webpack_require__.n(react__WEBPACK_IMPORTED_MODULE_1__);
-/* harmony import */ var _components_ProductList_ProductList__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! ../../components/ProductList/ProductList */ "./src/components/ProductList/ProductList.js");
+/* harmony import */ var _components_ProductList_ProductList__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! ../../components/ProductList/ProductList */ "./src/components/ProductList/ProductList.js");
 /* provided dependency */ var React = __webpack_require__(/*! react */ "./node_modules/react/index.js");
-function asyncGeneratorStep(gen, resolve, reject, _next, _throw, key, arg) { try { var info = gen[key](arg); var value = info.value; } catch (error) { reject(error); return; } if (info.done) { resolve(value); } else { Promise.resolve(value).then(_next, _throw); } }
-function _asyncToGenerator(fn) { return function () { var self = this, args = arguments; return new Promise(function (resolve, reject) { var gen = fn.apply(self, args); function _next(value) { asyncGeneratorStep(gen, resolve, reject, _next, _throw, "next", value); } function _throw(err) { asyncGeneratorStep(gen, resolve, reject, _next, _throw, "throw", err); } _next(undefined); }); }; }
-
-
 
 
 function Favorites(_ref) {
   let {
     user,
-    setUser
+    setUser,
+    favItems,
+    setFavItems
   } = _ref;
-  const [favItems, setFavItems] = (0,react__WEBPACK_IMPORTED_MODULE_1__.useState)([]);
-  (0,react__WEBPACK_IMPORTED_MODULE_1__.useEffect)(() => {
-    function getFavItems() {
-      return _getFavItems.apply(this, arguments);
-    }
-    function _getFavItems() {
-      _getFavItems = _asyncToGenerator(function* () {
-        const favorites = yield _utilities_users_api__WEBPACK_IMPORTED_MODULE_3__.getFavorites(user._id);
-        setFavItems(favorites);
-      });
-      return _getFavItems.apply(this, arguments);
-    }
-    getFavItems();
-  }, [user]);
   return /*#__PURE__*/React.createElement("div", {
     className: _Favorites_module_scss__WEBPACK_IMPORTED_MODULE_0__["default"].Favorites
-  }, /*#__PURE__*/React.createElement("h1", null, "".concat(user.name, "'s Favorites")), /*#__PURE__*/React.createElement(_components_ProductList_ProductList__WEBPACK_IMPORTED_MODULE_2__["default"], {
+  }, /*#__PURE__*/React.createElement("h1", null, "".concat(user.name, "'s Favorites")), /*#__PURE__*/React.createElement(_components_ProductList_ProductList__WEBPACK_IMPORTED_MODULE_1__["default"], {
     productItems: favItems,
     user: user,
     setUser: setUser
@@ -3928,7 +3955,7 @@ ___CSS_LOADER_EXPORT___.push([module.id, `.EvJeWycjWguFHSsSccQS {
   width: 100%;
   display: flex;
   justify-content: space-between;
-  padding: 1rem 2rem;
+  padding: 1rem 3rem;
 }
 .EvJeWycjWguFHSsSccQS .GeSzGs2amMkt5E70DuBu .gBCoukNKSxyvXYDFBIOh {
   display: flex;
@@ -3937,6 +3964,20 @@ ___CSS_LOADER_EXPORT___.push([module.id, `.EvJeWycjWguFHSsSccQS {
 .EvJeWycjWguFHSsSccQS .GeSzGs2amMkt5E70DuBu .gBCoukNKSxyvXYDFBIOh img {
   height: 36vmin;
   border-radius: 50%;
+}
+.EvJeWycjWguFHSsSccQS .GeSzGs2amMkt5E70DuBu .gBCoukNKSxyvXYDFBIOh h1 {
+  margin: 0 0 2rem 0;
+}
+.EvJeWycjWguFHSsSccQS .GeSzGs2amMkt5E70DuBu .gBCoukNKSxyvXYDFBIOh table {
+  text-align: left;
+  font-size: 1.25rem;
+}
+.EvJeWycjWguFHSsSccQS .GeSzGs2amMkt5E70DuBu .gBCoukNKSxyvXYDFBIOh table th {
+  padding-right: 1.5rem;
+  padding-bottom: 0.5rem;
+}
+.EvJeWycjWguFHSsSccQS .GeSzGs2amMkt5E70DuBu .gBCoukNKSxyvXYDFBIOh table td {
+  padding-bottom: 0.5rem;
 }
 .EvJeWycjWguFHSsSccQS .GeSzGs2amMkt5E70DuBu .diIuZgDLG6L5GuLFspYT {
   display: flex;
@@ -3948,7 +3989,7 @@ ___CSS_LOADER_EXPORT___.push([module.id, `.EvJeWycjWguFHSsSccQS {
   background: none;
   color: var(--black);
   border: none;
-  font-size: 1rem;
+  font-size: 1.25rem;
   font-weight: 600;
 }
 .EvJeWycjWguFHSsSccQS .GeSzGs2amMkt5E70DuBu .diIuZgDLG6L5GuLFspYT a {
@@ -3956,19 +3997,27 @@ ___CSS_LOADER_EXPORT___.push([module.id, `.EvJeWycjWguFHSsSccQS {
   padding: 0.25rem;
   text-decoration: none;
   color: var(--black);
-  font-size: 1rem;
+  font-size: 1.25rem;
   font-weight: 600;
 }
 .EvJeWycjWguFHSsSccQS .g4XXYAS1pQEjP54EhDRE {
-  padding: 1rem 2rem;
+  padding: 1rem 3rem;
   width: 100%;
+  border-radius: 0.625rem;
 }
 .EvJeWycjWguFHSsSccQS .sXt_iwh9aGr3_NhBnFWX {
   display: flex;
   flex-direction: row;
   justify-content: flex-start;
   align-items: center;
-}`, "",{"version":3,"sources":["webpack://./src/pages/AccountPage/AccountPage.module.scss"],"names":[],"mappings":"AAAA;EACE,WAAA;AACF;AAAE;EACE,WAAA;EACA,aAAA;EACA,8BAAA;EACA,kBAAA;AAEJ;AADI;EACE,aAAA;EACA,2BAAA;AAGN;AAFM;EACE,cAAA;EACA,kBAAA;AAIR;AADI;EACE,aAAA;EACA,uBAAA;AAGN;AAFM;EACE,SAAA;EACA,gBAAA;EACA,gBAAA;EACA,mBAAA;EACA,YAAA;EACA,eAAA;EACA,gBAAA;AAIR;AAFM;EACE,SAAA;EACA,gBAAA;EACA,qBAAA;EACA,mBAAA;EACA,eAAA;EACA,gBAAA;AAIR;AAAC;EACC,kBAAA;EACA,WAAA;AAEF;AAAE;EACE,aAAA;EACA,mBAAA;EACA,2BAAA;EACA,mBAAA;AAEJ","sourcesContent":[".AccountPage {\n  width: 100%;\n  .header {\n    width: 100%;\n    display: flex;\n    justify-content: space-between;\n    padding: 1rem 2rem;\n    .infoSection {\n      display: flex;\n      justify-content: flex-start;\n      img {\n        height: 36vmin;\n        border-radius: 50%;\n      }\n    }\n    .links {\n      display: flex;\n      align-items: flex-start;\n      button {\n        margin: 0;\n        padding: 0.25rem;\n        background: none;\n        color: var(--black);\n        border: none;\n        font-size: 1rem;\n        font-weight: 600;\n      }\n      a {\n        margin: 0;\n        padding: 0.25rem;\n        text-decoration: none;\n        color: var(--black);\n        font-size: 1rem;\n        font-weight: 600;\n      }\n    }\n  }\n .favorites {\n  padding: 1rem 2rem;\n  width: 100%;\n }\n  .favsHeading {\n    display: flex;\n    flex-direction: row;\n    justify-content: flex-start;\n    align-items: center;\n  }\n}"],"sourceRoot":""}]);
+}
+.EvJeWycjWguFHSsSccQS .sXt_iwh9aGr3_NhBnFWX h2 {
+  margin-right: 1.5rem;
+}
+.EvJeWycjWguFHSsSccQS .mkHUT0saiEAau67XZ6lP {
+  overflow: auto;
+  white-space: nowrap;
+}`, "",{"version":3,"sources":["webpack://./src/pages/AccountPage/AccountPage.module.scss"],"names":[],"mappings":"AAAA;EACE,WAAA;AACF;AAAE;EACE,WAAA;EACA,aAAA;EACA,8BAAA;EACA,kBAAA;AAEJ;AADI;EACE,aAAA;EACA,2BAAA;AAGN;AAFM;EACE,cAAA;EACA,kBAAA;AAIR;AAFM;EACE,kBAAA;AAIR;AAFM;EACE,gBAAA;EACA,kBAAA;AAIR;AAHQ;EACE,qBAAA;EACA,sBAAA;AAKV;AAHQ;EACE,sBAAA;AAKV;AADI;EACE,aAAA;EACA,uBAAA;AAGN;AAFM;EACE,SAAA;EACA,gBAAA;EACA,gBAAA;EACA,mBAAA;EACA,YAAA;EACA,kBAAA;EACA,gBAAA;AAIR;AAFM;EACE,SAAA;EACA,gBAAA;EACA,qBAAA;EACA,mBAAA;EACA,kBAAA;EACA,gBAAA;AAIR;AAAC;EACC,kBAAA;EACA,WAAA;EACA,uBAAA;AAEF;AAAE;EACE,aAAA;EACA,mBAAA;EACA,2BAAA;EACA,mBAAA;AAEJ;AADI;EACE,oBAAA;AAGN;AAAE;EACE,cAAA;EACA,mBAAA;AAEJ","sourcesContent":[".AccountPage {\n  width: 100%;\n  .header {\n    width: 100%;\n    display: flex;\n    justify-content: space-between;\n    padding: 1rem 3rem;\n    .infoSection {\n      display: flex;\n      justify-content: flex-start;\n      img {\n        height: 36vmin;\n        border-radius: 50%;\n      }\n      h1 {\n        margin: 0 0 2rem 0;\n      }\n      table {\n        text-align: left;\n        font-size: 1.25rem;\n        th {\n          padding-right: 1.5rem;\n          padding-bottom: 0.5rem;\n        }\n        td {\n          padding-bottom: 0.5rem;\n        }\n      }\n    }\n    .links {\n      display: flex;\n      align-items: flex-start;\n      button {\n        margin: 0;\n        padding: 0.25rem;\n        background: none;\n        color: var(--black);\n        border: none;\n        font-size: 1.25rem;\n        font-weight: 600;\n      }\n      a {\n        margin: 0;\n        padding: 0.25rem;\n        text-decoration: none;\n        color: var(--black);\n        font-size: 1.25rem;\n        font-weight: 600;\n      }\n    }\n  }\n .favorites {\n  padding: 1rem 3rem;\n  width: 100%;\n  border-radius: 0.625rem;\n }\n  .favsHeading {\n    display: flex;\n    flex-direction: row;\n    justify-content: flex-start;\n    align-items: center;\n    h2 {\n      margin-right: 1.5rem;\n    }\n  }\n  .ProductList {\n    overflow: auto;\n    white-space: nowrap;\n  }\n}"],"sourceRoot":""}]);
 // Exports
 ___CSS_LOADER_EXPORT___.locals = {
 	"AccountPage": `EvJeWycjWguFHSsSccQS`,
@@ -3976,7 +4025,8 @@ ___CSS_LOADER_EXPORT___.locals = {
 	"infoSection": `gBCoukNKSxyvXYDFBIOh`,
 	"links": `diIuZgDLG6L5GuLFspYT`,
 	"favorites": `g4XXYAS1pQEjP54EhDRE`,
-	"favsHeading": `sXt_iwh9aGr3_NhBnFWX`
+	"favsHeading": `sXt_iwh9aGr3_NhBnFWX`,
+	"ProductList": `mkHUT0saiEAau67XZ6lP`
 };
 /* harmony default export */ const __WEBPACK_DEFAULT_EXPORT__ = (___CSS_LOADER_EXPORT___);
 
