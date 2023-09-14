@@ -12,8 +12,17 @@ export default function ProductList({ productItems, user, setUser }) {
     />
   )
   return (
-    <main className={styles.ProductList}>
+   <>
+    {items.length > 0 ?
+    <main className={styles.main}>
       {items}
     </main>
+    :
+    <div>
+      <p>No results</p>
+      <p>Try checking your spelling or use more general terms</p>
+    </div>  
+  }
+   </>
   )
 }
