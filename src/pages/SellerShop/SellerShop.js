@@ -4,6 +4,7 @@ import styles from './SellerShop.module.scss'
 import { useEffect, useState } from 'react'
 import ProductList from '../../components/ProductList/ProductList'
 import CategoryList from '../../components/CategoryList/CategoryList'
+import shopIcon from '../../assets/images/shop-icon.svg'
 
 export default function SellerShop({ user, setUser }) {
   const [shop, setShop] = useState(null)
@@ -47,25 +48,29 @@ export default function SellerShop({ user, setUser }) {
   }, [shopActiveCat])
 
   return (
-    <div>
-      <div className={styles.shopHeader}>
-        <div className={styles.shopLogo}>
-          <img src={shop?.heroImage} alt={`${shop?.name}'s Logo`} />
+    <div className={`${styles.SellerShop} flex-col`}>
+      {shop &&
+        <div className={styles.shopHeader}>
+          <div className={styles.shopLogo}>
+            <img src={shop.heroImage !== "img path" ? shop.heroImage : shopIcon} alt={`${shop?.name}'s Logo`} />
+          </div>
+          <div className={styles.shopInfo}>
+            <h1 className="heading">{shop?.name}</h1>
+            <p className={styles.description}>{shop?.description}</p>
+          </div>
         </div>
-        <div className={styles.shopInfo}>
-          <h1>{shop?.name}</h1>
-          <p>{shop?.description}</p>
+      }
+      <section className={styles.shopProducts}>
+        <aside className={styles.categoryList}>
+          <CategoryList categories={shopCategories} activeCat={shopActiveCat} setActiveCat={setShopActiveCat} />
+        </aside>
+        <div className={styles.shopItems}>
+          {shop &&
+            <ProductList productItems={shopProducts} user={user} setUser={setUser} />}
         </div>
-      </div>
-      <aside className={styles.categoryList}>
-        <CategoryList categories={shopCategories} activeCat={shopActiveCat} setActiveCat={setShopActiveCat} />
-      </aside>
-      <div className={styles.shopItems}>
-        {shop &&
-          <ProductList productItems={shopProducts} user={user} setUser={setUser} />}
-      </div>
-
+      </section>
     </div>
+
   )
 }
 
