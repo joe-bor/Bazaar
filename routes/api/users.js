@@ -14,7 +14,7 @@ router.post('/login', dataController.login, apiController.auth)
 router.get('/check-token', ensureLoggedIn, checkToken)
 
 // PUT -> /api/users/:id - update User info
-router.put('/:id', /*upload,*/ dataController.update, apiController.auth)
+router.put('/:id', upload, dataController.update, apiController.auth)
 
 // Delete -> /api/users/:id - delete user account
 router.delete('/:id', dataController.destroy)
