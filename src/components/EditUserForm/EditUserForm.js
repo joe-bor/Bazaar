@@ -2,7 +2,7 @@ import { useEffect, useRef, useState } from 'react'
 import styles from './EditUserForm.module.scss'
 import FormInput from '../FormInput/FormInput'
 import { updateUser } from '../../utilities/users-service'
-import axiosFetch from '../../utilities/image-upload'
+import { axiosPut } from '../../utilities/image-upload'
 
 
 function EditUserForm({ user, setUser }) {
@@ -101,8 +101,8 @@ function EditUserForm({ user, setUser }) {
     //     formData.append(key, values[key])
     //   }
     // }
-   
-    const data = axiosFetch(formData)
+  console.log(user._id)
+    const data = axiosPut(user._id, formData)
     setPhotoUrl(data.secure_url)
 
 
