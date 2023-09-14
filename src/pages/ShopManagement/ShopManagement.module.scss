@@ -1,0 +1,56 @@
+.ShopManagement {
+  width: 100%;
+  .header {
+    width: 100%;
+    display: flex;
+    justify-content: space-between;
+    padding: 1rem 3rem;
+    .infoSection {
+      display: flex;
+      justify-content: flex-start;
+      img {
+      height: 36vmin;
+      }
+      .circle {
+        border-radius: 50%;
+      }
+      .shopInfo {
+        margin-left: 1rem;
+        h1 {
+          margin: 0 0 2rem 0;
+        }
+        .description{
+        font-size: 1.25rem;
+        max-width: 40vw;
+        }
+      }
+    }
+    .links {
+      display: flex;
+      align-items: flex-start;
+      button {
+        margin: 0;
+        padding: 0.25rem;
+        background: none;
+        color: var(--black);
+        border: none;
+        font-size: 1.25rem;
+        font-weight: 600;
+      }
+    }
+  }
+ .products {
+  padding: 1rem 3rem;
+  width: 100%;
+  border-radius: 0.625rem;
+ }
+  .productsHeading {
+    display: flex;
+    flex-direction: row;
+    justify-content: flex-start;
+    align-items: center;
+    h2 {
+      margin-right: 1.5rem;
+    }
+  }
+}
