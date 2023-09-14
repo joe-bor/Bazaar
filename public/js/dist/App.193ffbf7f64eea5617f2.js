@@ -1083,9 +1083,9 @@ function ProductList(_ref) {
     user: user,
     setUser: setUser
   }));
-  return /*#__PURE__*/React.createElement("main", {
-    className: _ProductList_module_scss__WEBPACK_IMPORTED_MODULE_0__["default"].ProductList
-  }, items);
+  return /*#__PURE__*/React.createElement(React.Fragment, null, items.length > 0 ? /*#__PURE__*/React.createElement("main", {
+    className: _ProductList_module_scss__WEBPACK_IMPORTED_MODULE_0__["default"].main
+  }, items) : /*#__PURE__*/React.createElement("div", null, /*#__PURE__*/React.createElement("p", null, "No results"), /*#__PURE__*/React.createElement("p", null, "Try checking your spelling or use more general terms")));
 }
 
 /***/ }),
@@ -1163,7 +1163,7 @@ function SearchBar(_ref) {
       return excludeProps.includes(key) ? false : item[key] // value
       .toString() // convert to string
       .toLowerCase() // lowercase string
-      .includes(searchTerm.toLowerCase());
+      .includes(searchTerm.toLowerCase().replace(/\s+/g, ''));
     });
   }
   const handleChange = evt => {
@@ -2439,12 +2439,11 @@ function ShopPage(_ref) {
 /* harmony export */ });
 /* unused harmony export axiosPost */
 /* harmony import */ var _utilities_users_service__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! ../utilities/users-service */ "./src/utilities/users-service.js");
-/* harmony import */ var axios__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! axios */ "./node_modules/axios/index.js");
-/* harmony import */ var axios__WEBPACK_IMPORTED_MODULE_0___default = /*#__PURE__*/__webpack_require__.n(axios__WEBPACK_IMPORTED_MODULE_0__);
+/* harmony import */ var axios__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! axios */ "./node_modules/axios/lib/axios.js");
 
 
 function axiosPut(id, imageData) {
-  return axios__WEBPACK_IMPORTED_MODULE_0___default().put("/api/users/".concat(id), imageData, {
+  return axios__WEBPACK_IMPORTED_MODULE_0__["default"].put("/api/users/".concat(id), imageData, {
     headers: new Headers({
       'Content-Type': "multipart/form-data",
       'Authorization': "Bearer ".concat((0,_utilities_users_service__WEBPACK_IMPORTED_MODULE_1__.getToken)())
@@ -2452,7 +2451,7 @@ function axiosPut(id, imageData) {
   });
 }
 function axiosPost(id, imageData) {
-  return axios__WEBPACK_IMPORTED_MODULE_0___default().post("/api/users/".concat(id), imageData, {
+  return axios__WEBPACK_IMPORTED_MODULE_0__["default"].post("/api/users/".concat(id), imageData, {
     headers: new Headers({
       'Content-Type': "multipart/form-data",
       'Authorization': "Bearer ".concat((0,_utilities_users_service__WEBPACK_IMPORTED_MODULE_1__.getToken)())
@@ -5981,7 +5980,7 @@ module.exports = __webpack_require__.p + "30d3bcd23354a47bfa21.svg";
 /******/ 	// startup
 /******/ 	// Load entry module and return exports
 /******/ 	// This entry module depends on other loaded chunks and execution need to be delayed
-/******/ 	var __webpack_exports__ = __webpack_require__.O(undefined, ["vendors-node_modules_axios_index_js-node_modules_css-loader_dist_runtime_api_js-node_modules_-a86d86"], () => (__webpack_require__("./src/index.js")))
+/******/ 	var __webpack_exports__ = __webpack_require__.O(undefined, ["vendors-node_modules_css-loader_dist_runtime_api_js-node_modules_css-loader_dist_runtime_sour-7b3006"], () => (__webpack_require__("./src/index.js")))
 /******/ 	__webpack_exports__ = __webpack_require__.O(__webpack_exports__);
 /******/ 	
 /******/ })()
