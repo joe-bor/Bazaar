@@ -15,6 +15,7 @@ export default function NavBar({
     setFilteredItems,
     items,
     user,
+    userShop,
     setUser,
     cart,
     setCart,
@@ -50,17 +51,6 @@ export default function NavBar({
                         filteredItems={filteredItems}
                         setFilteredItems={setFilteredItems} />
                 </div>
-            </div>
-            <div className={styles.catsAndIcons}>
-                <div className={styles.categories}>
-                    <ul>
-                        {categories.map((category, index) => (
-                            <li className={styles.li} key={index}>
-                                {category}
-                            </li>
-                        ))}
-                    </ul>
-                </div>
                 <div className={styles.icons}>
                     <Link to="/favorites">
                         <div>
@@ -68,6 +58,27 @@ export default function NavBar({
                             <img src={favHeart} alt="heart" />
                         </div>
                     </Link>
+                    {user.name !== 'c186ec' ?
+                        <Link to="/account">
+                            <div>
+                                <i className="user-icon"></i>
+                                <img src={userIcon} alt="user-icon" />
+                            </div>
+                        </Link>
+                        :
+                        <div onClick={toggleAuthModal}>
+                            Log In
+                        </div>
+                    }
+                    {userShop ? <Link to="/shopmgmt">
+                        <div>
+                            <i className="store"></i>
+                            <img src={shopIcon} alt="store" />
+                        </div>
+                    </Link>
+                        :
+                        null
+                    }
                     <Link to="/cart">
                         <div>
                             <i className="cart"></i>
@@ -78,14 +89,17 @@ export default function NavBar({
                             )}
                         </div>
                     </Link>
-                    <Link to="/store">
-                        <div>
-                            <i className="store"></i>
-                            <img src={shopIcon} alt="store" />
-                        </div>
-                    </Link>
 
                 </div>
+            </div>
+            <div className={styles.categories}>
+                <ul>
+                    {categories.map((category, index) => (
+                        <li className={styles.li} key={index}>
+                            {category}
+                        </li>
+                    ))}
+                </ul>
             </div>
         </nav>
     )

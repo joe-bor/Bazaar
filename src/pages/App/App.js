@@ -133,6 +133,7 @@ export default function App() {
         setFilteredItems={setFilteredItems}
         items={items}
         user={user}
+        userShop={userShop}
         cart={cart}
         location={location}
         cartTotals={cartTotals}
