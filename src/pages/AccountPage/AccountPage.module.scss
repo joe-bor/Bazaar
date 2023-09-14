@@ -4,7 +4,7 @@
     width: 100%;
     display: flex;
     justify-content: space-between;
-    padding: 1rem 3rem;
+    padding: 2rem 2.5rem;
     .infoSection {
       display: flex;
       justify-content: flex-start;
@@ -49,6 +49,9 @@
         color: var(--black);
         font-size: 1.25rem;
         font-weight: 600;
+      }
+      button:hover, a:hover {
+        color: var(--accent);
       }
     }
   }

@@ -1,0 +1,26 @@
+.SellerShop {
+  display: flex;
+  margin: 2rem 2.5rem;
+  .shopHeader {
+    display: flex;
+    margin-bottom: 2rem;
+    .shopLogo {
+      border-radius: 0.625rem;
+      margin-right: 1.75rem;
+      img {
+        height: 18vmin;
+      }
+    }
+    h1 {
+      margin: 0 0 2rem 0;
+    }
+    .description{
+      font-size: 1.25rem;
+      max-width: 40vw;
+    }
+  }
+  .shopProducts {
+    display: flex;
+    flex-direction: row;
+  }
+}
