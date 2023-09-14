@@ -19,7 +19,7 @@ export default function SearchBar({
         : item[key] // value
             .toString() // convert to string
             .toLowerCase() // lowercase string
-            .includes(searchTerm.toLowerCase());
+            .includes(searchTerm.toLowerCase().replace(/\s+/g, ''));
     });
   }
 
