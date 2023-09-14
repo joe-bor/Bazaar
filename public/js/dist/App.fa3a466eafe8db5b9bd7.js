@@ -45,14 +45,14 @@ function AuthModal(_ref) {
     onClick: handleCloseAuthModal
   }, "X"), showSignUp ? /*#__PURE__*/React.createElement(React.Fragment, null, /*#__PURE__*/React.createElement(_SignUpForm_SignUpForm__WEBPACK_IMPORTED_MODULE_1__["default"], {
     setUser: setUser,
-    onSubmit: toggleAuthModal
+    handleCloseAuthModal: handleCloseAuthModal
   }), /*#__PURE__*/React.createElement("p", null, "Already a member? ", /*#__PURE__*/React.createElement("strong", {
     onClick: toggleModalContents
   }, "Login"))) : /*#__PURE__*/React.createElement(React.Fragment, null, /*#__PURE__*/React.createElement(_LoginForm_LoginForm__WEBPACK_IMPORTED_MODULE_3__["default"], {
-    setUser: setUser
+    setUser: setUser,
+    handleCloseAuthModal: handleCloseAuthModal
   }), /*#__PURE__*/React.createElement("p", null, "Don't have an account? ", /*#__PURE__*/React.createElement("strong", {
-    onClick: toggleModalContents,
-    onSubmit: toggleAuthModal
+    onClick: toggleModalContents
   }, "Sign Up")))));
 }
 
@@ -768,7 +768,8 @@ function _toPrimitive(input, hint) { if (typeof input !== "object" || input === 
 
 function LoginForm(_ref) {
   let {
-    setUser
+    setUser,
+    handleCloseAuthModal
   } = _ref;
   const [values, setValues] = (0,react__WEBPACK_IMPORTED_MODULE_0__.useState)({
     email: "",
@@ -776,7 +777,7 @@ function LoginForm(_ref) {
   });
   const [error, setError] = (0,react__WEBPACK_IMPORTED_MODULE_0__.useState)('');
   const inputs = [{
-    id: 1,
+    id: "login-name",
     name: "email",
     type: "email",
     label: "Email",
@@ -784,7 +785,7 @@ function LoginForm(_ref) {
     errorMessage: "Must be a valid email address",
     required: true
   }, {
-    id: 2,
+    id: "login-pw",
     name: "password",
     type: "password",
     label: "Password",
@@ -804,6 +805,7 @@ function LoginForm(_ref) {
       e.preventDefault();
       const loggedInUser = yield (0,_utilities_users_service__WEBPACK_IMPORTED_MODULE_3__.login)(values);
       setUser(loggedInUser);
+      handleCloseAuthModal();
     });
     return function handleSubmit(_x) {
       return _ref2.apply(this, arguments);
@@ -1247,7 +1249,8 @@ function _toPrimitive(input, hint) { if (typeof input !== "object" || input === 
 
 function SignUpForm(_ref) {
   let {
-    setUser
+    setUser,
+    handleCloseAuthModal
   } = _ref;
   const [values, setValues] = (0,react__WEBPACK_IMPORTED_MODULE_0__.useState)({
     name: "",
@@ -1303,6 +1306,7 @@ function SignUpForm(_ref) {
       delete formData.confirm;
       const newUser = yield (0,_utilities_users_service__WEBPACK_IMPORTED_MODULE_3__.signUp)(formData);
       setUser(newUser);
+      handleCloseAuthModal();
     });
     return function handleSubmit(_x) {
       return _ref2.apply(this, arguments);
@@ -1736,6 +1740,7 @@ function App() {
   }, [user]);
   const handleCloseAuthModal = () => {
     setIsAuthModalOpen(false);
+    console.log('handleCloseAuthModal');
   };
   function createGuestUser() {
     return _createGuestUser.apply(this, arguments);

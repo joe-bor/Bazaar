@@ -98,6 +98,7 @@ export default function App() {
 
   const handleCloseAuthModal = () => {
     setIsAuthModalOpen(false)
+    console.log('handleCloseAuthModal')
   }
 
   async function createGuestUser() {
