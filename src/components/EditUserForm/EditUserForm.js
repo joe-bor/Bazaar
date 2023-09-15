@@ -76,7 +76,6 @@ function EditUserForm({ user, setUser }) {
 
   const handleImageChange = (e) => {
     e.preventDefault()
-    console.log(e.target.files)
     let reader = new FileReader()
     let file = e.target.files[0]
     reader.onloadend = () => {
@@ -98,11 +97,10 @@ function EditUserForm({ user, setUser }) {
     }
 
     const data = await userPut(user._id, formData)
-    console.log(data.data) // JWT of updated user
     // clear current token in localstorage
-    localStorage.removeItem('token');
+    localStorage.removeItem('token')
     // replace with data.data
-    localStorage.setItem('token', data.data);
+    localStorage.setItem('token', data.data)
     // extract user from token
     const newUser = JSON.parse(atob(data.data.split('.')[1])).user
     setUser(newUser)

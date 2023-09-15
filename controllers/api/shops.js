@@ -108,6 +108,7 @@ exports.deleteShop = async (req, res) => {
 // Add an item to a shop
 exports.addItem = async (req, res) => {
     try {
+        console.log(res.locals.imageData)
         // Set users image URL if available
         if (res.locals.imageData) {
             req.body.imageUrl = res.locals.imageData.secure_url
@@ -126,12 +127,15 @@ exports.addItem = async (req, res) => {
         // Create a new item in the database
         const item = await Item.create({
             name: req.body.name,
-            imageUrl: req.body.imageUrl,
             price: req.body.price,
             description: req.body.description,
             category: category._id,
             shop: shop._id
         })
+
+        // add the image to the item's images array
+        item.images.addToSet(req.body.imageUrl)
+        await item.save()
 
         // Add the created item to the shop's products
         shop.products.addToSet(item._id)

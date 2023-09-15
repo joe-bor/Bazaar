@@ -77,7 +77,6 @@ function SignUpForm({ setUser, handleCloseAuthModal }) {
 
   const handleImageChange = (e) => {
     e.preventDefault()
-    console.log(e.target.files)
     let reader = new FileReader()
     let file = e.target.files[0]
     reader.onloadend = () => {
@@ -96,10 +95,9 @@ function SignUpForm({ setUser, handleCloseAuthModal }) {
       }
     }
     const newUser = await userPost(formData)
-    console.log(newUser)
-    localStorage.removeItem('token');
+    localStorage.removeItem('token')
     // replace with data.data
-    localStorage.setItem('token', newUser.data);
+    localStorage.setItem('token', newUser.data)
     // extract user from token
     const createdUser = JSON.parse(atob(newUser.data.split('.')[1])).user
     setUser(createdUser)

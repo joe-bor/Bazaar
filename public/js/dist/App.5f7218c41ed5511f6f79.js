@@ -450,7 +450,6 @@ function EditUserForm(_ref) {
   };
   const handleImageChange = e => {
     e.preventDefault();
-    console.log(e.target.files);
     let reader = new FileReader();
     let file = e.target.files[0];
     reader.onloadend = () => {
@@ -469,7 +468,6 @@ function EditUserForm(_ref) {
         }
       }
       const data = yield (0,_utilities_image_upload__WEBPACK_IMPORTED_MODULE_3__.userPut)(user._id, formData);
-      console.log(data.data); // JWT of updated user
       // clear current token in localstorage
       localStorage.removeItem('token');
       // replace with data.data
@@ -1135,7 +1133,7 @@ function ProductForm(_ref) {
         const data = yield (0,_utilities_image_upload__WEBPACK_IMPORTED_MODULE_3__.itemPost)(userShop._id, formData);
         // set shop state to have shop info
         setUserShop(data.data.shop);
-        setShopProducts([...shopProducts, data.data.items]);
+        setShopProducts([...shopProducts, data.data.item]);
         console.log(data);
         // }
       } catch (error) {
@@ -1358,15 +1356,17 @@ function SearchBar(_ref) {
 /* harmony import */ var _FormInput_FormInput__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! ../FormInput/FormInput */ "./src/components/FormInput/FormInput.js");
 /* harmony import */ var react_router_dom__WEBPACK_IMPORTED_MODULE_4__ = __webpack_require__(/*! react-router-dom */ "./node_modules/react-router/dist/index.js");
 /* harmony import */ var _utilities_image_upload__WEBPACK_IMPORTED_MODULE_3__ = __webpack_require__(/*! ../../utilities/image-upload */ "./src/utilities/image-upload.js");
+/* harmony import */ var _utilities_shops_api__WEBPACK_IMPORTED_MODULE_5__ = __webpack_require__(/*! ../../utilities/shops-api */ "./src/utilities/shops-api.js");
 /* provided dependency */ var React = __webpack_require__(/*! react */ "./node_modules/react/index.js");
 function _extends() { _extends = Object.assign ? Object.assign.bind() : function (target) { for (var i = 1; i < arguments.length; i++) { var source = arguments[i]; for (var key in source) { if (Object.prototype.hasOwnProperty.call(source, key)) { target[key] = source[key]; } } } return target; }; return _extends.apply(this, arguments); }
-function asyncGeneratorStep(gen, resolve, reject, _next, _throw, key, arg) { try { var info = gen[key](arg); var value = info.value; } catch (error) { reject(error); return; } if (info.done) { resolve(value); } else { Promise.resolve(value).then(_next, _throw); } }
-function _asyncToGenerator(fn) { return function () { var self = this, args = arguments; return new Promise(function (resolve, reject) { var gen = fn.apply(self, args); function _next(value) { asyncGeneratorStep(gen, resolve, reject, _next, _throw, "next", value); } function _throw(err) { asyncGeneratorStep(gen, resolve, reject, _next, _throw, "throw", err); } _next(undefined); }); }; }
 function ownKeys(object, enumerableOnly) { var keys = Object.keys(object); if (Object.getOwnPropertySymbols) { var symbols = Object.getOwnPropertySymbols(object); enumerableOnly && (symbols = symbols.filter(function (sym) { return Object.getOwnPropertyDescriptor(object, sym).enumerable; })), keys.push.apply(keys, symbols); } return keys; }
 function _objectSpread(target) { for (var i = 1; i < arguments.length; i++) { var source = null != arguments[i] ? arguments[i] : {}; i % 2 ? ownKeys(Object(source), !0).forEach(function (key) { _defineProperty(target, key, source[key]); }) : Object.getOwnPropertyDescriptors ? Object.defineProperties(target, Object.getOwnPropertyDescriptors(source)) : ownKeys(Object(source)).forEach(function (key) { Object.defineProperty(target, key, Object.getOwnPropertyDescriptor(source, key)); }); } return target; }
 function _defineProperty(obj, key, value) { key = _toPropertyKey(key); if (key in obj) { Object.defineProperty(obj, key, { value: value, enumerable: true, configurable: true, writable: true }); } else { obj[key] = value; } return obj; }
 function _toPropertyKey(arg) { var key = _toPrimitive(arg, "string"); return typeof key === "symbol" ? key : String(key); }
 function _toPrimitive(input, hint) { if (typeof input !== "object" || input === null) return input; var prim = input[Symbol.toPrimitive]; if (prim !== undefined) { var res = prim.call(input, hint || "default"); if (typeof res !== "object") return res; throw new TypeError("@@toPrimitive must return a primitive value."); } return (hint === "string" ? String : Number)(input); }
+function asyncGeneratorStep(gen, resolve, reject, _next, _throw, key, arg) { try { var info = gen[key](arg); var value = info.value; } catch (error) { reject(error); return; } if (info.done) { resolve(value); } else { Promise.resolve(value).then(_next, _throw); } }
+function _asyncToGenerator(fn) { return function () { var self = this, args = arguments; return new Promise(function (resolve, reject) { var gen = fn.apply(self, args); function _next(value) { asyncGeneratorStep(gen, resolve, reject, _next, _throw, "next", value); } function _throw(err) { asyncGeneratorStep(gen, resolve, reject, _next, _throw, "throw", err); } _next(undefined); }); }; }
+
 
 
 
@@ -1382,18 +1382,31 @@ function ShopForm(_ref) {
     toggleEditShop
   } = _ref;
   const [shopValues, setShopValues] = (0,react__WEBPACK_IMPORTED_MODULE_0__.useState)({
-    name: location.pathname === '/shopmgmt' ? userShop.name : '',
-    description: location.pathname === '/shopmgmt' ? userShop.descroption : ''
+    name: '',
+    description: ''
   });
   const [file, setFile] = (0,react__WEBPACK_IMPORTED_MODULE_0__.useState)(null);
   const [photoUrl, setPhotoUrl] = (0,react__WEBPACK_IMPORTED_MODULE_0__.useState)('');
   const navigate = (0,react_router_dom__WEBPACK_IMPORTED_MODULE_4__.useNavigate)();
+  (0,react__WEBPACK_IMPORTED_MODULE_0__.useEffect)(() => {
+    function getAShop() {
+      return _getAShop.apply(this, arguments);
+    }
+    function _getAShop() {
+      _getAShop = _asyncToGenerator(function* () {
+        const shop = yield (0,_utilities_shops_api__WEBPACK_IMPORTED_MODULE_5__.getShop)(user.shop);
+        setUserShop(shop);
+      });
+      return _getAShop.apply(this, arguments);
+    }
+    getAShop();
+  }, [user]);
   const shopInputs = [{
     id: "shop-name",
     name: "name",
     type: "text",
     placeholder: "Shop Name",
-    value: location.pathname === '/account' ? shopValues.name : userShop === null || userShop === void 0 ? void 0 : userShop.name,
+    value: location.pathname === "./shopmgmt/".concat(user.shop) ? userShop.name : shopValues.name,
     errorMessage: "Shop name is required and can't include special characters",
     label: "Shop Name",
     pattern: "^[A-Za-z0-9 ']+$",
@@ -1403,7 +1416,7 @@ function ShopForm(_ref) {
     name: "description",
     type: "text",
     placeholder: "Shop Description",
-    value: location.pathname === '/account' ? shopValues.description : userShop === null || userShop === void 0 ? void 0 : userShop.description,
+    value: location.pathname === "./shopmgmt/".concat(user.shop) ? userShop.description : shopValues.description,
     errorMessage: "Shop description is required",
     label: "Shop Description",
     required: true
@@ -1577,7 +1590,6 @@ function SignUpForm(_ref) {
   };
   const handleImageChange = e => {
     e.preventDefault();
-    console.log(e.target.files);
     let reader = new FileReader();
     let file = e.target.files[0];
     reader.onloadend = () => {
@@ -1596,7 +1608,6 @@ function SignUpForm(_ref) {
         }
       }
       const newUser = yield (0,_utilities_image_upload__WEBPACK_IMPORTED_MODULE_3__.userPost)(formData);
-      console.log(newUser);
       localStorage.removeItem('token');
       // replace with data.data
       localStorage.setItem('token', newUser.data);
@@ -1892,7 +1903,7 @@ function AccountPage(_ref) {
   }, "Edit Profile"), /*#__PURE__*/React.createElement(react_router_dom__WEBPACK_IMPORTED_MODULE_9__.Link, {
     to: "/orderhistory"
   }, "Order History"), user.shop ? /*#__PURE__*/React.createElement(react_router_dom__WEBPACK_IMPORTED_MODULE_9__.Link, {
-    to: "/shopmgmt"
+    to: "/shopmgmt/".concat(userShop._id)
   }, "Manage Shop") : /*#__PURE__*/React.createElement("button", {
     onClick: toggleCreateShop
   }, "Create a Shop"), /*#__PURE__*/React.createElement("button", {
@@ -2517,7 +2528,6 @@ function ItemDetails(_ref) {
   }
   function _handleAddToCart() {
     _handleAddToCart = _asyncToGenerator(function* () {
-      console.log(itemId);
       const updatedCart = yield _utilities_orders_api__WEBPACK_IMPORTED_MODULE_6__.addItemToCart(itemId);
       setCart(updatedCart);
     });
@@ -2607,7 +2617,6 @@ function OrderHistory(_ref) {
     function _fetchOrderHistory() {
       _fetchOrderHistory = _asyncToGenerator(function* () {
         const orders = yield _utilities_orders_api__WEBPACK_IMPORTED_MODULE_5__.getOrderHistory();
-        console.log(orders);
         setOrders(orders);
         // if no orders, acriveOrder will be set to null
         setActiveOrder(orders[0] || null);
@@ -2616,7 +2625,7 @@ function OrderHistory(_ref) {
     }
     fetchOrderHistory();
   }, []);
-  console.log(orders);
+
   /* ----- Event Handlers ----- */
   function handleSelectOrder(order) {
     setActiveOrder(order);
@@ -2631,7 +2640,7 @@ function OrderHistory(_ref) {
     orders: orders,
     activeOrder: activeOrder,
     handleSelectOrder: handleSelectOrder
-  })), console.log(activeOrder), /*#__PURE__*/React.createElement(_components_OrderDetail_OrderDetail__WEBPACK_IMPORTED_MODULE_3__["default"], {
+  })), /*#__PURE__*/React.createElement(_components_OrderDetail_OrderDetail__WEBPACK_IMPORTED_MODULE_3__["default"], {
     order: activeOrder,
     shopName: activeOrder === null || activeOrder === void 0 ? void 0 : activeOrder.shop.name
   }));
@@ -2696,13 +2705,11 @@ function SellerShop(_ref) {
   }, []);
   (0,react__WEBPACK_IMPORTED_MODULE_1__.useEffect)(() => {
     if (shop) {
-      console.log(shop);
       const shopCats = shop.products.reduce((cats, item) => {
         const cat = item.category.name;
         return cats.includes(cat) ? cats : [...cats, cat];
       }, []);
       shopCats.unshift('Show All');
-      console.log(shopCats);
       setShopCategories(shopCats);
       setShopActiveCat(shopCats[0]);
     }
@@ -2817,7 +2824,7 @@ function ShopManagement(_ref) {
     getUserShop();
   }, [user]);
   (0,react__WEBPACK_IMPORTED_MODULE_0__.useEffect)(() => {
-    if (userShop && userShop.products.length > 0 && shopProducts.length === 0) {
+    if (userShop && (userShop === null || userShop === void 0 ? void 0 : userShop.products.length) > 0 && (shopProducts === null || shopProducts === void 0 ? void 0 : shopProducts.length) === 0) {
       setShopProducts(userShop.products);
     }
   }, [userShop]);

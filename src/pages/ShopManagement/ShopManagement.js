@@ -35,7 +35,7 @@ export default function ShopManagement({
   }, [user])
 
   useEffect(() => {
-    if (userShop && userShop.products.length > 0 && shopProducts.length === 0) {
+    if (userShop && userShop?.products.length > 0 && shopProducts?.length === 0) {
       setShopProducts(userShop.products)
     }
   }, [userShop])

@@ -1,18 +1,28 @@
-import { useState } from 'react'
+import { useEffect, useState } from 'react'
 import styles from './ShopForm.module.scss'
 import FormInput from '../FormInput/FormInput'
 import { useNavigate } from 'react-router-dom'
 import { shopPost, shopPut } from '../../utilities/image-upload'
+import { getShop } from '../../utilities/shops-api'
 
 export default function ShopForm({ user, setUser, location, userShop, setUserShop, toggleEditShop }) {
   const [shopValues, setShopValues] = useState({
-    name: location.pathname === '/shopmgmt' ? userShop.name : '',
-    description: location.pathname === '/shopmgmt' ? userShop.descroption : ''
+    name: '',
+    description: ''
   })
   const [file, setFile] = useState(null)
   const [photoUrl, setPhotoUrl] = useState('')
 
   const navigate = useNavigate()
+
+  useEffect(() => {
+    async function getAShop() {
+      const shop = await getShop(user.shop)
+      setUserShop(shop)
+    }
+    getAShop()
+  }, [user])
+
 
 
   const shopInputs = [
@@ -21,7 +31,7 @@ export default function ShopForm({ user, setUser, location, userShop, setUserSho
       name: "name",
       type: "text",
       placeholder: "Shop Name",
-      value: location.pathname === '/account' ? shopValues.name : userShop?.name,
+      value: location.pathname === `./shopmgmt/${user.shop}` ? userShop.name : shopValues.name,
       errorMessage:
         "Shop name is required and can't include special characters",
       label: "Shop Name",
@@ -33,7 +43,7 @@ export default function ShopForm({ user, setUser, location, userShop, setUserSho
       name: "description",
       type: "text",
       placeholder: "Shop Description",
-      value: location.pathname === '/account' ? shopValues.description : userShop?.description,
+      value: location.pathname === `./shopmgmt/${user.shop}` ? userShop.description : shopValues.description,
       errorMessage: "Shop description is required",
       label: "Shop Description",
       required: true,

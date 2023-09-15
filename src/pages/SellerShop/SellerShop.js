@@ -25,13 +25,11 @@ export default function SellerShop({ user, setUser, favItems, setFavItems }) {
 
   useEffect(() => {
     if (shop) {
-      console.log(shop)
       const shopCats = shop.products.reduce((cats, item) => {
         const cat = item.category.name
         return cats.includes(cat) ? cats : [...cats, cat]
       }, [])
       shopCats.unshift('Show All')
-      console.log(shopCats)
       setShopCategories(shopCats)
       setShopActiveCat(shopCats[0])
     }

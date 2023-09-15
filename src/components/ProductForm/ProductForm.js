@@ -112,7 +112,7 @@ export default function ProductForm({ user, setUser, userShop, setUserShop, cate
       const data = await itemPost(userShop._id, formData)
       // set shop state to have shop info
       setUserShop(data.data.shop)
-      setShopProducts([...shopProducts, data.data.items])
+      setShopProducts([...shopProducts, data.data.item])
       console.log(data)
       // }
     } catch (error) {

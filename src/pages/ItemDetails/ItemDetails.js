@@ -32,7 +32,6 @@ export default function ItemDetails({ setCart, favItems, user, setFavItems, setU
 
 
   async function handleAddToCart() {
-    console.log(itemId)
     const updatedCart = await ordersAPI.addItemToCart(itemId)
     setCart(updatedCart)
   }
