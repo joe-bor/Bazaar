@@ -58,7 +58,7 @@ export default function NavBar({
                         </div>
 
                     }
-                    {userShop?.name !== 'Loading...' ? <Link to="/shopmgmt">
+                    {userShop?.name !== 'Loading...' ? <Link to={`/shopmgmt/${user?._id}`}>
                         <div>
                             <img src={shopIcon} alt="store" />
                         </div>
@@ -86,6 +86,6 @@ export default function NavBar({
                     ))}
                 </ul>
             </div>
-        </nav>
+        </nav >
     )
 }

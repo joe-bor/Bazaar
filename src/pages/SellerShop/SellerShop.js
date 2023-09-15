@@ -6,7 +6,7 @@ import ProductList from '../../components/ProductList/ProductList'
 import CategoryList from '../../components/CategoryList/CategoryList'
 import shopIcon from '../../assets/images/shop-icon.svg'
 
-export default function SellerShop({ user, setUser }) {
+export default function SellerShop({ user, setUser, favItems, setFavItems }) {
   const [shop, setShop] = useState(null)
   const [shopCategories, setShopCategories] = useState([])
   const [shopProducts, setShopProducts] = useState([])
@@ -66,7 +66,7 @@ export default function SellerShop({ user, setUser }) {
         </aside>
         <div className={styles.shopItems}>
           {shop &&
-            <ProductList productItems={shopProducts} user={user} setUser={setUser} />}
+            <ProductList productItems={shopProducts} user={user} setUser={setUser} favItems={favItems} setFavItems={setFavItems} />}
         </div>
       </section>
     </div>
