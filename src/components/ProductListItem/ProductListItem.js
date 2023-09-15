@@ -26,7 +26,9 @@ export default function ProductListItem({ productItem, user, setUser, favItems, 
   }
 
   async function handleFavClick() {
+    console.log(user)
     const updatedUser = await toggleFavorites(user._id, productItem._id)
+    console.log(updatedUser)
     setUser(updatedUser)
   }
 
