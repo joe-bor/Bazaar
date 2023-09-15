@@ -18,17 +18,38 @@ export default function ProductListItem({ productItem, user, setUser }) {
   }
 
   return (
-    <div className={styles.ProductListItem} >
-      <div className={styles.imageContainer}>
+    <div className={styles.ProductListItem}>
         {/* 🟥 need a way to show multiple images 🟥 */}
-        {productItem?.images.length > 0 ? <img className={styles.itemImage} src={productItem.images[0]} onClick={handleClick}></img> : <p>No images available</p> }
+        {productItem?.images.length > 0 ? (
+          <div>
+        <img 
+          className={styles.itemImage} 
+          src={productItem.images[0]} 
+          onClick={handleClick}
+          alt={productItem.name}
+        />
         {/* 🟥 add favorite button to show on hover 🟥 */}
-        <button onClick={handleFavClick}><img src={favHeart} /></button>
-        <FavoriteIcon className={styles.FavoriteIcon} onClick={handleFavClick} />
+        <div className={styles.favoriteOverlay}>
+        <button onClick={handleFavClick}>
+          <img src={favHeart} alt="Favorite" />
+        </button>
+        </div>
       </div>
+          ):(
+            <p>No images available</p>
+          )}
+        <FavoriteIcon className={styles.FavoriteIcon} onClick={handleFavClick} />
       <div className={styles.itemInfo}>
-        {productItem && <><div className={styles.name} onClick={handleClick}>{productItem.name} </div>
-        <div className={styles.price} onClick={handleClick}>${productItem?.price.toFixed(2)}</div> </>} 
+        {productItem && (
+        <>
+        <div className={styles.name} onClick={handleClick}>
+          {productItem.name} 
+          </div>
+        <div className={styles.price} onClick={handleClick}>
+          ${productItem?.price.toFixed(2)}
+          </div> 
+          </>
+        )} 
       </div>
     </div>
   )

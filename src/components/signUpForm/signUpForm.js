@@ -4,7 +4,7 @@ import FormInput from '../FormInput/FormInput'
 // import { signUp } from '../../utilities/users-service'
 import { userPost } from '../../utilities/image-upload'
 
-function SignUpForm({ setUser }) {
+function SignUpForm({ setUser, handleCloseAuthModal }) {
 
   const [values, setValues] = useState({
     name: "",
@@ -89,20 +89,13 @@ function SignUpForm({ setUser }) {
 
   const handleSubmit = async (e) => {
     e.preventDefault()
-    // const formData = { ...values }
-    // delete formData.confirm
-    // const newUser = await signUp(formData)
-    // setUser(newUser)
-    const formData = new FormData()
-    formData.append('file', file)
-    for (let key in values) {
-      if (key !== 'confirm') {
-        formData.append(key, values[key])
-      }
-    }
-    const data = await userPost(formData)
-    setPhotoUrl(data.secure_url)
-    console.log(data)
+
+    const formData = { ...values }
+    delete formData.confirm
+    const newUser = await userPost(formData)
+    setUser(newUser)
+    handleCloseAuthModal()
+
   }
 
   return (

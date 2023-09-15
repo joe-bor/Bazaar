@@ -2,27 +2,37 @@
   display: flex;
   width: 100vw;
   flex-direction: column;
+  background-color: var(--darker-bg);
   .topLine {
     display: flex;
-    flex-direction: row;
+    padding: 1.5rem 1rem 1rem 1rem;
+    align-items: center;
+  }
+  .logoContainer {
+    padding: 0rem 1rem;
+  }
+  .searchbarContainer {
+    padding-top: .5rem;
+    width: 80%;
   }
   .categories ul {
     display: flex;
     flex-direction: row;
-    justify-content: space-between;
-    align-items: flex-start;
-    flex-wrap: wrap;
+    overflow: auto;
+    white-space: nowrap;
+    list-style: none;
     margin: 0;
-    padding: 0;
-    .categoryName {
-      list-style: none;
-      padding: 0.2rem;
-    }
+    padding: 0px 1rem;
+  }
+  .li {
+    margin: 0rem .5rem;
   }
   .icons img {
-    height: 4vmin;
+    height: 5vmin;
+    padding: 0rem .5rem;
   }
   .icons {
     display: flex;
+    padding: 0rem .5rem;
   }
 }

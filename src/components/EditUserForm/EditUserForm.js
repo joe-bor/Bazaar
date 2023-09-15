@@ -14,7 +14,6 @@ function EditUserForm({ user, setUser }) {
     confirm: "",
   })
   const [file, setFile] = useState(null)
-  const [photoUrl, setPhotoUrl] = useState('')
 
   const inputs = [
     {
@@ -26,7 +25,7 @@ function EditUserForm({ user, setUser }) {
       errorMessage:
         "Required and can't include special characters",
       label: "Name",
-      pattern: "^[A-Za-z0-9]+$",
+      pattern: "^[A-Za-z0-9 ]+$",
       required: true,
     },
     {
@@ -89,9 +88,7 @@ function EditUserForm({ user, setUser }) {
 
   const handleSubmit = async (e) => {
     e.preventDefault()
-    // once you have the file from the user's comupter, call set file and then save that to the state variable
-    // then send the file from state to the upload route - need separate function to handle upload function (need utility)
-    // then use a .then to send the request to update user
+
     const formData = new FormData()
     formData.append('file', file)
     for (let key in values) {
@@ -99,10 +96,19 @@ function EditUserForm({ user, setUser }) {
         formData.append(key, values[key])
       }
     }
-    console.log(user._id)
+
+
+
     const data = await userPut(user._id, formData)
-    setPhotoUrl(data.secure_url)
-    console.log(data)
+    console.log(data.data) // JWT of updated user
+    // clear current token in localstorage
+    localStorage.removeItem('token');
+    // replace with data.data
+    localStorage.setItem('token', data.data);
+    // extract user from token
+    const newUser = JSON.parse(atob(data.data.split('.')[1])).user
+    setUser(newUser)
+
   }
 
   return (

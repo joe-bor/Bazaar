@@ -15,6 +15,9 @@ export default function CreateShop({ user, setUser, location, userShop, setUserS
   const [file, setFile] = useState(null)
   const [photoUrl, setPhotoUrl] = useState('')
 
+ 
+
+
   const navigate = useNavigate()
 
 
@@ -52,34 +55,35 @@ export default function CreateShop({ user, setUser, location, userShop, setUserS
       "File type must be .png, .jpeg, or .jpg",
     label: "Shop Logo Image"
   }
-  const imageInputProps = {
-    id: "add-photo",
-    name: "file",
-    type: "file",
-    accept: ".png, .jpg, .jpeg",
-    errorMessage:
-      "File type must be .png, .jpeg, or .jpg",
-    label: "Shop Image"
-  }
+
 
   const handleShopInputChange = (e) => {
     setShopValues({ ...shopValues, [e.target.name]: e.target.value })
   }
 
-  // 🟥 function for handling image upload 🟥
+  const handleImageChange = (e) => {
+    e.preventDefault()
+    let reader = new FileReader()
+    let file = e.target.files[0]
+    reader.onloadend = () => {
+      setFile(file)
+    }
+    reader.readAsDataURL(file)
+  }
 
   async function handleShopSubmit(e) {
     e.preventDefault()
     if (location.pathname === '/shopmgmt') {
-      // send request to update shop
+
       const formData = new FormData()
-        formData.append('file', file)
-        for (let key in values) {
-            formData.append(key, values[key])
+      formData.append('file', file)
+      for (let key in shopValues) {
+        if (key !== 'confirm') {
+          formData.append(key, shopValues[key])
         }
-        const updatedShop = await shopPost(userShop._id, formData)
-        setPhotoUrl(updatedShop.secure_url)
-        console.log(updatedShop)
+      }
+      const updatedShop = await shopPost(userShop._id, formData)
+      
       setUserShop(updatedShop)
       toggleEditShop()
     } else {
@@ -110,10 +114,12 @@ export default function CreateShop({ user, setUser, location, userShop, setUserS
 
   return (
     <div className={styles.CreateShop}>
-      <div className="form-container">
+      <div>
         <h1 className={styles.h1}>{location.pathname === '/account' ? 'Create A Shop' : 'Edit Shop Details'}</h1>
-        <form autoComplete="off" onSubmit={handleShopSubmit}>
-          <FormInput {...imageInputProps} handleInputChange={handleImageChange} />
+
+        <form  className={styles.form} autoComplete="off" onSubmit={handleShopSubmit}>
+          <FormInput {...logoInputProps} handleInputChange={handleImageChange} />
+
           {shopInputs.map(input => <FormInput key={input.id} {...input} value={shopValues[input.name]} handleInputChange={handleShopInputChange} />)}
           <button formMethod='dialog'>{location.pathname === '/account' ? 'Create Shop' : 'Update Shop'}</button>
         </form>

@@ -52,6 +52,7 @@ export async function itemPost(imageData) {
     headers: new Headers({ 
       'Content-Type': "multipart/form-data", 
       'Authorization': `Bearer ${getToken()}`
+
     })
   })
 }
