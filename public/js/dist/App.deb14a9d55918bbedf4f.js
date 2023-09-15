@@ -1702,10 +1702,12 @@ function ProductListItem(_ref) {
   const [itemIsFav, setItemIsFav] = (0,react__WEBPACK_IMPORTED_MODULE_2__.useState)(false);
   const navigate = (0,react_router_dom__WEBPACK_IMPORTED_MODULE_4__.useNavigate)();
   (0,react__WEBPACK_IMPORTED_MODULE_2__.useEffect)(() => {
-    if (favItems.find(favItem => favItem._id === productItem._id)) {
-      setItemIsFav(true);
-    } else {
-      setItemIsFav(false);
+    if (favItems && favItems.length > 0) {
+      if (favItems.find(favItem => favItem._id === productItem._id)) {
+        setItemIsFav(true);
+      } else {
+        setItemIsFav(false);
+      }
     }
   }, [favItems]);
   function handleClick(e) {
@@ -2502,12 +2504,14 @@ function ItemDetails(_ref) {
     getItem();
   }, []);
   (0,react__WEBPACK_IMPORTED_MODULE_0__.useEffect)(() => {
-    if (favItems.find(favItem => favItem._id === item._id)) {
-      setIsFav(true);
-    } else {
-      setIsFav(false);
+    if (item && favItems && favItems.length > 0) {
+      if (favItems.find(favItem => favItem._id === item._id)) {
+        setIsFav(true);
+      } else {
+        setIsFav(false);
+      }
     }
-  }, [favItems]);
+  }, [favItems, item]);
   function handleAddToCart() {
     return _handleAddToCart.apply(this, arguments);
   }

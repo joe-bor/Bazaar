@@ -11,10 +11,12 @@ export default function ProductListItem({ productItem, user, setUser, favItems, 
   const navigate = useNavigate()
 
   useEffect(() => {
-    if (favItems.find(favItem => favItem._id === productItem._id)) {
-      setItemIsFav(true)
-    } else {
-      setItemIsFav(false)
+    if (favItems && favItems.length > 0) {
+      if (favItems.find(favItem => favItem._id === productItem._id)) {
+        setItemIsFav(true)
+      } else {
+        setItemIsFav(false)
+      }
     }
   }, [favItems])
 
