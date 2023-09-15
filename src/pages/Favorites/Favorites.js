@@ -6,7 +6,7 @@ export default function Favorites({ user, setUser, favItems, setFavItems }) {
   return (
     <div className={styles.Favorites}>
       <h1>{`${user.name}'s Favorites`}</h1>
-      <ProductList productItems={favItems} user={user} setUser={setUser} />
+      <ProductList productItems={favItems} user={user} setUser={setUser} favItems={favItems} setFavItems={setFavItems} />
     </div>
   )
 }

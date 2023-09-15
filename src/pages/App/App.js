@@ -1,22 +1,23 @@
-import React, { useState, useEffect, useRef } from 'react';
-import { Routes, Route, Navigate, useNavigate, useLocation } from 'react-router-dom';
-import styles from './App.module.scss';
-import Home from '../Home/Home';
-import ShopPage from '../ShopPage/ShopPage';
-import SellerShop from '../SellerShop/SellerShop';
-import ItemDetails from '../ItemDetails/ItemDetails';
-import Favorites from '../Favorites/Favorites';
-import Cart from '../Cart/Cart';
-import Checkout from '../Checkout/Checkout';
-import OrderHistory from '../OrderHistory/OrderHistory';
-import AccountPage from '../AccountPage/AccountPage';
-import ShopMgmt from '../ShopManagement/ShopManagement';
-import NavBar from '../../components/NavBar/NavBar';
-import { getUser, signUp } from '../../utilities/users-service';
+import React, { useState, useEffect, useRef } from 'react'
+import { Routes, Route, Navigate, useNavigate, useLocation } from 'react-router-dom'
+import styles from './App.module.scss'
+import Home from '../Home/Home'
+import ShopPage from '../ShopPage/ShopPage'
+import SellerShop from '../SellerShop/SellerShop'
+import ItemDetails from '../ItemDetails/ItemDetails'
+import Favorites from '../Favorites/Favorites'
+import Cart from '../Cart/Cart'
+import Checkout from '../Checkout/Checkout'
+import OrderHistory from '../OrderHistory/OrderHistory'
+import AccountPage from '../AccountPage/AccountPage'
+import ShopMgmt from '../ShopManagement/ShopManagement'
+import NavBar from '../../components/NavBar/NavBar'
+import { getUser, signUp } from '../../utilities/users-service'
 import AuthModal from '../../components/AuthModal/AuthModal'
 import * as ItemsAPI from '../../utilities/items-api'
 import * as ordersAPI from '../../utilities/orders-api'
 import * as usersAPI from '../../utilities/users-api'
+import { getShop } from '../../utilities/shops-api'
 
 
 export default function App() {
@@ -30,7 +31,12 @@ export default function App() {
     totalItemQty: 0,
     totalPrice: 0
   })
-  const [userShop, setUserShop] = useState(null)
+  const [userShop, setUserShop] = useState({
+    name: 'Loading...',
+    seller: {},
+    description: 'Loading...',
+    products: []
+  })
   const [favItems, setFavItems] = useState([])
 
   const categoriesRef = useRef([])
@@ -43,11 +49,17 @@ export default function App() {
   useEffect(() => {
     if (!user) {
       createGuestUser()
-
     } else {
       getItems()
+      if (user?.shop) {
+        async function retrieveShop() {
+          const shop = await getShop(user.shop)
+          setUserShop(shop)
+        }
+        retrieveShop()
+      }
     }
-  }, [])
+  }, [user])
 
   async function getItems() {
     const allItems = await ItemsAPI.getAll()
@@ -60,7 +72,6 @@ export default function App() {
     setActiveCat(categoriesRef.current[0])
     setFilteredItems(allItems) // for search bar
   }
-
 
   const toggleAuthModal = () => {
     setIsAuthModalOpen(!isAuthModalOpen)
@@ -86,13 +97,15 @@ export default function App() {
   }, [cart])
 
 
-
+  // automatically retrieve user's favorites
   useEffect(() => {
-    async function getFavItems() {
-      const favorites = await usersAPI.getFavorites(user._id)
-      setFavItems(favorites)
+    if (user) {
+      async function getFavItems() {
+        const favorites = await usersAPI.getFavorites(user._id)
+        setFavItems(favorites)
+      }
+      getFavItems()
     }
-    getFavItems()
   }, [user])
 
 
@@ -141,16 +154,16 @@ export default function App() {
         createGuestUser={createGuestUser} />
       <Routes>
         {/* client-side route that renders the component instance if the patch matches the url in the address bar */}
-        <Route path="/home" element={<Home items={items} className={styles.Home} categories={categoriesRef.current} setActiveCat={setActiveCat} setCart={setCart} />} />
-        <Route path="/shop" element={<ShopPage className={styles.ShopPage} items={filteredItems} user={user} setUser={setUser} />} />
+        <Route path="/home" element={<Home items={items} className={styles.Home} categories={categoriesRef.current} setActiveCat={setActiveCat} setCart={setCart} favItems={favItems} setFavItems={setFavItems} />} />
+        <Route path="/shop" element={<ShopPage className={styles.ShopPage} items={items} user={user} setUser={setUser} activeCat={activeCat} setActiveCat={setActiveCat} categories={categoriesRef.current} filteredItems={filteredItems} setFilteredItems={setFilteredItems} favItems={favItems} setFavItems={setFavItems} />} />
         <Route path="/itemdetails/:itemId" element={<ItemDetails setCart={setCart} favItems={favItems} setFavItems={setFavItems} user={user} setUser={setUser} />} />
         <Route path="/account" element={<AccountPage className={styles.AccountPage} user={user} setUser={setUser} createGuestUser={createGuestUser} userShop={userShop} setUserShop={setUserShop} favItems={favItems} setFavItems={setFavItems} />} />
         <Route path="/favorites" element={<Favorites user={user} setUser={setUser} favItems={favItems} setFavItems={setFavItems} />} />
         <Route path="/cart" element={<Cart className={styles.Cart} cart={cart} setCart={setCart} cartTotals={cartTotals} />} />
         <Route path="/checkout" element={<Checkout className={styles.Checkout} cart={cart} setCart={setCart} cartTotals={cartTotals} />} />
         <Route path="/orderhistory" element={<OrderHistory user={user} setUser={setUser} />} />
-        <Route path="/sellershop/:shopId" element={<SellerShop user={user} setUser={setUser} />} />
-        <Route path="/shopmgmt" element={<ShopMgmt categories={categoriesRef.current} user={user} setUser={setUser} userShop={userShop} setUserShop={setUserShop} />} />
+        <Route path="/sellershop/:shopId" element={<SellerShop user={user} setUser={setUser} favItems={favItems} setFavItems={setFavItems} />} />
+        <Route path="/shopmgmt/:shopId" element={<ShopMgmt categories={categoriesRef.current} user={user} setUser={setUser} userShop={userShop} setUserShop={setUserShop} />} />
         {/* redirect to /home if path in address bar hasn't matched a <Route> above */}
         <Route path="/*" element={<Navigate to="/home" />} />
       </Routes>

@@ -18,7 +18,6 @@ export default function OrderHistory({ }) {
     // load previous paid orders
     async function fetchOrderHistory() {
       const orders = await ordersAPI.getOrderHistory()
-      console.log(orders)
       setOrders(orders)
       // if no orders, acriveOrder will be set to null
       setActiveOrder(orders[0] || null)
@@ -26,7 +25,6 @@ export default function OrderHistory({ }) {
     fetchOrderHistory()
   }, [])
 
-  console.log(orders)
   /* ----- Event Handlers ----- */
   function handleSelectOrder(order) {
     setActiveOrder(order)
@@ -42,7 +40,6 @@ export default function OrderHistory({ }) {
           handleSelectOrder={handleSelectOrder}
         />
       </aside>
-      {console.log(activeOrder)}
       <OrderDetail
         order={activeOrder}
         shopName={activeOrder?.shop.name}

@@ -1,12 +1,12 @@
-import UserLogOut from "../../components/UserLogOut/UserLogOut";
-import EditUserForm from "../../components/EditUserForm/EditUserForm";
+import UserLogOut from "../../components/UserLogOut/UserLogOut"
+import EditUserForm from "../../components/EditUserForm/EditUserForm"
 import userIcon from '../../assets/images/user-icon.svg'
 import { useState, useRef, useEffect } from 'react'
 import { Link, useLocation, useNavigate } from "react-router-dom"
-import { deleteUser } from "../../utilities/users-service";
+import { deleteUser, getUser } from "../../utilities/users-service"
 import styles from './AccountPage.module.scss'
-import CreateShop from "../../components/CreateShop/CreateShop";
-import ProductList from "../../components/ProductList/ProductList";
+import ShopForm from "../../components/ShopForm/ShopForm"
+import ProductList from "../../components/ProductList/ProductList"
 
 export default function AccountPage({ user, setUser, createGuestUser, userShop, setUserShop, favItems }) {
   const [editModalOpen, setEditModalOpen] = useState(false)
@@ -16,6 +16,14 @@ export default function AccountPage({ user, setUser, createGuestUser, userShop, 
   const shopModalRef = useRef()
   const navigate = useNavigate()
   const location = useLocation()
+
+  useEffect(() => {
+    async function getTheUser() {
+      const theUser = await getUser()
+      setUser(theUser)
+    }
+    getTheUser()
+  }, [])
 
   // when editModalOpen state changes, update the editModalRef to open / close modal
   useEffect(() => {
@@ -55,7 +63,7 @@ export default function AccountPage({ user, setUser, createGuestUser, userShop, 
     <div className={`${styles.AccountPage} flex-ctr-ctr flex-col`}>
       <section className={styles.header}>
         <div className={styles.infoSection}>
-          <img src={user.name === 'c186ec' || !user.imageUrl ? userIcon : user.imageUrl} />
+          <img src={user?.name === 'c186ec' || !user?.imageUrl ? userIcon : user?.imageUrl} />
           <div className={styles.infoDetails}>
             <h1 className="title">{user.name}</h1>
             <table>
@@ -75,7 +83,7 @@ export default function AccountPage({ user, setUser, createGuestUser, userShop, 
         <div className={`${styles.links} flex-col`}>
           <button onClick={toggleEditModal}>Edit Profile</button>
           <Link to='/orderhistory'>Order History</Link>
-          {user.shop ? <Link to='/shopmgmt'>Manage Shop</Link> : <button onClick={toggleCreateShop}>Create a Shop</button>}
+          {user.shop ? <Link to={`/shopmgmt/${userShop._id}`}>Manage Shop</Link> : <button onClick={toggleCreateShop}>Create a Shop</button>}
           <button onClick={deleteUserAcc}>Delete Account</button>
           <UserLogOut createGuestUser={createGuestUser} />
         </div>
@@ -87,7 +95,7 @@ export default function AccountPage({ user, setUser, createGuestUser, userShop, 
         <ProductList productItems={favPreviewItems} />
       </div>
       <dialog
-      className={styles.dialog}
+        className={styles.dialog}
         ref={editModalRef}
         onClose={toggleEditModal}
         onSubmit={toggleEditModal}>
@@ -100,7 +108,7 @@ export default function AccountPage({ user, setUser, createGuestUser, userShop, 
         ref={shopModalRef}
         onClose={toggleCreateShop}
         onSubmit={toggleCreateShop}>
-        <CreateShop
+        <ShopForm
           user={user}
           setUser={setUser}
           location={location}

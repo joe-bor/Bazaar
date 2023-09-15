@@ -10,7 +10,7 @@ const shop = require('../../models/shop')
 // Create a new shop
 exports.createShop = async (req, res) => {
     try {
-    // Set users image URL if available
+        // Set users image URL if available
         if (res.locals.imageData) {
             req.body.imageUrl = res.locals.imageData.secure_url
         }
@@ -26,7 +26,6 @@ exports.createShop = async (req, res) => {
 
         // Update the user document with the new shop ID
         const user = await User.findOneAndUpdate({ _id: req.user._id }, { shop: newShop._id }, { new: true })
-        console.log(user)
 
         // Respond with user and new shop data
         res.status(200).json({ user, newShop })
@@ -38,10 +37,10 @@ exports.createShop = async (req, res) => {
 // Update a shop
 exports.updateShop = async (req, res) => {
     try {
-            // Set users image URL if available
-            if (res.locals.imageData) {
-                req.body.heroImage = res.locals.imageData.secure_url
-            }
+        // Set users image URL if available
+        if (res.locals.imageData) {
+            req.body.heroImage = res.locals.imageData.secure_url
+        }
         // Find and update the shop with the provided ID
         const shop = await Shop.findByIdAndUpdate(req.params.id, req.body, { new: true })
 
@@ -69,7 +68,7 @@ exports.getShop = async (req, res) => {
                 }
             })
             .exec()
-        
+
         // Check if the shop was not found
         if (!shop) {
             return res.status(404).json({ error: 'Shop not found' })
@@ -109,12 +108,13 @@ exports.deleteShop = async (req, res) => {
 // Add an item to a shop
 exports.addItem = async (req, res) => {
     try {
+        console.log(res.locals.imageData)
         // Set users image URL if available
         if (res.locals.imageData) {
             req.body.imageUrl = res.locals.imageData.secure_url
         }
         // Find the shop by its ID
-        const shop = await Shop.findById(req.params.id)
+        const shop = await Shop.findById(req.params.shopId)
 
         // Check if the shop was not found
         if (!shop) {
@@ -127,19 +127,22 @@ exports.addItem = async (req, res) => {
         // Create a new item in the database
         const item = await Item.create({
             name: req.body.name,
-            imageUrl: req.body.imageUrl,
             price: req.body.price,
             description: req.body.description,
             category: category._id,
             shop: shop._id
         })
 
+        // add the image to the item's images array
+        item.images.addToSet(req.body.imageUrl)
+        await item.save()
+
         // Add the created item to the shop's products
         shop.products.addToSet(item._id)
         await shop.save()
 
         // Respond with the created item 
-        res.status(200).json({shop, item})
+        res.status(200).json({ shop, item })
     } catch (error) {
         res.status(400).json({ error: error.message })
     }
@@ -153,7 +156,7 @@ exports.updateItem = async (req, res) => {
             req.body.imageUrl = res.locals.imageData.secure_url
         }
         // Find the shop by its ID
-        const shop = await Shop.findById(req.params.ShopId)
+        const shop = await Shop.findById(req.params.shopId)
 
         // Check if the shop was not found
         if (!shop) {
@@ -188,7 +191,7 @@ exports.deleteItem = async (req, res) => {
         // Find the shop by its ID
         const shop = await Shop.findById(req.params.id)
 
-         // Check if the shop was not found
+        // Check if the shop was not found
         if (!shop) {
             return res.status(404).json({ error: 'Shop not found' })
         }

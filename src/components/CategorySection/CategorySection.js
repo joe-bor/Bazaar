@@ -4,7 +4,7 @@ import ProductList from '../ProductList/ProductList'
 import styles from './CategorySection.module.scss'
 import { useEffect, useState } from 'react'
 
-export default function CategorySection({ items, category, setActiveCat }) {
+export default function CategorySection({ items, category, setActiveCat, favItems, setFavItems }) {
     // make an API call to the DB and query for all items that has the category === prop.category
 
     const [firstFiveItems, setFirstFiveItems] = useState([])
@@ -20,7 +20,7 @@ export default function CategorySection({ items, category, setActiveCat }) {
     return (
         <div className={styles.categoryRow}>
             {category}<Link to='/shop' onClick={e => setActiveCat(category)} >➡</Link>
-            <ProductList productItems={firstFiveItems} />
+            <ProductList productItems={firstFiveItems} favItems={favItems} setFavItems={setFavItems} />
         </div>
     )
 }

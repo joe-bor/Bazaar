@@ -3,10 +3,8 @@ const fs = require('fs')
 
 async function upload(req, res, next) {
     try {
-        console.log(req.files)
         if (!req.files) { return next() }
-        const file = req.files.file 
-        console.log(file)
+        const file = req.files.file
         const imagePath = `${__dirname}/temp/${Math.random() * 1000 + file.name}`
         file.mv(imagePath, (error) => {
             if (error) {

@@ -2,6 +2,10 @@
   height: 3vmin;
 
   img {
-    fill: red
+    fill: red;
   }
+}
+
+.FavoriteIcon:hover {
+  cursor: pointer;
 }

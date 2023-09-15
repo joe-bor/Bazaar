@@ -21,16 +21,17 @@ export default function ItemDetails({ setCart, favItems, user, setFavItems, setU
   }, [])
 
   useEffect(() => {
-    if (favItems.find(favItem => favItem._id === item._id)){
-      setIsFav(true)
-    } else {
-      setIsFav(false)
+    if (item && favItems && favItems.length > 0) {
+      if (favItems.find(favItem => favItem._id === item._id)) {
+        setIsFav(true)
+      } else {
+        setIsFav(false)
+      }
     }
-  }, [favItems])
-  
+  }, [favItems, item])
+
 
   async function handleAddToCart() {
-    console.log(itemId)
     const updatedCart = await ordersAPI.addItemToCart(itemId)
     setCart(updatedCart)
   }
@@ -53,8 +54,8 @@ export default function ItemDetails({ setCart, favItems, user, setFavItems, setU
           <div className={styles.description}>{item?.description}</div>
           <Link to={`/sellershop/${item?.shop._id}`}><div className={styles.shopName}>{item?.shop.name}</div></Link>
           <div className={styles.price}>${item?.price.toFixed(2)}</div>
-            <FavoriteIcon className={styles.FavoriteIcon} isFav={isFav} handleFaveClick={handleFaveClick} />
-            <button className={styles.addToCart} onClick={handleAddToCart} >Add To Cart</button>
+          <FavoriteIcon className={styles.FavoriteIcon} isFav={isFav} handleFaveClick={handleFaveClick} />
+          <button className={styles.addToCart} onClick={handleAddToCart} >Add To Cart</button>
         </div>
       </div>
       <ReviewList itemId={itemId} />

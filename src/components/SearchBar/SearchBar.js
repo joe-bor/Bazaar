@@ -41,9 +41,9 @@ export default function SearchBar({
   };
 
   return (
-    <form 
-    className={styles.searchForm}
-    onSubmit={handleSubmit}>
+    <form
+      className={styles.searchForm}
+      onSubmit={handleSubmit}>
       <input
         className={styles.input}
         onChange={handleChange}
@@ -55,10 +55,10 @@ export default function SearchBar({
         className={styles.searchBtn}
         type="submit"
       >
-        <img 
-        className={styles.searchIcon}
-        src={searchIcon} 
-        alt="search" />
+        <img
+          className={styles.searchIcon}
+          src={searchIcon}
+          alt="search" />
       </button>
     </form>
   );

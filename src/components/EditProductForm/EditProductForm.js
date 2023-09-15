@@ -10,15 +10,19 @@ function EditProductForm({ userShop, setUserShop, user, setUser, categories }) {
     const [shop, setShop] = useState(null)
     const [products, setProducts] = useState([])
     const [id, setId] = useState('')
+    const [values, setValues] = useState({})
+    const [file, setFile] = useState(null)
+    const [photoUrl, setPhotoUrl] = useState('')
+
     useEffect(() => {
-        async function fetch(){
+        async function fetch() {
             if (shop === null) {
                 const search = await getShop(user.shop)
                 console.log(search)
                 setShop(search)
             }
         }
-        fetch()
+        // fetch()
     }, [])
     useEffect(() => {
         if (shop) {
@@ -41,9 +45,7 @@ function EditProductForm({ userShop, setUserShop, user, setUser, categories }) {
             setId(product._id)
         }
     }, [product])
-    const [values, setValues] = useState({})
-    const [file, setFile] = useState(null)
-    const [photoUrl, setPhotoUrl] = useState('')
+
 
     const imageInputProps = {
         id: "edit-photo",
@@ -51,7 +53,7 @@ function EditProductForm({ userShop, setUserShop, user, setUser, categories }) {
         type: "file",
         accept: ".png, .jpg, .jpeg",
         errorMessage:
-        "File type must be .png, .jpeg, or .jpg",
+            "File type must be .png, .jpeg, or .jpg",
         label: "Product Image"
     }
 
@@ -65,7 +67,7 @@ function EditProductForm({ userShop, setUserShop, user, setUser, categories }) {
         let reader = new FileReader()
         let file = e.target.files[0]
         reader.onloadend = () => {
-        setFile(file)
+            setFile(file)
         }
         reader.readAsDataURL(file)
     }
@@ -93,11 +95,11 @@ function EditProductForm({ userShop, setUserShop, user, setUser, categories }) {
     if (product === null) {
         return (
             <>
-            <h1 className={styles.h1}>Select Product to Edit</h1>
+                <h1 className={styles.h1}>Select Product to Edit</h1>
                 <form className={styles.form} onSubmit={handleFirstSubmit} >
                     <select id='products' name='product' value={values.product} onChange={handleInputChange}>
                         <option key="" value="">--Please choose an option--</option>
-                        {products.map( (productItem) => {
+                        {products.map((productItem) => {
                             console.log(productItem)
                             return <option key={productItem} value={productItem}>{productItem.name}</option>
                         })}
@@ -106,59 +108,59 @@ function EditProductForm({ userShop, setUserShop, user, setUser, categories }) {
                 </form>
 
             </>
-        ) 
+        )
     } else {
         console.log('product = ' + product)
         const inputs = [
             {
-            id: "edit-name",
-            name: "name",
-            type: "text",
-            placeholder: product.name,
-            value: product.name,
-            errorMessage:
-                "Product name is required and can't include special characters",
-            label: "Name",
-            pattern: "^[A-Za-z0-9]+$",
-            required: true,
+                id: "edit-name",
+                name: "name",
+                type: "text",
+                placeholder: product.name,
+                value: product.name,
+                errorMessage:
+                    "Product name is required and can't include special characters",
+                label: "Name",
+                pattern: "^[A-Za-z0-9]+$",
+                required: true,
             },
             {
-            id: "edit-description",
-            name: "description",
-            type: "text",
-            placeholder: product.description,
-            value: product.description,
-            errorMessage: "Product description is required",
-            label: "Description",
-            required: true,
+                id: "edit-description",
+                name: "description",
+                type: "text",
+                placeholder: product.description,
+                value: product.description,
+                errorMessage: "Product description is required",
+                label: "Description",
+                required: true,
             },
             {
-            id: "edit-price",
-            name: "price",
-            type: "number",
-            placeholder: product.price,
-            value: product.price,
-            errorMessage:
-                "",
-            label: "price",
-            required: true
-        }
+                id: "edit-price",
+                name: "price",
+                type: "number",
+                placeholder: product.price,
+                value: product.price,
+                errorMessage:
+                    "",
+                label: "price",
+                required: true
+            }
         ]
         return (
             <>
-            <h1 className={styles.h1}>Edit Product Info</h1>
-            <form className={styles.form} onSubmit={handleSubmit} >
-                <FormInput {...imageInputProps} handleInputChange={handleImageChange} />
-                {inputs.map(input => <FormInput key={input.id} {...input} value={values[input.name]} handleInputChange={handleInputChange} />)}
-                <select id='product-category' name='category' value={values.category} onChange={handleInputChange}>
-                    {categories.slice(1).map( (category) => {
-                        return <option  key={category} value={category}>{category}</option>
-                    })}
-                </select>
-                <button formMethod='dialog'>Update</button>
-            </form>
-            
-        </>
+                <h1 className={styles.h1}>Edit Product Info</h1>
+                <form className={styles.form} onSubmit={handleSubmit} >
+                    <FormInput {...imageInputProps} handleInputChange={handleImageChange} />
+                    {inputs.map(input => <FormInput key={input.id} {...input} value={values[input.name]} handleInputChange={handleInputChange} />)}
+                    <select id='product-category' name='category' value={values.category} onChange={handleInputChange}>
+                        {categories.slice(1).map((category) => {
+                            return <option key={category} value={category}>{category}</option>
+                        })}
+                    </select>
+                    <button formMethod='dialog'>Update</button>
+                </form>
+
+            </>
         )
     }
 }

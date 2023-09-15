@@ -7,7 +7,7 @@ export default function AuthModal({ setUser, isAuthModalOpen, toggleAuthModal, h
 
   /* --- State --- */
   const modalRef = useRef()
-  const [showSignUp, setShowSignUp] = useState(true)
+  const [showSignUp, setShowSignUp] = useState(false)
 
 
   const toggleModalContents = () => {
@@ -24,11 +24,11 @@ export default function AuthModal({ setUser, isAuthModalOpen, toggleAuthModal, h
         <button onClick={handleCloseAuthModal}>X</button>
         {showSignUp ?
           <>
-            <SignUpForm setUser={setUser} handleCloseAuthModal={handleCloseAuthModal}/>
+            <SignUpForm setUser={setUser} handleCloseAuthModal={handleCloseAuthModal} />
             <p>Already a member? <strong onClick={toggleModalContents}>Login</strong></p>
           </> :
           <>
-            <LoginForm setUser={setUser} handleCloseAuthModal={handleCloseAuthModal}/>
+            <LoginForm setUser={setUser} handleCloseAuthModal={handleCloseAuthModal} />
             <p>Don't have an account? <strong onClick={toggleModalContents}>Sign Up</strong></p>
           </>
         }
