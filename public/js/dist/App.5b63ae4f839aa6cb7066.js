@@ -30,7 +30,7 @@ function AuthModal(_ref) {
   } = _ref;
   /* --- State --- */
   const modalRef = (0,react__WEBPACK_IMPORTED_MODULE_0__.useRef)();
-  const [showSignUp, setShowSignUp] = (0,react__WEBPACK_IMPORTED_MODULE_0__.useState)(true);
+  const [showSignUp, setShowSignUp] = (0,react__WEBPACK_IMPORTED_MODULE_0__.useState)(false);
   const toggleModalContents = () => {
     setShowSignUp(!showSignUp);
   };
@@ -1288,15 +1288,9 @@ function NavBar(_ref) {
     items,
     user,
     userShop,
-    setUser,
     cart,
-    setCart,
-    setItems,
-    activeCat,
-    setActiveCat,
     searchTerm,
     setSearchTerm,
-    setCategories,
     cartTotals
   } = _ref;
   return /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default().createElement("nav", {
@@ -1317,37 +1311,33 @@ function NavBar(_ref) {
     setFilteredItems: setFilteredItems
   })), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default().createElement("div", {
     className: _NavBar_module_scss__WEBPACK_IMPORTED_MODULE_1__["default"].icons
-  }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default().createElement(react_router_dom__WEBPACK_IMPORTED_MODULE_8__.Link, {
+  }, (user === null || user === void 0 ? void 0 : user.name) !== 'c186ec' ? /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default().createElement((react__WEBPACK_IMPORTED_MODULE_0___default().Fragment), null, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default().createElement(react_router_dom__WEBPACK_IMPORTED_MODULE_8__.Link, {
     to: "/favorites"
   }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default().createElement("div", null, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default().createElement("img", {
     src: _assets_images_fav_heart_svg__WEBPACK_IMPORTED_MODULE_4__,
     alt: "heart"
-  }))), (user === null || user === void 0 ? void 0 : user.name) !== 'c186ec' ? /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default().createElement(react_router_dom__WEBPACK_IMPORTED_MODULE_8__.Link, {
+  }))), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default().createElement(react_router_dom__WEBPACK_IMPORTED_MODULE_8__.Link, {
     to: "/account"
   }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default().createElement("div", null, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default().createElement("img", {
     src: _assets_images_user_icon_svg__WEBPACK_IMPORTED_MODULE_2__,
     alt: "user-icon"
-  }))) : /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default().createElement("div", {
+  })))) : /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default().createElement("div", {
+    className: _NavBar_module_scss__WEBPACK_IMPORTED_MODULE_1__["default"].login,
     onClick: toggleAuthModal
-  }, "Log In"), userShop ? /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default().createElement(react_router_dom__WEBPACK_IMPORTED_MODULE_8__.Link, {
+  }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default().createElement("p", null, "Log In")), userShop.name !== 'Loading...' ? /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default().createElement(react_router_dom__WEBPACK_IMPORTED_MODULE_8__.Link, {
     to: "/shopmgmt"
   }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default().createElement("div", null, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default().createElement("img", {
     src: _assets_images_shop_icon_svg__WEBPACK_IMPORTED_MODULE_5__,
     alt: "store"
-  }))) : null, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default().createElement(react_router_dom__WEBPACK_IMPORTED_MODULE_8__.Link, {
+  }))) : /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default().createElement((react__WEBPACK_IMPORTED_MODULE_0___default().Fragment), null), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default().createElement(react_router_dom__WEBPACK_IMPORTED_MODULE_8__.Link, {
     to: "/cart"
   }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default().createElement("div", {
     className: _NavBar_module_scss__WEBPACK_IMPORTED_MODULE_1__["default"].cartContainer
-  }, (cart === null || cart === void 0 ? void 0 : cart.length) > 0 && /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default().createElement("span", {
-    className: "cart-count"
+  }, (cart === null || cart === void 0 ? void 0 : cart.length) > 0 && /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default().createElement("div", {
+    className: _NavBar_module_scss__WEBPACK_IMPORTED_MODULE_1__["default"].cartCount
   }, cartTotals.totalItemQty), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default().createElement("img", {
     src: _assets_images_cart_icon_svg__WEBPACK_IMPORTED_MODULE_3__,
     alt: "cart"
-  }))), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default().createElement(react_router_dom__WEBPACK_IMPORTED_MODULE_8__.Link, {
-    to: "/store"
-  }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default().createElement("div", null, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default().createElement("img", {
-    src: _assets_images_shop_icon_svg__WEBPACK_IMPORTED_MODULE_5__,
-    alt: "store"
   }))))), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default().createElement("div", {
     className: _NavBar_module_scss__WEBPACK_IMPORTED_MODULE_1__["default"].categories
   }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default().createElement("ul", null, categories.map((category, index) => /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default().createElement("li", {
@@ -1940,9 +1930,6 @@ function AccountPage(_ref) {
   const [favPreviewItems, setFavPreviewItems] = (0,react__WEBPACK_IMPORTED_MODULE_3__.useState)([]);
   const editModalRef = (0,react__WEBPACK_IMPORTED_MODULE_3__.useRef)();
   const shopModalRef = (0,react__WEBPACK_IMPORTED_MODULE_3__.useRef)();
-  const {
-    userId
-  } = (0,react_router_dom__WEBPACK_IMPORTED_MODULE_7__.useParams)();
   const navigate = (0,react_router_dom__WEBPACK_IMPORTED_MODULE_7__.useNavigate)();
   const location = (0,react_router_dom__WEBPACK_IMPORTED_MODULE_7__.useLocation)();
   (0,react__WEBPACK_IMPORTED_MODULE_3__.useEffect)(() => {
@@ -4278,17 +4265,15 @@ ___CSS_LOADER_EXPORT___.push([module.id, `.QpVD3qAS0nYBtoQqAYoe {
   width: 100vw;
   flex-direction: column;
   background-color: var(--darker-bg);
+  padding: 1.5rem 2.5rem 1.5rem 2.5rem;
 }
 .QpVD3qAS0nYBtoQqAYoe .ETXKGGNl5tlo6ysveYto {
   display: flex;
-  padding: 1.5rem 1rem 1rem 1rem;
+  justify-content: space-between;
   align-items: center;
 }
-.QpVD3qAS0nYBtoQqAYoe .A60HazoTJRIitNz5LcLL {
-  padding: 0rem 1rem;
-}
 .QpVD3qAS0nYBtoQqAYoe .nMiVjXaXwa3ibY5rrRVx {
-  padding-top: 0.5rem;
+  padding: 0.25rem 1rem 0 1rem;
   width: 80%;
 }
 .QpVD3qAS0nYBtoQqAYoe .GLulqAwuajleN_WuAFSf ul {
@@ -4298,40 +4283,70 @@ ___CSS_LOADER_EXPORT___.push([module.id, `.QpVD3qAS0nYBtoQqAYoe {
   white-space: nowrap;
   list-style: none;
   margin: 0;
-  padding: 0px 1rem;
+  padding: 1rem 0 0 0;
+  -ms-overflow-style: none;
+  scrollbar-width: none;
+}
+.QpVD3qAS0nYBtoQqAYoe .GLulqAwuajleN_WuAFSf ul::-webkit-scrollbar {
+  display: none;
 }
 .QpVD3qAS0nYBtoQqAYoe .qX3Jm8O2TDklTOBfqqeu {
-  margin: 0rem 0.5rem;
-}
-.QpVD3qAS0nYBtoQqAYoe .LBVFPVGLZ99nx_pJh_n4 img {
-  height: 5vmin;
-  padding: 0rem 0.5rem;
+  margin: 0rem 0.375rem;
 }
 .QpVD3qAS0nYBtoQqAYoe .LBVFPVGLZ99nx_pJh_n4 {
   display: flex;
-  padding: 0rem 0.5rem;
+  justify-content: space-between;
+}
+.QpVD3qAS0nYBtoQqAYoe .LBVFPVGLZ99nx_pJh_n4 img {
+  height: 4vmin;
+  padding: 0rem 0.4rem;
+}
+.QpVD3qAS0nYBtoQqAYoe .LBVFPVGLZ99nx_pJh_n4 img:hover {
+  cursor: pointer;
 }
 .QpVD3qAS0nYBtoQqAYoe .LBVFPVGLZ99nx_pJh_n4 .iI9H00scrcBvKZSZZIvI {
   text-align: center;
   position: relative;
 }
-.QpVD3qAS0nYBtoQqAYoe .LBVFPVGLZ99nx_pJh_n4 .iI9H00scrcBvKZSZZIvI .iNMS8QjVXiXcpdqptZZN {
+.QpVD3qAS0nYBtoQqAYoe .LBVFPVGLZ99nx_pJh_n4 .iI9H00scrcBvKZSZZIvI .Hfz8Jcyg8F3QfwGb2JOQ {
+  width: 2vmin;
+  height: 2vmin;
+  font-size: 1.25vmin;
+  font-weight: 600;
   z-index: 2;
   position: absolute;
-  top: 50%;
-  left: 50%;
-}`, "",{"version":3,"sources":["webpack://./src/components/NavBar/NavBar.module.scss"],"names":[],"mappings":"AAAA;EACE,aAAA;EACA,YAAA;EACA,sBAAA;EACA,kCAAA;AACF;AAAE;EACE,aAAA;EACA,8BAAA;EACA,mBAAA;AAEJ;AAAE;EACE,kBAAA;AAEJ;AAAE;EACE,mBAAA;EACA,UAAA;AAEJ;AAAE;EACE,aAAA;EACA,mBAAA;EACA,cAAA;EACA,mBAAA;EACA,gBAAA;EACA,SAAA;EACA,iBAAA;AAEJ;AAAE;EACE,mBAAA;AAEJ;AAAE;EACE,aAAA;EACA,oBAAA;AAEJ;AAAE;EACE,aAAA;EACA,oBAAA;AAEJ;AADI;EACE,kBAAA;EACA,kBAAA;AAGN;AAFM;EACE,UAAA;EACA,kBAAA;EACA,QAAA;EACA,SAAA;AAIR","sourcesContent":[".NavBar {\n  display: flex;\n  width: 100vw;\n  flex-direction: column;\n  background-color: var(--darker-bg);\n  .topLine {\n    display: flex;\n    padding: 1.5rem 1rem 1rem 1rem;\n    align-items: center;\n  }\n  .logoContainer {\n    padding: 0rem 1rem;\n  }\n  .searchbarContainer {\n    padding-top: .5rem;\n    width: 80%;\n  }\n  .categories ul {\n    display: flex;\n    flex-direction: row;\n    overflow: auto;\n    white-space: nowrap;\n    list-style: none;\n    margin: 0;\n    padding: 0px 1rem;\n  }\n  .li {\n    margin: 0rem .5rem;\n  }\n  .icons img {\n    height: 5vmin;\n    padding: 0rem .5rem;\n  }\n  .icons {\n    display: flex;\n    padding: 0rem .5rem;\n    .cartContainer {\n      text-align: center;\n      position: relative;\n      .cart-count {\n        z-index: 2; \n        position: absolute;\n        top: 50%;\n        left: 50%;\n      }\n  }\n  }\n}"],"sourceRoot":""}]);
+  top: 23.5%;
+  left: 37%;
+  text-decoration: none;
+  color: var(--black);
+}
+.QpVD3qAS0nYBtoQqAYoe .LBVFPVGLZ99nx_pJh_n4 ._O_XE5GfXHdyMuZrTVOA {
+  width: 7vmin;
+  display: table;
+  padding: 0rem 0.4rem;
+}
+.QpVD3qAS0nYBtoQqAYoe .LBVFPVGLZ99nx_pJh_n4 ._O_XE5GfXHdyMuZrTVOA p {
+  display: table-cell;
+  text-align: center;
+  vertical-align: middle;
+  font-size: 1.75vmin;
+  font-weight: 600;
+}
+.QpVD3qAS0nYBtoQqAYoe .LBVFPVGLZ99nx_pJh_n4 ._O_XE5GfXHdyMuZrTVOA:hover {
+  cursor: pointer;
+  color: var(--accent);
+}`, "",{"version":3,"sources":["webpack://./src/components/NavBar/NavBar.module.scss"],"names":[],"mappings":"AAAA;EACE,aAAA;EACA,YAAA;EACA,sBAAA;EACA,kCAAA;EACA,oCAAA;AACF;AAAE;EACE,aAAA;EACA,8BAAA;EACA,mBAAA;AAEJ;AAAE;EACE,4BAAA;EACA,UAAA;AAEJ;AAAE;EACE,aAAA;EACA,mBAAA;EACA,cAAA;EACA,mBAAA;EACA,gBAAA;EACA,SAAA;EACA,mBAAA;EACA,wBAAA;EACA,qBAAA;AAEJ;AAAE;EACE,aAAA;AAEJ;AAAE;EACE,qBAAA;AAEJ;AAAE;EACE,aAAA;EACA,8BAAA;AAEJ;AADI;EACE,aAAA;EACA,oBAAA;AAGN;AADI;EACE,eAAA;AAGN;AADI;EACE,kBAAA;EACA,kBAAA;AAGN;AAFM;EACE,YAAA;EACA,aAAA;EACA,mBAAA;EACA,gBAAA;EACA,UAAA;EACA,kBAAA;EACA,UAAA;EACA,SAAA;EACA,qBAAA;EACA,mBAAA;AAIR;AADI;EACE,YAAA;EACA,cAAA;EAQA,oBAAA;AAJN;AAHM;EACE,mBAAA;EACA,kBAAA;EACA,sBAAA;EACA,mBAAA;EACA,gBAAA;AAKR;AADI;EACE,eAAA;EACA,oBAAA;AAGN","sourcesContent":[".NavBar {\n  display: flex;\n  width: 100vw;\n  flex-direction: column;\n  background-color: var(--darker-bg);\n  padding: 1.5rem 2.5rem 1.5rem 2.5rem;\n  .topLine {\n    display: flex;\n    justify-content: space-between;\n    align-items: center;\n  }\n  .searchbarContainer {\n    padding: 0.25rem 1rem 0 1rem;\n    width: 80%;\n  }\n  .categories ul {\n    display: flex;\n    flex-direction: row;\n    overflow: auto;\n    white-space: nowrap;\n    list-style: none;\n    margin: 0;\n    padding: 1rem 0 0 0;\n    -ms-overflow-style: none;\n    scrollbar-width: none;\n  }\n  .categories ul::-webkit-scrollbar {\n    display: none;\n  }\n  .li {\n    margin: 0rem 0.375rem;\n  }\n  .icons {\n    display: flex;\n    justify-content: space-between;\n    img {\n      height: 4vmin;\n      padding: 0rem 0.4rem;\n    }\n    img:hover{\n      cursor: pointer;\n    }\n    .cartContainer {\n      text-align: center;\n      position: relative;\n      .cartCount {\n        width: 2vmin;\n        height: 2vmin;\n        font-size: 1.25vmin;\n        font-weight: 600;\n        z-index: 2;\n        position: absolute;\n        top: 23.5%;\n        left: 37%;\n        text-decoration: none;\n        color: var(--black);\n      }\n    }\n    .login {\n      width: 7vmin;\n      display: table;\n      p {\n        display: table-cell;\n        text-align: center;\n        vertical-align: middle;\n        font-size: 1.75vmin;\n        font-weight: 600;\n      }\n      padding: 0rem 0.4rem;\n    }\n    .login:hover {\n      cursor: pointer;\n      color: var(--accent)\n    }\n  }\n}\n"],"sourceRoot":""}]);
 // Exports
 ___CSS_LOADER_EXPORT___.locals = {
 	"NavBar": `QpVD3qAS0nYBtoQqAYoe`,
 	"topLine": `ETXKGGNl5tlo6ysveYto`,
-	"logoContainer": `A60HazoTJRIitNz5LcLL`,
 	"searchbarContainer": `nMiVjXaXwa3ibY5rrRVx`,
 	"categories": `GLulqAwuajleN_WuAFSf`,
 	"li": `qX3Jm8O2TDklTOBfqqeu`,
 	"icons": `LBVFPVGLZ99nx_pJh_n4`,
 	"cartContainer": `iI9H00scrcBvKZSZZIvI`,
-	"cart-count": `iNMS8QjVXiXcpdqptZZN`
+	"cartCount": `Hfz8Jcyg8F3QfwGb2JOQ`,
+	"login": `_O_XE5GfXHdyMuZrTVOA`
 };
 /* harmony default export */ const __WEBPACK_DEFAULT_EXPORT__ = (___CSS_LOADER_EXPORT___);
 

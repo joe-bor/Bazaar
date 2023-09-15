@@ -16,15 +16,9 @@ export default function NavBar({
     items,
     user,
     userShop,
-    setUser,
     cart,
-    setCart,
-    setItems,
-    activeCat,
-    setActiveCat,
     searchTerm,
     setSearchTerm,
-    setCategories,
     cartTotals
 
 }) {
@@ -45,43 +39,40 @@ export default function NavBar({
                         setFilteredItems={setFilteredItems} />
                 </div>
                 <div className={styles.icons}>
-                    <Link to="/favorites">
-                        <div>
-                            <img src={favHeart} alt="heart" />
-                        </div>
-                    </Link>
                     {user?.name !== 'c186ec' ?
-                        <Link to="/account">
-                            <div>
-                                <img src={userIcon} alt="user-icon" />
-                            </div>
-                        </Link>
+                        <>
+                            <Link to="/favorites">
+                                <div>
+                                    <img src={favHeart} alt="heart" />
+                                </div>
+                            </Link>
+                            <Link to="/account">
+                                <div>
+                                    <img src={userIcon} alt="user-icon" />
+                                </div>
+                            </Link>
+                        </>
                         :
-                        <div onClick={toggleAuthModal}>
-                            Log In
+                        <div className={styles.login} onClick={toggleAuthModal}>
+                            <p>Log In</p>
                         </div>
+
                     }
-                    {userShop ? <Link to="/shopmgmt">
+                    {userShop.name !== 'Loading...' ? <Link to="/shopmgmt">
                         <div>
                             <img src={shopIcon} alt="store" />
                         </div>
                     </Link>
                         :
-                        null
+                        <></>
                     }
                     <Link to="/cart">
                         <div className={styles.cartContainer}>
                             {/* Display the cart count if items are in the cart */}
                             {cart?.length > 0 && (
-                                <span className="cart-count">{cartTotals.totalItemQty}</span>
+                                <div className={styles.cartCount}>{cartTotals.totalItemQty}</div>
                             )}
                             <img src={cartIcon} alt="cart" />
-                        </div>
-                    </Link>
-
-                    <Link to="/store">
-                        <div>
-                            <img src={shopIcon} alt="store" />
                         </div>
                     </Link>
                 </div>
