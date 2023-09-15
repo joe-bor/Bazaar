@@ -3,15 +3,18 @@ import styles from './CreateProduct.module.scss'
 import FormInput from '../FormInput/FormInput'
 import { useNavigate } from 'react-router-dom'
 import { addItemToShop } from '../../utilities/shops-api'
+import { itemPost } from '../../utilities/image-upload'
 
 export default function CreateProduct({ user, setUser, userShop, setUserShop, categories, setShopProducts, shopProducts }) {
   const [productValues, setProductValues] = useState({
     name: '',
     description: '',
     price: '',
-    category: ''
-    // images:
+    category: '',
+    file: '',
   })
+  const [file, setFile] = useState(null)
+  const [photoUrl, setPhotoUrl] = useState('')
   const navigate = useNavigate()
 
   const productInputs = [
@@ -22,7 +25,8 @@ export default function CreateProduct({ user, setUser, userShop, setUserShop, ca
       placeholder: "Product Name",
       value: location.pathname === '/shopmgmt' ? productValues.name : shop?.name,
       errorMessage:
-        "Product name is required and can't include special characters",
+        `Product name is required and 
+        can't include special characters`,
       label: "Product Name",
       pattern: "^[A-Za-z0-9 ']+$",
       required: true,
@@ -49,17 +53,17 @@ export default function CreateProduct({ user, setUser, userShop, setUserShop, ca
     },
   ]
 
-  const photoInputProps = {
-    id: "product-photo",
+  const imageInputProps = {
+    id: "add-photo",
     name: "file",
     type: "file",
     accept: ".png, .jpg, .jpeg",
     errorMessage:
       "File type must be .png, .jpeg, or .jpg",
-    label: "Product Photo"
+    label: "Product Image"
   }
 
-  const handleProductInputChange = (e) => {
+  const handleInputChange = (e) => {
     setProductValues({ ...productValues, [e.target.name]: e.target.value })
   }
 
@@ -67,32 +71,51 @@ export default function CreateProduct({ user, setUser, userShop, setUserShop, ca
 
   async function handleProductSubmit(e) {
     e.preventDefault()
-
     // Create an item
     // save to db
     // add to shop (state) - i want it to show up
-    const newItem = {
-      name: productValues.name,
-      price: parseInt(productValues.price, 10),
-      description: productValues.description,
-      category: productValues.category,
+    // const newItem = {
+    //   name: productValues.name,
+    //   price: parseInt(productValues.price, 10),
+    //   description: productValues.description,
+    //   category: productValues.category,
+    // }
+    // console.log(newItem)
+    // const { shop, item } = await addItemToShop(userShop._id, newItem)
+    // console.log(item)
+    // setUserShop(shop)
+    // setShopProducts( [...shopProducts, item])
+    const formData = new FormData()
+    formData.append('file', file)
+    for (let key in values) {
+      formData.append(key, values[key])
     }
-    console.log(newItem)
-    const { shop, item } = await addItemToShop(userShop._id, newItem)
-    console.log(item)
-    setUserShop(shop)
-    setShopProducts( [...shopProducts, item])
+    const data = await itemPost(formData)
+    setPhotoUrl(data.secure_url)
+    console.log(data)
   }
 
+  const handleImageChange = (e) => {
+    e.preventDefault()
+    console.log(e.target.files)
+    let reader = new FileReader()
+    let file = e.target.files[0]
+    reader.onloadend = () => {
+      setFile(file)
+    }
+    reader.readAsDataURL(file)
+  }
   return (
     <div className={styles.CreateProduct}>
-      <div className="form-container">
+      <div>
         <h1 className={styles.h1}>{location.pathname === '/shopmgmt' ? 'Create A Product' : 'Edit Product Details'}</h1>
-        <form autoComplete="off" onSubmit={handleProductSubmit}>
+
+        <form className={styles.form} autoComplete="off" onSubmit={handleProductSubmit}>
           {/* <FormInput {...logoInputProps} handleInputChange={handleImageChange} /> */}
           {productInputs.map(input => <FormInput key={input.id} {...input} value={productValues[input.name]} handleInputChange={handleProductInputChange} />)}
+
           <label htmlFor='product-category'>Product Category:</label>
-          <select id='product-category' name='category' value={productValues.category} onChange={handleProductInputChange}>
+          <select id='product-category' name='category' value={productValues.category} onChange={handleInputChange}>
             {categories.slice(1).map( (category) => {
               return <option  key={category} value={category}>{category}</option>
             })}

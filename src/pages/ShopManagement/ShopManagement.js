@@ -5,14 +5,19 @@ import styles from './ShopManagement.module.scss'
 import CreateShop from "../../components/CreateShop/CreateShop";
 import CreateProduct from "../../components/CreateProduct/CreateProduct";
 import ProductList from '../../components/ProductList/ProductList';
+import EditProductForm from '../../components/EditProductForm/EditProductForm'
+import EditShopForm from '../../components/EditShopForm/EditShopForm'
 import shopIcon from '../../assets/images/shop-icon.svg'
+
 
 export default function ShopManagement({ user, setUser, userShop, setUserShop, categories }) {
   const [productModalOpen, setProductModalOpen] = useState(false)
   const [shopEditModalOpen, setShopEditModalOpen] = useState(false)
+  const [productEditModalOpen, setProductEditModalOpen] = useState(false)
   const [shopProducts, setShopProducts] = useState([])
   const productModalRef = useRef()
   const shopEditModalRef = useRef()
+  const productEditModalRef = useRef()
   const navigate = useNavigate()
   const location = useLocation()
 
@@ -31,7 +36,6 @@ export default function ShopManagement({ user, setUser, userShop, setUserShop, c
     if (userShop && userShop.products.length > 0 && shopProducts.length === 0) {
       setShopProducts(userShop.products)
     }
-
   }, [userShop])
 
 
@@ -43,12 +47,20 @@ export default function ShopManagement({ user, setUser, userShop, setUserShop, c
     shopEditModalOpen ? shopEditModalRef.current.showModal() : shopEditModalRef.current.close()
   }, [shopEditModalOpen])
 
+  useEffect(() => {
+    productEditModalOpen ? productEditModalRef.current.showModal() : shopEditModalRef.current.close()
+  }, [productEditModalOpen])
+
   function toggleCreateProduct() {
     setProductModalOpen(!productModalOpen)
   }
 
   function toggleEditShop() {
     setShopEditModalOpen(!shopEditModalOpen)
+  }
+
+  function toggleEditProductForm() {
+    setProductEditModalOpen(!productEditModalOpen)
   }
 
   async function deleteUserShop() {
@@ -64,6 +76,7 @@ export default function ShopManagement({ user, setUser, userShop, setUserShop, c
     <div className={styles.ShopManagement}>
       <section className={styles.header}>
         {userShop &&
+
           <div className={styles.infoSection}>
             <img className={userShop.heroImage ? styles.circle : ''} src={userShop.heroImage ? userShop.heroImage : shopIcon} />
             <div className={styles.shopInfo}>
@@ -74,15 +87,18 @@ export default function ShopManagement({ user, setUser, userShop, setUserShop, c
         <div className={`${styles.links} flex-col`}>
           <button onClick={toggleEditShop}>Edit Shop Info</button>
           <button onClick={toggleCreateProduct}>Add A Product</button>
+          <button onClick={toggleEditProductForm}>Edit an Item</button>
           <button onClick={deleteUserShop}>Delete Shop</button>
+          
         </div>
       </section>
       <div className={styles.products}>
         <h2 className={styles.productsHeading}>Products</h2>
         {shopProducts.length > 0 ? <ProductList productItems={shopProducts} user={user} setUser={setUser} /> : null}
       </div>
-      <dialog ref={shopEditModalRef} onClose={toggleEditShop}><CreateShop toggleEditShop={toggleEditShop} user={user} setUser={setUser} location={location} userShop={userShop} setUserShop={setUserShop} /></dialog>
-      <dialog ref={productModalRef} onClose={toggleCreateProduct}><CreateProduct toggleCreateProduct={toggleCreateProduct} shopProducts={shopProducts} setShopProducts={setShopProducts} user={user} setUser={setUser} location={location} userShop={userShop} setUserShop={setUserShop} categories={categories} /></dialog>
+      <dialog className={styles.dialog} ref={shopEditModalRef} onClose={toggleEditShop}><EditShopForm toggleEditShop={toggleEditShop} user={user} setUser={setUser} location={location} userShop={userShop} setUserShop={setUserShop} /></dialog>
+      <dialog className={styles.dialog} ref={productModalRef} onClose={toggleCreateProduct}><CreateProduct toggleCreateProduct={toggleCreateProduct} shopProducts={shopProducts} setShopProducts={setShopProducts} user={user} setUser={setUser} location={location} userShop={userShop} setUserShop={setUserShop} categories={categories} /></dialog>
+      <dialog ref={productEditModalRef} onClose={toggleEditProductForm}><EditProductForm toggleCreateProduct={toggleCreateProduct} user={user} selectedProduct={selectedProduct} setSelectedProduct={setSelectedProduct} categories={categories} /></dialog>
     </div>
   )
 }

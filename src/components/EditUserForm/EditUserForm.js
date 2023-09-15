@@ -1,8 +1,8 @@
 import { useEffect, useRef, useState } from 'react'
 import styles from './EditUserForm.module.scss'
 import FormInput from '../FormInput/FormInput'
-import { updateUser } from '../../utilities/users-service'
-import { axiosPut } from '../../utilities/image-upload'
+// import { updateUser } from '../../utilities/users-service'
+import { userPut } from '../../utilities/image-upload'
 
 
 function EditUserForm({ user, setUser }) {
@@ -88,6 +88,7 @@ function EditUserForm({ user, setUser }) {
 
   const handleSubmit = async (e) => {
     e.preventDefault()
+
     const formData = new FormData()
     formData.append('file', file)
     for (let key in values) {
@@ -97,7 +98,8 @@ function EditUserForm({ user, setUser }) {
     }
 
 
-    const data = await axiosPut(user._id, formData)
+
+    const data = await userPut(user._id, formData)
     console.log(data.data) // JWT of updated user
     // clear current token in localstorage
     localStorage.removeItem('token');
@@ -107,7 +109,6 @@ function EditUserForm({ user, setUser }) {
     const newUser = JSON.parse(atob(data.data.split('.')[1])).user
     setUser(newUser)
 
-   
   }
 
   return (

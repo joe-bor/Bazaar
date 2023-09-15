@@ -4,13 +4,19 @@ import styles from './CreateShop.module.scss'
 import FormInput from '../FormInput/FormInput'
 import { useNavigate } from 'react-router-dom'
 import { updateUser } from '../../utilities/users-service'
+import { shopPost } from '../../utilities/image-upload'
 
 export default function CreateShop({ user, setUser, location, userShop, setUserShop, toggleEditShop }) {
   const [shopValues, setShopValues] = useState({
     name: '',
     description: '',
+    file: ''
   })
   const [file, setFile] = useState(null)
+  const [photoUrl, setPhotoUrl] = useState('')
+
+ 
+
 
   const navigate = useNavigate()
 
@@ -50,11 +56,12 @@ export default function CreateShop({ user, setUser, location, userShop, setUserS
     label: "Shop Logo Image"
   }
 
+
   const handleShopInputChange = (e) => {
     setShopValues({ ...shopValues, [e.target.name]: e.target.value })
   }
 
-  const handleImageChange = () => {
+  const handleImageChange = (e) => {
     e.preventDefault()
     let reader = new FileReader()
     let file = e.target.files[0]
@@ -67,6 +74,7 @@ export default function CreateShop({ user, setUser, location, userShop, setUserS
   async function handleShopSubmit(e) {
     e.preventDefault()
     if (location.pathname === '/shopmgmt') {
+
       const formData = new FormData()
       formData.append('file', file)
       for (let key in shopValues) {
@@ -74,8 +82,8 @@ export default function CreateShop({ user, setUser, location, userShop, setUserS
           formData.append(key, shopValues[key])
         }
       }
-      //! send request to update shop - AXIOS instead
-      const updatedShop = await editShopInfo(userShop._id, formData)
+      const updatedShop = await shopPost(userShop._id, formData)
+      
       setUserShop(updatedShop)
       toggleEditShop()
     } else {
@@ -93,12 +101,25 @@ export default function CreateShop({ user, setUser, location, userShop, setUserS
     }
   }
 
+  const handleImageChange = (e) => {
+    e.preventDefault()
+    console.log(e.target.files)
+    let reader = new FileReader()
+    let file = e.target.files[0]
+    reader.onloadend = () => {
+      setFile(file)
+    }
+    reader.readAsDataURL(file)
+  }
+
   return (
     <div className={styles.CreateShop}>
-      <div className="form-container">
+      <div>
         <h1 className={styles.h1}>{location.pathname === '/account' ? 'Create A Shop' : 'Edit Shop Details'}</h1>
-        <form autoComplete="off" onSubmit={handleShopSubmit}>
+
+        <form  className={styles.form} autoComplete="off" onSubmit={handleShopSubmit}>
           <FormInput {...logoInputProps} handleInputChange={handleImageChange} />
+
           {shopInputs.map(input => <FormInput key={input.id} {...input} value={shopValues[input.name]} handleInputChange={handleShopInputChange} />)}
           <button formMethod='dialog'>{location.pathname === '/account' ? 'Create Shop' : 'Update Shop'}</button>
         </form>
