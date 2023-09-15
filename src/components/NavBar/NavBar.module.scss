@@ -1,0 +1,79 @@
+.NavBar {
+  display: flex;
+  width: 100vw;
+  flex-direction: column;
+  background-color: var(--darker-bg);
+  padding: 1.5rem 2.5rem 1.5rem 2.5rem;
+  .topLine {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+  }
+  .searchbarContainer {
+    padding: 0.25rem 1rem 0 1rem;
+    width: 80%;
+  }
+  .categories ul {
+    display: flex;
+    flex-direction: row;
+    overflow: auto;
+    white-space: nowrap;
+    list-style: none;
+    margin: 0;
+    padding: 1rem 0 0 0;
+    -ms-overflow-style: none;
+    scrollbar-width: none;
+  }
+  .categories ul::-webkit-scrollbar {
+    display: none;
+  }
+  .li {
+    margin: 0rem 0.375rem;
+  }
+  .icons {
+    display: flex;
+    justify-content: space-between;
+    img {
+      height: 4vmin;
+      padding: 0rem 0.4rem;
+    }
+    img:hover{
+      cursor: pointer;
+    }
+    .userPhoto {
+      border-radius: 50%;
+    }
+    .cartContainer {
+      text-align: center;
+      position: relative;
+      .cartCount {
+        width: 2vmin;
+        height: 2vmin;
+        font-size: 1.25vmin;
+        font-weight: 600;
+        z-index: 2;
+        position: absolute;
+        top: 23.5%;
+        left: 37%;
+        text-decoration: none;
+        color: var(--black);
+      }
+    }
+    .login {
+      width: 7vmin;
+      display: table;
+      p {
+        display: table-cell;
+        text-align: center;
+        vertical-align: middle;
+        font-size: 1.75vmin;
+        font-weight: 600;
+      }
+      padding: 0rem 0.4rem;
+    }
+    .login:hover {
+      cursor: pointer;
+      color: var(--accent)
+    }
+  }
+}

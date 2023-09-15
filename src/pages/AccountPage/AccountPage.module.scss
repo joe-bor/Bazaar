@@ -1,0 +1,89 @@
+.AccountPage {
+  width: 100%;
+  .header {
+    width: 100%;
+    display: flex;
+    justify-content: space-between;
+    padding: 2rem 2.5rem;
+    .infoSection {
+      display: flex;
+      justify-content: flex-start;
+      img {
+        height: 36vmin;
+        border-radius: 50%;
+      }
+      .infoDetails {
+        margin-left: 1rem;
+        h1 {
+          margin: 0 0 2rem 0;
+        }
+        table {
+          text-align: left;
+          font-size: 1.25rem;
+          th {
+            padding-right: 1.5rem;
+            padding-bottom: 0.5rem;
+          }
+          td {
+            padding-bottom: 0.5rem;
+          }
+        }
+      }
+    }
+    .links {
+      display: flex;
+      align-items: flex-start;
+      button {
+        margin: 0;
+        padding: 0.25rem;
+        background: none;
+        color: var(--black);
+        border: none;
+        font-size: 1.25rem;
+        font-weight: 600;
+      }
+      a {
+        margin: 0;
+        padding: 0.25rem;
+        text-decoration: none;
+        color: var(--black);
+        font-size: 1.25rem;
+        font-weight: 600;
+      }
+      button:hover, a:hover {
+        color: var(--accent);
+      }
+    }
+  }
+ .favorites {
+  padding: 1rem 3rem;
+  width: 100%;
+  border-radius: 0.625rem;
+ }
+  .favsHeading {
+    display: flex;
+    flex-direction: row;
+    justify-content: flex-start;
+    align-items: center;
+    h2 {
+      margin-right: 1.5rem;
+    }
+  }
+  .ProductList {
+    overflow: auto;
+    white-space: nowrap;
+  }
+
+  .dialog {
+    width: 35%;
+    border: .1rem solid grey;
+    border-radius: .5rem;
+    box-shadow: 3px 3px 5px 1px rgba(93, 128, 80, 0.99);
+    overflow: hidden;
+  }
+
+  .dialog::backdrop {
+      backdrop-filter: blur(3px);
+      background-color: rgba(128, 120, 120, 0.3);
+  }
+}

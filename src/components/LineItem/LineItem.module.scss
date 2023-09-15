@@ -1,0 +1,62 @@
+.LineItem {
+  padding: 0.25rem 0;
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  .imgContainer {
+    background-color: var(--image-bg);
+    padding: 1.5rem;
+    width: 100%;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    flex-grow: 1;
+    .itemImage {
+      width: 100%;
+      max-height: 100%;
+      object-fit: scale-down;
+    }
+  }
+  .itemDetails {
+    padding-left: 0.5rem;
+    display: flex;
+    flex-direction: column;
+    justify-content: flex-start;
+    .itemInfo {
+      display: flex;
+      flex-direction: column;
+      justify-content: flex-start;
+      .itemName {
+        font-weight: 600;
+        font-size: 1.8vmin;
+      }
+      .itemPrice {
+        font-weight: 400;
+        font-size: 1.7vmin;
+      }
+    }
+  }
+  .qty{
+    margin-top: 3vmin;
+    div{
+      display: flex;
+      align-items: center;
+      .qtyBtn { 
+        padding: 0.25rem 0.5rem;
+        font-size: 1.6vmin;
+        font-weight: 700;
+      }
+      span {
+        padding: 0 0.5rem;
+        font-size: 1.7vmin;
+        font-weight: 400;
+      }
+      span.paid {
+        padding: 0;
+      }
+    }
+    .extPrice {
+      font-weight: 600;
+      font-size: 1.8vmin;
+    }
+  }
+}

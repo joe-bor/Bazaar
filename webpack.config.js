@@ -10,9 +10,9 @@ module.exports = (env) => {
 			App: './src/index.js',
 			main: './src/main.js'
 			/* main: *
-                but this is where you would put code that you need to be compiled in the browser seperate from the react app, like google analytics, google maps, facebook pixel stuff, adsense scripts etc
-                every framework has a mechanism for these things
-            */
+								but this is where you would put code that you need to be compiled in the browser seperate from the react app, like google analytics, google maps, facebook pixel stuff, adsense scripts etc
+								every framework has a mechanism for these things
+						*/
 		},
 		output: {
 			path: path.resolve(__dirname, 'public/js/dist'),
@@ -21,7 +21,7 @@ module.exports = (env) => {
 				process.env.NODE_ENV === 'dev'
 					? '[name].js.map'
 					: '[name].[contenthash].js.map',
-			publicPath: '/js/dist'
+			publicPath: '/js/dist/'
 		},
 		devtool: 'source-map',
 		module: {
@@ -49,6 +49,14 @@ module.exports = (env) => {
 						'sass-loader',
 						'postcss-loader'
 					]
+				},
+				{
+					test: /\.(png|svg|jpg|jpeg|gif)$/i,
+					type: 'asset/resource',
+				},
+				{
+					test: /\.(woff|woff2|eot|ttf|otf)$/i,
+					type: 'asset/resource',
 				}
 			]
 		},

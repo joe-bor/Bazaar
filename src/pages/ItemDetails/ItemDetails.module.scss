@@ -1,0 +1,62 @@
+.ItemContainer {
+    display: grid;
+    grid-template-columns: 50% 50%;
+
+    .imageContainer {
+        margin: 1.8rem;
+
+        .itemImage {
+            width: 100%;
+            aspect-ratio: 1 / 1;
+            border-radius: 1rem;
+        }
+    }
+
+    .itemInfo {
+       
+        
+        .name {
+            font-size: 1.8rem;
+            font-weight: 700;
+            margin: 1rem;
+        }
+
+        a {
+            color: inherit;
+            text-decoration: none;
+        }
+
+        a:hover {
+            cursor: pointer;
+        }
+
+        .shopName {
+            font-size: 1.1rem;
+            font-weight: 700;
+            margin: 1rem;
+        }
+
+        .description {
+            margin: 1rem;
+            font-style: italic;
+        }
+
+        .price  {
+            font-size: 1.1rem;
+            margin: 1rem;
+            font-weight: 700;
+        }
+
+    
+        .addToCart {
+            margin: 1rem;
+            width: 85%;
+        }
+
+        .FavoriteIcon:hover {
+            cursor: pointer;
+        }
+    
+
+    }
+}

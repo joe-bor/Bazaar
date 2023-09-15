@@ -1,54 +1,180 @@
-@import "node_modules/bootstrap/scss/bootstrap.scss";
-@import url("https://fonts.googleapis.com/css?family=Roboto:100,300,400,500,700");
-@import "reset";
-@import "grid";
+@import url('https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap');
+
+@font-face {
+  font-family: 'Graphik';
+  src: url('../assets/fonts/Graphik-Semibold.otf') format('opentype');
+  font-weight: 600;
+}
+
+@font-face {
+  font-family: 'Graphik';
+  src: url('../assets/fonts/Graphik-Regular.otf') format('opentype');
+  font-weight: 400;
+}
+
+:root {
+  --accent: #1CBE4F;
+  --black: #000000;
+  --lighter-bg: #FBFBFA;
+  --darker-bg: #EEEEEA;
+  --grey: #D6D6D2;
+}
+
+*,
+*:before,
+*:after {
+    box-sizing: border-box;
+}
 
 body {
-  font-size: 16px;
+  margin: 0;
+  font-family: 'Graphik', 'Inter', sans-serif;
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+  background-color: var(--lighter-bg);
+  padding: 0;
+  height: 100vh;
+  font-weight: 400;
 }
 
-.NavBar {
-  display: flex;
-  justify-content: space-around;
-  width: 100%;
-  background-color: #f0f0f0;
-  height: 2rem;
-  align-items: center;
+#app {
+  height: 100%;
+}
+
+.title {
+  font-weight: 600;
+  font-size: 2.5rem;
+}
+
+.heading {
+  font-weight: 600;
+  font-size: 2rem;
+}
+
+.subheading {
+  font-weight: 600;
   font-size: 1.5rem;
-  color: orangered;
-  a {
-    color: orangered;
-    text-decoration: none;
-    &:link, &:visited {
-      color: orangered;
-      text-decoration: none;
-    }
-  }
 }
 
-.HomePage {
-  h1 {
-    font-size: 3rem;
-  }
+.category {
+  font-weight: 400;
+  font-size: 1.375rem;
+}
+
+.body {
+  font-weight: 400;
+  font-size: 1.125rem;
+}
+
+.align-ctr {
+  text-align: center;
+}
+
+.align-rt {
+  text-align: right;
+}
+
+.flex-ctr-ctr {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+.flex-col {
+  flex-direction: column;
+}
+
+.flex-j-end {
+  justify-content: flex-end;
+}
+
+.scroll-y {
+ overflow-y: scroll;
+}
+
+.form-container {
+  padding: 0.5rem 0;
+  background-color: var(--darker-bg);
+}
+
+p.error-message {
+  color: var(--accent);
+  text-align: center;
 
 }
 
-.AboutPage {
-  h1 {
-    font-size: 3rem;
-  }
+form {
+  display: grid;
+  grid-template-columns: 1fr 3fr;
+  gap: 1.25vmin;
+  color: var(--black);
 }
 
-.ContactPage{
-  h1 {
-    font-size: 3rem;
-  }
-
+label {
+  font-size: 2vmin;
+  display: flex;
+  align-items: center;
 }
 
-.AppPage {
-  h1 {
-    font-size: 3rem;
-  }
-
+input {
+  padding: 1vmin;
+  font-size: 2vmin;
+  border: .1vmin solid var(--black);
+  border-radius: 0.625rem;;
+  color: var(--black);
+  background-image: none !important; /* prevent lastpass */
+  outline: none;
 }
+
+input:focus {
+  border-color: var(--accent);
+}
+
+button, a.button {
+  padding: 1vmin;
+  color: var(--lighter-bg);
+  background-color: var(--accent);
+  font-size: 2vmin;
+  font-weight: 700;
+  text-decoration: none;
+  text-align: center;
+  border-radius: 0.625rem;
+  border: .1vmin solid var(--accent);
+  outline: none;
+  cursor: pointer;
+}
+
+button:hover {
+  color: var(--accent);
+  border: .1vmin solid var(--accent);
+  background-color: var(--lighter-bg);
+}
+
+button.large {
+  font-size: 1.5vmin;
+  padding: .6vmin .8vmin;
+  
+}
+
+button.med {
+  font-size: 1vmin;
+  padding: .4vmin .5vmin;
+}
+
+button.small {
+  width: 10vmin;
+  height: 3.5vmin;
+  font-size: 1.25vmin;
+  padding: .4vmin .5vmin;
+}
+
+button:disabled, form:invalid button[type="submit"] {
+  cursor: not-allowed;
+  color: rgba(0, 0, 0, 0.5)
+} 
+
+// button[type="submit"] {
+//   grid-column: span 2;
+//   margin: 1vmin 0 0;
+//   color: var(--accent)
+// }

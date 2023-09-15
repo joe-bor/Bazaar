@@ -1,0 +1,11 @@
+.FavoriteIcon .icon {
+  height: 3vmin;
+
+  img {
+    fill: red;
+  }
+}
+
+.FavoriteIcon:hover {
+  cursor: pointer;
+}
