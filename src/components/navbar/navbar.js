@@ -90,7 +90,26 @@ export default function NavBar({
                         </div>
                     </Link>
 
-                </div>
+                    <Link to="/store">
+                        <div>
+                            <i className="store"></i>
+                            <img src={shopIcon} alt="store" />
+                        </div>
+                    </Link>
+                    <div className="navbar-user">
+                    {user?.name !== 'c186ec' ? (
+                        //Display user profile info if logged in
+                        <>
+                            <img src={user?.imageUrl ? user.imageUrl : userIcon} alt="Profile" />
+                            <Link to='/account'><span>{user?.name}</span></Link>
+                        </>
+                    ) : (
+                        //Display user profile info if logged in
+                        <>
+                            <div onClick={toggleAuthModal}>Log In</div>
+                        </>        
+                    )}</div>
+            </div>
             </div>
             <div className={styles.categories}>
                 <ul>
@@ -103,4 +122,4 @@ export default function NavBar({
             </div>
         </nav>
     )
-}
+    }

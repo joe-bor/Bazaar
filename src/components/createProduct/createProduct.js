@@ -22,7 +22,8 @@ export default function CreateProduct({ user, setUser, userShop, setUserShop, ca
       placeholder: "Product Name",
       value: location.pathname === '/shopmgmt' ? productValues.name : shop?.name,
       errorMessage:
-        "Product name is required and can't include special characters",
+        `Product name is required and 
+        can't include special characters`,
       label: "Product Name",
       pattern: "^[A-Za-z0-9 ']+$",
       required: true,
@@ -86,9 +87,9 @@ export default function CreateProduct({ user, setUser, userShop, setUserShop, ca
 
   return (
     <div className={styles.CreateProduct}>
-      <div className="form-container">
+      <div>
         <h1 className={styles.h1}>{location.pathname === '/shopmgmt' ? 'Create A Product' : 'Edit Product Details'}</h1>
-        <form autoComplete="off" onSubmit={handleProductSubmit}>
+        <form className={styles.form} autoComplete="off" onSubmit={handleProductSubmit}>
           {/* <FormInput {...logoInputProps} handleInputChange={handleImageChange} /> */}
           {productInputs.map(input => <FormInput key={input.id} {...input} value={productValues[input.name]} handleInputChange={handleProductInputChange} />)}
           <label htmlFor='product-category'>Product Category:</label>

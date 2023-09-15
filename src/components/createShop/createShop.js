@@ -54,7 +54,7 @@ export default function CreateShop({ user, setUser, location, userShop, setUserS
     setShopValues({ ...shopValues, [e.target.name]: e.target.value })
   }
 
-  const handleImageChange = () => {
+  const handleImageChange = (e) => {
     e.preventDefault()
     let reader = new FileReader()
     let file = e.target.files[0]
@@ -95,9 +95,9 @@ export default function CreateShop({ user, setUser, location, userShop, setUserS
 
   return (
     <div className={styles.CreateShop}>
-      <div className="form-container">
+      <div>
         <h1 className={styles.h1}>{location.pathname === '/account' ? 'Create A Shop' : 'Edit Shop Details'}</h1>
-        <form autoComplete="off" onSubmit={handleShopSubmit}>
+        <form  className={styles.form} autoComplete="off" onSubmit={handleShopSubmit}>
           <FormInput {...logoInputProps} handleInputChange={handleImageChange} />
           {shopInputs.map(input => <FormInput key={input.id} {...input} value={shopValues[input.name]} handleInputChange={handleShopInputChange} />)}
           <button formMethod='dialog'>{location.pathname === '/account' ? 'Create Shop' : 'Update Shop'}</button>

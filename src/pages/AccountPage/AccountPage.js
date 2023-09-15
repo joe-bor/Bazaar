@@ -87,6 +87,7 @@ export default function AccountPage({ user, setUser, createGuestUser, userShop, 
         <ProductList productItems={favPreviewItems} />
       </div>
       <dialog
+      className={styles.dialog}
         ref={editModalRef}
         onClose={toggleEditModal}
         onSubmit={toggleEditModal}>
@@ -95,6 +96,7 @@ export default function AccountPage({ user, setUser, createGuestUser, userShop, 
           setUser={setUser} />
       </dialog>
       <dialog
+        className={styles.dialog}
         ref={shopModalRef}
         onClose={toggleCreateShop}
         onSubmit={toggleCreateShop}>
