@@ -11,7 +11,6 @@ export default function ShopForm({ user, setUser, location, userShop, setUserSho
     description: ''
   })
   const [file, setFile] = useState(null)
-  const [photoUrl, setPhotoUrl] = useState('')
 
   const navigate = useNavigate()
 
@@ -26,29 +25,28 @@ export default function ShopForm({ user, setUser, location, userShop, setUserSho
   }, [user])
 
 
-
   const shopInputs = [
     {
       id: "shop-name",
       name: "name",
       type: "text",
       placeholder: "Shop Name",
-      value: location.pathname === `./shopmgmt/${user.shop}` ? userShop.name : shopValues.name,
+      value: shopValues.name,
       errorMessage:
         "Shop name is required and can't include special characters",
       label: "Shop Name",
       pattern: "^[A-Za-z0-9 ']+$",
-      required: true,
+      required: location.pathname.includes('/shopmgmt') ? false : true,
     },
     {
       id: "shop-description",
       name: "description",
       type: "text",
       placeholder: "Shop Description",
-      value: location.pathname === `./shopmgmt/${user.shop}` ? userShop.description : shopValues.description,
+      value: shopValues.description,
       errorMessage: "Shop description is required",
       label: "Shop Description",
-      required: true,
+      required: location.pathname.includes('/shopmgmt') ? false : true,
     }
   ]
 
@@ -70,9 +68,13 @@ export default function ShopForm({ user, setUser, location, userShop, setUserSho
     e.preventDefault()
     try {
       const formData = new FormData()
-      formData.append('file', file)
+      if (file) {
+        formData.append('file', file)
+      }
       for (let key in shopValues) {
-        formData.append(key, shopValues[key])
+        if (shopValues[key] !== '') {
+          formData.append(key, shopValues[key])
+        }
       }
       formData.append('token', localStorage.getItem('token'))
       // edit the shop in shop management
@@ -89,6 +91,7 @@ export default function ShopForm({ user, setUser, location, userShop, setUserSho
         setUserShop(data.data.newShop)
         navigate(`/shopmgmt/${data.data.newShop._id}`)
       }
+
     } catch (error) {
       console.error(error)
     }

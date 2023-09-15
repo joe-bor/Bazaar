@@ -1,5 +1,5 @@
 import React from 'react'
-import { Link } from 'react-router-dom'
+import { Link, useNavigate } from 'react-router-dom'
 import styles from './NavBar.module.scss'
 import userIcon from '../../assets/images/user-icon.svg'
 import cartIcon from '../../assets/images/cart-icon.svg'
@@ -19,9 +19,17 @@ export default function NavBar({
     cart,
     searchTerm,
     setSearchTerm,
-    cartTotals
+    cartTotals,
+    setActiveCat
 
 }) {
+
+    const navigate = useNavigate()
+
+    function handleCatClick(e) {
+        setActiveCat(e.target.innerText)
+        navigate('/shop')
+    }
 
     return (
         <nav className={styles.NavBar}>
@@ -36,7 +44,8 @@ export default function NavBar({
                         setSearchTerm={setSearchTerm}
                         items={items}
                         filteredItems={filteredItems}
-                        setFilteredItems={setFilteredItems} />
+                        setFilteredItems={setFilteredItems}
+                        setActiveCat={setActiveCat} />
                 </div>
                 <div className={styles.icons}>
                     {user?.name !== 'c186ec' ?
@@ -80,7 +89,8 @@ export default function NavBar({
             <div className={styles.categories}>
                 <ul>
                     {categories.map((category, index) => (
-                        <li className={styles.li} key={index}>
+
+                        <li className={styles.li} onClick={handleCatClick} key={index}>
                             {category}
                         </li>
                     ))}

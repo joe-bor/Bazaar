@@ -151,10 +151,22 @@ export default function App() {
         cart={cart}
         location={location}
         cartTotals={cartTotals}
+        activeCat={activeCat}
+        setActiveCat={setActiveCat}
         createGuestUser={createGuestUser} />
       <Routes>
         {/* client-side route that renders the component instance if the patch matches the url in the address bar */}
-        <Route path="/home" element={<Home items={items} className={styles.Home} categories={categoriesRef.current} setActiveCat={setActiveCat} setCart={setCart} favItems={favItems} setFavItems={setFavItems} />} />
+        <Route path="/home" element={
+          <Home
+            items={items}
+            className={styles.Home}
+            categories={categoriesRef.current}
+            setActiveCat={setActiveCat}
+            setCart={setCart}
+            favItems={favItems}
+            setFavItems={setFavItems}
+          />
+        } />
         <Route path="/shop" element={<ShopPage className={styles.ShopPage} items={items} user={user} setUser={setUser} activeCat={activeCat} setActiveCat={setActiveCat} categories={categoriesRef.current} filteredItems={filteredItems} setFilteredItems={setFilteredItems} favItems={favItems} setFavItems={setFavItems} />} />
         <Route path="/itemdetails/:itemId" element={<ItemDetails setCart={setCart} favItems={favItems} setFavItems={setFavItems} user={user} setUser={setUser} />} />
         <Route path="/account" element={<AccountPage className={styles.AccountPage} user={user} setUser={setUser} createGuestUser={createGuestUser} userShop={userShop} setUserShop={setUserShop} favItems={favItems} setFavItems={setFavItems} />} />

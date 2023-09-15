@@ -8,7 +8,7 @@ import styles from './AccountPage.module.scss'
 import ShopForm from "../../components/ShopForm/ShopForm"
 import ProductList from "../../components/ProductList/ProductList"
 
-export default function AccountPage({ user, setUser, createGuestUser, userShop, setUserShop, favItems }) {
+export default function AccountPage({ user, setUser, createGuestUser, userShop, setUserShop, favItems, setFavItems }) {
   const [editModalOpen, setEditModalOpen] = useState(false)
   const [shopModalOpen, setShopModalOpen] = useState(false)
   const [favPreviewItems, setFavPreviewItems] = useState([])
@@ -55,6 +55,12 @@ export default function AccountPage({ user, setUser, createGuestUser, userShop, 
 
   async function deleteUserAcc() {
     await deleteUser(user._id)
+    setUserShop({
+      name: 'Loading...',
+      seller: {},
+      description: 'Loading...',
+      products: []
+    })
     createGuestUser()
     navigate('/home')
   }
@@ -85,14 +91,14 @@ export default function AccountPage({ user, setUser, createGuestUser, userShop, 
           <Link to='/orderhistory'>Order History</Link>
           {user.shop ? <Link to={`/shopmgmt/${userShop._id}`}>Manage Shop</Link> : <button onClick={toggleCreateShop}>Create a Shop</button>}
           <button onClick={deleteUserAcc}>Delete Account</button>
-          <UserLogOut createGuestUser={createGuestUser} />
+          <UserLogOut createGuestUser={createGuestUser} setUserShop={setUserShop} />
         </div>
       </section>
       <div className={styles.favorites}>
         <div className={styles.favsHeading}>
           <h2 className="heading">Favorites</h2><button className="small" onClick={() => navigate('/favorites')}>See All</button>
         </div>
-        <ProductList productItems={favPreviewItems} user={user} />
+        <ProductList productItems={favPreviewItems} user={user} setUser={setUser} favItems={favItems} setFavItems={setFavItems} />
       </div>
       <dialog
         className={styles.dialog}
