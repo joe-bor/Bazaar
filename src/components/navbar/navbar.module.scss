@@ -6,12 +6,13 @@
   .topLine {
     display: flex;
     padding: 1.5rem 1rem 1rem 1rem;
+    align-items: center;
   }
   .logoContainer {
     padding: 0rem 1rem;
   }
   .searchbarContainer {
-    padding-top: 3px;
+    padding-top: .5rem;
     width: 80%;
   }
   .categories ul {
@@ -27,9 +28,11 @@
     margin: 0rem .5rem;
   }
   .icons img {
-    height: 4vmin;
+    height: 5vmin;
+    padding: 0rem .5rem;
   }
   .icons {
     display: flex;
+    padding: 0rem .5rem;
   }
 }
