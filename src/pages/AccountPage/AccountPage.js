@@ -92,7 +92,7 @@ export default function AccountPage({ user, setUser, createGuestUser, userShop, 
         <div className={styles.favsHeading}>
           <h2 className="heading">Favorites</h2><button className="small" onClick={() => navigate('/favorites')}>See All</button>
         </div>
-        <ProductList productItems={favPreviewItems} />
+        <ProductList productItems={favPreviewItems} user={user} />
       </div>
       <dialog
         className={styles.dialog}

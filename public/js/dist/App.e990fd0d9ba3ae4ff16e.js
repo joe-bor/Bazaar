@@ -1389,17 +1389,19 @@ function ShopForm(_ref) {
   const [photoUrl, setPhotoUrl] = (0,react__WEBPACK_IMPORTED_MODULE_0__.useState)('');
   const navigate = (0,react_router_dom__WEBPACK_IMPORTED_MODULE_4__.useNavigate)();
   (0,react__WEBPACK_IMPORTED_MODULE_0__.useEffect)(() => {
-    function getAShop() {
-      return _getAShop.apply(this, arguments);
+    if (user.shop) {
+      function getAShop() {
+        return _getAShop.apply(this, arguments);
+      }
+      function _getAShop() {
+        _getAShop = _asyncToGenerator(function* () {
+          const shop = yield (0,_utilities_shops_api__WEBPACK_IMPORTED_MODULE_5__.getShop)(user.shop);
+          setUserShop(shop);
+        });
+        return _getAShop.apply(this, arguments);
+      }
+      getAShop();
     }
-    function _getAShop() {
-      _getAShop = _asyncToGenerator(function* () {
-        const shop = yield (0,_utilities_shops_api__WEBPACK_IMPORTED_MODULE_5__.getShop)(user.shop);
-        setUserShop(shop);
-      });
-      return _getAShop.apply(this, arguments);
-    }
-    getAShop();
   }, [user]);
   const shopInputs = [{
     id: "shop-name",
@@ -1729,7 +1731,9 @@ function ProductListItem(_ref) {
   }
   function _handleFavClick() {
     _handleFavClick = _asyncToGenerator(function* () {
+      console.log(user);
       const updatedUser = yield (0,_utilities_users_service__WEBPACK_IMPORTED_MODULE_5__.toggleFavorites)(user._id, productItem._id);
+      console.log(updatedUser);
       setUser(updatedUser);
     });
     return _handleFavClick.apply(this, arguments);
@@ -1920,7 +1924,8 @@ function AccountPage(_ref) {
     className: "small",
     onClick: () => navigate('/favorites')
   }, "See All")), /*#__PURE__*/React.createElement(_components_ProductList_ProductList__WEBPACK_IMPORTED_MODULE_6__["default"], {
-    productItems: favPreviewItems
+    productItems: favPreviewItems,
+    user: user
   })), /*#__PURE__*/React.createElement("dialog", {
     className: _AccountPage_module_scss__WEBPACK_IMPORTED_MODULE_4__["default"].dialog,
     ref: editModalRef,

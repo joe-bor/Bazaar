@@ -16,11 +16,13 @@ export default function ShopForm({ user, setUser, location, userShop, setUserSho
   const navigate = useNavigate()
 
   useEffect(() => {
-    async function getAShop() {
-      const shop = await getShop(user.shop)
-      setUserShop(shop)
+    if (user.shop) {
+      async function getAShop() {
+        const shop = await getShop(user.shop)
+        setUserShop(shop)
+      }
+      getAShop()
     }
-    getAShop()
   }, [user])
 
 
