@@ -154,8 +154,8 @@ function CategorySection(_ref) {
 /* harmony import */ var react__WEBPACK_IMPORTED_MODULE_0___default = /*#__PURE__*/__webpack_require__.n(react__WEBPACK_IMPORTED_MODULE_0__);
 /* harmony import */ var _CreateProduct_module_scss__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! ./CreateProduct.module.scss */ "./src/components/CreateProduct/CreateProduct.module.scss");
 /* harmony import */ var _FormInput_FormInput__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! ../FormInput/FormInput */ "./src/components/FormInput/FormInput.js");
-/* harmony import */ var react_router_dom__WEBPACK_IMPORTED_MODULE_3__ = __webpack_require__(/*! react-router-dom */ "./node_modules/react-router/dist/index.js");
-/* harmony import */ var _utilities_shops_api__WEBPACK_IMPORTED_MODULE_4__ = __webpack_require__(/*! ../../utilities/shops-api */ "./src/utilities/shops-api.js");
+/* harmony import */ var react_router_dom__WEBPACK_IMPORTED_MODULE_4__ = __webpack_require__(/*! react-router-dom */ "./node_modules/react-router/dist/index.js");
+/* harmony import */ var _utilities_image_upload__WEBPACK_IMPORTED_MODULE_3__ = __webpack_require__(/*! ../../utilities/image-upload */ "./src/utilities/image-upload.js");
 /* provided dependency */ var React = __webpack_require__(/*! react */ "./node_modules/react/index.js");
 function _extends() { _extends = Object.assign ? Object.assign.bind() : function (target) { for (var i = 1; i < arguments.length; i++) { var source = arguments[i]; for (var key in source) { if (Object.prototype.hasOwnProperty.call(source, key)) { target[key] = source[key]; } } } return target; }; return _extends.apply(this, arguments); }
 function asyncGeneratorStep(gen, resolve, reject, _next, _throw, key, arg) { try { var info = gen[key](arg); var value = info.value; } catch (error) { reject(error); return; } if (info.done) { resolve(value); } else { Promise.resolve(value).then(_next, _throw); } }
@@ -165,6 +165,7 @@ function _objectSpread(target) { for (var i = 1; i < arguments.length; i++) { va
 function _defineProperty(obj, key, value) { key = _toPropertyKey(key); if (key in obj) { Object.defineProperty(obj, key, { value: value, enumerable: true, configurable: true, writable: true }); } else { obj[key] = value; } return obj; }
 function _toPropertyKey(arg) { var key = _toPrimitive(arg, "string"); return typeof key === "symbol" ? key : String(key); }
 function _toPrimitive(input, hint) { if (typeof input !== "object" || input === null) return input; var prim = input[Symbol.toPrimitive]; if (prim !== undefined) { var res = prim.call(input, hint || "default"); if (typeof res !== "object") return res; throw new TypeError("@@toPrimitive must return a primitive value."); } return (hint === "string" ? String : Number)(input); }
+
 
 
 
@@ -185,11 +186,12 @@ function CreateProduct(_ref) {
     name: '',
     description: '',
     price: '',
-    category: ''
-    // images:
+    category: '',
+    file: ''
   });
-
-  const navigate = (0,react_router_dom__WEBPACK_IMPORTED_MODULE_3__.useNavigate)();
+  const [file, setFile] = (0,react__WEBPACK_IMPORTED_MODULE_0__.useState)(null);
+  const [photoUrl, setPhotoUrl] = (0,react__WEBPACK_IMPORTED_MODULE_0__.useState)('');
+  const navigate = (0,react_router_dom__WEBPACK_IMPORTED_MODULE_4__.useNavigate)();
   const productInputs = [{
     id: "product-name",
     name: "name",
@@ -219,15 +221,15 @@ function CreateProduct(_ref) {
     label: "Product Price",
     required: true
   }];
-  const photoInputProps = {
-    id: "product-photo",
+  const imageInputProps = {
+    id: "add-photo",
     name: "file",
     type: "file",
     accept: ".png, .jpg, .jpeg",
     errorMessage: "File type must be .png, .jpeg, or .jpg",
-    label: "Product Photo"
+    label: "Product Image"
   };
-  const handleProductInputChange = e => {
+  const handleInputChange = e => {
     setProductValues(_objectSpread(_objectSpread({}, productValues), {}, {
       [e.target.name]: e.target.value
     }));
@@ -240,27 +242,41 @@ function CreateProduct(_ref) {
   function _handleProductSubmit() {
     _handleProductSubmit = _asyncToGenerator(function* (e) {
       e.preventDefault();
-
       // Create an item
       // save to db
       // add to shop (state) - i want it to show up
-      const newItem = {
-        name: productValues.name,
-        price: parseInt(productValues.price, 10),
-        description: productValues.description,
-        category: productValues.category
-      };
-      console.log(newItem);
-      const {
-        shop,
-        item
-      } = yield (0,_utilities_shops_api__WEBPACK_IMPORTED_MODULE_4__.addItemToShop)(userShop._id, newItem);
-      console.log(item);
-      setUserShop(shop);
-      setShopProducts([...shopProducts, item]);
+      // const newItem = {
+      //   name: productValues.name,
+      //   price: parseInt(productValues.price, 10),
+      //   description: productValues.description,
+      //   category: productValues.category,
+      // }
+      // console.log(newItem)
+      // const { shop, item } = await addItemToShop(userShop._id, newItem)
+      // console.log(item)
+      // setUserShop(shop)
+      // setShopProducts( [...shopProducts, item])
+      const formData = new FormData();
+      formData.append('file', file);
+      for (let key in values) {
+        formData.append(key, values[key]);
+      }
+      const data = yield (0,_utilities_image_upload__WEBPACK_IMPORTED_MODULE_3__.itemPost)(formData);
+      setPhotoUrl(data.secure_url);
+      console.log(data);
     });
     return _handleProductSubmit.apply(this, arguments);
   }
+  const handleImageChange = e => {
+    e.preventDefault();
+    console.log(e.target.files);
+    let reader = new FileReader();
+    let file = e.target.files[0];
+    reader.onloadend = () => {
+      setFile(file);
+    };
+    reader.readAsDataURL(file);
+  };
   return /*#__PURE__*/React.createElement("div", {
     className: _CreateProduct_module_scss__WEBPACK_IMPORTED_MODULE_1__["default"].CreateProduct
   }, /*#__PURE__*/React.createElement("div", {
@@ -270,18 +286,20 @@ function CreateProduct(_ref) {
   }, location.pathname === '/shopmgmt' ? 'Create A Product' : 'Edit Product Details'), /*#__PURE__*/React.createElement("form", {
     autoComplete: "off",
     onSubmit: handleProductSubmit
-  }, productInputs.map(input => /*#__PURE__*/React.createElement(_FormInput_FormInput__WEBPACK_IMPORTED_MODULE_2__["default"], _extends({
+  }, /*#__PURE__*/React.createElement(_FormInput_FormInput__WEBPACK_IMPORTED_MODULE_2__["default"], _extends({}, imageInputProps, {
+    handleInputChange: handleImageChange
+  })), productInputs.map(input => /*#__PURE__*/React.createElement(_FormInput_FormInput__WEBPACK_IMPORTED_MODULE_2__["default"], _extends({
     key: input.id
   }, input, {
     value: productValues[input.name],
-    handleInputChange: handleProductInputChange
+    handleInputChange: handleInputChange
   }))), /*#__PURE__*/React.createElement("label", {
     htmlFor: "product-category"
   }, "Product Category:"), /*#__PURE__*/React.createElement("select", {
     id: "product-category",
     name: "category",
     value: productValues.category,
-    onChange: handleProductInputChange
+    onChange: handleInputChange
   }, categories.slice(1).map(category => {
     return /*#__PURE__*/React.createElement("option", {
       key: category,
@@ -305,11 +323,12 @@ function CreateProduct(_ref) {
 /* harmony export */ });
 /* harmony import */ var react__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! react */ "./node_modules/react/index.js");
 /* harmony import */ var react__WEBPACK_IMPORTED_MODULE_0___default = /*#__PURE__*/__webpack_require__.n(react__WEBPACK_IMPORTED_MODULE_0__);
-/* harmony import */ var _utilities_shops_api__WEBPACK_IMPORTED_MODULE_4__ = __webpack_require__(/*! ../../utilities/shops-api */ "./src/utilities/shops-api.js");
+/* harmony import */ var _utilities_shops_api__WEBPACK_IMPORTED_MODULE_5__ = __webpack_require__(/*! ../../utilities/shops-api */ "./src/utilities/shops-api.js");
 /* harmony import */ var _CreateShop_module_scss__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! ./CreateShop.module.scss */ "./src/components/CreateShop/CreateShop.module.scss");
 /* harmony import */ var _FormInput_FormInput__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! ../FormInput/FormInput */ "./src/components/FormInput/FormInput.js");
-/* harmony import */ var react_router_dom__WEBPACK_IMPORTED_MODULE_3__ = __webpack_require__(/*! react-router-dom */ "./node_modules/react-router/dist/index.js");
-/* harmony import */ var _utilities_users_service__WEBPACK_IMPORTED_MODULE_5__ = __webpack_require__(/*! ../../utilities/users-service */ "./src/utilities/users-service.js");
+/* harmony import */ var react_router_dom__WEBPACK_IMPORTED_MODULE_4__ = __webpack_require__(/*! react-router-dom */ "./node_modules/react-router/dist/index.js");
+/* harmony import */ var _utilities_users_service__WEBPACK_IMPORTED_MODULE_6__ = __webpack_require__(/*! ../../utilities/users-service */ "./src/utilities/users-service.js");
+/* harmony import */ var _utilities_image_upload__WEBPACK_IMPORTED_MODULE_3__ = __webpack_require__(/*! ../../utilities/image-upload */ "./src/utilities/image-upload.js");
 /* provided dependency */ var React = __webpack_require__(/*! react */ "./node_modules/react/index.js");
 function _extends() { _extends = Object.assign ? Object.assign.bind() : function (target) { for (var i = 1; i < arguments.length; i++) { var source = arguments[i]; for (var key in source) { if (Object.prototype.hasOwnProperty.call(source, key)) { target[key] = source[key]; } } } return target; }; return _extends.apply(this, arguments); }
 function asyncGeneratorStep(gen, resolve, reject, _next, _throw, key, arg) { try { var info = gen[key](arg); var value = info.value; } catch (error) { reject(error); return; } if (info.done) { resolve(value); } else { Promise.resolve(value).then(_next, _throw); } }
@@ -319,6 +338,7 @@ function _objectSpread(target) { for (var i = 1; i < arguments.length; i++) { va
 function _defineProperty(obj, key, value) { key = _toPropertyKey(key); if (key in obj) { Object.defineProperty(obj, key, { value: value, enumerable: true, configurable: true, writable: true }); } else { obj[key] = value; } return obj; }
 function _toPropertyKey(arg) { var key = _toPrimitive(arg, "string"); return typeof key === "symbol" ? key : String(key); }
 function _toPrimitive(input, hint) { if (typeof input !== "object" || input === null) return input; var prim = input[Symbol.toPrimitive]; if (prim !== undefined) { var res = prim.call(input, hint || "default"); if (typeof res !== "object") return res; throw new TypeError("@@toPrimitive must return a primitive value."); } return (hint === "string" ? String : Number)(input); }
+
 
 
 
@@ -336,11 +356,12 @@ function CreateShop(_ref) {
   } = _ref;
   const [shopValues, setShopValues] = (0,react__WEBPACK_IMPORTED_MODULE_0__.useState)({
     name: '',
-    description: ''
-    // logoImage: null
+    description: '',
+    file: ''
   });
-
-  const navigate = (0,react_router_dom__WEBPACK_IMPORTED_MODULE_3__.useNavigate)();
+  const [file, setFile] = (0,react__WEBPACK_IMPORTED_MODULE_0__.useState)(null);
+  const [photoUrl, setPhotoUrl] = (0,react__WEBPACK_IMPORTED_MODULE_0__.useState)('');
+  const navigate = (0,react_router_dom__WEBPACK_IMPORTED_MODULE_4__.useNavigate)();
   const shopInputs = [{
     id: "shop-name",
     name: "name",
@@ -369,6 +390,14 @@ function CreateShop(_ref) {
     errorMessage: "File type must be .png, .jpeg, or .jpg",
     label: "Shop Logo Image"
   };
+  const imageInputProps = {
+    id: "add-photo",
+    name: "file",
+    type: "file",
+    accept: ".png, .jpg, .jpeg",
+    errorMessage: "File type must be .png, .jpeg, or .jpg",
+    label: "Shop Image"
+  };
   const handleShopInputChange = e => {
     setShopValues(_objectSpread(_objectSpread({}, shopValues), {}, {
       [e.target.name]: e.target.value
@@ -382,10 +411,16 @@ function CreateShop(_ref) {
   function _handleShopSubmit() {
     _handleShopSubmit = _asyncToGenerator(function* (e) {
       e.preventDefault();
-      const formData = _objectSpread({}, shopValues);
       if (location.pathname === '/shopmgmt') {
         // send request to update shop
-        const updatedShop = yield (0,_utilities_shops_api__WEBPACK_IMPORTED_MODULE_4__.editShopInfo)(userShop._id, formData);
+        const formData = new FormData();
+        formData.append('file', file);
+        for (let key in values) {
+          formData.append(key, values[key]);
+        }
+        const updatedShop = yield (0,_utilities_image_upload__WEBPACK_IMPORTED_MODULE_3__.shopPost)(userShop._id, formData);
+        setPhotoUrl(updatedShop.secure_url);
+        console.log(updatedShop);
         setUserShop(updatedShop);
         toggleEditShop();
       } else {
@@ -393,13 +428,13 @@ function CreateShop(_ref) {
         const {
           shopOwner,
           shop
-        } = yield (0,_utilities_shops_api__WEBPACK_IMPORTED_MODULE_4__.createShop)({
+        } = yield (0,_utilities_shops_api__WEBPACK_IMPORTED_MODULE_5__.createShop)({
           seller: user._id,
           name: shopValues.name,
           description: shopValues.description
         });
         // set user state to have shop info
-        const updatedUser = yield (0,_utilities_users_service__WEBPACK_IMPORTED_MODULE_5__.updateUser)(user._id, shopOwner);
+        const updatedUser = yield (0,_utilities_users_service__WEBPACK_IMPORTED_MODULE_6__.updateUser)(user._id, shopOwner);
         setUser(updatedUser);
         setUserShop(shop);
         navigate('/shopmgmt');
@@ -407,6 +442,16 @@ function CreateShop(_ref) {
     });
     return _handleShopSubmit.apply(this, arguments);
   }
+  const handleImageChange = e => {
+    e.preventDefault();
+    console.log(e.target.files);
+    let reader = new FileReader();
+    let file = e.target.files[0];
+    reader.onloadend = () => {
+      setFile(file);
+    };
+    reader.readAsDataURL(file);
+  };
   return /*#__PURE__*/React.createElement("div", {
     className: _CreateShop_module_scss__WEBPACK_IMPORTED_MODULE_1__["default"].CreateShop
   }, /*#__PURE__*/React.createElement("div", {
@@ -416,10 +461,396 @@ function CreateShop(_ref) {
   }, location.pathname === '/account' ? 'Create A Shop' : 'Edit Shop Details'), /*#__PURE__*/React.createElement("form", {
     autoComplete: "off",
     onSubmit: handleShopSubmit
-  }, shopInputs.map(input => /*#__PURE__*/React.createElement(_FormInput_FormInput__WEBPACK_IMPORTED_MODULE_2__["default"], _extends({
+  }, /*#__PURE__*/React.createElement(_FormInput_FormInput__WEBPACK_IMPORTED_MODULE_2__["default"], _extends({}, imageInputProps, {
+    handleInputChange: handleImageChange
+  })), shopInputs.map(input => /*#__PURE__*/React.createElement(_FormInput_FormInput__WEBPACK_IMPORTED_MODULE_2__["default"], _extends({
     key: input.id
   }, input, {
     value: shopValues[input.name],
+    handleInputChange: handleShopInputChange
+  }))), /*#__PURE__*/React.createElement("button", {
+    formMethod: "dialog"
+  }, location.pathname === '/account' ? 'Create Shop' : 'Update Shop'))));
+}
+
+/***/ }),
+
+/***/ "./src/components/EditProductForm/EditProductForm.js":
+/*!***********************************************************!*\
+  !*** ./src/components/EditProductForm/EditProductForm.js ***!
+  \***********************************************************/
+/***/ ((__unused_webpack_module, __webpack_exports__, __webpack_require__) => {
+
+/* harmony export */ __webpack_require__.d(__webpack_exports__, {
+/* harmony export */   "default": () => (__WEBPACK_DEFAULT_EXPORT__)
+/* harmony export */ });
+/* harmony import */ var react__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! react */ "./node_modules/react/index.js");
+/* harmony import */ var react__WEBPACK_IMPORTED_MODULE_0___default = /*#__PURE__*/__webpack_require__.n(react__WEBPACK_IMPORTED_MODULE_0__);
+/* harmony import */ var _EditProductForm_module_scss__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! ./EditProductForm.module.scss */ "./src/components/EditProductForm/EditProductForm.module.scss");
+/* harmony import */ var _FormInput_FormInput__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! ../FormInput/FormInput */ "./src/components/FormInput/FormInput.js");
+/* harmony import */ var _utilities_image_upload__WEBPACK_IMPORTED_MODULE_3__ = __webpack_require__(/*! ../../utilities/image-upload */ "./src/utilities/image-upload.js");
+/* harmony import */ var _utilities_shops_api__WEBPACK_IMPORTED_MODULE_4__ = __webpack_require__(/*! ../../utilities/shops-api */ "./src/utilities/shops-api.js");
+/* provided dependency */ var React = __webpack_require__(/*! react */ "./node_modules/react/index.js");
+function _extends() { _extends = Object.assign ? Object.assign.bind() : function (target) { for (var i = 1; i < arguments.length; i++) { var source = arguments[i]; for (var key in source) { if (Object.prototype.hasOwnProperty.call(source, key)) { target[key] = source[key]; } } } return target; }; return _extends.apply(this, arguments); }
+function ownKeys(object, enumerableOnly) { var keys = Object.keys(object); if (Object.getOwnPropertySymbols) { var symbols = Object.getOwnPropertySymbols(object); enumerableOnly && (symbols = symbols.filter(function (sym) { return Object.getOwnPropertyDescriptor(object, sym).enumerable; })), keys.push.apply(keys, symbols); } return keys; }
+function _objectSpread(target) { for (var i = 1; i < arguments.length; i++) { var source = null != arguments[i] ? arguments[i] : {}; i % 2 ? ownKeys(Object(source), !0).forEach(function (key) { _defineProperty(target, key, source[key]); }) : Object.getOwnPropertyDescriptors ? Object.defineProperties(target, Object.getOwnPropertyDescriptors(source)) : ownKeys(Object(source)).forEach(function (key) { Object.defineProperty(target, key, Object.getOwnPropertyDescriptor(source, key)); }); } return target; }
+function _defineProperty(obj, key, value) { key = _toPropertyKey(key); if (key in obj) { Object.defineProperty(obj, key, { value: value, enumerable: true, configurable: true, writable: true }); } else { obj[key] = value; } return obj; }
+function _toPropertyKey(arg) { var key = _toPrimitive(arg, "string"); return typeof key === "symbol" ? key : String(key); }
+function _toPrimitive(input, hint) { if (typeof input !== "object" || input === null) return input; var prim = input[Symbol.toPrimitive]; if (prim !== undefined) { var res = prim.call(input, hint || "default"); if (typeof res !== "object") return res; throw new TypeError("@@toPrimitive must return a primitive value."); } return (hint === "string" ? String : Number)(input); }
+function asyncGeneratorStep(gen, resolve, reject, _next, _throw, key, arg) { try { var info = gen[key](arg); var value = info.value; } catch (error) { reject(error); return; } if (info.done) { resolve(value); } else { Promise.resolve(value).then(_next, _throw); } }
+function _asyncToGenerator(fn) { return function () { var self = this, args = arguments; return new Promise(function (resolve, reject) { var gen = fn.apply(self, args); function _next(value) { asyncGeneratorStep(gen, resolve, reject, _next, _throw, "next", value); } function _throw(err) { asyncGeneratorStep(gen, resolve, reject, _next, _throw, "throw", err); } _next(undefined); }); }; }
+
+
+
+
+
+
+function EditProductForm(_ref) {
+  let {
+    userShop,
+    selectedProduct,
+    setSelectedProduct,
+    setUserShop,
+    user,
+    setUser,
+    categories
+  } = _ref;
+  const [product, setProduct] = (0,react__WEBPACK_IMPORTED_MODULE_0__.useState)(null);
+  const [shop, setShop] = (0,react__WEBPACK_IMPORTED_MODULE_0__.useState)(null);
+  const [products, setProducts] = (0,react__WEBPACK_IMPORTED_MODULE_0__.useState)([]);
+  const [id, setId] = (0,react__WEBPACK_IMPORTED_MODULE_0__.useState)('');
+  (0,react__WEBPACK_IMPORTED_MODULE_0__.useEffect)(() => {
+    function fetch() {
+      return _fetch.apply(this, arguments);
+    }
+    function _fetch() {
+      _fetch = _asyncToGenerator(function* () {
+        if (shop === null) {
+          const search = yield (0,_utilities_shops_api__WEBPACK_IMPORTED_MODULE_4__.getShop)(user.shop);
+          console.log(search);
+          setShop(search);
+        }
+      });
+      return _fetch.apply(this, arguments);
+    }
+    fetch();
+  }, []);
+  (0,react__WEBPACK_IMPORTED_MODULE_0__.useEffect)(() => {
+    if (shop) {
+      setProducts([...shop.products]);
+      setValues({
+        product: ''
+      });
+    }
+  }, [shop]);
+  (0,react__WEBPACK_IMPORTED_MODULE_0__.useEffect)(() => {
+    if (product) {
+      setValues({
+        product: '',
+        name: product.name,
+        description: product.description,
+        price: product.price,
+        category: product.category,
+        file: product.file
+      });
+      setId(product._id);
+    }
+  }, [product]);
+  const [values, setValues] = (0,react__WEBPACK_IMPORTED_MODULE_0__.useState)({});
+  const [file, setFile] = (0,react__WEBPACK_IMPORTED_MODULE_0__.useState)(null);
+  const [photoUrl, setPhotoUrl] = (0,react__WEBPACK_IMPORTED_MODULE_0__.useState)('');
+  const imageInputProps = {
+    id: "edit-photo",
+    name: "file",
+    type: "file",
+    accept: ".png, .jpg, .jpeg",
+    errorMessage: "File type must be .png, .jpeg, or .jpg",
+    label: "Product Image"
+  };
+  const handleInputChange = e => {
+    setValues(_objectSpread(_objectSpread({}, values), {}, {
+      [e.target.name]: e.target.value
+    }));
+  };
+  const handleImageChange = e => {
+    e.preventDefault();
+    console.log(e.target.files);
+    let reader = new FileReader();
+    let file = e.target.files[0];
+    reader.onloadend = () => {
+      setFile(file);
+    };
+    reader.readAsDataURL(file);
+  };
+  const handleFirstSubmit = /*#__PURE__*/function () {
+    var _ref2 = _asyncToGenerator(function* (e) {
+      e.preventDefault();
+      console.log(values);
+      setProduct(values.product);
+    });
+    return function handleFirstSubmit(_x) {
+      return _ref2.apply(this, arguments);
+    };
+  }();
+  const handleSubmit = /*#__PURE__*/function () {
+    var _ref3 = _asyncToGenerator(function* (e) {
+      e.preventDefault();
+      // once you have the file from the user's comupter, call set file and then save that to the state variable
+      // then send the file from state to the upload route - need separate function to handle upload function (need utility)
+      // then use a .then to send the request to update user
+      const formData = new FormData();
+      formData.append('file', file);
+      for (let key in values) {
+        formData.append(key, values[key]);
+      }
+      const data = yield (0,_utilities_image_upload__WEBPACK_IMPORTED_MODULE_3__.itemPut)(id, formData);
+      setPhotoUrl(data.secure_url);
+      console.log(data);
+    });
+    return function handleSubmit(_x2) {
+      return _ref3.apply(this, arguments);
+    };
+  }();
+  if (product === null) {
+    return /*#__PURE__*/React.createElement(React.Fragment, null, /*#__PURE__*/React.createElement("h1", {
+      className: _EditProductForm_module_scss__WEBPACK_IMPORTED_MODULE_1__["default"].h1
+    }, "Select Product to Edit"), /*#__PURE__*/React.createElement("form", {
+      className: _EditProductForm_module_scss__WEBPACK_IMPORTED_MODULE_1__["default"].form,
+      onSubmit: handleFirstSubmit
+    }, /*#__PURE__*/React.createElement("select", {
+      id: "products",
+      name: "product",
+      value: values.product,
+      onChange: handleInputChange
+    }, /*#__PURE__*/React.createElement("option", {
+      key: "",
+      value: ""
+    }, "--Please choose an option--"), products.map(productItem => {
+      console.log(productItem);
+      return /*#__PURE__*/React.createElement("option", {
+        key: productItem,
+        value: productItem
+      }, productItem.name);
+    })), /*#__PURE__*/React.createElement("button", {
+      formMethod: "dialog"
+    }, "Select Item")));
+  } else {
+    console.log('product = ' + product);
+    const inputs = [{
+      id: "edit-name",
+      name: "name",
+      type: "text",
+      placeholder: product.name,
+      value: product.name,
+      errorMessage: "Product name is required and can't include special characters",
+      label: "Name",
+      pattern: "^[A-Za-z0-9]+$",
+      required: true
+    }, {
+      id: "edit-description",
+      name: "description",
+      type: "text",
+      placeholder: product.description,
+      value: product.description,
+      errorMessage: "Product description is required",
+      label: "Description",
+      required: true
+    }, {
+      id: "edit-price",
+      name: "price",
+      type: "number",
+      placeholder: product.price,
+      value: product.price,
+      errorMessage: "",
+      label: "price",
+      required: true
+    }];
+    return /*#__PURE__*/React.createElement(React.Fragment, null, /*#__PURE__*/React.createElement("h1", {
+      className: _EditProductForm_module_scss__WEBPACK_IMPORTED_MODULE_1__["default"].h1
+    }, "Edit Product Info"), /*#__PURE__*/React.createElement("form", {
+      className: _EditProductForm_module_scss__WEBPACK_IMPORTED_MODULE_1__["default"].form,
+      onSubmit: handleSubmit
+    }, /*#__PURE__*/React.createElement(_FormInput_FormInput__WEBPACK_IMPORTED_MODULE_2__["default"], _extends({}, imageInputProps, {
+      handleInputChange: handleImageChange
+    })), inputs.map(input => /*#__PURE__*/React.createElement(_FormInput_FormInput__WEBPACK_IMPORTED_MODULE_2__["default"], _extends({
+      key: input.id
+    }, input, {
+      value: values[input.name],
+      handleInputChange: handleInputChange
+    }))), /*#__PURE__*/React.createElement("select", {
+      id: "product-category",
+      name: "category",
+      value: values.category,
+      onChange: handleInputChange
+    }, categories.slice(1).map(category => {
+      return /*#__PURE__*/React.createElement("option", {
+        key: category,
+        value: category
+      }, category);
+    })), /*#__PURE__*/React.createElement("button", {
+      formMethod: "dialog"
+    }, "Update")));
+  }
+}
+/* harmony default export */ const __WEBPACK_DEFAULT_EXPORT__ = (EditProductForm);
+
+/***/ }),
+
+/***/ "./src/components/EditShopForm/EditShopForm.js":
+/*!*****************************************************!*\
+  !*** ./src/components/EditShopForm/EditShopForm.js ***!
+  \*****************************************************/
+/***/ ((__unused_webpack_module, __webpack_exports__, __webpack_require__) => {
+
+/* harmony export */ __webpack_require__.d(__webpack_exports__, {
+/* harmony export */   "default": () => (/* binding */ CreateShop)
+/* harmony export */ });
+/* harmony import */ var react__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! react */ "./node_modules/react/index.js");
+/* harmony import */ var react__WEBPACK_IMPORTED_MODULE_0___default = /*#__PURE__*/__webpack_require__.n(react__WEBPACK_IMPORTED_MODULE_0__);
+/* harmony import */ var _utilities_shops_api__WEBPACK_IMPORTED_MODULE_5__ = __webpack_require__(/*! ../../utilities/shops-api */ "./src/utilities/shops-api.js");
+/* harmony import */ var _CreateShop_CreateShop_module_scss__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! ../CreateShop/CreateShop.module.scss */ "./src/components/CreateShop/CreateShop.module.scss");
+/* harmony import */ var _FormInput_FormInput__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! ../FormInput/FormInput */ "./src/components/FormInput/FormInput.js");
+/* harmony import */ var react_router_dom__WEBPACK_IMPORTED_MODULE_4__ = __webpack_require__(/*! react-router-dom */ "./node_modules/react-router/dist/index.js");
+/* harmony import */ var _utilities_users_service__WEBPACK_IMPORTED_MODULE_6__ = __webpack_require__(/*! ../../utilities/users-service */ "./src/utilities/users-service.js");
+/* harmony import */ var _utilities_image_upload__WEBPACK_IMPORTED_MODULE_3__ = __webpack_require__(/*! ../../utilities/image-upload */ "./src/utilities/image-upload.js");
+/* provided dependency */ var React = __webpack_require__(/*! react */ "./node_modules/react/index.js");
+function _extends() { _extends = Object.assign ? Object.assign.bind() : function (target) { for (var i = 1; i < arguments.length; i++) { var source = arguments[i]; for (var key in source) { if (Object.prototype.hasOwnProperty.call(source, key)) { target[key] = source[key]; } } } return target; }; return _extends.apply(this, arguments); }
+function asyncGeneratorStep(gen, resolve, reject, _next, _throw, key, arg) { try { var info = gen[key](arg); var value = info.value; } catch (error) { reject(error); return; } if (info.done) { resolve(value); } else { Promise.resolve(value).then(_next, _throw); } }
+function _asyncToGenerator(fn) { return function () { var self = this, args = arguments; return new Promise(function (resolve, reject) { var gen = fn.apply(self, args); function _next(value) { asyncGeneratorStep(gen, resolve, reject, _next, _throw, "next", value); } function _throw(err) { asyncGeneratorStep(gen, resolve, reject, _next, _throw, "throw", err); } _next(undefined); }); }; }
+function ownKeys(object, enumerableOnly) { var keys = Object.keys(object); if (Object.getOwnPropertySymbols) { var symbols = Object.getOwnPropertySymbols(object); enumerableOnly && (symbols = symbols.filter(function (sym) { return Object.getOwnPropertyDescriptor(object, sym).enumerable; })), keys.push.apply(keys, symbols); } return keys; }
+function _objectSpread(target) { for (var i = 1; i < arguments.length; i++) { var source = null != arguments[i] ? arguments[i] : {}; i % 2 ? ownKeys(Object(source), !0).forEach(function (key) { _defineProperty(target, key, source[key]); }) : Object.getOwnPropertyDescriptors ? Object.defineProperties(target, Object.getOwnPropertyDescriptors(source)) : ownKeys(Object(source)).forEach(function (key) { Object.defineProperty(target, key, Object.getOwnPropertyDescriptor(source, key)); }); } return target; }
+function _defineProperty(obj, key, value) { key = _toPropertyKey(key); if (key in obj) { Object.defineProperty(obj, key, { value: value, enumerable: true, configurable: true, writable: true }); } else { obj[key] = value; } return obj; }
+function _toPropertyKey(arg) { var key = _toPrimitive(arg, "string"); return typeof key === "symbol" ? key : String(key); }
+function _toPrimitive(input, hint) { if (typeof input !== "object" || input === null) return input; var prim = input[Symbol.toPrimitive]; if (prim !== undefined) { var res = prim.call(input, hint || "default"); if (typeof res !== "object") return res; throw new TypeError("@@toPrimitive must return a primitive value."); } return (hint === "string" ? String : Number)(input); }
+
+
+
+
+
+
+
+function CreateShop(_ref) {
+  let {
+    user,
+    setUser,
+    location,
+    userShop,
+    setUserShop,
+    toggleEditShop
+  } = _ref;
+  const [values, setValues] = (0,react__WEBPACK_IMPORTED_MODULE_0__.useState)({
+    name: '',
+    description: '',
+    file: ''
+  });
+  const [file, setFile] = (0,react__WEBPACK_IMPORTED_MODULE_0__.useState)(null);
+  const [photoUrl, setPhotoUrl] = (0,react__WEBPACK_IMPORTED_MODULE_0__.useState)('');
+  const navigate = (0,react_router_dom__WEBPACK_IMPORTED_MODULE_4__.useNavigate)();
+  const shopInputs = [{
+    id: "shop-name",
+    name: "name",
+    type: "text",
+    placeholder: "Shop Name",
+    value: location.pathname === '/account' ? values.name : userShop === null || userShop === void 0 ? void 0 : userShop.name,
+    errorMessage: "Shop name is required and can't include special characters",
+    label: "Shop Name",
+    pattern: "^[A-Za-z0-9 ']+$",
+    required: true
+  }, {
+    id: "shop-description",
+    name: "description",
+    type: "text",
+    placeholder: "Shop Description",
+    value: location.pathname === '/account' ? values.description : userShop === null || userShop === void 0 ? void 0 : userShop.description,
+    errorMessage: "Shop description is required",
+    label: "Shop Description",
+    required: true
+  }];
+  const logoInputProps = {
+    id: "shop-logo",
+    name: "file",
+    type: "file",
+    accept: ".png, .jpg, .jpeg",
+    errorMessage: "File type must be .png, .jpeg, or .jpg",
+    label: "Shop Logo Image"
+  };
+  const imageInputProps = {
+    id: "add-photo",
+    name: "file",
+    type: "file",
+    accept: ".png, .jpg, .jpeg",
+    errorMessage: "File type must be .png, .jpeg, or .jpg",
+    label: "Shop Image"
+  };
+  const handleShopInputChange = e => {
+    setValues(_objectSpread(_objectSpread({}, values), {}, {
+      [e.target.name]: e.target.value
+    }));
+  };
+
+  // 🟥 function for handling image upload 🟥
+  function handleShopSubmit(_x) {
+    return _handleShopSubmit.apply(this, arguments);
+  }
+  function _handleShopSubmit() {
+    _handleShopSubmit = _asyncToGenerator(function* (e) {
+      e.preventDefault();
+      if (location.pathname === '/shopmgmt') {
+        // send request to update shop
+        const formData = new FormData();
+        formData.append('file', file);
+        for (let key in values) {
+          formData.append(key, values[key]);
+        }
+        const updatedShop = yield (0,_utilities_image_upload__WEBPACK_IMPORTED_MODULE_3__.shopPut)(userShop._id, formData);
+        setPhotoUrl(updatedShop.secure_url);
+        console.log(updatedShop);
+        setUserShop(updatedShop);
+        toggleEditShop();
+      } else {
+        // send request to create shop
+        const {
+          shopOwner,
+          shop
+        } = yield (0,_utilities_shops_api__WEBPACK_IMPORTED_MODULE_5__.createShop)({
+          seller: user._id,
+          name: values.name,
+          description: values.description
+        });
+        // set user state to have shop info
+        const updatedUser = yield (0,_utilities_users_service__WEBPACK_IMPORTED_MODULE_6__.updateUser)(user._id, shopOwner);
+        setUser(updatedUser);
+        setUserShop(shop);
+        navigate('/shopmgmt');
+      }
+    });
+    return _handleShopSubmit.apply(this, arguments);
+  }
+  const handleImageChange = e => {
+    e.preventDefault();
+    console.log(e.target.files);
+    let reader = new FileReader();
+    let file = e.target.files[0];
+    reader.onloadend = () => {
+      setFile(file);
+    };
+    reader.readAsDataURL(file);
+  };
+  return /*#__PURE__*/React.createElement("div", {
+    className: _CreateShop_CreateShop_module_scss__WEBPACK_IMPORTED_MODULE_1__["default"].CreateShop
+  }, /*#__PURE__*/React.createElement("div", {
+    className: "form-container"
+  }, /*#__PURE__*/React.createElement("h1", {
+    className: _CreateShop_CreateShop_module_scss__WEBPACK_IMPORTED_MODULE_1__["default"].h1
+  }, location.pathname === '/account' ? 'Create A Shop' : 'Edit Shop Details'), /*#__PURE__*/React.createElement("form", {
+    autoComplete: "off",
+    onSubmit: handleShopSubmit
+  }, /*#__PURE__*/React.createElement(_FormInput_FormInput__WEBPACK_IMPORTED_MODULE_2__["default"], _extends({}, imageInputProps, {
+    handleInputChange: handleImageChange
+  })), shopInputs.map(input => /*#__PURE__*/React.createElement(_FormInput_FormInput__WEBPACK_IMPORTED_MODULE_2__["default"], _extends({
+    key: input.id
+  }, input, {
+    value: values[input.name],
     handleInputChange: handleShopInputChange
   }))), /*#__PURE__*/React.createElement("button", {
     formMethod: "dialog"
@@ -454,7 +885,7 @@ function _toPrimitive(input, hint) { if (typeof input !== "object" || input === 
 
 
 
-
+// import { updateUser } from '../../utilities/users-service'
 
 function EditUserForm(_ref) {
   let {
@@ -533,22 +964,18 @@ function EditUserForm(_ref) {
       e.preventDefault();
       // once you have the file from the user's comupter, call set file and then save that to the state variable
       // then send the file from state to the upload route - need separate function to handle upload function (need utility)
-      // then use a .then to senf the request to update user
-
+      // then use a .then to send the request to update user
       const formData = new FormData();
       formData.append('file', file);
-
-      // for (let key in values) {
-      //   if (key !== 'confirm') {
-      //     formData.append(key, values[key])
-      //   }
-      // }
+      for (let key in values) {
+        if (key !== 'confirm') {
+          formData.append(key, values[key]);
+        }
+      }
       console.log(user._id);
-      const data = (0,_utilities_image_upload__WEBPACK_IMPORTED_MODULE_3__.axiosPut)(user._id, formData);
+      const data = yield (0,_utilities_image_upload__WEBPACK_IMPORTED_MODULE_3__.userPut)(user._id, formData);
       setPhotoUrl(data.secure_url);
-
-      // const updatedUser = await updateUser(user._id, formData)
-      // setUser(updatedUser)
+      console.log(data);
     });
     return function handleSubmit(_x) {
       return _ref2.apply(this, arguments);
@@ -561,7 +988,12 @@ function EditUserForm(_ref) {
     onSubmit: handleSubmit
   }, /*#__PURE__*/React.createElement(_FormInput_FormInput__WEBPACK_IMPORTED_MODULE_2__["default"], _extends({}, imageInputProps, {
     handleInputChange: handleImageChange
-  })), /*#__PURE__*/React.createElement("button", {
+  })), inputs.map(input => /*#__PURE__*/React.createElement(_FormInput_FormInput__WEBPACK_IMPORTED_MODULE_2__["default"], _extends({
+    key: input.id
+  }, input, {
+    value: values[input.name],
+    handleInputChange: handleInputChange
+  }))), /*#__PURE__*/React.createElement("button", {
     formMethod: "dialog"
   }, "Update")));
 }
@@ -1074,14 +1506,16 @@ function ProductList(_ref) {
   let {
     productItems,
     user,
-    setUser
+    setUser,
+    setSelectedProduct
   } = _ref;
   const items = productItems.map(item => /*#__PURE__*/React.createElement(_productListItem_productListItem__WEBPACK_IMPORTED_MODULE_1__["default"], {
     className: _ProductList_module_scss__WEBPACK_IMPORTED_MODULE_0__["default"].ProductListItem,
     key: item._id,
     productItem: item,
     user: user,
-    setUser: setUser
+    setUser: setUser,
+    setSelectedProduct: setSelectedProduct
   }));
   return /*#__PURE__*/React.createElement("main", {
     className: _ProductList_module_scss__WEBPACK_IMPORTED_MODULE_0__["default"].ProductList
@@ -1206,7 +1640,7 @@ function SearchBar(_ref) {
 /* harmony import */ var react__WEBPACK_IMPORTED_MODULE_0___default = /*#__PURE__*/__webpack_require__.n(react__WEBPACK_IMPORTED_MODULE_0__);
 /* harmony import */ var _SignUpForm_module_scss__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! ./SignUpForm.module.scss */ "./src/components/SignUpForm/SignUpForm.module.scss");
 /* harmony import */ var _FormInput_FormInput__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! ../FormInput/FormInput */ "./src/components/FormInput/FormInput.js");
-/* harmony import */ var _utilities_users_service__WEBPACK_IMPORTED_MODULE_3__ = __webpack_require__(/*! ../../utilities/users-service */ "./src/utilities/users-service.js");
+/* harmony import */ var _utilities_image_upload__WEBPACK_IMPORTED_MODULE_3__ = __webpack_require__(/*! ../../utilities/image-upload */ "./src/utilities/image-upload.js");
 /* provided dependency */ var React = __webpack_require__(/*! react */ "./node_modules/react/index.js");
 function _extends() { _extends = Object.assign ? Object.assign.bind() : function (target) { for (var i = 1; i < arguments.length; i++) { var source = arguments[i]; for (var key in source) { if (Object.prototype.hasOwnProperty.call(source, key)) { target[key] = source[key]; } } } return target; }; return _extends.apply(this, arguments); }
 function asyncGeneratorStep(gen, resolve, reject, _next, _throw, key, arg) { try { var info = gen[key](arg); var value = info.value; } catch (error) { reject(error); return; } if (info.done) { resolve(value); } else { Promise.resolve(value).then(_next, _throw); } }
@@ -1219,6 +1653,7 @@ function _toPrimitive(input, hint) { if (typeof input !== "object" || input === 
 
 
 
+// import { signUp } from '../../utilities/users-service'
 
 function SignUpForm(_ref) {
   let {
@@ -1228,8 +1663,11 @@ function SignUpForm(_ref) {
     name: "",
     email: "",
     password: "",
-    confirm: ""
+    confirm: "",
+    file: ''
   });
+  const [file, setFile] = (0,react__WEBPACK_IMPORTED_MODULE_0__.useState)(null);
+  const [photoUrl, setPhotoUrl] = (0,react__WEBPACK_IMPORTED_MODULE_0__.useState)('');
   const inputs = [{
     id: "name",
     name: "name",
@@ -1266,18 +1704,46 @@ function SignUpForm(_ref) {
     pattern: values.password,
     required: true
   }];
+  const imageInputProps = {
+    id: "add-photo",
+    name: "file",
+    type: "file",
+    accept: ".png, .jpg, .jpeg",
+    errorMessage: "File type must be .png, .jpeg, or .jpg",
+    label: "Profile Image"
+  };
   const handleInputChange = e => {
     setValues(_objectSpread(_objectSpread({}, values), {}, {
       [e.target.name]: e.target.value
     }));
   };
+  const handleImageChange = e => {
+    e.preventDefault();
+    console.log(e.target.files);
+    let reader = new FileReader();
+    let file = e.target.files[0];
+    reader.onloadend = () => {
+      setFile(file);
+    };
+    reader.readAsDataURL(file);
+  };
   const handleSubmit = /*#__PURE__*/function () {
     var _ref2 = _asyncToGenerator(function* (e) {
       e.preventDefault();
-      const formData = _objectSpread({}, values);
-      delete formData.confirm;
-      const newUser = yield (0,_utilities_users_service__WEBPACK_IMPORTED_MODULE_3__.signUp)(formData);
-      setUser(newUser);
+      // const formData = { ...values }
+      // delete formData.confirm
+      // const newUser = await signUp(formData)
+      // setUser(newUser)
+      const formData = new FormData();
+      formData.append('file', file);
+      for (let key in values) {
+        if (key !== 'confirm') {
+          formData.append(key, values[key]);
+        }
+      }
+      const data = yield (0,_utilities_image_upload__WEBPACK_IMPORTED_MODULE_3__.userPost)(formData);
+      setPhotoUrl(data.secure_url);
+      console.log(data);
     });
     return function handleSubmit(_x) {
       return _ref2.apply(this, arguments);
@@ -1288,7 +1754,9 @@ function SignUpForm(_ref) {
   }, "Register"), /*#__PURE__*/React.createElement("form", {
     className: _SignUpForm_module_scss__WEBPACK_IMPORTED_MODULE_1__["default"].form,
     onSubmit: handleSubmit
-  }, inputs.map(input => /*#__PURE__*/React.createElement(_FormInput_FormInput__WEBPACK_IMPORTED_MODULE_2__["default"], _extends({
+  }, /*#__PURE__*/React.createElement(_FormInput_FormInput__WEBPACK_IMPORTED_MODULE_2__["default"], _extends({}, imageInputProps, {
+    handleInputChange: handleImageChange
+  })), inputs.map(input => /*#__PURE__*/React.createElement(_FormInput_FormInput__WEBPACK_IMPORTED_MODULE_2__["default"], _extends({
     key: input.id
   }, input, {
     value: values[input.name],
@@ -1360,15 +1828,24 @@ function _asyncToGenerator(fn) { return function () { var self = this, args = ar
 
 
 
+
 function ProductListItem(_ref) {
   let {
+    setSelectedProduct,
     productItem,
     user,
     setUser
   } = _ref;
+  const location = (0,react_router_dom__WEBPACK_IMPORTED_MODULE_3__.useLocation)();
+  const path = location.pathname.split('/');
+  console.log(path);
   const navigate = (0,react_router_dom__WEBPACK_IMPORTED_MODULE_3__.useNavigate)();
   function handleClick(e) {
-    navigate("/itemdetails/".concat(productItem._id));
+    if (path.includes('shopmgmt')) {
+      setSelectedProduct(productItem);
+    } else {
+      navigate("/itemdetails/".concat(productItem._id));
+    }
   }
   function handleFavClick() {
     return _handleFavClick.apply(this, arguments);
@@ -2280,15 +2757,19 @@ function SellerShop(_ref) {
 /* harmony export */ });
 /* harmony import */ var react__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! react */ "./node_modules/react/index.js");
 /* harmony import */ var react__WEBPACK_IMPORTED_MODULE_0___default = /*#__PURE__*/__webpack_require__.n(react__WEBPACK_IMPORTED_MODULE_0__);
-/* harmony import */ var react_router_dom__WEBPACK_IMPORTED_MODULE_5__ = __webpack_require__(/*! react-router-dom */ "./node_modules/react-router/dist/index.js");
-/* harmony import */ var _utilities_shops_api__WEBPACK_IMPORTED_MODULE_6__ = __webpack_require__(/*! ../../utilities/shops-api */ "./src/utilities/shops-api.js");
+/* harmony import */ var react_router_dom__WEBPACK_IMPORTED_MODULE_7__ = __webpack_require__(/*! react-router-dom */ "./node_modules/react-router/dist/index.js");
+/* harmony import */ var _utilities_shops_api__WEBPACK_IMPORTED_MODULE_8__ = __webpack_require__(/*! ../../utilities/shops-api */ "./src/utilities/shops-api.js");
 /* harmony import */ var _ShopManagement_module_scss__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! ./ShopManagement.module.scss */ "./src/pages/ShopManagement/ShopManagement.module.scss");
 /* harmony import */ var _components_CreateShop_CreateShop__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! ../../components/CreateShop/CreateShop */ "./src/components/CreateShop/CreateShop.js");
 /* harmony import */ var _components_CreateProduct_CreateProduct__WEBPACK_IMPORTED_MODULE_3__ = __webpack_require__(/*! ../../components/CreateProduct/CreateProduct */ "./src/components/CreateProduct/CreateProduct.js");
 /* harmony import */ var _components_ProductList_ProductList__WEBPACK_IMPORTED_MODULE_4__ = __webpack_require__(/*! ../../components/ProductList/ProductList */ "./src/components/ProductList/ProductList.js");
+/* harmony import */ var _components_EditProductForm_EditProductForm__WEBPACK_IMPORTED_MODULE_5__ = __webpack_require__(/*! ../../components/EditProductForm/EditProductForm */ "./src/components/EditProductForm/EditProductForm.js");
+/* harmony import */ var _components_EditShopForm_EditShopForm__WEBPACK_IMPORTED_MODULE_6__ = __webpack_require__(/*! ../../components/EditShopForm/EditShopForm */ "./src/components/EditShopForm/EditShopForm.js");
 /* provided dependency */ var React = __webpack_require__(/*! react */ "./node_modules/react/index.js");
 function asyncGeneratorStep(gen, resolve, reject, _next, _throw, key, arg) { try { var info = gen[key](arg); var value = info.value; } catch (error) { reject(error); return; } if (info.done) { resolve(value); } else { Promise.resolve(value).then(_next, _throw); } }
 function _asyncToGenerator(fn) { return function () { var self = this, args = arguments; return new Promise(function (resolve, reject) { var gen = fn.apply(self, args); function _next(value) { asyncGeneratorStep(gen, resolve, reject, _next, _throw, "next", value); } function _throw(err) { asyncGeneratorStep(gen, resolve, reject, _next, _throw, "throw", err); } _next(undefined); }); }; }
+
+
 
 
 
@@ -2306,11 +2787,14 @@ function ShopManagement(_ref) {
   } = _ref;
   const [productModalOpen, setProductModalOpen] = (0,react__WEBPACK_IMPORTED_MODULE_0__.useState)(false);
   const [shopEditModalOpen, setShopEditModalOpen] = (0,react__WEBPACK_IMPORTED_MODULE_0__.useState)(false);
+  const [productEditModalOpen, setProductEditModalOpen] = (0,react__WEBPACK_IMPORTED_MODULE_0__.useState)(false);
   const [shopProducts, setShopProducts] = (0,react__WEBPACK_IMPORTED_MODULE_0__.useState)([]);
+  const [selectedProduct, setSelectedProduct] = (0,react__WEBPACK_IMPORTED_MODULE_0__.useState)({});
   const productModalRef = (0,react__WEBPACK_IMPORTED_MODULE_0__.useRef)();
   const shopEditModalRef = (0,react__WEBPACK_IMPORTED_MODULE_0__.useRef)();
-  const navigate = (0,react_router_dom__WEBPACK_IMPORTED_MODULE_5__.useNavigate)();
-  const location = (0,react_router_dom__WEBPACK_IMPORTED_MODULE_5__.useLocation)();
+  const productEditModalRef = (0,react__WEBPACK_IMPORTED_MODULE_0__.useRef)();
+  const navigate = (0,react_router_dom__WEBPACK_IMPORTED_MODULE_7__.useNavigate)();
+  const location = (0,react_router_dom__WEBPACK_IMPORTED_MODULE_7__.useLocation)();
   (0,react__WEBPACK_IMPORTED_MODULE_0__.useEffect)(() => {
     if (user.shop) {
       function getUserShop() {
@@ -2318,7 +2802,7 @@ function ShopManagement(_ref) {
       }
       function _getUserShop() {
         _getUserShop = _asyncToGenerator(function* () {
-          const userShopInfo = yield _utilities_shops_api__WEBPACK_IMPORTED_MODULE_6__.getShop(user.shop);
+          const userShopInfo = yield _utilities_shops_api__WEBPACK_IMPORTED_MODULE_8__.getShop(user.shop);
           setUserShop(userShopInfo);
         });
         return _getUserShop.apply(this, arguments);
@@ -2331,24 +2815,31 @@ function ShopManagement(_ref) {
       setShopProducts(userShop.products);
     }
   }, [userShop]);
+  console.log(userShop);
   (0,react__WEBPACK_IMPORTED_MODULE_0__.useEffect)(() => {
     productModalOpen ? productModalRef.current.showModal() : productModalRef.current.close();
   }, [productModalOpen]);
   (0,react__WEBPACK_IMPORTED_MODULE_0__.useEffect)(() => {
     shopEditModalOpen ? shopEditModalRef.current.showModal() : shopEditModalRef.current.close();
   }, [shopEditModalOpen]);
+  (0,react__WEBPACK_IMPORTED_MODULE_0__.useEffect)(() => {
+    productEditModalOpen ? productEditModalRef.current.showModal() : shopEditModalRef.current.close();
+  }, [productEditModalOpen]);
   function toggleCreateProduct() {
     setProductModalOpen(!productModalOpen);
   }
   function toggleEditShop() {
     setShopEditModalOpen(!shopEditModalOpen);
   }
+  function toggleEditProductForm() {
+    setProductEditModalOpen(!productEditModalOpen);
+  }
   function deleteUserShop() {
     return _deleteUserShop.apply(this, arguments);
   }
   function _deleteUserShop() {
     _deleteUserShop = _asyncToGenerator(function* () {
-      const user = yield _utilities_shops_api__WEBPACK_IMPORTED_MODULE_6__.deleteShop(userShop._id);
+      const user = yield _utilities_shops_api__WEBPACK_IMPORTED_MODULE_8__.deleteShop(userShop._id);
       setUserShop(null);
       setUser(user);
       navigate('/account');
@@ -2368,15 +2859,18 @@ function ShopManagement(_ref) {
   }, "Edit Shop"), /*#__PURE__*/React.createElement("button", {
     onClick: toggleCreateProduct
   }, "Add A Product"), /*#__PURE__*/React.createElement("button", {
+    onClick: toggleEditProductForm
+  }, "Edit an Item"), /*#__PURE__*/React.createElement("button", {
     onClick: deleteUserShop
   }, "Delete Shop")), /*#__PURE__*/React.createElement("div", null, /*#__PURE__*/React.createElement("h2", null, "Products"), shopProducts.length > 0 ? /*#__PURE__*/React.createElement(_components_ProductList_ProductList__WEBPACK_IMPORTED_MODULE_4__["default"], {
     productItems: shopProducts,
     user: user,
-    setUser: setUser
+    setUser: setUser,
+    setSelectedProduct: setSelectedProduct
   }) : null), /*#__PURE__*/React.createElement("dialog", {
     ref: shopEditModalRef,
     onClose: toggleEditShop
-  }, /*#__PURE__*/React.createElement(_components_CreateShop_CreateShop__WEBPACK_IMPORTED_MODULE_2__["default"], {
+  }, /*#__PURE__*/React.createElement(_components_EditShopForm_EditShopForm__WEBPACK_IMPORTED_MODULE_6__["default"], {
     toggleEditShop: toggleEditShop,
     user: user,
     setUser: setUser,
@@ -2395,6 +2889,15 @@ function ShopManagement(_ref) {
     location: location,
     userShop: userShop,
     setUserShop: setUserShop,
+    categories: categories
+  })), /*#__PURE__*/React.createElement("dialog", {
+    ref: productEditModalRef,
+    onClose: toggleEditProductForm
+  }, /*#__PURE__*/React.createElement(_components_EditProductForm_EditProductForm__WEBPACK_IMPORTED_MODULE_5__["default"], {
+    toggleCreateProduct: toggleCreateProduct,
+    user: user,
+    selectedProduct: selectedProduct,
+    setSelectedProduct: setSelectedProduct,
     categories: categories
   })));
 }
@@ -2435,29 +2938,103 @@ function ShopPage(_ref) {
 /***/ ((__unused_webpack_module, __webpack_exports__, __webpack_require__) => {
 
 /* harmony export */ __webpack_require__.d(__webpack_exports__, {
-/* harmony export */   axiosPut: () => (/* binding */ axiosPut)
+/* harmony export */   itemPost: () => (/* binding */ itemPost),
+/* harmony export */   itemPut: () => (/* binding */ itemPut),
+/* harmony export */   shopPost: () => (/* binding */ shopPost),
+/* harmony export */   shopPut: () => (/* binding */ shopPut),
+/* harmony export */   userPost: () => (/* binding */ userPost),
+/* harmony export */   userPut: () => (/* binding */ userPut)
 /* harmony export */ });
-/* unused harmony export axiosPost */
 /* harmony import */ var _utilities_users_service__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! ../utilities/users-service */ "./src/utilities/users-service.js");
 /* harmony import */ var axios__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! axios */ "./node_modules/axios/index.js");
 /* harmony import */ var axios__WEBPACK_IMPORTED_MODULE_0___default = /*#__PURE__*/__webpack_require__.n(axios__WEBPACK_IMPORTED_MODULE_0__);
+function asyncGeneratorStep(gen, resolve, reject, _next, _throw, key, arg) { try { var info = gen[key](arg); var value = info.value; } catch (error) { reject(error); return; } if (info.done) { resolve(value); } else { Promise.resolve(value).then(_next, _throw); } }
+function _asyncToGenerator(fn) { return function () { var self = this, args = arguments; return new Promise(function (resolve, reject) { var gen = fn.apply(self, args); function _next(value) { asyncGeneratorStep(gen, resolve, reject, _next, _throw, "next", value); } function _throw(err) { asyncGeneratorStep(gen, resolve, reject, _next, _throw, "throw", err); } _next(undefined); }); }; }
 
 
-function axiosPut(id, imageData) {
-  return axios__WEBPACK_IMPORTED_MODULE_0___default().put("/api/users/".concat(id), imageData, {
-    headers: new Headers({
-      'Content-Type': "multipart/form-data",
-      'Authorization': "Bearer ".concat((0,_utilities_users_service__WEBPACK_IMPORTED_MODULE_1__.getToken)())
-    })
-  });
+function userPut(_x, _x2) {
+  return _userPut.apply(this, arguments);
 }
-function axiosPost(id, imageData) {
-  return axios__WEBPACK_IMPORTED_MODULE_0___default().post("/api/users/".concat(id), imageData, {
-    headers: new Headers({
-      'Content-Type': "multipart/form-data",
-      'Authorization': "Bearer ".concat((0,_utilities_users_service__WEBPACK_IMPORTED_MODULE_1__.getToken)())
-    })
+function _userPut() {
+  _userPut = _asyncToGenerator(function* (id, imageData) {
+    return axios__WEBPACK_IMPORTED_MODULE_0___default().put("/api/users/".concat(id), imageData, {
+      headers: new Headers({
+        'Content-Type': "multipart/form-data",
+        'Authorization': "Bearer ".concat((0,_utilities_users_service__WEBPACK_IMPORTED_MODULE_1__.getToken)())
+      })
+    });
   });
+  return _userPut.apply(this, arguments);
+}
+function userPost(_x3) {
+  return _userPost.apply(this, arguments);
+}
+function _userPost() {
+  _userPost = _asyncToGenerator(function* (imageData) {
+    return axios__WEBPACK_IMPORTED_MODULE_0___default().post("/api/users", imageData, {
+      headers: new Headers({
+        'Content-Type': "multipart/form-data",
+        'Authorization': "Bearer ".concat((0,_utilities_users_service__WEBPACK_IMPORTED_MODULE_1__.getToken)())
+      })
+    });
+  });
+  return _userPost.apply(this, arguments);
+}
+function shopPost(_x4) {
+  return _shopPost.apply(this, arguments);
+}
+function _shopPost() {
+  _shopPost = _asyncToGenerator(function* (imageData) {
+    return axios__WEBPACK_IMPORTED_MODULE_0___default().post("/api/shops", imageData, {
+      headers: new Headers({
+        'Content-Type': "multipart/form-data",
+        'Authorization': "Bearer ".concat((0,_utilities_users_service__WEBPACK_IMPORTED_MODULE_1__.getToken)())
+      })
+    });
+  });
+  return _shopPost.apply(this, arguments);
+}
+function shopPut(_x5, _x6) {
+  return _shopPut.apply(this, arguments);
+}
+function _shopPut() {
+  _shopPut = _asyncToGenerator(function* (id, imageData) {
+    return axios__WEBPACK_IMPORTED_MODULE_0___default().put("/api/shops/".concat(id), imageData, {
+      headers: new Headers({
+        'Content-Type': "multipart/form-data",
+        'Authorization': "Bearer ".concat((0,_utilities_users_service__WEBPACK_IMPORTED_MODULE_1__.getToken)())
+      })
+    });
+  });
+  return _shopPut.apply(this, arguments);
+}
+function itemPut(_x7, _x8) {
+  return _itemPut.apply(this, arguments);
+}
+function _itemPut() {
+  _itemPut = _asyncToGenerator(function* (id, imageData) {
+    return axios__WEBPACK_IMPORTED_MODULE_0___default().put("/api/shops/items/".concat(id), imageData, {
+      headers: new Headers({
+        'Content-Type': "multipart/form-data",
+        'Authorization': "Bearer ".concat((0,_utilities_users_service__WEBPACK_IMPORTED_MODULE_1__.getToken)())
+      })
+    });
+  });
+  return _itemPut.apply(this, arguments);
+}
+function itemPost(_x9) {
+  return _itemPost.apply(this, arguments);
+}
+function _itemPost() {
+  _itemPost = _asyncToGenerator(function* (imageData) {
+    return axios__WEBPACK_IMPORTED_MODULE_0___default().post("/api/shops/items/".concat(id), imageData, {
+      headers: new Headers({
+        'Content-Type': "multipart/form-data",
+        'Authorization': "Bearer ".concat((0,_utilities_users_service__WEBPACK_IMPORTED_MODULE_1__.getToken)())
+      })
+    });
+  });
+  return _itemPost.apply(this, arguments);
 }
 
 /***/ }),
@@ -2699,13 +3276,11 @@ function _sendUrlFormData() {
 /***/ ((__unused_webpack_module, __webpack_exports__, __webpack_require__) => {
 
 /* harmony export */ __webpack_require__.d(__webpack_exports__, {
-/* harmony export */   addItemToShop: () => (/* binding */ addItemToShop),
 /* harmony export */   createShop: () => (/* binding */ createShop),
 /* harmony export */   deleteShop: () => (/* binding */ deleteShop),
-/* harmony export */   editShopInfo: () => (/* binding */ editShopInfo),
 /* harmony export */   getShop: () => (/* binding */ getShop)
 /* harmony export */ });
-/* unused harmony export removeItemFromShop */
+/* unused harmony exports editShopInfo, addItemToShop, removeItemFromShop */
 /* harmony import */ var _send_request__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! ./send-request */ "./src/utilities/send-request.js");
 
 const BASE_URL = '/api/shops';
@@ -2951,7 +3526,6 @@ ___CSS_LOADER_EXPORT___.push([module.id, `.PPkPteL5d88UtmG7W6FH {
   border: 0.1rem solid grey;
   border-radius: 0.5rem;
   box-shadow: 3px 3px 5px 1px rgba(93, 128, 80, 0.99);
-  overflow: hidden;
 }
 .PPkPteL5d88UtmG7W6FH p {
   text-align: center;
@@ -2972,7 +3546,7 @@ ___CSS_LOADER_EXPORT___.push([module.id, `.PPkPteL5d88UtmG7W6FH {
   -webkit-backdrop-filter: blur(2px);
   backdrop-filter: blur(2px);
   background-color: rgba(128, 120, 120, 0.3);
-}`, "",{"version":3,"sources":["webpack://./src/components/AuthModal/AuthModal.module.scss"],"names":[],"mappings":"AAAA;EACI,UAAA;EACA,yBAAA;EACA,qBAAA;EACA,mDAAA;EACA,gBAAA;AACJ;AAEI;EACI,kBAAA;EACA,WAAA;EACA,kBAAA;EACA,qBAAA;AAAR;AAGI;EACI,mBAAA;EACA,eAAA;AADR;AAII;EACI,sBAAA;EACA,kBAAA;AAFR;;AAMA;EACI,kCAAA;EACQ,0BAAA;EACR,0CAAA;AAHJ","sourcesContent":[".dialog {\n    width: 35%;\n    border: .1rem solid grey;\n    border-radius: .5rem;\n    box-shadow: 3px 3px 5px 1px rgba(93, 128, 80, 0.99);\n    overflow: hidden;\n\n\n    p {\n        text-align: center;\n        color: grey;\n        margin-top: .2rem;\n        margin-bottom: .5rem;\n    }\n\n    strong {\n        font-weight: bolder;\n        cursor: pointer;\n    }\n\n    strong:hover {\n        transform: scale(1.05);\n        color: forestgreen;\n    }\n}\n\n.dialog::backdrop {\n    -webkit-backdrop-filter: blur(2px);\n            backdrop-filter: blur(2px);\n    background-color: rgba(128, 120, 120, 0.3);\n}"],"sourceRoot":""}]);
+}`, "",{"version":3,"sources":["webpack://./src/components/AuthModal/AuthModal.module.scss"],"names":[],"mappings":"AAAA;EACI,UAAA;EACA,yBAAA;EACA,qBAAA;EACA,mDAAA;AACJ;AAEI;EACI,kBAAA;EACA,WAAA;EACA,kBAAA;EACA,qBAAA;AAAR;AAGI;EACI,mBAAA;EACA,eAAA;AADR;AAII;EACI,sBAAA;EACA,kBAAA;AAFR;;AAMA;EACI,kCAAA;EACQ,0BAAA;EACR,0CAAA;AAHJ","sourcesContent":[".dialog {\n    width: 35%;\n    border: .1rem solid grey;\n    border-radius: .5rem;\n    box-shadow: 3px 3px 5px 1px rgba(93, 128, 80, 0.99);\n\n\n    p {\n        text-align: center;\n        color: grey;\n        margin-top: .2rem;\n        margin-bottom: .5rem;\n    }\n\n    strong {\n        font-weight: bolder;\n        cursor: pointer;\n    }\n\n    strong:hover {\n        transform: scale(1.05);\n        color: forestgreen;\n    }\n}\n\n.dialog::backdrop {\n    -webkit-backdrop-filter: blur(2px);\n            backdrop-filter: blur(2px);\n    background-color: rgba(128, 120, 120, 0.3);\n}"],"sourceRoot":""}]);
 // Exports
 ___CSS_LOADER_EXPORT___.locals = {
 	"dialog": `PPkPteL5d88UtmG7W6FH`
@@ -3125,6 +3699,32 @@ ___CSS_LOADER_EXPORT___.locals = {
 	"h1": `SB7xnWiKSlUqpOcOaLoH`,
 	"form": `MCG3lSW4MZuylt4I_LVt`
 };
+/* harmony default export */ const __WEBPACK_DEFAULT_EXPORT__ = (___CSS_LOADER_EXPORT___);
+
+
+/***/ }),
+
+/***/ "./node_modules/css-loader/dist/cjs.js??ruleSet[1].rules[2].use[1]!./node_modules/sass-loader/dist/cjs.js!./node_modules/postcss-loader/dist/cjs.js!./src/components/EditProductForm/EditProductForm.module.scss":
+/*!***********************************************************************************************************************************************************************************************************************!*\
+  !*** ./node_modules/css-loader/dist/cjs.js??ruleSet[1].rules[2].use[1]!./node_modules/sass-loader/dist/cjs.js!./node_modules/postcss-loader/dist/cjs.js!./src/components/EditProductForm/EditProductForm.module.scss ***!
+  \***********************************************************************************************************************************************************************************************************************/
+/***/ ((module, __webpack_exports__, __webpack_require__) => {
+
+/* harmony export */ __webpack_require__.d(__webpack_exports__, {
+/* harmony export */   "default": () => (__WEBPACK_DEFAULT_EXPORT__)
+/* harmony export */ });
+/* harmony import */ var _node_modules_css_loader_dist_runtime_sourceMaps_js__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! ../../../node_modules/css-loader/dist/runtime/sourceMaps.js */ "./node_modules/css-loader/dist/runtime/sourceMaps.js");
+/* harmony import */ var _node_modules_css_loader_dist_runtime_sourceMaps_js__WEBPACK_IMPORTED_MODULE_0___default = /*#__PURE__*/__webpack_require__.n(_node_modules_css_loader_dist_runtime_sourceMaps_js__WEBPACK_IMPORTED_MODULE_0__);
+/* harmony import */ var _node_modules_css_loader_dist_runtime_api_js__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! ../../../node_modules/css-loader/dist/runtime/api.js */ "./node_modules/css-loader/dist/runtime/api.js");
+/* harmony import */ var _node_modules_css_loader_dist_runtime_api_js__WEBPACK_IMPORTED_MODULE_1___default = /*#__PURE__*/__webpack_require__.n(_node_modules_css_loader_dist_runtime_api_js__WEBPACK_IMPORTED_MODULE_1__);
+// Imports
+
+
+var ___CSS_LOADER_EXPORT___ = _node_modules_css_loader_dist_runtime_api_js__WEBPACK_IMPORTED_MODULE_1___default()((_node_modules_css_loader_dist_runtime_sourceMaps_js__WEBPACK_IMPORTED_MODULE_0___default()));
+// Module
+___CSS_LOADER_EXPORT___.push([module.id, ``, "",{"version":3,"sources":[],"names":[],"mappings":"","sourceRoot":""}]);
+// Exports
+___CSS_LOADER_EXPORT___.locals = {};
 /* harmony default export */ const __WEBPACK_DEFAULT_EXPORT__ = (___CSS_LOADER_EXPORT___);
 
 
@@ -3759,7 +4359,8 @@ ___CSS_LOADER_EXPORT___.push([module.id, `.ChEwCuplRM1BDEj7Yzlp {
 .fFzangV2xm2t8P5WmvJN {
   display: flex;
   flex-direction: column;
-  width: 100%;
+  min-width: 100%;
+  min-height: 100%;
   padding: 3rem;
   margin: -1.8rem 0;
 }
@@ -3782,7 +4383,7 @@ ___CSS_LOADER_EXPORT___.push([module.id, `.ChEwCuplRM1BDEj7Yzlp {
 .fFzangV2xm2t8P5WmvJN button:hover {
   background-color: rgb(7, 99, 7);
   transform: scale(1.015);
-}`, "",{"version":3,"sources":["webpack://./src/components/SignUpForm/SignUpForm.module.scss"],"names":[],"mappings":"AAAA;EACI,kBAAA;EACA,iBAAA;EACA,WAAA;EACA,gBAAA;AACJ;;AAEA;EACI,aAAA;EACA,sBAAA;EACA,WAAA;EACA,aAAA;EACA,iBAAA;AACJ;AACI;EACI,WAAA;EACA,cAAA;EACA,eAAA;EACA,YAAA;EACA,kCAAA;EACA,YAAA;EACA,qBAAA;EACA,iBAAA;EACA,iBAAA;EACA,eAAA;EACA,gBAAA;EACA,mBAAA;EACA,sBAAA;EACA,0BAAA;AACR;AAEI;EACI,+BAAA;EACA,uBAAA;AAAR","sourcesContent":[".h1 {\n    text-align: center;\n    font-size: 3.5rem;\n    color: gray;\n    margin: .6rem 0;\n}\n\n.form {\n    display: flex;\n    flex-direction: column;\n    width: 100%;\n    padding: 3rem;\n    margin: -1.8rem 0;\n\n    button {\n        width: 100%;\n        height: 2.5rem;\n        padding: .5rem;\n        border: none;\n        background-color: rgb(12, 133, 12);\n        color: white;\n        border-radius: .2rem;\n        font-weight: bold;\n        font-size: 1.8rem;\n        cursor: pointer;\n        margin-top: 1rem;\n        margin-bottom: 1rem;\n        letter-spacing: .2rem;\n        transition: all ease .35s;\n    }\n\n    button:hover {\n        background-color: rgb(7, 99, 7);\n        transform: scale(1.015);\n    }\n}"],"sourceRoot":""}]);
+}`, "",{"version":3,"sources":["webpack://./src/components/SignUpForm/SignUpForm.module.scss"],"names":[],"mappings":"AAAA;EACI,kBAAA;EACA,iBAAA;EACA,WAAA;EACA,gBAAA;AACJ;;AAEA;EACI,aAAA;EACA,sBAAA;EACA,eAAA;EACA,gBAAA;EACA,aAAA;EACA,iBAAA;AACJ;AACI;EACI,WAAA;EACA,cAAA;EACA,eAAA;EACA,YAAA;EACA,kCAAA;EACA,YAAA;EACA,qBAAA;EACA,iBAAA;EACA,iBAAA;EACA,eAAA;EACA,gBAAA;EACA,mBAAA;EACA,sBAAA;EACA,0BAAA;AACR;AAEI;EACI,+BAAA;EACA,uBAAA;AAAR","sourcesContent":[".h1 {\n    text-align: center;\n    font-size: 3.5rem;\n    color: gray;\n    margin: .6rem 0;\n}\n\n.form {\n    display: flex;\n    flex-direction: column;\n    min-width: 100%;\n    min-height: 100%;\n    padding: 3rem;\n    margin: -1.8rem 0;\n\n    button {\n        width: 100%;\n        height: 2.5rem;\n        padding: .5rem;\n        border: none;\n        background-color: rgb(12, 133, 12);\n        color: white;\n        border-radius: .2rem;\n        font-weight: bold;\n        font-size: 1.8rem;\n        cursor: pointer;\n        margin-top: 1rem;\n        margin-bottom: 1rem;\n        letter-spacing: .2rem;\n        transition: all ease .35s;\n    }\n\n    button:hover {\n        background-color: rgb(7, 99, 7);\n        transform: scale(1.015);\n    }\n}"],"sourceRoot":""}]);
 // Exports
 ___CSS_LOADER_EXPORT___.locals = {
 	"h1": `ChEwCuplRM1BDEj7Yzlp`,
@@ -4431,6 +5032,59 @@ var update = _node_modules_style_loader_dist_runtime_injectStylesIntoStyleTag_js
 
 
        /* harmony default export */ const __WEBPACK_DEFAULT_EXPORT__ = (_node_modules_css_loader_dist_cjs_js_ruleSet_1_rules_2_use_1_node_modules_sass_loader_dist_cjs_js_node_modules_postcss_loader_dist_cjs_js_CreateShop_module_scss__WEBPACK_IMPORTED_MODULE_6__["default"] && _node_modules_css_loader_dist_cjs_js_ruleSet_1_rules_2_use_1_node_modules_sass_loader_dist_cjs_js_node_modules_postcss_loader_dist_cjs_js_CreateShop_module_scss__WEBPACK_IMPORTED_MODULE_6__["default"].locals ? _node_modules_css_loader_dist_cjs_js_ruleSet_1_rules_2_use_1_node_modules_sass_loader_dist_cjs_js_node_modules_postcss_loader_dist_cjs_js_CreateShop_module_scss__WEBPACK_IMPORTED_MODULE_6__["default"].locals : undefined);
+
+
+/***/ }),
+
+/***/ "./src/components/EditProductForm/EditProductForm.module.scss":
+/*!********************************************************************!*\
+  !*** ./src/components/EditProductForm/EditProductForm.module.scss ***!
+  \********************************************************************/
+/***/ ((__unused_webpack_module, __webpack_exports__, __webpack_require__) => {
+
+/* harmony export */ __webpack_require__.d(__webpack_exports__, {
+/* harmony export */   "default": () => (__WEBPACK_DEFAULT_EXPORT__)
+/* harmony export */ });
+/* harmony import */ var _node_modules_style_loader_dist_runtime_injectStylesIntoStyleTag_js__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! !../../../node_modules/style-loader/dist/runtime/injectStylesIntoStyleTag.js */ "./node_modules/style-loader/dist/runtime/injectStylesIntoStyleTag.js");
+/* harmony import */ var _node_modules_style_loader_dist_runtime_injectStylesIntoStyleTag_js__WEBPACK_IMPORTED_MODULE_0___default = /*#__PURE__*/__webpack_require__.n(_node_modules_style_loader_dist_runtime_injectStylesIntoStyleTag_js__WEBPACK_IMPORTED_MODULE_0__);
+/* harmony import */ var _node_modules_style_loader_dist_runtime_styleDomAPI_js__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! !../../../node_modules/style-loader/dist/runtime/styleDomAPI.js */ "./node_modules/style-loader/dist/runtime/styleDomAPI.js");
+/* harmony import */ var _node_modules_style_loader_dist_runtime_styleDomAPI_js__WEBPACK_IMPORTED_MODULE_1___default = /*#__PURE__*/__webpack_require__.n(_node_modules_style_loader_dist_runtime_styleDomAPI_js__WEBPACK_IMPORTED_MODULE_1__);
+/* harmony import */ var _node_modules_style_loader_dist_runtime_insertBySelector_js__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! !../../../node_modules/style-loader/dist/runtime/insertBySelector.js */ "./node_modules/style-loader/dist/runtime/insertBySelector.js");
+/* harmony import */ var _node_modules_style_loader_dist_runtime_insertBySelector_js__WEBPACK_IMPORTED_MODULE_2___default = /*#__PURE__*/__webpack_require__.n(_node_modules_style_loader_dist_runtime_insertBySelector_js__WEBPACK_IMPORTED_MODULE_2__);
+/* harmony import */ var _node_modules_style_loader_dist_runtime_setAttributesWithoutAttributes_js__WEBPACK_IMPORTED_MODULE_3__ = __webpack_require__(/*! !../../../node_modules/style-loader/dist/runtime/setAttributesWithoutAttributes.js */ "./node_modules/style-loader/dist/runtime/setAttributesWithoutAttributes.js");
+/* harmony import */ var _node_modules_style_loader_dist_runtime_setAttributesWithoutAttributes_js__WEBPACK_IMPORTED_MODULE_3___default = /*#__PURE__*/__webpack_require__.n(_node_modules_style_loader_dist_runtime_setAttributesWithoutAttributes_js__WEBPACK_IMPORTED_MODULE_3__);
+/* harmony import */ var _node_modules_style_loader_dist_runtime_insertStyleElement_js__WEBPACK_IMPORTED_MODULE_4__ = __webpack_require__(/*! !../../../node_modules/style-loader/dist/runtime/insertStyleElement.js */ "./node_modules/style-loader/dist/runtime/insertStyleElement.js");
+/* harmony import */ var _node_modules_style_loader_dist_runtime_insertStyleElement_js__WEBPACK_IMPORTED_MODULE_4___default = /*#__PURE__*/__webpack_require__.n(_node_modules_style_loader_dist_runtime_insertStyleElement_js__WEBPACK_IMPORTED_MODULE_4__);
+/* harmony import */ var _node_modules_style_loader_dist_runtime_styleTagTransform_js__WEBPACK_IMPORTED_MODULE_5__ = __webpack_require__(/*! !../../../node_modules/style-loader/dist/runtime/styleTagTransform.js */ "./node_modules/style-loader/dist/runtime/styleTagTransform.js");
+/* harmony import */ var _node_modules_style_loader_dist_runtime_styleTagTransform_js__WEBPACK_IMPORTED_MODULE_5___default = /*#__PURE__*/__webpack_require__.n(_node_modules_style_loader_dist_runtime_styleTagTransform_js__WEBPACK_IMPORTED_MODULE_5__);
+/* harmony import */ var _node_modules_css_loader_dist_cjs_js_ruleSet_1_rules_2_use_1_node_modules_sass_loader_dist_cjs_js_node_modules_postcss_loader_dist_cjs_js_EditProductForm_module_scss__WEBPACK_IMPORTED_MODULE_6__ = __webpack_require__(/*! !!../../../node_modules/css-loader/dist/cjs.js??ruleSet[1].rules[2].use[1]!../../../node_modules/sass-loader/dist/cjs.js!../../../node_modules/postcss-loader/dist/cjs.js!./EditProductForm.module.scss */ "./node_modules/css-loader/dist/cjs.js??ruleSet[1].rules[2].use[1]!./node_modules/sass-loader/dist/cjs.js!./node_modules/postcss-loader/dist/cjs.js!./src/components/EditProductForm/EditProductForm.module.scss");
+
+      
+      
+      
+      
+      
+      
+      
+      
+      
+
+var options = {};
+
+options.styleTagTransform = (_node_modules_style_loader_dist_runtime_styleTagTransform_js__WEBPACK_IMPORTED_MODULE_5___default());
+options.setAttributes = (_node_modules_style_loader_dist_runtime_setAttributesWithoutAttributes_js__WEBPACK_IMPORTED_MODULE_3___default());
+
+      options.insert = _node_modules_style_loader_dist_runtime_insertBySelector_js__WEBPACK_IMPORTED_MODULE_2___default().bind(null, "head");
+    
+options.domAPI = (_node_modules_style_loader_dist_runtime_styleDomAPI_js__WEBPACK_IMPORTED_MODULE_1___default());
+options.insertStyleElement = (_node_modules_style_loader_dist_runtime_insertStyleElement_js__WEBPACK_IMPORTED_MODULE_4___default());
+
+var update = _node_modules_style_loader_dist_runtime_injectStylesIntoStyleTag_js__WEBPACK_IMPORTED_MODULE_0___default()(_node_modules_css_loader_dist_cjs_js_ruleSet_1_rules_2_use_1_node_modules_sass_loader_dist_cjs_js_node_modules_postcss_loader_dist_cjs_js_EditProductForm_module_scss__WEBPACK_IMPORTED_MODULE_6__["default"], options);
+
+
+
+
+       /* harmony default export */ const __WEBPACK_DEFAULT_EXPORT__ = (_node_modules_css_loader_dist_cjs_js_ruleSet_1_rules_2_use_1_node_modules_sass_loader_dist_cjs_js_node_modules_postcss_loader_dist_cjs_js_EditProductForm_module_scss__WEBPACK_IMPORTED_MODULE_6__["default"] && _node_modules_css_loader_dist_cjs_js_ruleSet_1_rules_2_use_1_node_modules_sass_loader_dist_cjs_js_node_modules_postcss_loader_dist_cjs_js_EditProductForm_module_scss__WEBPACK_IMPORTED_MODULE_6__["default"].locals ? _node_modules_css_loader_dist_cjs_js_ruleSet_1_rules_2_use_1_node_modules_sass_loader_dist_cjs_js_node_modules_postcss_loader_dist_cjs_js_EditProductForm_module_scss__WEBPACK_IMPORTED_MODULE_6__["default"].locals : undefined);
 
 
 /***/ }),

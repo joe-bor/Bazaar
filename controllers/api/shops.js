@@ -10,11 +10,16 @@ const shop = require('../../models/shop')
 // Create a new shop
 exports.createShop = async (req, res) => {
     try {
+    // Set users image URL if available
+        if (res.locals.imageData) {
+            req.body.imageUrl = res.locals.imageData.secure_url
+        }
         // Create a new shop in the database
+
         const newShop = await Shop.create({
             seller: req.user._id,
             name: req.body.name,
-            heroImage: req.body.heroImage,
+            heroImage: req.body.imageUrl,
             rating: null,
             description: req.body.description
         })
@@ -33,6 +38,10 @@ exports.createShop = async (req, res) => {
 // Update a shop
 exports.updateShop = async (req, res) => {
     try {
+            // Set users image URL if available
+            if (res.locals.imageData) {
+                req.body.heroImage = res.locals.imageData.secure_url
+            }
         // Find and update the shop with the provided ID
         const shop = await Shop.findByIdAndUpdate(req.params.id, req.body, { new: true })
 
@@ -100,6 +109,10 @@ exports.deleteShop = async (req, res) => {
 // Add an item to a shop
 exports.addItem = async (req, res) => {
     try {
+        // Set users image URL if available
+        if (res.locals.imageData) {
+            req.body.imageUrl = res.locals.imageData.secure_url
+        }
         // Find the shop by its ID
         const shop = await Shop.findById(req.params.id)
 
@@ -114,8 +127,7 @@ exports.addItem = async (req, res) => {
         // Create a new item in the database
         const item = await Item.create({
             name: req.body.name,
-            // imageUrl: req.body.imageUrl,
-            // publicId: req.body.publicId,
+            imageUrl: req.body.imageUrl,
             price: req.body.price,
             description: req.body.description,
             category: category._id,
@@ -136,6 +148,10 @@ exports.addItem = async (req, res) => {
 // Update item to a shop
 exports.updateItem = async (req, res) => {
     try {
+        // Set users image URL if available
+        if (res.locals.imageData) {
+            req.body.imageUrl = res.locals.imageData.secure_url
+        }
         // Find the shop by its ID
         const shop = await Shop.findById(req.params.ShopId)
 

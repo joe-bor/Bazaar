@@ -1,8 +1,8 @@
 import { useEffect, useRef, useState } from 'react'
 import styles from './EditUserForm.module.scss'
 import FormInput from '../FormInput/FormInput'
-import { updateUser } from '../../utilities/users-service'
-import { axiosPut } from '../../utilities/image-upload'
+// import { updateUser } from '../../utilities/users-service'
+import { userPut } from '../../utilities/image-upload'
 
 
 function EditUserForm({ user, setUser }) {
@@ -91,23 +91,18 @@ function EditUserForm({ user, setUser }) {
     e.preventDefault()
     // once you have the file from the user's comupter, call set file and then save that to the state variable
     // then send the file from state to the upload route - need separate function to handle upload function (need utility)
-    // then use a .then to senf the request to update user
-
+    // then use a .then to send the request to update user
     const formData = new FormData()
     formData.append('file', file)
-  
-    // for (let key in values) {
-    //   if (key !== 'confirm') {
-    //     formData.append(key, values[key])
-    //   }
-    // }
-  console.log(user._id)
-    const data = axiosPut(user._id, formData)
+    for (let key in values) {
+      if (key !== 'confirm') {
+        formData.append(key, values[key])
+      }
+    }
+    console.log(user._id)
+    const data = await userPut(user._id, formData)
     setPhotoUrl(data.secure_url)
-
-
-    // const updatedUser = await updateUser(user._id, formData)
-    // setUser(updatedUser)
+    console.log(data)
   }
 
   return (
@@ -115,7 +110,7 @@ function EditUserForm({ user, setUser }) {
       <h1 className={styles.h1}>Edit User Info</h1>
       <form className={styles.form} onSubmit={handleSubmit} >
         <FormInput {...imageInputProps} handleInputChange={handleImageChange} />
-        {/* {inputs.map(input => <FormInput key={input.id} {...input} value={values[input.name]} handleInputChange={handleInputChange} />)} */}
+        {inputs.map(input => <FormInput key={input.id} {...input} value={values[input.name]} handleInputChange={handleInputChange} />)}
         <button formMethod='dialog'>Update</button>
       </form>
 
