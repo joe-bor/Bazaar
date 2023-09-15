@@ -63,7 +63,7 @@ export default function CreateProduct({ user, setUser, userShop, setUserShop, ca
     label: "Product Image"
   }
 
-  const handleInputChange = (e) => {
+  const handleProductInputChange = (e) => {
     setProductValues({ ...productValues, [e.target.name]: e.target.value })
   }
 
@@ -95,7 +95,7 @@ export default function CreateProduct({ user, setUser, userShop, setUserShop, ca
     console.log(data)
   }
 
-  const handleImageChange = (e) => {
+  const handleProductImageChange = (e) => {
     e.preventDefault()
     console.log(e.target.files)
     let reader = new FileReader()
@@ -111,13 +111,13 @@ export default function CreateProduct({ user, setUser, userShop, setUserShop, ca
         <h1 className={styles.h1}>{location.pathname === '/shopmgmt' ? 'Create A Product' : 'Edit Product Details'}</h1>
 
         <form className={styles.form} autoComplete="off" onSubmit={handleProductSubmit}>
-          {/* <FormInput {...logoInputProps} handleInputChange={handleImageChange} /> */}
+          {/* <FormInput {...logoInputProps} handleInputChange={handleProductImageChange} /> */}
           {productInputs.map(input => <FormInput key={input.id} {...input} value={productValues[input.name]} handleInputChange={handleProductInputChange} />)}
 
           <label htmlFor='product-category'>Product Category:</label>
-          <select id='product-category' name='category' value={productValues.category} onChange={handleInputChange}>
-            {categories.slice(1).map( (category) => {
-              return <option  key={category} value={category}>{category}</option>
+          <select id='product-category' name='category' value={productValues.category} onChange={handleProductInputChange}>
+            {categories.slice(1).map((category) => {
+              return <option key={category} value={category}>{category}</option>
             })}
           </select>
           <button formMethod='dialog'>{location.pathname === '/shopmgmt' ? 'Create Product' : 'Update Product'}</button>

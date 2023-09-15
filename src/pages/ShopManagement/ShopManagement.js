@@ -1,5 +1,5 @@
 import { useState, useRef, useEffect } from 'react'
-import { Link, useLocation, useNavigate } from "react-router-dom"
+import { Link, useLocation, useNavigate, useParams } from "react-router-dom"
 import * as shopsAPI from '../../utilities/shops-api'
 import styles from './ShopManagement.module.scss'
 import CreateShop from "../../components/CreateShop/CreateShop";
@@ -18,18 +18,16 @@ export default function ShopManagement({ user, setUser, userShop, setUserShop, c
   const productModalRef = useRef()
   const shopEditModalRef = useRef()
   const productEditModalRef = useRef()
+  let { shopId } = useParams()
   const navigate = useNavigate()
   const location = useLocation()
 
   useEffect(() => {
-    if (user.shop) {
-      async function getUserShop() {
-        const userShopInfo = await shopsAPI.getShop(user.shop)
-        setUserShop(userShopInfo)
-      }
-      getUserShop()
+    async function getUserShop() {
+      const userShopInfo = await shopsAPI.getShop(shopId)
+      setUserShop(userShopInfo)
     }
-
+    getUserShop()
   }, [user])
 
   useEffect(() => {
@@ -76,7 +74,6 @@ export default function ShopManagement({ user, setUser, userShop, setUserShop, c
     <div className={styles.ShopManagement}>
       <section className={styles.header}>
         {userShop &&
-
           <div className={styles.infoSection}>
             <img className={userShop.heroImage ? styles.circle : ''} src={userShop.heroImage ? userShop.heroImage : shopIcon} />
             <div className={styles.shopInfo}>
@@ -89,7 +86,7 @@ export default function ShopManagement({ user, setUser, userShop, setUserShop, c
           <button onClick={toggleCreateProduct}>Add A Product</button>
           <button onClick={toggleEditProductForm}>Edit an Item</button>
           <button onClick={deleteUserShop}>Delete Shop</button>
-          
+
         </div>
       </section>
       <div className={styles.products}>
@@ -98,7 +95,7 @@ export default function ShopManagement({ user, setUser, userShop, setUserShop, c
       </div>
       <dialog className={styles.dialog} ref={shopEditModalRef} onClose={toggleEditShop}><EditShopForm toggleEditShop={toggleEditShop} user={user} setUser={setUser} location={location} userShop={userShop} setUserShop={setUserShop} /></dialog>
       <dialog className={styles.dialog} ref={productModalRef} onClose={toggleCreateProduct}><CreateProduct toggleCreateProduct={toggleCreateProduct} shopProducts={shopProducts} setShopProducts={setShopProducts} user={user} setUser={setUser} location={location} userShop={userShop} setUserShop={setUserShop} categories={categories} /></dialog>
-      <dialog ref={productEditModalRef} onClose={toggleEditProductForm}><EditProductForm toggleCreateProduct={toggleCreateProduct} user={user} selectedProduct={selectedProduct} setSelectedProduct={setSelectedProduct} categories={categories} /></dialog>
+      {/* <dialog ref={productEditModalRef} onClose={toggleEditProductForm}><EditProductForm toggleCreateProduct={toggleCreateProduct} user={user} categories={categories} /></dialog> */}
     </div>
   )
 }

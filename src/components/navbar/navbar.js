@@ -29,19 +29,12 @@ export default function NavBar({
 
 }) {
 
-
-    // clicking on logo takes you home
-    function handleLogoClick() {
-        navigate('/home')
-    }
-
     return (
         <nav className={styles.NavBar}>
             <div className={styles.topLine}>
                 <div className={styles.logoContainer}>
                     <Logo
-                        className={styles.Logo}
-                        onClick={handleLogoClick} />
+                        className={styles.Logo} />
                 </div>
                 <div className={styles.searchbarContainer}>
                     <SearchBar
@@ -54,14 +47,12 @@ export default function NavBar({
                 <div className={styles.icons}>
                     <Link to="/favorites">
                         <div>
-                            <i className="heart"></i>
                             <img src={favHeart} alt="heart" />
                         </div>
                     </Link>
-                    {user.name !== 'c186ec' ?
+                    {user?.name !== 'c186ec' ?
                         <Link to="/account">
                             <div>
-                                <i className="user-icon"></i>
                                 <img src={userIcon} alt="user-icon" />
                             </div>
                         </Link>
@@ -72,7 +63,6 @@ export default function NavBar({
                     }
                     {userShop ? <Link to="/shopmgmt">
                         <div>
-                            <i className="store"></i>
                             <img src={shopIcon} alt="store" />
                         </div>
                     </Link>
@@ -80,36 +70,21 @@ export default function NavBar({
                         null
                     }
                     <Link to="/cart">
-                        <div>
-                            <i className="cart"></i>
-                            <img src={cartIcon} alt="cart" />
+                        <div className={styles.cartContainer}>
                             {/* Display the cart count if items are in the cart */}
                             {cart?.length > 0 && (
                                 <span className="cart-count">{cartTotals.totalItemQty}</span>
                             )}
+                            <img src={cartIcon} alt="cart" />
                         </div>
                     </Link>
 
                     <Link to="/store">
                         <div>
-                            <i className="store"></i>
                             <img src={shopIcon} alt="store" />
                         </div>
                     </Link>
-                    <div className="navbar-user">
-                    {user?.name !== 'c186ec' ? (
-                        //Display user profile info if logged in
-                        <>
-                            <img src={user?.imageUrl ? user.imageUrl : userIcon} alt="Profile" />
-                            <Link to='/account'><span>{user?.name}</span></Link>
-                        </>
-                    ) : (
-                        //Display user profile info if logged in
-                        <>
-                            <div onClick={toggleAuthModal}>Log In</div>
-                        </>        
-                    )}</div>
-            </div>
+                </div>
             </div>
             <div className={styles.categories}>
                 <ul>
@@ -122,4 +97,4 @@ export default function NavBar({
             </div>
         </nav>
     )
-    }
+}

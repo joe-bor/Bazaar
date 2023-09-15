@@ -2,8 +2,8 @@ import UserLogOut from "../../components/UserLogOut/UserLogOut";
 import EditUserForm from "../../components/EditUserForm/EditUserForm";
 import userIcon from '../../assets/images/user-icon.svg'
 import { useState, useRef, useEffect } from 'react'
-import { Link, useLocation, useNavigate } from "react-router-dom"
-import { deleteUser } from "../../utilities/users-service";
+import { Link, useLocation, useNavigate, useParams } from "react-router-dom"
+import { deleteUser, getUser } from "../../utilities/users-service";
 import styles from './AccountPage.module.scss'
 import CreateShop from "../../components/CreateShop/CreateShop";
 import ProductList from "../../components/ProductList/ProductList";
@@ -14,8 +14,17 @@ export default function AccountPage({ user, setUser, createGuestUser, userShop, 
   const [favPreviewItems, setFavPreviewItems] = useState([])
   const editModalRef = useRef()
   const shopModalRef = useRef()
+  const { userId } = useParams()
   const navigate = useNavigate()
   const location = useLocation()
+
+  useEffect(() => {
+    async function getTheUser() {
+      const theUser = await getUser()
+      setUser(theUser)
+    }
+    getTheUser()
+  }, [])
 
   // when editModalOpen state changes, update the editModalRef to open / close modal
   useEffect(() => {
@@ -87,7 +96,7 @@ export default function AccountPage({ user, setUser, createGuestUser, userShop, 
         <ProductList productItems={favPreviewItems} />
       </div>
       <dialog
-      className={styles.dialog}
+        className={styles.dialog}
         ref={editModalRef}
         onClose={toggleEditModal}
         onSubmit={toggleEditModal}>

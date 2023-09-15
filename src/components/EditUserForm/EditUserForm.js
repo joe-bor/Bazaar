@@ -97,8 +97,6 @@ function EditUserForm({ user, setUser }) {
       }
     }
 
-
-
     const data = await userPut(user._id, formData)
     console.log(data.data) // JWT of updated user
     // clear current token in localstorage

@@ -1,22 +1,16 @@
 import { useState } from 'react'
-import { createShop, editShopInfo } from '../../utilities/shops-api'
 import styles from './CreateShop.module.scss'
 import FormInput from '../FormInput/FormInput'
 import { useNavigate } from 'react-router-dom'
-import { updateUser } from '../../utilities/users-service'
-import { shopPost } from '../../utilities/image-upload'
+import { shopPost, shopPut } from '../../utilities/image-upload'
 
 export default function CreateShop({ user, setUser, location, userShop, setUserShop, toggleEditShop }) {
   const [shopValues, setShopValues] = useState({
     name: '',
-    description: '',
-    file: ''
+    description: ''
   })
   const [file, setFile] = useState(null)
   const [photoUrl, setPhotoUrl] = useState('')
-
- 
-
 
   const navigate = useNavigate()
 
@@ -56,54 +50,42 @@ export default function CreateShop({ user, setUser, location, userShop, setUserS
     label: "Shop Logo Image"
   }
 
-
   const handleShopInputChange = (e) => {
     setShopValues({ ...shopValues, [e.target.name]: e.target.value })
   }
 
-  const handleImageChange = (e) => {
-    e.preventDefault()
-    let reader = new FileReader()
-    let file = e.target.files[0]
-    reader.onloadend = () => {
-      setFile(file)
-    }
-    reader.readAsDataURL(file)
-  }
-
   async function handleShopSubmit(e) {
     e.preventDefault()
-    if (location.pathname === '/shopmgmt') {
-
+    try {
       const formData = new FormData()
       formData.append('file', file)
       for (let key in shopValues) {
-        if (key !== 'confirm') {
-          formData.append(key, shopValues[key])
-        }
+        formData.append(key, shopValues[key])
       }
-      const updatedShop = await shopPost(userShop._id, formData)
-      
-      setUserShop(updatedShop)
-      toggleEditShop()
-    } else {
-      // send request to create shop
-      const { shopOwner, shop } = await createShop({
-        seller: user._id,
-        name: shopValues.name,
-        description: shopValues.description
-      })
-      // set user state to have shop info
-      const updatedUser = await updateUser(user._id, shopOwner)      
-      setUser(updatedUser)
-      setUserShop(shop)
-      navigate('/shopmgmt')
+      formData.append('token', localStorage.getItem('token'))
+      // edit the shop in shop management
+      if (location.pathname === '/shopmgmt') {
+        const updatedShop = await shopPut(userShop._id, formData)
+        setUserShop(updatedShop)
+        toggleEditShop()
+        // create shop in account page
+      } else {
+        // send request to create shop
+        const { currentUser, newShop } = await shopPost(formData)
+        // set user state to have shop info
+        setUser(currentUser)
+        setUserShop(newShop)
+        navigate(`/shopmgmt/${newShop._id}`)
+      }
+    } catch (error) {
+      console.error(error)
+    } finally {
+
     }
   }
 
   const handleImageChange = (e) => {
     e.preventDefault()
-    console.log(e.target.files)
     let reader = new FileReader()
     let file = e.target.files[0]
     reader.onloadend = () => {
@@ -117,7 +99,7 @@ export default function CreateShop({ user, setUser, location, userShop, setUserS
       <div>
         <h1 className={styles.h1}>{location.pathname === '/account' ? 'Create A Shop' : 'Edit Shop Details'}</h1>
 
-        <form  className={styles.form} autoComplete="off" onSubmit={handleShopSubmit}>
+        <form className={styles.form} autoComplete="off" onSubmit={handleShopSubmit}>
           <FormInput {...logoInputProps} handleInputChange={handleImageChange} />
 
           {shopInputs.map(input => <FormInput key={input.id} {...input} value={shopValues[input.name]} handleInputChange={handleShopInputChange} />)}

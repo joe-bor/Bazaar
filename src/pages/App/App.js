@@ -30,7 +30,12 @@ export default function App() {
     totalItemQty: 0,
     totalPrice: 0
   })
-  const [userShop, setUserShop] = useState(null)
+  const [userShop, setUserShop] = useState({
+    name: 'Loading...',
+    seller: {},
+    description: 'Loading...',
+    products: []
+  })
   const [favItems, setFavItems] = useState([])
 
   const categoriesRef = useRef([])
@@ -61,7 +66,6 @@ export default function App() {
     setFilteredItems(allItems) // for search bar
   }
 
-
   const toggleAuthModal = () => {
     setIsAuthModalOpen(!isAuthModalOpen)
   }
@@ -86,13 +90,15 @@ export default function App() {
   }, [cart])
 
 
-
+  // automatically retrieve user's favorites
   useEffect(() => {
-    async function getFavItems() {
-      const favorites = await usersAPI.getFavorites(user._id)
-      setFavItems(favorites)
+    if (user) {
+      async function getFavItems() {
+        const favorites = await usersAPI.getFavorites(user._id)
+        setFavItems(favorites)
+      }
+      getFavItems()
     }
-    getFavItems()
   }, [user])
 
 
@@ -150,7 +156,7 @@ export default function App() {
         <Route path="/checkout" element={<Checkout className={styles.Checkout} cart={cart} setCart={setCart} cartTotals={cartTotals} />} />
         <Route path="/orderhistory" element={<OrderHistory user={user} setUser={setUser} />} />
         <Route path="/sellershop/:shopId" element={<SellerShop user={user} setUser={setUser} />} />
-        <Route path="/shopmgmt" element={<ShopMgmt categories={categoriesRef.current} user={user} setUser={setUser} userShop={userShop} setUserShop={setUserShop} />} />
+        <Route path="/shopmgmt/:shopId" element={<ShopMgmt categories={categoriesRef.current} user={user} setUser={setUser} userShop={userShop} setUserShop={setUserShop} />} />
         {/* redirect to /home if path in address bar hasn't matched a <Route> above */}
         <Route path="/*" element={<Navigate to="/home" />} />
       </Routes>

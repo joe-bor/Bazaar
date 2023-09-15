@@ -10,7 +10,7 @@ const shop = require('../../models/shop')
 // Create a new shop
 exports.createShop = async (req, res) => {
     try {
-    // Set users image URL if available
+        // Set users image URL if available
         if (res.locals.imageData) {
             req.body.imageUrl = res.locals.imageData.secure_url
         }
@@ -25,11 +25,10 @@ exports.createShop = async (req, res) => {
         })
 
         // Update the user document with the new shop ID
-        const user = await User.findOneAndUpdate({ _id: req.user._id }, { shop: newShop._id }, { new: true })
-        console.log(user)
+        const currentUser = await User.findOneAndUpdate({ _id: req.user._id }, { shop: newShop._id }, { new: true })
 
         // Respond with user and new shop data
-        res.status(200).json({ user, newShop })
+        res.status(200).json({ currentUser, newShop })
     } catch (error) {
         res.status(400).json({ error: error.message })
     }
@@ -38,10 +37,10 @@ exports.createShop = async (req, res) => {
 // Update a shop
 exports.updateShop = async (req, res) => {
     try {
-            // Set users image URL if available
-            if (res.locals.imageData) {
-                req.body.heroImage = res.locals.imageData.secure_url
-            }
+        // Set users image URL if available
+        if (res.locals.imageData) {
+            req.body.heroImage = res.locals.imageData.secure_url
+        }
         // Find and update the shop with the provided ID
         const shop = await Shop.findByIdAndUpdate(req.params.id, req.body, { new: true })
 
@@ -69,7 +68,7 @@ exports.getShop = async (req, res) => {
                 }
             })
             .exec()
-        
+
         // Check if the shop was not found
         if (!shop) {
             return res.status(404).json({ error: 'Shop not found' })
@@ -139,7 +138,7 @@ exports.addItem = async (req, res) => {
         await shop.save()
 
         // Respond with the created item 
-        res.status(200).json({shop, item})
+        res.status(200).json({ shop, item })
     } catch (error) {
         res.status(400).json({ error: error.message })
     }
@@ -188,7 +187,7 @@ exports.deleteItem = async (req, res) => {
         // Find the shop by its ID
         const shop = await Shop.findById(req.params.id)
 
-         // Check if the shop was not found
+        // Check if the shop was not found
         if (!shop) {
             return res.status(404).json({ error: 'Shop not found' })
         }

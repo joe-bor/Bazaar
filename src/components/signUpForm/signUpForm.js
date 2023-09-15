@@ -1,7 +1,6 @@
-import { useEffect, useRef, useState } from 'react'
+import { useState } from 'react'
 import styles from './SignUpForm.module.scss'
 import FormInput from '../FormInput/FormInput'
-// import { signUp } from '../../utilities/users-service'
 import { userPost } from '../../utilities/image-upload'
 
 function SignUpForm({ setUser, handleCloseAuthModal }) {
@@ -89,13 +88,22 @@ function SignUpForm({ setUser, handleCloseAuthModal }) {
 
   const handleSubmit = async (e) => {
     e.preventDefault()
-
-    const formData = { ...values }
-    delete formData.confirm
+    const formData = new FormData()
+    formData.append('file', file)
+    for (let key in values) {
+      if (key !== 'confirm') {
+        formData.append(key, values[key])
+      }
+    }
     const newUser = await userPost(formData)
-    setUser(newUser)
+    console.log(newUser)
+    localStorage.removeItem('token');
+    // replace with data.data
+    localStorage.setItem('token', newUser.data);
+    // extract user from token
+    const createdUser = JSON.parse(atob(newUser.data.split('.')[1])).user
+    setUser(createdUser)
     handleCloseAuthModal()
-
   }
 
   return (

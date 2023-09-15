@@ -8,7 +8,7 @@ const fileUpload = require('express-fileupload')
 
 
 app.use(express.json());
-// app.use(express.urlencoded({ extended: false }));
+app.use(express.urlencoded({ extended: false }));
 app.use(fileUpload({
 	limits: { fileSize: 40 * 1024 * 1024 }
 }))
@@ -23,6 +23,7 @@ app.use((req, res, next) => {
 });
 app.use(express.static('public'));
 app.use(require('./config/checkToken'));
+app.use(require('./config/checkBodyToken'))
 app.use(logger('dev'));
 
 // Put API routes here, before the "catch all" route
