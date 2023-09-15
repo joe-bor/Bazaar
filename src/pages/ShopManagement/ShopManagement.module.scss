@@ -4,7 +4,7 @@
     width: 100%;
     display: flex;
     justify-content: space-between;
-    padding: 1rem 3rem;
+    padding: 2rem 2.5rem;
     .infoSection {
       display: flex;
       justify-content: flex-start;
@@ -20,8 +20,8 @@
           margin: 0 0 2rem 0;
         }
         .description{
-        font-size: 1.25rem;
-        max-width: 40vw;
+          font-size: 1.25rem;
+          max-width: 40vw;
         }
       }
     }
@@ -36,6 +36,9 @@
         border: none;
         font-size: 1.25rem;
         font-weight: 600;
+      }
+      button:hover {
+        color: var(--accent);
       }
     }
   }
