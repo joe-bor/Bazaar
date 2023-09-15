@@ -84,9 +84,21 @@ export default function NavBar({
                             <img src={shopIcon} alt="store" />
                         </div>
                     </Link>
-
-                </div>
+                    <div className="navbar-user">
+                    {user?.name !== 'c186ec' ? (
+                        //Display user profile info if logged in
+                        <>
+                            <img src={user?.imageUrl ? user.imageUrl : userIcon} alt="Profile" />
+                            <Link to='/account'><span>{user?.name}</span></Link>
+                        </>
+                    ) : (
+                        //Display user profile info if logged in
+                        <>
+                            <div onClick={toggleAuthModal}>Log In</div>
+                        </>        
+                    )}</div>
+            </div>
             </div>
         </nav>
     )
-}
+    }

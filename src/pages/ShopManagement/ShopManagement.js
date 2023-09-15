@@ -81,8 +81,8 @@ export default function ShopManagement({ user, setUser, userShop, setUserShop, c
         <h2 className={styles.productsHeading}>Products</h2>
         {shopProducts.length > 0 ? <ProductList productItems={shopProducts} user={user} setUser={setUser} /> : null}
       </div>
-      <dialog ref={shopEditModalRef} onClose={toggleEditShop}><CreateShop toggleEditShop={toggleEditShop} user={user} setUser={setUser} location={location} userShop={userShop} setUserShop={setUserShop} /></dialog>
-      <dialog ref={productModalRef} onClose={toggleCreateProduct}><CreateProduct toggleCreateProduct={toggleCreateProduct} shopProducts={shopProducts} setShopProducts={setShopProducts} user={user} setUser={setUser} location={location} userShop={userShop} setUserShop={setUserShop} categories={categories} /></dialog>
+      <dialog className={styles.dialog} ref={shopEditModalRef} onClose={toggleEditShop}><CreateShop toggleEditShop={toggleEditShop} user={user} setUser={setUser} location={location} userShop={userShop} setUserShop={setUserShop} /></dialog>
+      <dialog className={styles.dialog} ref={productModalRef} onClose={toggleCreateProduct}><CreateProduct toggleCreateProduct={toggleCreateProduct} shopProducts={shopProducts} setShopProducts={setShopProducts} user={user} setUser={setUser} location={location} userShop={userShop} setUserShop={setUserShop} categories={categories} /></dialog>
     </div>
   )
 }
