@@ -15,11 +15,11 @@ router.put('/:id', upload, shopsCtrl.updateShop)
 // DELETE -> /api/shops/:id - delete a shop
 router.delete('/:id', shopsCtrl.deleteShop)
 
-// POST -> /api/shops/items/:id (- add an item to shop
-router.post('/items/:id', upload, shopsCtrl.addItem)
+// POST -> /api/shops/:shopId/items (- add an item to shop
+router.post('/:shopId/items', upload, shopsCtrl.addItem)
 
-// PUT -> /api/shops/items/:id - update an item in shop
-router.put('/items/:id', upload, shopsCtrl.updateItem)
+// PUT -> /api/shops/:shopId/items/:itemId - update an item in shop
+router.put('/:shopId/items/:itemId', upload, shopsCtrl.updateItem)
 
 // DELETE -> /api/shops/items/:id - delete an item from shop
 router.delete('/:id/items/:itemid', shopsCtrl.deleteItem)

@@ -48,7 +48,7 @@ export default function NavBar({
                             </Link>
                             <Link to="/account">
                                 <div>
-                                    <img src={userIcon} alt="user-icon" />
+                                    <img className={user?.imageUrl ? styles.userPhoto : ''} src={user?.imageUrl ? user.imageUrl : userIcon} alt="user-icon" />
                                 </div>
                             </Link>
                         </>
@@ -58,7 +58,7 @@ export default function NavBar({
                         </div>
 
                     }
-                    {userShop.name !== 'Loading...' ? <Link to="/shopmgmt">
+                    {userShop?.name !== 'Loading...' ? <Link to="/shopmgmt">
                         <div>
                             <img src={shopIcon} alt="store" />
                         </div>

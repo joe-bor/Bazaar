@@ -25,10 +25,10 @@ exports.createShop = async (req, res) => {
         })
 
         // Update the user document with the new shop ID
-        const currentUser = await User.findOneAndUpdate({ _id: req.user._id }, { shop: newShop._id }, { new: true })
+        const user = await User.findOneAndUpdate({ _id: req.user._id }, { shop: newShop._id }, { new: true })
 
         // Respond with user and new shop data
-        res.status(200).json({ currentUser, newShop })
+        res.status(200).json({ user, newShop })
     } catch (error) {
         res.status(400).json({ error: error.message })
     }
@@ -113,7 +113,7 @@ exports.addItem = async (req, res) => {
             req.body.imageUrl = res.locals.imageData.secure_url
         }
         // Find the shop by its ID
-        const shop = await Shop.findById(req.params.id)
+        const shop = await Shop.findById(req.params.shopId)
 
         // Check if the shop was not found
         if (!shop) {
@@ -152,7 +152,7 @@ exports.updateItem = async (req, res) => {
             req.body.imageUrl = res.locals.imageData.secure_url
         }
         // Find the shop by its ID
-        const shop = await Shop.findById(req.params.ShopId)
+        const shop = await Shop.findById(req.params.shopId)
 
         // Check if the shop was not found
         if (!shop) {

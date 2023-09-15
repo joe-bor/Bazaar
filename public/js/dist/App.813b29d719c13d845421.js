@@ -140,319 +140,6 @@ function CategorySection(_ref) {
 
 /***/ }),
 
-/***/ "./src/components/CreateProduct/CreateProduct.js":
-/*!*******************************************************!*\
-  !*** ./src/components/CreateProduct/CreateProduct.js ***!
-  \*******************************************************/
-/***/ ((__unused_webpack_module, __webpack_exports__, __webpack_require__) => {
-
-/* harmony export */ __webpack_require__.d(__webpack_exports__, {
-/* harmony export */   "default": () => (/* binding */ CreateProduct)
-/* harmony export */ });
-/* harmony import */ var react__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! react */ "./node_modules/react/index.js");
-/* harmony import */ var react__WEBPACK_IMPORTED_MODULE_0___default = /*#__PURE__*/__webpack_require__.n(react__WEBPACK_IMPORTED_MODULE_0__);
-/* harmony import */ var _CreateProduct_module_scss__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! ./CreateProduct.module.scss */ "./src/components/CreateProduct/CreateProduct.module.scss");
-/* harmony import */ var _FormInput_FormInput__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! ../FormInput/FormInput */ "./src/components/FormInput/FormInput.js");
-/* harmony import */ var react_router_dom__WEBPACK_IMPORTED_MODULE_4__ = __webpack_require__(/*! react-router-dom */ "./node_modules/react-router/dist/index.js");
-/* harmony import */ var _utilities_image_upload__WEBPACK_IMPORTED_MODULE_3__ = __webpack_require__(/*! ../../utilities/image-upload */ "./src/utilities/image-upload.js");
-/* provided dependency */ var React = __webpack_require__(/*! react */ "./node_modules/react/index.js");
-function _extends() { _extends = Object.assign ? Object.assign.bind() : function (target) { for (var i = 1; i < arguments.length; i++) { var source = arguments[i]; for (var key in source) { if (Object.prototype.hasOwnProperty.call(source, key)) { target[key] = source[key]; } } } return target; }; return _extends.apply(this, arguments); }
-function asyncGeneratorStep(gen, resolve, reject, _next, _throw, key, arg) { try { var info = gen[key](arg); var value = info.value; } catch (error) { reject(error); return; } if (info.done) { resolve(value); } else { Promise.resolve(value).then(_next, _throw); } }
-function _asyncToGenerator(fn) { return function () { var self = this, args = arguments; return new Promise(function (resolve, reject) { var gen = fn.apply(self, args); function _next(value) { asyncGeneratorStep(gen, resolve, reject, _next, _throw, "next", value); } function _throw(err) { asyncGeneratorStep(gen, resolve, reject, _next, _throw, "throw", err); } _next(undefined); }); }; }
-function ownKeys(object, enumerableOnly) { var keys = Object.keys(object); if (Object.getOwnPropertySymbols) { var symbols = Object.getOwnPropertySymbols(object); enumerableOnly && (symbols = symbols.filter(function (sym) { return Object.getOwnPropertyDescriptor(object, sym).enumerable; })), keys.push.apply(keys, symbols); } return keys; }
-function _objectSpread(target) { for (var i = 1; i < arguments.length; i++) { var source = null != arguments[i] ? arguments[i] : {}; i % 2 ? ownKeys(Object(source), !0).forEach(function (key) { _defineProperty(target, key, source[key]); }) : Object.getOwnPropertyDescriptors ? Object.defineProperties(target, Object.getOwnPropertyDescriptors(source)) : ownKeys(Object(source)).forEach(function (key) { Object.defineProperty(target, key, Object.getOwnPropertyDescriptor(source, key)); }); } return target; }
-function _defineProperty(obj, key, value) { key = _toPropertyKey(key); if (key in obj) { Object.defineProperty(obj, key, { value: value, enumerable: true, configurable: true, writable: true }); } else { obj[key] = value; } return obj; }
-function _toPropertyKey(arg) { var key = _toPrimitive(arg, "string"); return typeof key === "symbol" ? key : String(key); }
-function _toPrimitive(input, hint) { if (typeof input !== "object" || input === null) return input; var prim = input[Symbol.toPrimitive]; if (prim !== undefined) { var res = prim.call(input, hint || "default"); if (typeof res !== "object") return res; throw new TypeError("@@toPrimitive must return a primitive value."); } return (hint === "string" ? String : Number)(input); }
-
-
-
-
-
-
-function CreateProduct(_ref) {
-  var _shop, _shop2, _shop3;
-  let {
-    user,
-    setUser,
-    userShop,
-    setUserShop,
-    categories,
-    setShopProducts,
-    shopProducts
-  } = _ref;
-  const [productValues, setProductValues] = (0,react__WEBPACK_IMPORTED_MODULE_0__.useState)({
-    name: '',
-    description: '',
-    price: '',
-    category: '',
-    file: ''
-  });
-  const [file, setFile] = (0,react__WEBPACK_IMPORTED_MODULE_0__.useState)(null);
-  const [photoUrl, setPhotoUrl] = (0,react__WEBPACK_IMPORTED_MODULE_0__.useState)('');
-  const navigate = (0,react_router_dom__WEBPACK_IMPORTED_MODULE_4__.useNavigate)();
-  const productInputs = [{
-    id: "product-name",
-    name: "name",
-    type: "text",
-    placeholder: "Product Name",
-    value: location.pathname === '/shopmgmt' ? productValues.name : (_shop = shop) === null || _shop === void 0 ? void 0 : _shop.name,
-    errorMessage: "Product name is required and \n        can't include special characters",
-    label: "Product Name",
-    pattern: "^[A-Za-z0-9 ']+$",
-    required: true
-  }, {
-    id: "product-description",
-    name: "description",
-    type: "text",
-    placeholder: "Product Description",
-    value: location.pathname === '/shopmgmt' ? productValues.description : (_shop2 = shop) === null || _shop2 === void 0 ? void 0 : _shop2.description,
-    errorMessage: "Product description is required",
-    label: "Product Description",
-    required: true
-  }, {
-    id: "product-price",
-    name: "price",
-    type: "text",
-    placeholder: "00.00",
-    value: location.pathname === '/shopmgmt' ? productValues.price : (_shop3 = shop) === null || _shop3 === void 0 ? void 0 : _shop3.price,
-    errorMessage: "Product price is required",
-    label: "Product Price",
-    required: true
-  }];
-  const imageInputProps = {
-    id: "add-photo",
-    name: "file",
-    type: "file",
-    accept: ".png, .jpg, .jpeg",
-    errorMessage: "File type must be .png, .jpeg, or .jpg",
-    label: "Product Image"
-  };
-  const handleProductInputChange = e => {
-    setProductValues(_objectSpread(_objectSpread({}, productValues), {}, {
-      [e.target.name]: e.target.value
-    }));
-  };
-
-  // 🟥 function for handling image upload 🟥
-  function handleProductSubmit(_x) {
-    return _handleProductSubmit.apply(this, arguments);
-  }
-  function _handleProductSubmit() {
-    _handleProductSubmit = _asyncToGenerator(function* (e) {
-      e.preventDefault();
-      // Create an item
-      // save to db
-      // add to shop (state) - i want it to show up
-      // const newItem = {
-      //   name: productValues.name,
-      //   price: parseInt(productValues.price, 10),
-      //   description: productValues.description,
-      //   category: productValues.category,
-      // }
-      // console.log(newItem)
-      // const { shop, item } = await addItemToShop(userShop._id, newItem)
-      // console.log(item)
-      // setUserShop(shop)
-      // setShopProducts( [...shopProducts, item])
-      const formData = new FormData();
-      formData.append('file', file);
-      for (let key in values) {
-        formData.append(key, values[key]);
-      }
-      const data = yield (0,_utilities_image_upload__WEBPACK_IMPORTED_MODULE_3__.itemPost)(formData);
-      setPhotoUrl(data.secure_url);
-      console.log(data);
-    });
-    return _handleProductSubmit.apply(this, arguments);
-  }
-  const handleProductImageChange = e => {
-    e.preventDefault();
-    console.log(e.target.files);
-    let reader = new FileReader();
-    let file = e.target.files[0];
-    reader.onloadend = () => {
-      setFile(file);
-    };
-    reader.readAsDataURL(file);
-  };
-  return /*#__PURE__*/React.createElement("div", {
-    className: _CreateProduct_module_scss__WEBPACK_IMPORTED_MODULE_1__["default"].CreateProduct
-  }, /*#__PURE__*/React.createElement("div", null, /*#__PURE__*/React.createElement("h1", {
-    className: _CreateProduct_module_scss__WEBPACK_IMPORTED_MODULE_1__["default"].h1
-  }, location.pathname === '/shopmgmt' ? 'Create A Product' : 'Edit Product Details'), /*#__PURE__*/React.createElement("form", {
-    className: _CreateProduct_module_scss__WEBPACK_IMPORTED_MODULE_1__["default"].form,
-    autoComplete: "off",
-    onSubmit: handleProductSubmit
-  }, productInputs.map(input => /*#__PURE__*/React.createElement(_FormInput_FormInput__WEBPACK_IMPORTED_MODULE_2__["default"], _extends({
-    key: input.id
-  }, input, {
-    value: productValues[input.name],
-    handleInputChange: handleProductInputChange
-  }))), /*#__PURE__*/React.createElement("label", {
-    htmlFor: "product-category"
-  }, "Product Category:"), /*#__PURE__*/React.createElement("select", {
-    id: "product-category",
-    name: "category",
-    value: productValues.category,
-    onChange: handleProductInputChange
-  }, categories.slice(1).map(category => {
-    return /*#__PURE__*/React.createElement("option", {
-      key: category,
-      value: category
-    }, category);
-  })), /*#__PURE__*/React.createElement("button", {
-    formMethod: "dialog"
-  }, location.pathname === '/shopmgmt' ? 'Create Product' : 'Update Product'))));
-}
-
-/***/ }),
-
-/***/ "./src/components/CreateShop/CreateShop.js":
-/*!*************************************************!*\
-  !*** ./src/components/CreateShop/CreateShop.js ***!
-  \*************************************************/
-/***/ ((__unused_webpack_module, __webpack_exports__, __webpack_require__) => {
-
-/* harmony export */ __webpack_require__.d(__webpack_exports__, {
-/* harmony export */   "default": () => (/* binding */ CreateShop)
-/* harmony export */ });
-/* harmony import */ var react__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! react */ "./node_modules/react/index.js");
-/* harmony import */ var react__WEBPACK_IMPORTED_MODULE_0___default = /*#__PURE__*/__webpack_require__.n(react__WEBPACK_IMPORTED_MODULE_0__);
-/* harmony import */ var _CreateShop_module_scss__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! ./CreateShop.module.scss */ "./src/components/CreateShop/CreateShop.module.scss");
-/* harmony import */ var _FormInput_FormInput__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! ../FormInput/FormInput */ "./src/components/FormInput/FormInput.js");
-/* harmony import */ var react_router_dom__WEBPACK_IMPORTED_MODULE_4__ = __webpack_require__(/*! react-router-dom */ "./node_modules/react-router/dist/index.js");
-/* harmony import */ var _utilities_image_upload__WEBPACK_IMPORTED_MODULE_3__ = __webpack_require__(/*! ../../utilities/image-upload */ "./src/utilities/image-upload.js");
-/* provided dependency */ var React = __webpack_require__(/*! react */ "./node_modules/react/index.js");
-function _extends() { _extends = Object.assign ? Object.assign.bind() : function (target) { for (var i = 1; i < arguments.length; i++) { var source = arguments[i]; for (var key in source) { if (Object.prototype.hasOwnProperty.call(source, key)) { target[key] = source[key]; } } } return target; }; return _extends.apply(this, arguments); }
-function asyncGeneratorStep(gen, resolve, reject, _next, _throw, key, arg) { try { var info = gen[key](arg); var value = info.value; } catch (error) { reject(error); return; } if (info.done) { resolve(value); } else { Promise.resolve(value).then(_next, _throw); } }
-function _asyncToGenerator(fn) { return function () { var self = this, args = arguments; return new Promise(function (resolve, reject) { var gen = fn.apply(self, args); function _next(value) { asyncGeneratorStep(gen, resolve, reject, _next, _throw, "next", value); } function _throw(err) { asyncGeneratorStep(gen, resolve, reject, _next, _throw, "throw", err); } _next(undefined); }); }; }
-function ownKeys(object, enumerableOnly) { var keys = Object.keys(object); if (Object.getOwnPropertySymbols) { var symbols = Object.getOwnPropertySymbols(object); enumerableOnly && (symbols = symbols.filter(function (sym) { return Object.getOwnPropertyDescriptor(object, sym).enumerable; })), keys.push.apply(keys, symbols); } return keys; }
-function _objectSpread(target) { for (var i = 1; i < arguments.length; i++) { var source = null != arguments[i] ? arguments[i] : {}; i % 2 ? ownKeys(Object(source), !0).forEach(function (key) { _defineProperty(target, key, source[key]); }) : Object.getOwnPropertyDescriptors ? Object.defineProperties(target, Object.getOwnPropertyDescriptors(source)) : ownKeys(Object(source)).forEach(function (key) { Object.defineProperty(target, key, Object.getOwnPropertyDescriptor(source, key)); }); } return target; }
-function _defineProperty(obj, key, value) { key = _toPropertyKey(key); if (key in obj) { Object.defineProperty(obj, key, { value: value, enumerable: true, configurable: true, writable: true }); } else { obj[key] = value; } return obj; }
-function _toPropertyKey(arg) { var key = _toPrimitive(arg, "string"); return typeof key === "symbol" ? key : String(key); }
-function _toPrimitive(input, hint) { if (typeof input !== "object" || input === null) return input; var prim = input[Symbol.toPrimitive]; if (prim !== undefined) { var res = prim.call(input, hint || "default"); if (typeof res !== "object") return res; throw new TypeError("@@toPrimitive must return a primitive value."); } return (hint === "string" ? String : Number)(input); }
-
-
-
-
-
-function CreateShop(_ref) {
-  let {
-    user,
-    setUser,
-    location,
-    userShop,
-    setUserShop,
-    toggleEditShop
-  } = _ref;
-  const [shopValues, setShopValues] = (0,react__WEBPACK_IMPORTED_MODULE_0__.useState)({
-    name: '',
-    description: ''
-  });
-  const [file, setFile] = (0,react__WEBPACK_IMPORTED_MODULE_0__.useState)(null);
-  const [photoUrl, setPhotoUrl] = (0,react__WEBPACK_IMPORTED_MODULE_0__.useState)('');
-  const navigate = (0,react_router_dom__WEBPACK_IMPORTED_MODULE_4__.useNavigate)();
-  const shopInputs = [{
-    id: "shop-name",
-    name: "name",
-    type: "text",
-    placeholder: "Shop Name",
-    value: location.pathname === '/account' ? shopValues.name : userShop === null || userShop === void 0 ? void 0 : userShop.name,
-    errorMessage: "Shop name is required and can't include special characters",
-    label: "Shop Name",
-    pattern: "^[A-Za-z0-9 ']+$",
-    required: true
-  }, {
-    id: "shop-description",
-    name: "description",
-    type: "text",
-    placeholder: "Shop Description",
-    value: location.pathname === '/account' ? shopValues.description : userShop === null || userShop === void 0 ? void 0 : userShop.description,
-    errorMessage: "Shop description is required",
-    label: "Shop Description",
-    required: true
-  }];
-  const logoInputProps = {
-    id: "shop-logo",
-    name: "file",
-    type: "file",
-    accept: ".png, .jpg, .jpeg",
-    errorMessage: "File type must be .png, .jpeg, or .jpg",
-    label: "Shop Logo Image"
-  };
-  const handleShopInputChange = e => {
-    setShopValues(_objectSpread(_objectSpread({}, shopValues), {}, {
-      [e.target.name]: e.target.value
-    }));
-  };
-  function handleShopSubmit(_x) {
-    return _handleShopSubmit.apply(this, arguments);
-  }
-  function _handleShopSubmit() {
-    _handleShopSubmit = _asyncToGenerator(function* (e) {
-      e.preventDefault();
-      try {
-        const formData = new FormData();
-        formData.append('file', file);
-        for (let key in shopValues) {
-          formData.append(key, shopValues[key]);
-        }
-        formData.append('token', localStorage.getItem('token'));
-        // edit the shop in shop management
-        if (location.pathname === '/shopmgmt') {
-          const updatedShop = yield (0,_utilities_image_upload__WEBPACK_IMPORTED_MODULE_3__.shopPut)(userShop._id, formData);
-          setUserShop(updatedShop);
-          toggleEditShop();
-          // create shop in account page
-        } else {
-          // send request to create shop
-          const {
-            currentUser,
-            newShop
-          } = yield (0,_utilities_image_upload__WEBPACK_IMPORTED_MODULE_3__.shopPost)(formData);
-          // set user state to have shop info
-          setUser(currentUser);
-          setUserShop(newShop);
-          navigate("/shopmgmt/".concat(newShop._id));
-        }
-      } catch (error) {
-        console.error(error);
-      } finally {}
-    });
-    return _handleShopSubmit.apply(this, arguments);
-  }
-  const handleImageChange = e => {
-    e.preventDefault();
-    let reader = new FileReader();
-    let file = e.target.files[0];
-    reader.onloadend = () => {
-      setFile(file);
-    };
-    reader.readAsDataURL(file);
-  };
-  return /*#__PURE__*/React.createElement("div", {
-    className: _CreateShop_module_scss__WEBPACK_IMPORTED_MODULE_1__["default"].CreateShop
-  }, /*#__PURE__*/React.createElement("div", null, /*#__PURE__*/React.createElement("h1", {
-    className: _CreateShop_module_scss__WEBPACK_IMPORTED_MODULE_1__["default"].h1
-  }, location.pathname === '/account' ? 'Create A Shop' : 'Edit Shop Details'), /*#__PURE__*/React.createElement("form", {
-    className: _CreateShop_module_scss__WEBPACK_IMPORTED_MODULE_1__["default"].form,
-    autoComplete: "off",
-    onSubmit: handleShopSubmit
-  }, /*#__PURE__*/React.createElement(_FormInput_FormInput__WEBPACK_IMPORTED_MODULE_2__["default"], _extends({}, logoInputProps, {
-    handleInputChange: handleImageChange
-  })), shopInputs.map(input => /*#__PURE__*/React.createElement(_FormInput_FormInput__WEBPACK_IMPORTED_MODULE_2__["default"], _extends({
-    key: input.id
-  }, input, {
-    value: shopValues[input.name],
-    handleInputChange: handleShopInputChange
-  }))), /*#__PURE__*/React.createElement("button", {
-    formMethod: "dialog"
-  }, location.pathname === '/account' ? 'Create Shop' : 'Update Shop'))));
-}
-
-/***/ }),
-
 /***/ "./src/components/EditProductForm/EditProductForm.js":
 /*!***********************************************************!*\
   !*** ./src/components/EditProductForm/EditProductForm.js ***!
@@ -665,169 +352,6 @@ function EditProductForm(_ref) {
   }
 }
 /* unused harmony default export */ var __WEBPACK_DEFAULT_EXPORT__ = (EditProductForm);
-
-/***/ }),
-
-/***/ "./src/components/EditShopForm/EditShopForm.js":
-/*!*****************************************************!*\
-  !*** ./src/components/EditShopForm/EditShopForm.js ***!
-  \*****************************************************/
-/***/ ((__unused_webpack_module, __webpack_exports__, __webpack_require__) => {
-
-/* harmony export */ __webpack_require__.d(__webpack_exports__, {
-/* harmony export */   "default": () => (/* binding */ CreateShop)
-/* harmony export */ });
-/* harmony import */ var react__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! react */ "./node_modules/react/index.js");
-/* harmony import */ var react__WEBPACK_IMPORTED_MODULE_0___default = /*#__PURE__*/__webpack_require__.n(react__WEBPACK_IMPORTED_MODULE_0__);
-/* harmony import */ var _utilities_shops_api__WEBPACK_IMPORTED_MODULE_5__ = __webpack_require__(/*! ../../utilities/shops-api */ "./src/utilities/shops-api.js");
-/* harmony import */ var _CreateShop_CreateShop_module_scss__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! ../CreateShop/CreateShop.module.scss */ "./src/components/CreateShop/CreateShop.module.scss");
-/* harmony import */ var _FormInput_FormInput__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! ../FormInput/FormInput */ "./src/components/FormInput/FormInput.js");
-/* harmony import */ var react_router_dom__WEBPACK_IMPORTED_MODULE_4__ = __webpack_require__(/*! react-router-dom */ "./node_modules/react-router/dist/index.js");
-/* harmony import */ var _utilities_users_service__WEBPACK_IMPORTED_MODULE_6__ = __webpack_require__(/*! ../../utilities/users-service */ "./src/utilities/users-service.js");
-/* harmony import */ var _utilities_image_upload__WEBPACK_IMPORTED_MODULE_3__ = __webpack_require__(/*! ../../utilities/image-upload */ "./src/utilities/image-upload.js");
-/* provided dependency */ var React = __webpack_require__(/*! react */ "./node_modules/react/index.js");
-function _extends() { _extends = Object.assign ? Object.assign.bind() : function (target) { for (var i = 1; i < arguments.length; i++) { var source = arguments[i]; for (var key in source) { if (Object.prototype.hasOwnProperty.call(source, key)) { target[key] = source[key]; } } } return target; }; return _extends.apply(this, arguments); }
-function asyncGeneratorStep(gen, resolve, reject, _next, _throw, key, arg) { try { var info = gen[key](arg); var value = info.value; } catch (error) { reject(error); return; } if (info.done) { resolve(value); } else { Promise.resolve(value).then(_next, _throw); } }
-function _asyncToGenerator(fn) { return function () { var self = this, args = arguments; return new Promise(function (resolve, reject) { var gen = fn.apply(self, args); function _next(value) { asyncGeneratorStep(gen, resolve, reject, _next, _throw, "next", value); } function _throw(err) { asyncGeneratorStep(gen, resolve, reject, _next, _throw, "throw", err); } _next(undefined); }); }; }
-function ownKeys(object, enumerableOnly) { var keys = Object.keys(object); if (Object.getOwnPropertySymbols) { var symbols = Object.getOwnPropertySymbols(object); enumerableOnly && (symbols = symbols.filter(function (sym) { return Object.getOwnPropertyDescriptor(object, sym).enumerable; })), keys.push.apply(keys, symbols); } return keys; }
-function _objectSpread(target) { for (var i = 1; i < arguments.length; i++) { var source = null != arguments[i] ? arguments[i] : {}; i % 2 ? ownKeys(Object(source), !0).forEach(function (key) { _defineProperty(target, key, source[key]); }) : Object.getOwnPropertyDescriptors ? Object.defineProperties(target, Object.getOwnPropertyDescriptors(source)) : ownKeys(Object(source)).forEach(function (key) { Object.defineProperty(target, key, Object.getOwnPropertyDescriptor(source, key)); }); } return target; }
-function _defineProperty(obj, key, value) { key = _toPropertyKey(key); if (key in obj) { Object.defineProperty(obj, key, { value: value, enumerable: true, configurable: true, writable: true }); } else { obj[key] = value; } return obj; }
-function _toPropertyKey(arg) { var key = _toPrimitive(arg, "string"); return typeof key === "symbol" ? key : String(key); }
-function _toPrimitive(input, hint) { if (typeof input !== "object" || input === null) return input; var prim = input[Symbol.toPrimitive]; if (prim !== undefined) { var res = prim.call(input, hint || "default"); if (typeof res !== "object") return res; throw new TypeError("@@toPrimitive must return a primitive value."); } return (hint === "string" ? String : Number)(input); }
-
-
-
-
-
-
-
-function CreateShop(_ref) {
-  let {
-    user,
-    setUser,
-    location,
-    userShop,
-    setUserShop,
-    toggleEditShop
-  } = _ref;
-  const [values, setValues] = (0,react__WEBPACK_IMPORTED_MODULE_0__.useState)({
-    name: '',
-    description: '',
-    file: ''
-  });
-  const [file, setFile] = (0,react__WEBPACK_IMPORTED_MODULE_0__.useState)(null);
-  const [photoUrl, setPhotoUrl] = (0,react__WEBPACK_IMPORTED_MODULE_0__.useState)('');
-  const navigate = (0,react_router_dom__WEBPACK_IMPORTED_MODULE_4__.useNavigate)();
-  const shopInputs = [{
-    id: "shop-name",
-    name: "name",
-    type: "text",
-    placeholder: "Shop Name",
-    value: location.pathname === '/account' ? values.name : userShop === null || userShop === void 0 ? void 0 : userShop.name,
-    errorMessage: "Shop name is required and can't include special characters",
-    label: "Shop Name",
-    pattern: "^[A-Za-z0-9 ']+$",
-    required: true
-  }, {
-    id: "shop-description",
-    name: "description",
-    type: "text",
-    placeholder: "Shop Description",
-    value: location.pathname === '/account' ? values.description : userShop === null || userShop === void 0 ? void 0 : userShop.description,
-    errorMessage: "Shop description is required",
-    label: "Shop Description",
-    required: true
-  }];
-  const logoInputProps = {
-    id: "shop-logo",
-    name: "file",
-    type: "file",
-    accept: ".png, .jpg, .jpeg",
-    errorMessage: "File type must be .png, .jpeg, or .jpg",
-    label: "Shop Logo Image"
-  };
-  const imageInputProps = {
-    id: "add-photo",
-    name: "file",
-    type: "file",
-    accept: ".png, .jpg, .jpeg",
-    errorMessage: "File type must be .png, .jpeg, or .jpg",
-    label: "Shop Image"
-  };
-  const handleShopInputChange = e => {
-    setValues(_objectSpread(_objectSpread({}, values), {}, {
-      [e.target.name]: e.target.value
-    }));
-  };
-
-  // 🟥 function for handling image upload 🟥
-  function handleShopSubmit(_x) {
-    return _handleShopSubmit.apply(this, arguments);
-  }
-  function _handleShopSubmit() {
-    _handleShopSubmit = _asyncToGenerator(function* (e) {
-      e.preventDefault();
-      if (location.pathname === '/shopmgmt') {
-        // send request to update shop
-        const formData = new FormData();
-        formData.append('file', file);
-        for (let key in values) {
-          formData.append(key, values[key]);
-        }
-        const updatedShop = yield (0,_utilities_image_upload__WEBPACK_IMPORTED_MODULE_3__.shopPut)(userShop._id, formData);
-        setPhotoUrl(updatedShop.secure_url);
-        console.log(updatedShop);
-        setUserShop(updatedShop);
-        toggleEditShop();
-      } else {
-        // send request to create shop
-        const {
-          shopOwner,
-          shop
-        } = yield (0,_utilities_shops_api__WEBPACK_IMPORTED_MODULE_5__.createShop)({
-          seller: user._id,
-          name: values.name,
-          description: values.description
-        });
-        // set user state to have shop info
-        const updatedUser = yield (0,_utilities_users_service__WEBPACK_IMPORTED_MODULE_6__.updateUser)(user._id, shopOwner);
-        setUser(updatedUser);
-        setUserShop(shop);
-        navigate('/shopmgmt');
-      }
-    });
-    return _handleShopSubmit.apply(this, arguments);
-  }
-  const handleImageChange = e => {
-    e.preventDefault();
-    console.log(e.target.files);
-    let reader = new FileReader();
-    let file = e.target.files[0];
-    reader.onloadend = () => {
-      setFile(file);
-    };
-    reader.readAsDataURL(file);
-  };
-  return /*#__PURE__*/React.createElement("div", {
-    className: _CreateShop_CreateShop_module_scss__WEBPACK_IMPORTED_MODULE_1__["default"].CreateShop
-  }, /*#__PURE__*/React.createElement("div", {
-    className: "form-container"
-  }, /*#__PURE__*/React.createElement("h1", {
-    className: _CreateShop_CreateShop_module_scss__WEBPACK_IMPORTED_MODULE_1__["default"].h1
-  }, location.pathname === '/account' ? 'Create A Shop' : 'Edit Shop Details'), /*#__PURE__*/React.createElement("form", {
-    autoComplete: "off",
-    onSubmit: handleShopSubmit
-  }, /*#__PURE__*/React.createElement(_FormInput_FormInput__WEBPACK_IMPORTED_MODULE_2__["default"], _extends({}, imageInputProps, {
-    handleInputChange: handleImageChange
-  })), shopInputs.map(input => /*#__PURE__*/React.createElement(_FormInput_FormInput__WEBPACK_IMPORTED_MODULE_2__["default"], _extends({
-    key: input.id
-  }, input, {
-    value: values[input.name],
-    handleInputChange: handleShopInputChange
-  }))), /*#__PURE__*/React.createElement("button", {
-    formMethod: "dialog"
-  }, location.pathname === '/account' ? 'Create Shop' : 'Update Shop'))));
-}
 
 /***/ }),
 
@@ -1319,12 +843,13 @@ function NavBar(_ref) {
   }))), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default().createElement(react_router_dom__WEBPACK_IMPORTED_MODULE_8__.Link, {
     to: "/account"
   }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default().createElement("div", null, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default().createElement("img", {
-    src: _assets_images_user_icon_svg__WEBPACK_IMPORTED_MODULE_2__,
+    className: user !== null && user !== void 0 && user.imageUrl ? _NavBar_module_scss__WEBPACK_IMPORTED_MODULE_1__["default"].userPhoto : '',
+    src: user !== null && user !== void 0 && user.imageUrl ? user.imageUrl : _assets_images_user_icon_svg__WEBPACK_IMPORTED_MODULE_2__,
     alt: "user-icon"
   })))) : /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default().createElement("div", {
     className: _NavBar_module_scss__WEBPACK_IMPORTED_MODULE_1__["default"].login,
     onClick: toggleAuthModal
-  }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default().createElement("p", null, "Log In")), userShop.name !== 'Loading...' ? /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default().createElement(react_router_dom__WEBPACK_IMPORTED_MODULE_8__.Link, {
+  }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default().createElement("p", null, "Log In")), (userShop === null || userShop === void 0 ? void 0 : userShop.name) !== 'Loading...' ? /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default().createElement(react_router_dom__WEBPACK_IMPORTED_MODULE_8__.Link, {
     to: "/shopmgmt"
   }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default().createElement("div", null, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default().createElement("img", {
     src: _assets_images_shop_icon_svg__WEBPACK_IMPORTED_MODULE_5__,
@@ -1455,6 +980,205 @@ function OrderListItem(_ref) {
     className: _OrderListItem_module_scss__WEBPACK_IMPORTED_MODULE_0__["default"].selectOrderBtn,
     onClick: () => handleSelectOrder(order)
   }, "Show Details"));
+}
+
+/***/ }),
+
+/***/ "./src/components/ProductForm/ProductForm.js":
+/*!***************************************************!*\
+  !*** ./src/components/ProductForm/ProductForm.js ***!
+  \***************************************************/
+/***/ ((__unused_webpack_module, __webpack_exports__, __webpack_require__) => {
+
+/* harmony export */ __webpack_require__.d(__webpack_exports__, {
+/* harmony export */   "default": () => (/* binding */ ProductForm)
+/* harmony export */ });
+/* harmony import */ var react__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! react */ "./node_modules/react/index.js");
+/* harmony import */ var react__WEBPACK_IMPORTED_MODULE_0___default = /*#__PURE__*/__webpack_require__.n(react__WEBPACK_IMPORTED_MODULE_0__);
+/* harmony import */ var _ProductForm_module_scss__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! ./ProductForm.module.scss */ "./src/components/ProductForm/ProductForm.module.scss");
+/* harmony import */ var _FormInput_FormInput__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! ../FormInput/FormInput */ "./src/components/FormInput/FormInput.js");
+/* harmony import */ var react_router_dom__WEBPACK_IMPORTED_MODULE_4__ = __webpack_require__(/*! react-router-dom */ "./node_modules/react-router/dist/index.js");
+/* harmony import */ var _utilities_image_upload__WEBPACK_IMPORTED_MODULE_3__ = __webpack_require__(/*! ../../utilities/image-upload */ "./src/utilities/image-upload.js");
+/* provided dependency */ var React = __webpack_require__(/*! react */ "./node_modules/react/index.js");
+function _extends() { _extends = Object.assign ? Object.assign.bind() : function (target) { for (var i = 1; i < arguments.length; i++) { var source = arguments[i]; for (var key in source) { if (Object.prototype.hasOwnProperty.call(source, key)) { target[key] = source[key]; } } } return target; }; return _extends.apply(this, arguments); }
+function asyncGeneratorStep(gen, resolve, reject, _next, _throw, key, arg) { try { var info = gen[key](arg); var value = info.value; } catch (error) { reject(error); return; } if (info.done) { resolve(value); } else { Promise.resolve(value).then(_next, _throw); } }
+function _asyncToGenerator(fn) { return function () { var self = this, args = arguments; return new Promise(function (resolve, reject) { var gen = fn.apply(self, args); function _next(value) { asyncGeneratorStep(gen, resolve, reject, _next, _throw, "next", value); } function _throw(err) { asyncGeneratorStep(gen, resolve, reject, _next, _throw, "throw", err); } _next(undefined); }); }; }
+function ownKeys(object, enumerableOnly) { var keys = Object.keys(object); if (Object.getOwnPropertySymbols) { var symbols = Object.getOwnPropertySymbols(object); enumerableOnly && (symbols = symbols.filter(function (sym) { return Object.getOwnPropertyDescriptor(object, sym).enumerable; })), keys.push.apply(keys, symbols); } return keys; }
+function _objectSpread(target) { for (var i = 1; i < arguments.length; i++) { var source = null != arguments[i] ? arguments[i] : {}; i % 2 ? ownKeys(Object(source), !0).forEach(function (key) { _defineProperty(target, key, source[key]); }) : Object.getOwnPropertyDescriptors ? Object.defineProperties(target, Object.getOwnPropertyDescriptors(source)) : ownKeys(Object(source)).forEach(function (key) { Object.defineProperty(target, key, Object.getOwnPropertyDescriptor(source, key)); }); } return target; }
+function _defineProperty(obj, key, value) { key = _toPropertyKey(key); if (key in obj) { Object.defineProperty(obj, key, { value: value, enumerable: true, configurable: true, writable: true }); } else { obj[key] = value; } return obj; }
+function _toPropertyKey(arg) { var key = _toPrimitive(arg, "string"); return typeof key === "symbol" ? key : String(key); }
+function _toPrimitive(input, hint) { if (typeof input !== "object" || input === null) return input; var prim = input[Symbol.toPrimitive]; if (prim !== undefined) { var res = prim.call(input, hint || "default"); if (typeof res !== "object") return res; throw new TypeError("@@toPrimitive must return a primitive value."); } return (hint === "string" ? String : Number)(input); }
+
+
+
+
+
+
+function ProductForm(_ref) {
+  let {
+    user,
+    setUser,
+    userShop,
+    setUserShop,
+    categories,
+    setShopProducts,
+    shopProducts,
+    location
+  } = _ref;
+  const [productValues, setProductValues] = (0,react__WEBPACK_IMPORTED_MODULE_0__.useState)({
+    name: '',
+    description: '',
+    price: '',
+    category: ''
+  });
+  const [file, setFile] = (0,react__WEBPACK_IMPORTED_MODULE_0__.useState)(null);
+  const [photoUrl, setPhotoUrl] = (0,react__WEBPACK_IMPORTED_MODULE_0__.useState)('');
+  const navigate = (0,react_router_dom__WEBPACK_IMPORTED_MODULE_4__.useNavigate)();
+  const productInputs = [{
+    id: "product-name",
+    name: "name",
+    type: "text",
+    placeholder: "Product Name",
+    value: location.pathname === '/shopmgmt' ? productValues.name : userShop === null || userShop === void 0 ? void 0 : userShop.name,
+    errorMessage: "Product name is required and \n        can't include special characters",
+    label: "Product Name",
+    pattern: "^[A-Za-z0-9 ']+$",
+    required: true
+  }, {
+    id: "product-description",
+    name: "description",
+    type: "text",
+    placeholder: "Product Description",
+    value: location.pathname === '/shopmgmt' ? productValues.description : userShop === null || userShop === void 0 ? void 0 : userShop.description,
+    errorMessage: "Product description is required",
+    label: "Product Description",
+    required: true
+  }, {
+    id: "product-price",
+    name: "price",
+    type: "text",
+    placeholder: "00.00",
+    value: location.pathname === '/shopmgmt' ? productValues.price : userShop === null || userShop === void 0 ? void 0 : userShop.price,
+    errorMessage: "Product price is required",
+    label: "Product Price",
+    required: true
+  }];
+  const photoInputProps = {
+    id: "add-photo",
+    name: "file",
+    type: "file",
+    accept: ".png, .jpg, .jpeg",
+    errorMessage: "File type must be .png, .jpeg, or .jpg",
+    label: "Product Image"
+  };
+  const handleProductInputChange = e => {
+    setProductValues(_objectSpread(_objectSpread({}, productValues), {}, {
+      [e.target.name]: e.target.value
+    }));
+  };
+  function handleProductSubmit(_x) {
+    return _handleProductSubmit.apply(this, arguments);
+  }
+  function _handleProductSubmit() {
+    _handleProductSubmit = _asyncToGenerator(function* (e) {
+      e.preventDefault();
+      // Create an item
+      // save to db
+      // add to shop (state) - i want it to show up
+      // const newItem = {
+      //   name: productValues.name,
+      //   price: parseInt(productValues.price, 10),
+      //   description: productValues.description,
+      //   category: productValues.category,
+      // }
+      // console.log(newItem)
+      // const { shop, item } = await addItemToShop(userShop._id, newItem)
+      // console.log(item)
+      // setUserShop(shop)
+      // setShopProducts( [...shopProducts, item])
+      const formData = new FormData();
+      formData.append('file', file);
+      for (let key in productValues) {
+        formData.append(key, productValues[key]);
+      }
+      const data = yield (0,_utilities_image_upload__WEBPACK_IMPORTED_MODULE_3__.itemPost)(formData);
+      setPhotoUrl(data.secure_url);
+      console.log(data);
+    });
+    return _handleProductSubmit.apply(this, arguments);
+  }
+  function handleProductSubmit(_x2) {
+    return _handleProductSubmit2.apply(this, arguments);
+  }
+  function _handleProductSubmit2() {
+    _handleProductSubmit2 = _asyncToGenerator(function* (e) {
+      e.preventDefault();
+      try {
+        const formData = new FormData();
+        formData.append('file', file);
+        for (let key in productValues) {
+          formData.append(key, productValues[key]);
+        }
+        formData.append('token', localStorage.getItem('token'));
+        // edit the shop in shop management
+        // if (location.pathname === '/shopmgmt') {
+        //   const updatedShop = await itemPut(userShop._id, formData)
+        //   setUserShop(updatedShop)
+        //   toggleEditShop()
+        //   // create product in shopmgmt page
+        // } else {
+        // send request to create product
+        const data = yield (0,_utilities_image_upload__WEBPACK_IMPORTED_MODULE_3__.itemPost)(userShop._id, formData);
+        // set shop state to have shop info
+        setUserShop(data.data.shop);
+        setShopProducts([...shopProducts, data.data.items]);
+        console.log(data);
+        // }
+      } catch (error) {
+        console.error(error);
+      }
+    });
+    return _handleProductSubmit2.apply(this, arguments);
+  }
+  const handleProductImageChange = e => {
+    e.preventDefault();
+    let reader = new FileReader();
+    let file = e.target.files[0];
+    reader.onloadend = () => {
+      setFile(file);
+    };
+    reader.readAsDataURL(file);
+  };
+  return /*#__PURE__*/React.createElement("div", {
+    className: _ProductForm_module_scss__WEBPACK_IMPORTED_MODULE_1__["default"].ProductForm
+  }, /*#__PURE__*/React.createElement("div", null, /*#__PURE__*/React.createElement("h1", {
+    className: _ProductForm_module_scss__WEBPACK_IMPORTED_MODULE_1__["default"].h1
+  }, location.pathname.includes('/shopmgmt') ? 'Create A Product' : 'Edit Product Details'), /*#__PURE__*/React.createElement("form", {
+    className: _ProductForm_module_scss__WEBPACK_IMPORTED_MODULE_1__["default"].form,
+    autoComplete: "off",
+    onSubmit: handleProductSubmit
+  }, /*#__PURE__*/React.createElement(_FormInput_FormInput__WEBPACK_IMPORTED_MODULE_2__["default"], _extends({}, photoInputProps, {
+    handleInputChange: handleProductImageChange
+  })), productInputs.map(input => /*#__PURE__*/React.createElement(_FormInput_FormInput__WEBPACK_IMPORTED_MODULE_2__["default"], _extends({
+    key: input.id
+  }, input, {
+    value: productValues[input.name],
+    handleInputChange: handleProductInputChange
+  }))), /*#__PURE__*/React.createElement("label", {
+    htmlFor: "product-category"
+  }, "Product Category:"), /*#__PURE__*/React.createElement("select", {
+    id: "product-category",
+    name: "category",
+    value: productValues.category,
+    onChange: handleProductInputChange
+  }, categories.slice(1).map(category => {
+    return /*#__PURE__*/React.createElement("option", {
+      key: category,
+      value: category
+    }, category);
+  })), /*#__PURE__*/React.createElement("button", {
+    formMethod: "dialog"
+  }, location.pathname === '/shopmgmt' ? 'Create Product' : 'Update Product'))));
 }
 
 /***/ }),
@@ -1607,6 +1331,148 @@ function SearchBar(_ref) {
     src: _assets_images_search_icon_svg__WEBPACK_IMPORTED_MODULE_1__,
     alt: "search"
   })));
+}
+
+/***/ }),
+
+/***/ "./src/components/ShopForm/ShopForm.js":
+/*!*********************************************!*\
+  !*** ./src/components/ShopForm/ShopForm.js ***!
+  \*********************************************/
+/***/ ((__unused_webpack_module, __webpack_exports__, __webpack_require__) => {
+
+/* harmony export */ __webpack_require__.d(__webpack_exports__, {
+/* harmony export */   "default": () => (/* binding */ ShopForm)
+/* harmony export */ });
+/* harmony import */ var react__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! react */ "./node_modules/react/index.js");
+/* harmony import */ var react__WEBPACK_IMPORTED_MODULE_0___default = /*#__PURE__*/__webpack_require__.n(react__WEBPACK_IMPORTED_MODULE_0__);
+/* harmony import */ var _ShopForm_module_scss__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! ./ShopForm.module.scss */ "./src/components/ShopForm/ShopForm.module.scss");
+/* harmony import */ var _FormInput_FormInput__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! ../FormInput/FormInput */ "./src/components/FormInput/FormInput.js");
+/* harmony import */ var react_router_dom__WEBPACK_IMPORTED_MODULE_4__ = __webpack_require__(/*! react-router-dom */ "./node_modules/react-router/dist/index.js");
+/* harmony import */ var _utilities_image_upload__WEBPACK_IMPORTED_MODULE_3__ = __webpack_require__(/*! ../../utilities/image-upload */ "./src/utilities/image-upload.js");
+/* provided dependency */ var React = __webpack_require__(/*! react */ "./node_modules/react/index.js");
+function _extends() { _extends = Object.assign ? Object.assign.bind() : function (target) { for (var i = 1; i < arguments.length; i++) { var source = arguments[i]; for (var key in source) { if (Object.prototype.hasOwnProperty.call(source, key)) { target[key] = source[key]; } } } return target; }; return _extends.apply(this, arguments); }
+function asyncGeneratorStep(gen, resolve, reject, _next, _throw, key, arg) { try { var info = gen[key](arg); var value = info.value; } catch (error) { reject(error); return; } if (info.done) { resolve(value); } else { Promise.resolve(value).then(_next, _throw); } }
+function _asyncToGenerator(fn) { return function () { var self = this, args = arguments; return new Promise(function (resolve, reject) { var gen = fn.apply(self, args); function _next(value) { asyncGeneratorStep(gen, resolve, reject, _next, _throw, "next", value); } function _throw(err) { asyncGeneratorStep(gen, resolve, reject, _next, _throw, "throw", err); } _next(undefined); }); }; }
+function ownKeys(object, enumerableOnly) { var keys = Object.keys(object); if (Object.getOwnPropertySymbols) { var symbols = Object.getOwnPropertySymbols(object); enumerableOnly && (symbols = symbols.filter(function (sym) { return Object.getOwnPropertyDescriptor(object, sym).enumerable; })), keys.push.apply(keys, symbols); } return keys; }
+function _objectSpread(target) { for (var i = 1; i < arguments.length; i++) { var source = null != arguments[i] ? arguments[i] : {}; i % 2 ? ownKeys(Object(source), !0).forEach(function (key) { _defineProperty(target, key, source[key]); }) : Object.getOwnPropertyDescriptors ? Object.defineProperties(target, Object.getOwnPropertyDescriptors(source)) : ownKeys(Object(source)).forEach(function (key) { Object.defineProperty(target, key, Object.getOwnPropertyDescriptor(source, key)); }); } return target; }
+function _defineProperty(obj, key, value) { key = _toPropertyKey(key); if (key in obj) { Object.defineProperty(obj, key, { value: value, enumerable: true, configurable: true, writable: true }); } else { obj[key] = value; } return obj; }
+function _toPropertyKey(arg) { var key = _toPrimitive(arg, "string"); return typeof key === "symbol" ? key : String(key); }
+function _toPrimitive(input, hint) { if (typeof input !== "object" || input === null) return input; var prim = input[Symbol.toPrimitive]; if (prim !== undefined) { var res = prim.call(input, hint || "default"); if (typeof res !== "object") return res; throw new TypeError("@@toPrimitive must return a primitive value."); } return (hint === "string" ? String : Number)(input); }
+
+
+
+
+
+function ShopForm(_ref) {
+  let {
+    user,
+    setUser,
+    location,
+    userShop,
+    setUserShop,
+    toggleEditShop
+  } = _ref;
+  const [shopValues, setShopValues] = (0,react__WEBPACK_IMPORTED_MODULE_0__.useState)({
+    name: location.pathname === '/shopmgmt' ? userShop.name : '',
+    description: location.pathname === '/shopmgmt' ? userShop.descroption : ''
+  });
+  const [file, setFile] = (0,react__WEBPACK_IMPORTED_MODULE_0__.useState)(null);
+  const [photoUrl, setPhotoUrl] = (0,react__WEBPACK_IMPORTED_MODULE_0__.useState)('');
+  const navigate = (0,react_router_dom__WEBPACK_IMPORTED_MODULE_4__.useNavigate)();
+  const shopInputs = [{
+    id: "shop-name",
+    name: "name",
+    type: "text",
+    placeholder: "Shop Name",
+    value: location.pathname === '/account' ? shopValues.name : userShop === null || userShop === void 0 ? void 0 : userShop.name,
+    errorMessage: "Shop name is required and can't include special characters",
+    label: "Shop Name",
+    pattern: "^[A-Za-z0-9 ']+$",
+    required: true
+  }, {
+    id: "shop-description",
+    name: "description",
+    type: "text",
+    placeholder: "Shop Description",
+    value: location.pathname === '/account' ? shopValues.description : userShop === null || userShop === void 0 ? void 0 : userShop.description,
+    errorMessage: "Shop description is required",
+    label: "Shop Description",
+    required: true
+  }];
+  const logoInputProps = {
+    id: "shop-logo",
+    name: "file",
+    type: "file",
+    accept: ".png, .jpg, .jpeg",
+    errorMessage: "File type must be .png, .jpeg, or .jpg",
+    label: "Shop Logo Image"
+  };
+  const handleShopInputChange = e => {
+    setShopValues(_objectSpread(_objectSpread({}, shopValues), {}, {
+      [e.target.name]: e.target.value
+    }));
+  };
+  function handleShopSubmit(_x) {
+    return _handleShopSubmit.apply(this, arguments);
+  }
+  function _handleShopSubmit() {
+    _handleShopSubmit = _asyncToGenerator(function* (e) {
+      e.preventDefault();
+      try {
+        const formData = new FormData();
+        formData.append('file', file);
+        for (let key in shopValues) {
+          formData.append(key, shopValues[key]);
+        }
+        formData.append('token', localStorage.getItem('token'));
+        // edit the shop in shop management
+        if (location.pathname.includes('/shopmgmt')) {
+          const updatedShop = yield (0,_utilities_image_upload__WEBPACK_IMPORTED_MODULE_3__.shopPut)(userShop._id, formData);
+          setUserShop(updatedShop);
+          toggleEditShop();
+          // create shop in account page
+        } else {
+          // send request to create shop
+          const data = yield (0,_utilities_image_upload__WEBPACK_IMPORTED_MODULE_3__.shopPost)(formData);
+          // set user state to have shop info
+          setUser(data.data.user);
+          setUserShop(data.data.newShop);
+          navigate("/shopmgmt/".concat(data.data.newShop._id));
+        }
+      } catch (error) {
+        console.error(error);
+      }
+    });
+    return _handleShopSubmit.apply(this, arguments);
+  }
+  const handleImageChange = e => {
+    e.preventDefault();
+    let reader = new FileReader();
+    let file = e.target.files[0];
+    reader.onloadend = () => {
+      setFile(file);
+    };
+    reader.readAsDataURL(file);
+  };
+  return /*#__PURE__*/React.createElement("div", {
+    className: _ShopForm_module_scss__WEBPACK_IMPORTED_MODULE_1__["default"].ShopForm
+  }, /*#__PURE__*/React.createElement("div", null, /*#__PURE__*/React.createElement("h1", {
+    className: _ShopForm_module_scss__WEBPACK_IMPORTED_MODULE_1__["default"].h1
+  }, location.pathname === '/account' ? 'Create A Shop' : 'Edit Shop Details'), /*#__PURE__*/React.createElement("form", {
+    className: _ShopForm_module_scss__WEBPACK_IMPORTED_MODULE_1__["default"].form,
+    autoComplete: "off",
+    onSubmit: handleShopSubmit
+  }, /*#__PURE__*/React.createElement(_FormInput_FormInput__WEBPACK_IMPORTED_MODULE_2__["default"], _extends({}, logoInputProps, {
+    handleInputChange: handleImageChange
+  })), shopInputs.map(input => /*#__PURE__*/React.createElement(_FormInput_FormInput__WEBPACK_IMPORTED_MODULE_2__["default"], _extends({
+    key: input.id
+  }, input, {
+    value: shopValues[input.name],
+    handleInputChange: handleShopInputChange
+  }))), /*#__PURE__*/React.createElement("button", {
+    formMethod: "dialog"
+  }, location.pathname === '/account' ? 'Create Shop' : 'Update Shop'))));
 }
 
 /***/ }),
@@ -1902,7 +1768,7 @@ root.render( /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default().createEle
 /* harmony import */ var react_router_dom__WEBPACK_IMPORTED_MODULE_9__ = __webpack_require__(/*! react-router-dom */ "./node_modules/react-router-dom/dist/index.js");
 /* harmony import */ var _utilities_users_service__WEBPACK_IMPORTED_MODULE_8__ = __webpack_require__(/*! ../../utilities/users-service */ "./src/utilities/users-service.js");
 /* harmony import */ var _AccountPage_module_scss__WEBPACK_IMPORTED_MODULE_4__ = __webpack_require__(/*! ./AccountPage.module.scss */ "./src/pages/AccountPage/AccountPage.module.scss");
-/* harmony import */ var _components_CreateShop_CreateShop__WEBPACK_IMPORTED_MODULE_5__ = __webpack_require__(/*! ../../components/CreateShop/CreateShop */ "./src/components/CreateShop/CreateShop.js");
+/* harmony import */ var _components_ShopForm_ShopForm__WEBPACK_IMPORTED_MODULE_5__ = __webpack_require__(/*! ../../components/ShopForm/ShopForm */ "./src/components/ShopForm/ShopForm.js");
 /* harmony import */ var _components_ProductList_ProductList__WEBPACK_IMPORTED_MODULE_6__ = __webpack_require__(/*! ../../components/ProductList/ProductList */ "./src/components/ProductList/ProductList.js");
 /* provided dependency */ var React = __webpack_require__(/*! react */ "./node_modules/react/index.js");
 function asyncGeneratorStep(gen, resolve, reject, _next, _throw, key, arg) { try { var info = gen[key](arg); var value = info.value; } catch (error) { reject(error); return; } if (info.done) { resolve(value); } else { Promise.resolve(value).then(_next, _throw); } }
@@ -1989,7 +1855,7 @@ function AccountPage(_ref) {
   }, /*#__PURE__*/React.createElement("div", {
     className: _AccountPage_module_scss__WEBPACK_IMPORTED_MODULE_4__["default"].infoSection
   }, /*#__PURE__*/React.createElement("img", {
-    src: user.name === 'c186ec' || !user.imageUrl ? _assets_images_user_icon_svg__WEBPACK_IMPORTED_MODULE_2__ : user.imageUrl
+    src: (user === null || user === void 0 ? void 0 : user.name) === 'c186ec' || !(user !== null && user !== void 0 && user.imageUrl) ? _assets_images_user_icon_svg__WEBPACK_IMPORTED_MODULE_2__ : user === null || user === void 0 ? void 0 : user.imageUrl
   }), /*#__PURE__*/React.createElement("div", {
     className: _AccountPage_module_scss__WEBPACK_IMPORTED_MODULE_4__["default"].infoDetails
   }, /*#__PURE__*/React.createElement("h1", {
@@ -2036,7 +1902,7 @@ function AccountPage(_ref) {
     ref: shopModalRef,
     onClose: toggleCreateShop,
     onSubmit: toggleCreateShop
-  }, /*#__PURE__*/React.createElement(_components_CreateShop_CreateShop__WEBPACK_IMPORTED_MODULE_5__["default"], {
+  }, /*#__PURE__*/React.createElement(_components_ShopForm_ShopForm__WEBPACK_IMPORTED_MODULE_5__["default"], {
     user: user,
     setUser: setUser,
     location: location,
@@ -2838,19 +2704,17 @@ function SellerShop(_ref) {
 /* harmony export */ });
 /* harmony import */ var react__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! react */ "./node_modules/react/index.js");
 /* harmony import */ var react__WEBPACK_IMPORTED_MODULE_0___default = /*#__PURE__*/__webpack_require__.n(react__WEBPACK_IMPORTED_MODULE_0__);
-/* harmony import */ var react_router_dom__WEBPACK_IMPORTED_MODULE_8__ = __webpack_require__(/*! react-router-dom */ "./node_modules/react-router/dist/index.js");
-/* harmony import */ var _utilities_shops_api__WEBPACK_IMPORTED_MODULE_9__ = __webpack_require__(/*! ../../utilities/shops-api */ "./src/utilities/shops-api.js");
+/* harmony import */ var react_router_dom__WEBPACK_IMPORTED_MODULE_7__ = __webpack_require__(/*! react-router-dom */ "./node_modules/react-router/dist/index.js");
+/* harmony import */ var _utilities_shops_api__WEBPACK_IMPORTED_MODULE_8__ = __webpack_require__(/*! ../../utilities/shops-api */ "./src/utilities/shops-api.js");
 /* harmony import */ var _ShopManagement_module_scss__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! ./ShopManagement.module.scss */ "./src/pages/ShopManagement/ShopManagement.module.scss");
-/* harmony import */ var _components_CreateShop_CreateShop__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! ../../components/CreateShop/CreateShop */ "./src/components/CreateShop/CreateShop.js");
-/* harmony import */ var _components_CreateProduct_CreateProduct__WEBPACK_IMPORTED_MODULE_3__ = __webpack_require__(/*! ../../components/CreateProduct/CreateProduct */ "./src/components/CreateProduct/CreateProduct.js");
+/* harmony import */ var _components_ShopForm_ShopForm__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! ../../components/ShopForm/ShopForm */ "./src/components/ShopForm/ShopForm.js");
+/* harmony import */ var _components_ProductForm_ProductForm__WEBPACK_IMPORTED_MODULE_3__ = __webpack_require__(/*! ../../components/ProductForm/ProductForm */ "./src/components/ProductForm/ProductForm.js");
 /* harmony import */ var _components_ProductList_ProductList__WEBPACK_IMPORTED_MODULE_4__ = __webpack_require__(/*! ../../components/ProductList/ProductList */ "./src/components/ProductList/ProductList.js");
 /* harmony import */ var _components_EditProductForm_EditProductForm__WEBPACK_IMPORTED_MODULE_5__ = __webpack_require__(/*! ../../components/EditProductForm/EditProductForm */ "./src/components/EditProductForm/EditProductForm.js");
-/* harmony import */ var _components_EditShopForm_EditShopForm__WEBPACK_IMPORTED_MODULE_6__ = __webpack_require__(/*! ../../components/EditShopForm/EditShopForm */ "./src/components/EditShopForm/EditShopForm.js");
-/* harmony import */ var _assets_images_shop_icon_svg__WEBPACK_IMPORTED_MODULE_7__ = __webpack_require__(/*! ../../assets/images/shop-icon.svg */ "./src/assets/images/shop-icon.svg");
+/* harmony import */ var _assets_images_shop_icon_svg__WEBPACK_IMPORTED_MODULE_6__ = __webpack_require__(/*! ../../assets/images/shop-icon.svg */ "./src/assets/images/shop-icon.svg");
 /* provided dependency */ var React = __webpack_require__(/*! react */ "./node_modules/react/index.js");
 function asyncGeneratorStep(gen, resolve, reject, _next, _throw, key, arg) { try { var info = gen[key](arg); var value = info.value; } catch (error) { reject(error); return; } if (info.done) { resolve(value); } else { Promise.resolve(value).then(_next, _throw); } }
 function _asyncToGenerator(fn) { return function () { var self = this, args = arguments; return new Promise(function (resolve, reject) { var gen = fn.apply(self, args); function _next(value) { asyncGeneratorStep(gen, resolve, reject, _next, _throw, "next", value); } function _throw(err) { asyncGeneratorStep(gen, resolve, reject, _next, _throw, "throw", err); } _next(undefined); }); }; }
-
 
 
 
@@ -2877,16 +2741,16 @@ function ShopManagement(_ref) {
   const productEditModalRef = (0,react__WEBPACK_IMPORTED_MODULE_0__.useRef)();
   let {
     shopId
-  } = (0,react_router_dom__WEBPACK_IMPORTED_MODULE_8__.useParams)();
-  const navigate = (0,react_router_dom__WEBPACK_IMPORTED_MODULE_8__.useNavigate)();
-  const location = (0,react_router_dom__WEBPACK_IMPORTED_MODULE_8__.useLocation)();
+  } = (0,react_router_dom__WEBPACK_IMPORTED_MODULE_7__.useParams)();
+  const navigate = (0,react_router_dom__WEBPACK_IMPORTED_MODULE_7__.useNavigate)();
+  const location = (0,react_router_dom__WEBPACK_IMPORTED_MODULE_7__.useLocation)();
   (0,react__WEBPACK_IMPORTED_MODULE_0__.useEffect)(() => {
     function getUserShop() {
       return _getUserShop.apply(this, arguments);
     }
     function _getUserShop() {
       _getUserShop = _asyncToGenerator(function* () {
-        const userShopInfo = yield _utilities_shops_api__WEBPACK_IMPORTED_MODULE_9__.getShop(shopId);
+        const userShopInfo = yield _utilities_shops_api__WEBPACK_IMPORTED_MODULE_8__.getShop(shopId);
         setUserShop(userShopInfo);
       });
       return _getUserShop.apply(this, arguments);
@@ -2921,7 +2785,7 @@ function ShopManagement(_ref) {
   }
   function _deleteUserShop() {
     _deleteUserShop = _asyncToGenerator(function* () {
-      const user = yield _utilities_shops_api__WEBPACK_IMPORTED_MODULE_9__.deleteShop(userShop._id);
+      const user = yield _utilities_shops_api__WEBPACK_IMPORTED_MODULE_8__.deleteShop(userShop._id);
       setUserShop(null);
       setUser(user);
       navigate('/account');
@@ -2936,7 +2800,7 @@ function ShopManagement(_ref) {
     className: _ShopManagement_module_scss__WEBPACK_IMPORTED_MODULE_1__["default"].infoSection
   }, /*#__PURE__*/React.createElement("img", {
     className: userShop.heroImage ? _ShopManagement_module_scss__WEBPACK_IMPORTED_MODULE_1__["default"].circle : '',
-    src: userShop.heroImage ? userShop.heroImage : _assets_images_shop_icon_svg__WEBPACK_IMPORTED_MODULE_7__
+    src: userShop.heroImage ? userShop.heroImage : _assets_images_shop_icon_svg__WEBPACK_IMPORTED_MODULE_6__
   }), /*#__PURE__*/React.createElement("div", {
     className: _ShopManagement_module_scss__WEBPACK_IMPORTED_MODULE_1__["default"].shopInfo
   }, /*#__PURE__*/React.createElement("h1", {
@@ -2965,7 +2829,7 @@ function ShopManagement(_ref) {
     className: _ShopManagement_module_scss__WEBPACK_IMPORTED_MODULE_1__["default"].dialog,
     ref: shopEditModalRef,
     onClose: toggleEditShop
-  }, /*#__PURE__*/React.createElement(_components_EditShopForm_EditShopForm__WEBPACK_IMPORTED_MODULE_6__["default"], {
+  }, /*#__PURE__*/React.createElement(_components_ShopForm_ShopForm__WEBPACK_IMPORTED_MODULE_2__["default"], {
     toggleEditShop: toggleEditShop,
     user: user,
     setUser: setUser,
@@ -2976,7 +2840,7 @@ function ShopManagement(_ref) {
     className: _ShopManagement_module_scss__WEBPACK_IMPORTED_MODULE_1__["default"].dialog,
     ref: productModalRef,
     onClose: toggleCreateProduct
-  }, /*#__PURE__*/React.createElement(_components_CreateProduct_CreateProduct__WEBPACK_IMPORTED_MODULE_3__["default"], {
+  }, /*#__PURE__*/React.createElement(_components_ProductForm_ProductForm__WEBPACK_IMPORTED_MODULE_3__["default"], {
     toggleCreateProduct: toggleCreateProduct,
     shopProducts: shopProducts,
     setShopProducts: setShopProducts,
@@ -3095,12 +2959,12 @@ function _shopPut() {
   });
   return _shopPut.apply(this, arguments);
 }
-function itemPut(_x7, _x8) {
+function itemPut(_x7, _x8, _x9) {
   return _itemPut.apply(this, arguments);
 }
 function _itemPut() {
-  _itemPut = _asyncToGenerator(function* (id, imageData) {
-    return axios__WEBPACK_IMPORTED_MODULE_0___default().put("/api/shops/items/".concat(id), imageData, {
+  _itemPut = _asyncToGenerator(function* (shopId, itemId, imageData) {
+    return axios__WEBPACK_IMPORTED_MODULE_0___default().put("/api/shops/".concat(shopId, "/items/").concat(itemId), imageData, {
       headers: new Headers({
         'Content-Type': "multipart/form-data",
         'Authorization': "Bearer ".concat((0,_utilities_users_service__WEBPACK_IMPORTED_MODULE_1__.getToken)())
@@ -3109,12 +2973,12 @@ function _itemPut() {
   });
   return _itemPut.apply(this, arguments);
 }
-function itemPost(_x9) {
+function itemPost(_x10, _x11) {
   return _itemPost.apply(this, arguments);
 }
 function _itemPost() {
-  _itemPost = _asyncToGenerator(function* (imageData) {
-    return axios__WEBPACK_IMPORTED_MODULE_0___default().post("/api/shops/items/".concat(id), imageData, {
+  _itemPost = _asyncToGenerator(function* (shopId, imageData) {
+    return axios__WEBPACK_IMPORTED_MODULE_0___default().post("/api/shops/".concat(shopId, "/items"), imageData, {
       headers: new Headers({
         'Content-Type': "multipart/form-data",
         'Authorization': "Bearer ".concat((0,_utilities_users_service__WEBPACK_IMPORTED_MODULE_1__.getToken)())
@@ -3363,11 +3227,10 @@ function _sendUrlFormData() {
 /***/ ((__unused_webpack_module, __webpack_exports__, __webpack_require__) => {
 
 /* harmony export */ __webpack_require__.d(__webpack_exports__, {
-/* harmony export */   createShop: () => (/* binding */ createShop),
 /* harmony export */   deleteShop: () => (/* binding */ deleteShop),
 /* harmony export */   getShop: () => (/* binding */ getShop)
 /* harmony export */ });
-/* unused harmony exports editShopInfo, addItemToShop, removeItemFromShop */
+/* unused harmony exports createShop, editShopInfo, addItemToShop, removeItemFromShop */
 /* harmony import */ var _send_request__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! ./send-request */ "./src/utilities/send-request.js");
 
 const BASE_URL = '/api/shops';
@@ -3487,9 +3350,9 @@ export default async function sendRequest(url, method = 'GET', payload = null) {
 /* harmony export */   logOut: () => (/* binding */ logOut),
 /* harmony export */   login: () => (/* binding */ login),
 /* harmony export */   signUp: () => (/* binding */ signUp),
-/* harmony export */   toggleFavorites: () => (/* binding */ toggleFavorites),
-/* harmony export */   updateUser: () => (/* binding */ updateUser)
+/* harmony export */   toggleFavorites: () => (/* binding */ toggleFavorites)
 /* harmony export */ });
+/* unused harmony export updateUser */
 /* harmony import */ var _users_api__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! ./users-api */ "./src/utilities/users-api.js");
 function asyncGeneratorStep(gen, resolve, reject, _next, _throw, key, arg) { try { var info = gen[key](arg); var value = info.value; } catch (error) { reject(error); return; } if (info.done) { resolve(value); } else { Promise.resolve(value).then(_next, _throw); } }
 function _asyncToGenerator(fn) { return function () { var self = this, args = arguments; return new Promise(function (resolve, reject) { var gen = fn.apply(self, args); function _next(value) { asyncGeneratorStep(gen, resolve, reject, _next, _throw, "next", value); } function _throw(err) { asyncGeneratorStep(gen, resolve, reject, _next, _throw, "throw", err); } _next(undefined); }); }; }
@@ -3716,146 +3579,6 @@ ___CSS_LOADER_EXPORT___.push([module.id, `.n2EL_wbvlH8E3w61dJMK {
 // Exports
 ___CSS_LOADER_EXPORT___.locals = {
 	"categoryRow": `n2EL_wbvlH8E3w61dJMK`
-};
-/* harmony default export */ const __WEBPACK_DEFAULT_EXPORT__ = (___CSS_LOADER_EXPORT___);
-
-
-/***/ }),
-
-/***/ "./node_modules/css-loader/dist/cjs.js??ruleSet[1].rules[2].use[1]!./node_modules/sass-loader/dist/cjs.js!./node_modules/postcss-loader/dist/cjs.js!./src/components/CreateProduct/CreateProduct.module.scss":
-/*!*******************************************************************************************************************************************************************************************************************!*\
-  !*** ./node_modules/css-loader/dist/cjs.js??ruleSet[1].rules[2].use[1]!./node_modules/sass-loader/dist/cjs.js!./node_modules/postcss-loader/dist/cjs.js!./src/components/CreateProduct/CreateProduct.module.scss ***!
-  \*******************************************************************************************************************************************************************************************************************/
-/***/ ((module, __webpack_exports__, __webpack_require__) => {
-
-/* harmony export */ __webpack_require__.d(__webpack_exports__, {
-/* harmony export */   "default": () => (__WEBPACK_DEFAULT_EXPORT__)
-/* harmony export */ });
-/* harmony import */ var _node_modules_css_loader_dist_runtime_sourceMaps_js__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! ../../../node_modules/css-loader/dist/runtime/sourceMaps.js */ "./node_modules/css-loader/dist/runtime/sourceMaps.js");
-/* harmony import */ var _node_modules_css_loader_dist_runtime_sourceMaps_js__WEBPACK_IMPORTED_MODULE_0___default = /*#__PURE__*/__webpack_require__.n(_node_modules_css_loader_dist_runtime_sourceMaps_js__WEBPACK_IMPORTED_MODULE_0__);
-/* harmony import */ var _node_modules_css_loader_dist_runtime_api_js__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! ../../../node_modules/css-loader/dist/runtime/api.js */ "./node_modules/css-loader/dist/runtime/api.js");
-/* harmony import */ var _node_modules_css_loader_dist_runtime_api_js__WEBPACK_IMPORTED_MODULE_1___default = /*#__PURE__*/__webpack_require__.n(_node_modules_css_loader_dist_runtime_api_js__WEBPACK_IMPORTED_MODULE_1__);
-// Imports
-
-
-var ___CSS_LOADER_EXPORT___ = _node_modules_css_loader_dist_runtime_api_js__WEBPACK_IMPORTED_MODULE_1___default()((_node_modules_css_loader_dist_runtime_sourceMaps_js__WEBPACK_IMPORTED_MODULE_0___default()));
-// Module
-___CSS_LOADER_EXPORT___.push([module.id, `.tM0gkDZzXybR6BsWESBt {
-  text-align: center;
-  font-size: 3rem;
-  color: gray;
-  margin: 0.6rem 0;
-}
-
-.LD4tzxwjv3zxQBf576f8 {
-  display: flex;
-  flex-direction: column;
-  width: 100%;
-  padding: 3rem;
-  margin: -1.8rem 0;
-}
-.LD4tzxwjv3zxQBf576f8 button {
-  width: 100%;
-  height: 2.5rem;
-  padding: 0.5rem;
-  border: none;
-  background-color: var(--accent);
-  color: white;
-  border-radius: 0.2rem;
-  font-weight: bold;
-  font-size: 1.3rem;
-  cursor: pointer;
-  margin-top: 1rem;
-  margin-bottom: 1rem;
-  letter-spacing: 0.2rem;
-  transition: all ease 0.35s;
-}
-.LD4tzxwjv3zxQBf576f8 button:hover {
-  background-color: rgb(7, 99, 7);
-  transform: scale(1.015);
-}
-.LD4tzxwjv3zxQBf576f8 select {
-  width: 9rem;
-  font-size: 1em;
-  border-radius: 10px;
-}
-.LD4tzxwjv3zxQBf576f8 select:focus {
-  outline: none;
-  border-color: var(--accent);
-}
-.LD4tzxwjv3zxQBf576f8 option {
-  color: gray;
-}
-.LD4tzxwjv3zxQBf576f8 label {
-  font-size: 1.5em;
-  color: gray;
-}`, "",{"version":3,"sources":["webpack://./src/components/CreateProduct/CreateProduct.module.scss"],"names":[],"mappings":"AAAA;EACI,kBAAA;EACA,eAAA;EACA,WAAA;EACA,gBAAA;AACJ;;AAEA;EACI,aAAA;EACA,sBAAA;EACA,WAAA;EACA,aAAA;EACA,iBAAA;AACJ;AACI;EACI,WAAA;EACA,cAAA;EACA,eAAA;EACA,YAAA;EACA,+BAAA;EACA,YAAA;EACA,qBAAA;EACA,iBAAA;EACA,iBAAA;EACA,eAAA;EACA,gBAAA;EACA,mBAAA;EACA,sBAAA;EACA,0BAAA;AACR;AAEI;EACI,+BAAA;EACA,uBAAA;AAAR;AAGI;EACI,WAAA;EACA,cAAA;EACA,mBAAA;AADR;AAII;EACI,aAAA;EACA,2BAAA;AAFR;AAKI;EACI,WAAA;AAHR;AAMI;EACI,gBAAA;EACA,WAAA;AAJR","sourcesContent":[".h1 {\n    text-align: center;\n    font-size: 3rem;\n    color: gray;\n    margin: .6rem 0;\n}\n\n.form {\n    display: flex;\n    flex-direction: column;\n    width: 100%;\n    padding: 3rem;\n    margin: -1.8rem 0;\n\n    button {\n        width: 100%;\n        height: 2.5rem;\n        padding: .5rem;\n        border: none;\n        background-color: var(--accent);\n        color: white;\n        border-radius: .2rem;\n        font-weight: bold;\n        font-size: 1.3rem;\n        cursor: pointer;\n        margin-top: 1rem;\n        margin-bottom: 1rem;\n        letter-spacing: .2rem;\n        transition: all ease .35s;\n    }\n\n    button:hover {\n        background-color: rgb(7, 99, 7);\n        transform: scale(1.015);\n    }\n\n    select {\n        width: 9rem;\n        font-size: 1em;\n        border-radius: 10px;\n    }\n\n    select:focus {\n        outline: none;\n        border-color: var(--accent);\n    }\n    \n    option {\n        color: gray;\n    }\n\n    label{\n        font-size: 1.5em;\n        color: gray;\n    }\n}"],"sourceRoot":""}]);
-// Exports
-___CSS_LOADER_EXPORT___.locals = {
-	"h1": `tM0gkDZzXybR6BsWESBt`,
-	"form": `LD4tzxwjv3zxQBf576f8`
-};
-/* harmony default export */ const __WEBPACK_DEFAULT_EXPORT__ = (___CSS_LOADER_EXPORT___);
-
-
-/***/ }),
-
-/***/ "./node_modules/css-loader/dist/cjs.js??ruleSet[1].rules[2].use[1]!./node_modules/sass-loader/dist/cjs.js!./node_modules/postcss-loader/dist/cjs.js!./src/components/CreateShop/CreateShop.module.scss":
-/*!*************************************************************************************************************************************************************************************************************!*\
-  !*** ./node_modules/css-loader/dist/cjs.js??ruleSet[1].rules[2].use[1]!./node_modules/sass-loader/dist/cjs.js!./node_modules/postcss-loader/dist/cjs.js!./src/components/CreateShop/CreateShop.module.scss ***!
-  \*************************************************************************************************************************************************************************************************************/
-/***/ ((module, __webpack_exports__, __webpack_require__) => {
-
-/* harmony export */ __webpack_require__.d(__webpack_exports__, {
-/* harmony export */   "default": () => (__WEBPACK_DEFAULT_EXPORT__)
-/* harmony export */ });
-/* harmony import */ var _node_modules_css_loader_dist_runtime_sourceMaps_js__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! ../../../node_modules/css-loader/dist/runtime/sourceMaps.js */ "./node_modules/css-loader/dist/runtime/sourceMaps.js");
-/* harmony import */ var _node_modules_css_loader_dist_runtime_sourceMaps_js__WEBPACK_IMPORTED_MODULE_0___default = /*#__PURE__*/__webpack_require__.n(_node_modules_css_loader_dist_runtime_sourceMaps_js__WEBPACK_IMPORTED_MODULE_0__);
-/* harmony import */ var _node_modules_css_loader_dist_runtime_api_js__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! ../../../node_modules/css-loader/dist/runtime/api.js */ "./node_modules/css-loader/dist/runtime/api.js");
-/* harmony import */ var _node_modules_css_loader_dist_runtime_api_js__WEBPACK_IMPORTED_MODULE_1___default = /*#__PURE__*/__webpack_require__.n(_node_modules_css_loader_dist_runtime_api_js__WEBPACK_IMPORTED_MODULE_1__);
-// Imports
-
-
-var ___CSS_LOADER_EXPORT___ = _node_modules_css_loader_dist_runtime_api_js__WEBPACK_IMPORTED_MODULE_1___default()((_node_modules_css_loader_dist_runtime_sourceMaps_js__WEBPACK_IMPORTED_MODULE_0___default()));
-// Module
-___CSS_LOADER_EXPORT___.push([module.id, `.SB7xnWiKSlUqpOcOaLoH {
-  text-align: center;
-  font-size: 3rem;
-  color: gray;
-  margin: 0.6rem 0;
-}
-
-.MCG3lSW4MZuylt4I_LVt {
-  display: flex;
-  flex-direction: column;
-  width: 100%;
-  padding: 3rem;
-  margin: -1.8rem 0;
-}
-.MCG3lSW4MZuylt4I_LVt button {
-  width: 100%;
-  height: 2.5rem;
-  padding: 0.5rem;
-  border: none;
-  background-color: var(--accent);
-  color: white;
-  border-radius: 0.2rem;
-  font-weight: bold;
-  font-size: 1.3rem;
-  cursor: pointer;
-  margin-top: 1rem;
-  margin-bottom: 1rem;
-  letter-spacing: 0.2rem;
-  transition: all ease 0.35s;
-}
-.MCG3lSW4MZuylt4I_LVt button:hover {
-  background-color: rgb(7, 99, 7);
-  transform: scale(1.015);
-}`, "",{"version":3,"sources":["webpack://./src/components/CreateShop/CreateShop.module.scss"],"names":[],"mappings":"AAAA;EACE,kBAAA;EACA,eAAA;EACA,WAAA;EACA,gBAAA;AACF;;AAEA;EACE,aAAA;EACA,sBAAA;EACA,WAAA;EACA,aAAA;EACA,iBAAA;AACF;AACE;EACI,WAAA;EACA,cAAA;EACA,eAAA;EACA,YAAA;EACA,+BAAA;EACA,YAAA;EACA,qBAAA;EACA,iBAAA;EACA,iBAAA;EACA,eAAA;EACA,gBAAA;EACA,mBAAA;EACA,sBAAA;EACA,0BAAA;AACN;AAEE;EACI,+BAAA;EACA,uBAAA;AAAN","sourcesContent":[".h1 {\n  text-align: center;\n  font-size: 3rem;\n  color: gray;\n  margin: .6rem 0;\n}\n\n.form {\n  display: flex;\n  flex-direction: column;\n  width: 100%;\n  padding: 3rem;\n  margin: -1.8rem 0;\n\n  button {\n      width: 100%;\n      height: 2.5rem;\n      padding: .5rem;\n      border: none;\n      background-color: var(--accent);\n      color: white;\n      border-radius: .2rem;\n      font-weight: bold;\n      font-size: 1.3rem;\n      cursor: pointer;\n      margin-top: 1rem;\n      margin-bottom: 1rem;\n      letter-spacing: .2rem;\n      transition: all ease .35s;\n  }\n\n  button:hover {\n      background-color: rgb(7, 99, 7);\n      transform: scale(1.015);\n  }\n}"],"sourceRoot":""}]);
-// Exports
-___CSS_LOADER_EXPORT___.locals = {
-	"h1": `SB7xnWiKSlUqpOcOaLoH`,
-	"form": `MCG3lSW4MZuylt4I_LVt`
 };
 /* harmony default export */ const __WEBPACK_DEFAULT_EXPORT__ = (___CSS_LOADER_EXPORT___);
 
@@ -4304,6 +4027,9 @@ ___CSS_LOADER_EXPORT___.push([module.id, `.QpVD3qAS0nYBtoQqAYoe {
 .QpVD3qAS0nYBtoQqAYoe .LBVFPVGLZ99nx_pJh_n4 img:hover {
   cursor: pointer;
 }
+.QpVD3qAS0nYBtoQqAYoe .LBVFPVGLZ99nx_pJh_n4 .WEbJ3VLe9X5d7yhBb6RA {
+  border-radius: 50%;
+}
 .QpVD3qAS0nYBtoQqAYoe .LBVFPVGLZ99nx_pJh_n4 .iI9H00scrcBvKZSZZIvI {
   text-align: center;
   position: relative;
@@ -4335,7 +4061,7 @@ ___CSS_LOADER_EXPORT___.push([module.id, `.QpVD3qAS0nYBtoQqAYoe {
 .QpVD3qAS0nYBtoQqAYoe .LBVFPVGLZ99nx_pJh_n4 ._O_XE5GfXHdyMuZrTVOA:hover {
   cursor: pointer;
   color: var(--accent);
-}`, "",{"version":3,"sources":["webpack://./src/components/NavBar/NavBar.module.scss"],"names":[],"mappings":"AAAA;EACE,aAAA;EACA,YAAA;EACA,sBAAA;EACA,kCAAA;EACA,oCAAA;AACF;AAAE;EACE,aAAA;EACA,8BAAA;EACA,mBAAA;AAEJ;AAAE;EACE,4BAAA;EACA,UAAA;AAEJ;AAAE;EACE,aAAA;EACA,mBAAA;EACA,cAAA;EACA,mBAAA;EACA,gBAAA;EACA,SAAA;EACA,mBAAA;EACA,wBAAA;EACA,qBAAA;AAEJ;AAAE;EACE,aAAA;AAEJ;AAAE;EACE,qBAAA;AAEJ;AAAE;EACE,aAAA;EACA,8BAAA;AAEJ;AADI;EACE,aAAA;EACA,oBAAA;AAGN;AADI;EACE,eAAA;AAGN;AADI;EACE,kBAAA;EACA,kBAAA;AAGN;AAFM;EACE,YAAA;EACA,aAAA;EACA,mBAAA;EACA,gBAAA;EACA,UAAA;EACA,kBAAA;EACA,UAAA;EACA,SAAA;EACA,qBAAA;EACA,mBAAA;AAIR;AADI;EACE,YAAA;EACA,cAAA;EAQA,oBAAA;AAJN;AAHM;EACE,mBAAA;EACA,kBAAA;EACA,sBAAA;EACA,mBAAA;EACA,gBAAA;AAKR;AADI;EACE,eAAA;EACA,oBAAA;AAGN","sourcesContent":[".NavBar {\n  display: flex;\n  width: 100vw;\n  flex-direction: column;\n  background-color: var(--darker-bg);\n  padding: 1.5rem 2.5rem 1.5rem 2.5rem;\n  .topLine {\n    display: flex;\n    justify-content: space-between;\n    align-items: center;\n  }\n  .searchbarContainer {\n    padding: 0.25rem 1rem 0 1rem;\n    width: 80%;\n  }\n  .categories ul {\n    display: flex;\n    flex-direction: row;\n    overflow: auto;\n    white-space: nowrap;\n    list-style: none;\n    margin: 0;\n    padding: 1rem 0 0 0;\n    -ms-overflow-style: none;\n    scrollbar-width: none;\n  }\n  .categories ul::-webkit-scrollbar {\n    display: none;\n  }\n  .li {\n    margin: 0rem 0.375rem;\n  }\n  .icons {\n    display: flex;\n    justify-content: space-between;\n    img {\n      height: 4vmin;\n      padding: 0rem 0.4rem;\n    }\n    img:hover{\n      cursor: pointer;\n    }\n    .cartContainer {\n      text-align: center;\n      position: relative;\n      .cartCount {\n        width: 2vmin;\n        height: 2vmin;\n        font-size: 1.25vmin;\n        font-weight: 600;\n        z-index: 2;\n        position: absolute;\n        top: 23.5%;\n        left: 37%;\n        text-decoration: none;\n        color: var(--black);\n      }\n    }\n    .login {\n      width: 7vmin;\n      display: table;\n      p {\n        display: table-cell;\n        text-align: center;\n        vertical-align: middle;\n        font-size: 1.75vmin;\n        font-weight: 600;\n      }\n      padding: 0rem 0.4rem;\n    }\n    .login:hover {\n      cursor: pointer;\n      color: var(--accent)\n    }\n  }\n}\n"],"sourceRoot":""}]);
+}`, "",{"version":3,"sources":["webpack://./src/components/NavBar/NavBar.module.scss"],"names":[],"mappings":"AAAA;EACE,aAAA;EACA,YAAA;EACA,sBAAA;EACA,kCAAA;EACA,oCAAA;AACF;AAAE;EACE,aAAA;EACA,8BAAA;EACA,mBAAA;AAEJ;AAAE;EACE,4BAAA;EACA,UAAA;AAEJ;AAAE;EACE,aAAA;EACA,mBAAA;EACA,cAAA;EACA,mBAAA;EACA,gBAAA;EACA,SAAA;EACA,mBAAA;EACA,wBAAA;EACA,qBAAA;AAEJ;AAAE;EACE,aAAA;AAEJ;AAAE;EACE,qBAAA;AAEJ;AAAE;EACE,aAAA;EACA,8BAAA;AAEJ;AADI;EACE,aAAA;EACA,oBAAA;AAGN;AADI;EACE,eAAA;AAGN;AADI;EACE,kBAAA;AAGN;AADI;EACE,kBAAA;EACA,kBAAA;AAGN;AAFM;EACE,YAAA;EACA,aAAA;EACA,mBAAA;EACA,gBAAA;EACA,UAAA;EACA,kBAAA;EACA,UAAA;EACA,SAAA;EACA,qBAAA;EACA,mBAAA;AAIR;AADI;EACE,YAAA;EACA,cAAA;EAQA,oBAAA;AAJN;AAHM;EACE,mBAAA;EACA,kBAAA;EACA,sBAAA;EACA,mBAAA;EACA,gBAAA;AAKR;AADI;EACE,eAAA;EACA,oBAAA;AAGN","sourcesContent":[".NavBar {\n  display: flex;\n  width: 100vw;\n  flex-direction: column;\n  background-color: var(--darker-bg);\n  padding: 1.5rem 2.5rem 1.5rem 2.5rem;\n  .topLine {\n    display: flex;\n    justify-content: space-between;\n    align-items: center;\n  }\n  .searchbarContainer {\n    padding: 0.25rem 1rem 0 1rem;\n    width: 80%;\n  }\n  .categories ul {\n    display: flex;\n    flex-direction: row;\n    overflow: auto;\n    white-space: nowrap;\n    list-style: none;\n    margin: 0;\n    padding: 1rem 0 0 0;\n    -ms-overflow-style: none;\n    scrollbar-width: none;\n  }\n  .categories ul::-webkit-scrollbar {\n    display: none;\n  }\n  .li {\n    margin: 0rem 0.375rem;\n  }\n  .icons {\n    display: flex;\n    justify-content: space-between;\n    img {\n      height: 4vmin;\n      padding: 0rem 0.4rem;\n    }\n    img:hover{\n      cursor: pointer;\n    }\n    .userPhoto {\n      border-radius: 50%;\n    }\n    .cartContainer {\n      text-align: center;\n      position: relative;\n      .cartCount {\n        width: 2vmin;\n        height: 2vmin;\n        font-size: 1.25vmin;\n        font-weight: 600;\n        z-index: 2;\n        position: absolute;\n        top: 23.5%;\n        left: 37%;\n        text-decoration: none;\n        color: var(--black);\n      }\n    }\n    .login {\n      width: 7vmin;\n      display: table;\n      p {\n        display: table-cell;\n        text-align: center;\n        vertical-align: middle;\n        font-size: 1.75vmin;\n        font-weight: 600;\n      }\n      padding: 0rem 0.4rem;\n    }\n    .login:hover {\n      cursor: pointer;\n      color: var(--accent)\n    }\n  }\n}\n"],"sourceRoot":""}]);
 // Exports
 ___CSS_LOADER_EXPORT___.locals = {
 	"NavBar": `QpVD3qAS0nYBtoQqAYoe`,
@@ -4344,6 +4070,7 @@ ___CSS_LOADER_EXPORT___.locals = {
 	"categories": `GLulqAwuajleN_WuAFSf`,
 	"li": `qX3Jm8O2TDklTOBfqqeu`,
 	"icons": `LBVFPVGLZ99nx_pJh_n4`,
+	"userPhoto": `WEbJ3VLe9X5d7yhBb6RA`,
 	"cartContainer": `iI9H00scrcBvKZSZZIvI`,
 	"cartCount": `Hfz8Jcyg8F3QfwGb2JOQ`,
 	"login": `_O_XE5GfXHdyMuZrTVOA`
@@ -4457,6 +4184,84 @@ ___CSS_LOADER_EXPORT___.locals = {
 
 /***/ }),
 
+/***/ "./node_modules/css-loader/dist/cjs.js??ruleSet[1].rules[2].use[1]!./node_modules/sass-loader/dist/cjs.js!./node_modules/postcss-loader/dist/cjs.js!./src/components/ProductForm/ProductForm.module.scss":
+/*!***************************************************************************************************************************************************************************************************************!*\
+  !*** ./node_modules/css-loader/dist/cjs.js??ruleSet[1].rules[2].use[1]!./node_modules/sass-loader/dist/cjs.js!./node_modules/postcss-loader/dist/cjs.js!./src/components/ProductForm/ProductForm.module.scss ***!
+  \***************************************************************************************************************************************************************************************************************/
+/***/ ((module, __webpack_exports__, __webpack_require__) => {
+
+/* harmony export */ __webpack_require__.d(__webpack_exports__, {
+/* harmony export */   "default": () => (__WEBPACK_DEFAULT_EXPORT__)
+/* harmony export */ });
+/* harmony import */ var _node_modules_css_loader_dist_runtime_sourceMaps_js__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! ../../../node_modules/css-loader/dist/runtime/sourceMaps.js */ "./node_modules/css-loader/dist/runtime/sourceMaps.js");
+/* harmony import */ var _node_modules_css_loader_dist_runtime_sourceMaps_js__WEBPACK_IMPORTED_MODULE_0___default = /*#__PURE__*/__webpack_require__.n(_node_modules_css_loader_dist_runtime_sourceMaps_js__WEBPACK_IMPORTED_MODULE_0__);
+/* harmony import */ var _node_modules_css_loader_dist_runtime_api_js__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! ../../../node_modules/css-loader/dist/runtime/api.js */ "./node_modules/css-loader/dist/runtime/api.js");
+/* harmony import */ var _node_modules_css_loader_dist_runtime_api_js__WEBPACK_IMPORTED_MODULE_1___default = /*#__PURE__*/__webpack_require__.n(_node_modules_css_loader_dist_runtime_api_js__WEBPACK_IMPORTED_MODULE_1__);
+// Imports
+
+
+var ___CSS_LOADER_EXPORT___ = _node_modules_css_loader_dist_runtime_api_js__WEBPACK_IMPORTED_MODULE_1___default()((_node_modules_css_loader_dist_runtime_sourceMaps_js__WEBPACK_IMPORTED_MODULE_0___default()));
+// Module
+___CSS_LOADER_EXPORT___.push([module.id, `.NuFjD7z_rZ4eTvHxD_Pw {
+  text-align: center;
+  font-size: 3rem;
+  color: gray;
+  margin: 0.6rem 0;
+}
+
+.itZSNDYTrsEnJKZPG4K_ {
+  display: flex;
+  flex-direction: column;
+  width: 100%;
+  padding: 3rem;
+  margin: -1.8rem 0;
+}
+.itZSNDYTrsEnJKZPG4K_ button {
+  width: 100%;
+  height: 2.5rem;
+  padding: 0.5rem;
+  border: none;
+  background-color: var(--accent);
+  color: white;
+  border-radius: 0.2rem;
+  font-weight: bold;
+  font-size: 1.3rem;
+  cursor: pointer;
+  margin-top: 1rem;
+  margin-bottom: 1rem;
+  letter-spacing: 0.2rem;
+  transition: all ease 0.35s;
+}
+.itZSNDYTrsEnJKZPG4K_ button:hover {
+  background-color: rgb(7, 99, 7);
+  transform: scale(1.015);
+}
+.itZSNDYTrsEnJKZPG4K_ select {
+  width: 9rem;
+  font-size: 1em;
+  border-radius: 10px;
+}
+.itZSNDYTrsEnJKZPG4K_ select:focus {
+  outline: none;
+  border-color: var(--accent);
+}
+.itZSNDYTrsEnJKZPG4K_ option {
+  color: gray;
+}
+.itZSNDYTrsEnJKZPG4K_ label {
+  font-size: 1.5em;
+  color: gray;
+}`, "",{"version":3,"sources":["webpack://./src/components/ProductForm/ProductForm.module.scss"],"names":[],"mappings":"AAAA;EACI,kBAAA;EACA,eAAA;EACA,WAAA;EACA,gBAAA;AACJ;;AAEA;EACI,aAAA;EACA,sBAAA;EACA,WAAA;EACA,aAAA;EACA,iBAAA;AACJ;AACI;EACI,WAAA;EACA,cAAA;EACA,eAAA;EACA,YAAA;EACA,+BAAA;EACA,YAAA;EACA,qBAAA;EACA,iBAAA;EACA,iBAAA;EACA,eAAA;EACA,gBAAA;EACA,mBAAA;EACA,sBAAA;EACA,0BAAA;AACR;AAEI;EACI,+BAAA;EACA,uBAAA;AAAR;AAGI;EACI,WAAA;EACA,cAAA;EACA,mBAAA;AADR;AAII;EACI,aAAA;EACA,2BAAA;AAFR;AAKI;EACI,WAAA;AAHR;AAMI;EACI,gBAAA;EACA,WAAA;AAJR","sourcesContent":[".h1 {\n    text-align: center;\n    font-size: 3rem;\n    color: gray;\n    margin: .6rem 0;\n}\n\n.form {\n    display: flex;\n    flex-direction: column;\n    width: 100%;\n    padding: 3rem;\n    margin: -1.8rem 0;\n\n    button {\n        width: 100%;\n        height: 2.5rem;\n        padding: .5rem;\n        border: none;\n        background-color: var(--accent);\n        color: white;\n        border-radius: .2rem;\n        font-weight: bold;\n        font-size: 1.3rem;\n        cursor: pointer;\n        margin-top: 1rem;\n        margin-bottom: 1rem;\n        letter-spacing: .2rem;\n        transition: all ease .35s;\n    }\n\n    button:hover {\n        background-color: rgb(7, 99, 7);\n        transform: scale(1.015);\n    }\n\n    select {\n        width: 9rem;\n        font-size: 1em;\n        border-radius: 10px;\n    }\n\n    select:focus {\n        outline: none;\n        border-color: var(--accent);\n    }\n    \n    option {\n        color: gray;\n    }\n\n    label{\n        font-size: 1.5em;\n        color: gray;\n    }\n}"],"sourceRoot":""}]);
+// Exports
+___CSS_LOADER_EXPORT___.locals = {
+	"h1": `NuFjD7z_rZ4eTvHxD_Pw`,
+	"form": `itZSNDYTrsEnJKZPG4K_`
+};
+/* harmony default export */ const __WEBPACK_DEFAULT_EXPORT__ = (___CSS_LOADER_EXPORT___);
+
+
+/***/ }),
+
 /***/ "./node_modules/css-loader/dist/cjs.js??ruleSet[1].rules[2].use[1]!./node_modules/sass-loader/dist/cjs.js!./node_modules/postcss-loader/dist/cjs.js!./src/components/ProductList/ProductList.module.scss":
 /*!***************************************************************************************************************************************************************************************************************!*\
   !*** ./node_modules/css-loader/dist/cjs.js??ruleSet[1].rules[2].use[1]!./node_modules/sass-loader/dist/cjs.js!./node_modules/postcss-loader/dist/cjs.js!./src/components/ProductList/ProductList.module.scss ***!
@@ -4532,6 +4337,68 @@ ___CSS_LOADER_EXPORT___.locals = {
 	"reviewer": `Hm0CDWxChaao0HZT8kCF`,
 	"starRating": `ucnFm38bIf88KA62J6_A`,
 	"review": `vIfp2qZJiXvFbDerDHip`
+};
+/* harmony default export */ const __WEBPACK_DEFAULT_EXPORT__ = (___CSS_LOADER_EXPORT___);
+
+
+/***/ }),
+
+/***/ "./node_modules/css-loader/dist/cjs.js??ruleSet[1].rules[2].use[1]!./node_modules/sass-loader/dist/cjs.js!./node_modules/postcss-loader/dist/cjs.js!./src/components/ShopForm/ShopForm.module.scss":
+/*!*********************************************************************************************************************************************************************************************************!*\
+  !*** ./node_modules/css-loader/dist/cjs.js??ruleSet[1].rules[2].use[1]!./node_modules/sass-loader/dist/cjs.js!./node_modules/postcss-loader/dist/cjs.js!./src/components/ShopForm/ShopForm.module.scss ***!
+  \*********************************************************************************************************************************************************************************************************/
+/***/ ((module, __webpack_exports__, __webpack_require__) => {
+
+/* harmony export */ __webpack_require__.d(__webpack_exports__, {
+/* harmony export */   "default": () => (__WEBPACK_DEFAULT_EXPORT__)
+/* harmony export */ });
+/* harmony import */ var _node_modules_css_loader_dist_runtime_sourceMaps_js__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! ../../../node_modules/css-loader/dist/runtime/sourceMaps.js */ "./node_modules/css-loader/dist/runtime/sourceMaps.js");
+/* harmony import */ var _node_modules_css_loader_dist_runtime_sourceMaps_js__WEBPACK_IMPORTED_MODULE_0___default = /*#__PURE__*/__webpack_require__.n(_node_modules_css_loader_dist_runtime_sourceMaps_js__WEBPACK_IMPORTED_MODULE_0__);
+/* harmony import */ var _node_modules_css_loader_dist_runtime_api_js__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! ../../../node_modules/css-loader/dist/runtime/api.js */ "./node_modules/css-loader/dist/runtime/api.js");
+/* harmony import */ var _node_modules_css_loader_dist_runtime_api_js__WEBPACK_IMPORTED_MODULE_1___default = /*#__PURE__*/__webpack_require__.n(_node_modules_css_loader_dist_runtime_api_js__WEBPACK_IMPORTED_MODULE_1__);
+// Imports
+
+
+var ___CSS_LOADER_EXPORT___ = _node_modules_css_loader_dist_runtime_api_js__WEBPACK_IMPORTED_MODULE_1___default()((_node_modules_css_loader_dist_runtime_sourceMaps_js__WEBPACK_IMPORTED_MODULE_0___default()));
+// Module
+___CSS_LOADER_EXPORT___.push([module.id, `.IFoYAg00T7bBl8s2Wsqc {
+  text-align: center;
+  font-size: 3rem;
+  color: gray;
+  margin: 0.6rem 0;
+}
+
+.dMSSZgrVSy9b7Ey1nXAA {
+  display: flex;
+  flex-direction: column;
+  width: 100%;
+  padding: 3rem;
+  margin: -1.8rem 0;
+}
+.dMSSZgrVSy9b7Ey1nXAA button {
+  width: 100%;
+  height: 2.5rem;
+  padding: 0.5rem;
+  border: none;
+  background-color: var(--accent);
+  color: white;
+  border-radius: 0.2rem;
+  font-weight: bold;
+  font-size: 1.3rem;
+  cursor: pointer;
+  margin-top: 1rem;
+  margin-bottom: 1rem;
+  letter-spacing: 0.2rem;
+  transition: all ease 0.35s;
+}
+.dMSSZgrVSy9b7Ey1nXAA button:hover {
+  background-color: rgb(7, 99, 7);
+  transform: scale(1.015);
+}`, "",{"version":3,"sources":["webpack://./src/components/ShopForm/ShopForm.module.scss"],"names":[],"mappings":"AAAA;EACE,kBAAA;EACA,eAAA;EACA,WAAA;EACA,gBAAA;AACF;;AAEA;EACE,aAAA;EACA,sBAAA;EACA,WAAA;EACA,aAAA;EACA,iBAAA;AACF;AACE;EACI,WAAA;EACA,cAAA;EACA,eAAA;EACA,YAAA;EACA,+BAAA;EACA,YAAA;EACA,qBAAA;EACA,iBAAA;EACA,iBAAA;EACA,eAAA;EACA,gBAAA;EACA,mBAAA;EACA,sBAAA;EACA,0BAAA;AACN;AAEE;EACI,+BAAA;EACA,uBAAA;AAAN","sourcesContent":[".h1 {\n  text-align: center;\n  font-size: 3rem;\n  color: gray;\n  margin: .6rem 0;\n}\n\n.form {\n  display: flex;\n  flex-direction: column;\n  width: 100%;\n  padding: 3rem;\n  margin: -1.8rem 0;\n\n  button {\n      width: 100%;\n      height: 2.5rem;\n      padding: .5rem;\n      border: none;\n      background-color: var(--accent);\n      color: white;\n      border-radius: .2rem;\n      font-weight: bold;\n      font-size: 1.3rem;\n      cursor: pointer;\n      margin-top: 1rem;\n      margin-bottom: 1rem;\n      letter-spacing: .2rem;\n      transition: all ease .35s;\n  }\n\n  button:hover {\n      background-color: rgb(7, 99, 7);\n      transform: scale(1.015);\n  }\n}"],"sourceRoot":""}]);
+// Exports
+___CSS_LOADER_EXPORT___.locals = {
+	"h1": `IFoYAg00T7bBl8s2Wsqc`,
+	"form": `dMSSZgrVSy9b7Ey1nXAA`
 };
 /* harmony default export */ const __WEBPACK_DEFAULT_EXPORT__ = (___CSS_LOADER_EXPORT___);
 
@@ -5534,112 +5401,6 @@ var update = _node_modules_style_loader_dist_runtime_injectStylesIntoStyleTag_js
 
 /***/ }),
 
-/***/ "./src/components/CreateProduct/CreateProduct.module.scss":
-/*!****************************************************************!*\
-  !*** ./src/components/CreateProduct/CreateProduct.module.scss ***!
-  \****************************************************************/
-/***/ ((__unused_webpack_module, __webpack_exports__, __webpack_require__) => {
-
-/* harmony export */ __webpack_require__.d(__webpack_exports__, {
-/* harmony export */   "default": () => (__WEBPACK_DEFAULT_EXPORT__)
-/* harmony export */ });
-/* harmony import */ var _node_modules_style_loader_dist_runtime_injectStylesIntoStyleTag_js__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! !../../../node_modules/style-loader/dist/runtime/injectStylesIntoStyleTag.js */ "./node_modules/style-loader/dist/runtime/injectStylesIntoStyleTag.js");
-/* harmony import */ var _node_modules_style_loader_dist_runtime_injectStylesIntoStyleTag_js__WEBPACK_IMPORTED_MODULE_0___default = /*#__PURE__*/__webpack_require__.n(_node_modules_style_loader_dist_runtime_injectStylesIntoStyleTag_js__WEBPACK_IMPORTED_MODULE_0__);
-/* harmony import */ var _node_modules_style_loader_dist_runtime_styleDomAPI_js__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! !../../../node_modules/style-loader/dist/runtime/styleDomAPI.js */ "./node_modules/style-loader/dist/runtime/styleDomAPI.js");
-/* harmony import */ var _node_modules_style_loader_dist_runtime_styleDomAPI_js__WEBPACK_IMPORTED_MODULE_1___default = /*#__PURE__*/__webpack_require__.n(_node_modules_style_loader_dist_runtime_styleDomAPI_js__WEBPACK_IMPORTED_MODULE_1__);
-/* harmony import */ var _node_modules_style_loader_dist_runtime_insertBySelector_js__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! !../../../node_modules/style-loader/dist/runtime/insertBySelector.js */ "./node_modules/style-loader/dist/runtime/insertBySelector.js");
-/* harmony import */ var _node_modules_style_loader_dist_runtime_insertBySelector_js__WEBPACK_IMPORTED_MODULE_2___default = /*#__PURE__*/__webpack_require__.n(_node_modules_style_loader_dist_runtime_insertBySelector_js__WEBPACK_IMPORTED_MODULE_2__);
-/* harmony import */ var _node_modules_style_loader_dist_runtime_setAttributesWithoutAttributes_js__WEBPACK_IMPORTED_MODULE_3__ = __webpack_require__(/*! !../../../node_modules/style-loader/dist/runtime/setAttributesWithoutAttributes.js */ "./node_modules/style-loader/dist/runtime/setAttributesWithoutAttributes.js");
-/* harmony import */ var _node_modules_style_loader_dist_runtime_setAttributesWithoutAttributes_js__WEBPACK_IMPORTED_MODULE_3___default = /*#__PURE__*/__webpack_require__.n(_node_modules_style_loader_dist_runtime_setAttributesWithoutAttributes_js__WEBPACK_IMPORTED_MODULE_3__);
-/* harmony import */ var _node_modules_style_loader_dist_runtime_insertStyleElement_js__WEBPACK_IMPORTED_MODULE_4__ = __webpack_require__(/*! !../../../node_modules/style-loader/dist/runtime/insertStyleElement.js */ "./node_modules/style-loader/dist/runtime/insertStyleElement.js");
-/* harmony import */ var _node_modules_style_loader_dist_runtime_insertStyleElement_js__WEBPACK_IMPORTED_MODULE_4___default = /*#__PURE__*/__webpack_require__.n(_node_modules_style_loader_dist_runtime_insertStyleElement_js__WEBPACK_IMPORTED_MODULE_4__);
-/* harmony import */ var _node_modules_style_loader_dist_runtime_styleTagTransform_js__WEBPACK_IMPORTED_MODULE_5__ = __webpack_require__(/*! !../../../node_modules/style-loader/dist/runtime/styleTagTransform.js */ "./node_modules/style-loader/dist/runtime/styleTagTransform.js");
-/* harmony import */ var _node_modules_style_loader_dist_runtime_styleTagTransform_js__WEBPACK_IMPORTED_MODULE_5___default = /*#__PURE__*/__webpack_require__.n(_node_modules_style_loader_dist_runtime_styleTagTransform_js__WEBPACK_IMPORTED_MODULE_5__);
-/* harmony import */ var _node_modules_css_loader_dist_cjs_js_ruleSet_1_rules_2_use_1_node_modules_sass_loader_dist_cjs_js_node_modules_postcss_loader_dist_cjs_js_CreateProduct_module_scss__WEBPACK_IMPORTED_MODULE_6__ = __webpack_require__(/*! !!../../../node_modules/css-loader/dist/cjs.js??ruleSet[1].rules[2].use[1]!../../../node_modules/sass-loader/dist/cjs.js!../../../node_modules/postcss-loader/dist/cjs.js!./CreateProduct.module.scss */ "./node_modules/css-loader/dist/cjs.js??ruleSet[1].rules[2].use[1]!./node_modules/sass-loader/dist/cjs.js!./node_modules/postcss-loader/dist/cjs.js!./src/components/CreateProduct/CreateProduct.module.scss");
-
-      
-      
-      
-      
-      
-      
-      
-      
-      
-
-var options = {};
-
-options.styleTagTransform = (_node_modules_style_loader_dist_runtime_styleTagTransform_js__WEBPACK_IMPORTED_MODULE_5___default());
-options.setAttributes = (_node_modules_style_loader_dist_runtime_setAttributesWithoutAttributes_js__WEBPACK_IMPORTED_MODULE_3___default());
-
-      options.insert = _node_modules_style_loader_dist_runtime_insertBySelector_js__WEBPACK_IMPORTED_MODULE_2___default().bind(null, "head");
-    
-options.domAPI = (_node_modules_style_loader_dist_runtime_styleDomAPI_js__WEBPACK_IMPORTED_MODULE_1___default());
-options.insertStyleElement = (_node_modules_style_loader_dist_runtime_insertStyleElement_js__WEBPACK_IMPORTED_MODULE_4___default());
-
-var update = _node_modules_style_loader_dist_runtime_injectStylesIntoStyleTag_js__WEBPACK_IMPORTED_MODULE_0___default()(_node_modules_css_loader_dist_cjs_js_ruleSet_1_rules_2_use_1_node_modules_sass_loader_dist_cjs_js_node_modules_postcss_loader_dist_cjs_js_CreateProduct_module_scss__WEBPACK_IMPORTED_MODULE_6__["default"], options);
-
-
-
-
-       /* harmony default export */ const __WEBPACK_DEFAULT_EXPORT__ = (_node_modules_css_loader_dist_cjs_js_ruleSet_1_rules_2_use_1_node_modules_sass_loader_dist_cjs_js_node_modules_postcss_loader_dist_cjs_js_CreateProduct_module_scss__WEBPACK_IMPORTED_MODULE_6__["default"] && _node_modules_css_loader_dist_cjs_js_ruleSet_1_rules_2_use_1_node_modules_sass_loader_dist_cjs_js_node_modules_postcss_loader_dist_cjs_js_CreateProduct_module_scss__WEBPACK_IMPORTED_MODULE_6__["default"].locals ? _node_modules_css_loader_dist_cjs_js_ruleSet_1_rules_2_use_1_node_modules_sass_loader_dist_cjs_js_node_modules_postcss_loader_dist_cjs_js_CreateProduct_module_scss__WEBPACK_IMPORTED_MODULE_6__["default"].locals : undefined);
-
-
-/***/ }),
-
-/***/ "./src/components/CreateShop/CreateShop.module.scss":
-/*!**********************************************************!*\
-  !*** ./src/components/CreateShop/CreateShop.module.scss ***!
-  \**********************************************************/
-/***/ ((__unused_webpack_module, __webpack_exports__, __webpack_require__) => {
-
-/* harmony export */ __webpack_require__.d(__webpack_exports__, {
-/* harmony export */   "default": () => (__WEBPACK_DEFAULT_EXPORT__)
-/* harmony export */ });
-/* harmony import */ var _node_modules_style_loader_dist_runtime_injectStylesIntoStyleTag_js__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! !../../../node_modules/style-loader/dist/runtime/injectStylesIntoStyleTag.js */ "./node_modules/style-loader/dist/runtime/injectStylesIntoStyleTag.js");
-/* harmony import */ var _node_modules_style_loader_dist_runtime_injectStylesIntoStyleTag_js__WEBPACK_IMPORTED_MODULE_0___default = /*#__PURE__*/__webpack_require__.n(_node_modules_style_loader_dist_runtime_injectStylesIntoStyleTag_js__WEBPACK_IMPORTED_MODULE_0__);
-/* harmony import */ var _node_modules_style_loader_dist_runtime_styleDomAPI_js__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! !../../../node_modules/style-loader/dist/runtime/styleDomAPI.js */ "./node_modules/style-loader/dist/runtime/styleDomAPI.js");
-/* harmony import */ var _node_modules_style_loader_dist_runtime_styleDomAPI_js__WEBPACK_IMPORTED_MODULE_1___default = /*#__PURE__*/__webpack_require__.n(_node_modules_style_loader_dist_runtime_styleDomAPI_js__WEBPACK_IMPORTED_MODULE_1__);
-/* harmony import */ var _node_modules_style_loader_dist_runtime_insertBySelector_js__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! !../../../node_modules/style-loader/dist/runtime/insertBySelector.js */ "./node_modules/style-loader/dist/runtime/insertBySelector.js");
-/* harmony import */ var _node_modules_style_loader_dist_runtime_insertBySelector_js__WEBPACK_IMPORTED_MODULE_2___default = /*#__PURE__*/__webpack_require__.n(_node_modules_style_loader_dist_runtime_insertBySelector_js__WEBPACK_IMPORTED_MODULE_2__);
-/* harmony import */ var _node_modules_style_loader_dist_runtime_setAttributesWithoutAttributes_js__WEBPACK_IMPORTED_MODULE_3__ = __webpack_require__(/*! !../../../node_modules/style-loader/dist/runtime/setAttributesWithoutAttributes.js */ "./node_modules/style-loader/dist/runtime/setAttributesWithoutAttributes.js");
-/* harmony import */ var _node_modules_style_loader_dist_runtime_setAttributesWithoutAttributes_js__WEBPACK_IMPORTED_MODULE_3___default = /*#__PURE__*/__webpack_require__.n(_node_modules_style_loader_dist_runtime_setAttributesWithoutAttributes_js__WEBPACK_IMPORTED_MODULE_3__);
-/* harmony import */ var _node_modules_style_loader_dist_runtime_insertStyleElement_js__WEBPACK_IMPORTED_MODULE_4__ = __webpack_require__(/*! !../../../node_modules/style-loader/dist/runtime/insertStyleElement.js */ "./node_modules/style-loader/dist/runtime/insertStyleElement.js");
-/* harmony import */ var _node_modules_style_loader_dist_runtime_insertStyleElement_js__WEBPACK_IMPORTED_MODULE_4___default = /*#__PURE__*/__webpack_require__.n(_node_modules_style_loader_dist_runtime_insertStyleElement_js__WEBPACK_IMPORTED_MODULE_4__);
-/* harmony import */ var _node_modules_style_loader_dist_runtime_styleTagTransform_js__WEBPACK_IMPORTED_MODULE_5__ = __webpack_require__(/*! !../../../node_modules/style-loader/dist/runtime/styleTagTransform.js */ "./node_modules/style-loader/dist/runtime/styleTagTransform.js");
-/* harmony import */ var _node_modules_style_loader_dist_runtime_styleTagTransform_js__WEBPACK_IMPORTED_MODULE_5___default = /*#__PURE__*/__webpack_require__.n(_node_modules_style_loader_dist_runtime_styleTagTransform_js__WEBPACK_IMPORTED_MODULE_5__);
-/* harmony import */ var _node_modules_css_loader_dist_cjs_js_ruleSet_1_rules_2_use_1_node_modules_sass_loader_dist_cjs_js_node_modules_postcss_loader_dist_cjs_js_CreateShop_module_scss__WEBPACK_IMPORTED_MODULE_6__ = __webpack_require__(/*! !!../../../node_modules/css-loader/dist/cjs.js??ruleSet[1].rules[2].use[1]!../../../node_modules/sass-loader/dist/cjs.js!../../../node_modules/postcss-loader/dist/cjs.js!./CreateShop.module.scss */ "./node_modules/css-loader/dist/cjs.js??ruleSet[1].rules[2].use[1]!./node_modules/sass-loader/dist/cjs.js!./node_modules/postcss-loader/dist/cjs.js!./src/components/CreateShop/CreateShop.module.scss");
-
-      
-      
-      
-      
-      
-      
-      
-      
-      
-
-var options = {};
-
-options.styleTagTransform = (_node_modules_style_loader_dist_runtime_styleTagTransform_js__WEBPACK_IMPORTED_MODULE_5___default());
-options.setAttributes = (_node_modules_style_loader_dist_runtime_setAttributesWithoutAttributes_js__WEBPACK_IMPORTED_MODULE_3___default());
-
-      options.insert = _node_modules_style_loader_dist_runtime_insertBySelector_js__WEBPACK_IMPORTED_MODULE_2___default().bind(null, "head");
-    
-options.domAPI = (_node_modules_style_loader_dist_runtime_styleDomAPI_js__WEBPACK_IMPORTED_MODULE_1___default());
-options.insertStyleElement = (_node_modules_style_loader_dist_runtime_insertStyleElement_js__WEBPACK_IMPORTED_MODULE_4___default());
-
-var update = _node_modules_style_loader_dist_runtime_injectStylesIntoStyleTag_js__WEBPACK_IMPORTED_MODULE_0___default()(_node_modules_css_loader_dist_cjs_js_ruleSet_1_rules_2_use_1_node_modules_sass_loader_dist_cjs_js_node_modules_postcss_loader_dist_cjs_js_CreateShop_module_scss__WEBPACK_IMPORTED_MODULE_6__["default"], options);
-
-
-
-
-       /* harmony default export */ const __WEBPACK_DEFAULT_EXPORT__ = (_node_modules_css_loader_dist_cjs_js_ruleSet_1_rules_2_use_1_node_modules_sass_loader_dist_cjs_js_node_modules_postcss_loader_dist_cjs_js_CreateShop_module_scss__WEBPACK_IMPORTED_MODULE_6__["default"] && _node_modules_css_loader_dist_cjs_js_ruleSet_1_rules_2_use_1_node_modules_sass_loader_dist_cjs_js_node_modules_postcss_loader_dist_cjs_js_CreateShop_module_scss__WEBPACK_IMPORTED_MODULE_6__["default"].locals ? _node_modules_css_loader_dist_cjs_js_ruleSet_1_rules_2_use_1_node_modules_sass_loader_dist_cjs_js_node_modules_postcss_loader_dist_cjs_js_CreateShop_module_scss__WEBPACK_IMPORTED_MODULE_6__["default"].locals : undefined);
-
-
-/***/ }),
-
 /***/ "./src/components/EditProductForm/EditProductForm.module.scss":
 /*!********************************************************************!*\
   !*** ./src/components/EditProductForm/EditProductForm.module.scss ***!
@@ -6223,6 +5984,59 @@ var update = _node_modules_style_loader_dist_runtime_injectStylesIntoStyleTag_js
 
 /***/ }),
 
+/***/ "./src/components/ProductForm/ProductForm.module.scss":
+/*!************************************************************!*\
+  !*** ./src/components/ProductForm/ProductForm.module.scss ***!
+  \************************************************************/
+/***/ ((__unused_webpack_module, __webpack_exports__, __webpack_require__) => {
+
+/* harmony export */ __webpack_require__.d(__webpack_exports__, {
+/* harmony export */   "default": () => (__WEBPACK_DEFAULT_EXPORT__)
+/* harmony export */ });
+/* harmony import */ var _node_modules_style_loader_dist_runtime_injectStylesIntoStyleTag_js__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! !../../../node_modules/style-loader/dist/runtime/injectStylesIntoStyleTag.js */ "./node_modules/style-loader/dist/runtime/injectStylesIntoStyleTag.js");
+/* harmony import */ var _node_modules_style_loader_dist_runtime_injectStylesIntoStyleTag_js__WEBPACK_IMPORTED_MODULE_0___default = /*#__PURE__*/__webpack_require__.n(_node_modules_style_loader_dist_runtime_injectStylesIntoStyleTag_js__WEBPACK_IMPORTED_MODULE_0__);
+/* harmony import */ var _node_modules_style_loader_dist_runtime_styleDomAPI_js__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! !../../../node_modules/style-loader/dist/runtime/styleDomAPI.js */ "./node_modules/style-loader/dist/runtime/styleDomAPI.js");
+/* harmony import */ var _node_modules_style_loader_dist_runtime_styleDomAPI_js__WEBPACK_IMPORTED_MODULE_1___default = /*#__PURE__*/__webpack_require__.n(_node_modules_style_loader_dist_runtime_styleDomAPI_js__WEBPACK_IMPORTED_MODULE_1__);
+/* harmony import */ var _node_modules_style_loader_dist_runtime_insertBySelector_js__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! !../../../node_modules/style-loader/dist/runtime/insertBySelector.js */ "./node_modules/style-loader/dist/runtime/insertBySelector.js");
+/* harmony import */ var _node_modules_style_loader_dist_runtime_insertBySelector_js__WEBPACK_IMPORTED_MODULE_2___default = /*#__PURE__*/__webpack_require__.n(_node_modules_style_loader_dist_runtime_insertBySelector_js__WEBPACK_IMPORTED_MODULE_2__);
+/* harmony import */ var _node_modules_style_loader_dist_runtime_setAttributesWithoutAttributes_js__WEBPACK_IMPORTED_MODULE_3__ = __webpack_require__(/*! !../../../node_modules/style-loader/dist/runtime/setAttributesWithoutAttributes.js */ "./node_modules/style-loader/dist/runtime/setAttributesWithoutAttributes.js");
+/* harmony import */ var _node_modules_style_loader_dist_runtime_setAttributesWithoutAttributes_js__WEBPACK_IMPORTED_MODULE_3___default = /*#__PURE__*/__webpack_require__.n(_node_modules_style_loader_dist_runtime_setAttributesWithoutAttributes_js__WEBPACK_IMPORTED_MODULE_3__);
+/* harmony import */ var _node_modules_style_loader_dist_runtime_insertStyleElement_js__WEBPACK_IMPORTED_MODULE_4__ = __webpack_require__(/*! !../../../node_modules/style-loader/dist/runtime/insertStyleElement.js */ "./node_modules/style-loader/dist/runtime/insertStyleElement.js");
+/* harmony import */ var _node_modules_style_loader_dist_runtime_insertStyleElement_js__WEBPACK_IMPORTED_MODULE_4___default = /*#__PURE__*/__webpack_require__.n(_node_modules_style_loader_dist_runtime_insertStyleElement_js__WEBPACK_IMPORTED_MODULE_4__);
+/* harmony import */ var _node_modules_style_loader_dist_runtime_styleTagTransform_js__WEBPACK_IMPORTED_MODULE_5__ = __webpack_require__(/*! !../../../node_modules/style-loader/dist/runtime/styleTagTransform.js */ "./node_modules/style-loader/dist/runtime/styleTagTransform.js");
+/* harmony import */ var _node_modules_style_loader_dist_runtime_styleTagTransform_js__WEBPACK_IMPORTED_MODULE_5___default = /*#__PURE__*/__webpack_require__.n(_node_modules_style_loader_dist_runtime_styleTagTransform_js__WEBPACK_IMPORTED_MODULE_5__);
+/* harmony import */ var _node_modules_css_loader_dist_cjs_js_ruleSet_1_rules_2_use_1_node_modules_sass_loader_dist_cjs_js_node_modules_postcss_loader_dist_cjs_js_ProductForm_module_scss__WEBPACK_IMPORTED_MODULE_6__ = __webpack_require__(/*! !!../../../node_modules/css-loader/dist/cjs.js??ruleSet[1].rules[2].use[1]!../../../node_modules/sass-loader/dist/cjs.js!../../../node_modules/postcss-loader/dist/cjs.js!./ProductForm.module.scss */ "./node_modules/css-loader/dist/cjs.js??ruleSet[1].rules[2].use[1]!./node_modules/sass-loader/dist/cjs.js!./node_modules/postcss-loader/dist/cjs.js!./src/components/ProductForm/ProductForm.module.scss");
+
+      
+      
+      
+      
+      
+      
+      
+      
+      
+
+var options = {};
+
+options.styleTagTransform = (_node_modules_style_loader_dist_runtime_styleTagTransform_js__WEBPACK_IMPORTED_MODULE_5___default());
+options.setAttributes = (_node_modules_style_loader_dist_runtime_setAttributesWithoutAttributes_js__WEBPACK_IMPORTED_MODULE_3___default());
+
+      options.insert = _node_modules_style_loader_dist_runtime_insertBySelector_js__WEBPACK_IMPORTED_MODULE_2___default().bind(null, "head");
+    
+options.domAPI = (_node_modules_style_loader_dist_runtime_styleDomAPI_js__WEBPACK_IMPORTED_MODULE_1___default());
+options.insertStyleElement = (_node_modules_style_loader_dist_runtime_insertStyleElement_js__WEBPACK_IMPORTED_MODULE_4___default());
+
+var update = _node_modules_style_loader_dist_runtime_injectStylesIntoStyleTag_js__WEBPACK_IMPORTED_MODULE_0___default()(_node_modules_css_loader_dist_cjs_js_ruleSet_1_rules_2_use_1_node_modules_sass_loader_dist_cjs_js_node_modules_postcss_loader_dist_cjs_js_ProductForm_module_scss__WEBPACK_IMPORTED_MODULE_6__["default"], options);
+
+
+
+
+       /* harmony default export */ const __WEBPACK_DEFAULT_EXPORT__ = (_node_modules_css_loader_dist_cjs_js_ruleSet_1_rules_2_use_1_node_modules_sass_loader_dist_cjs_js_node_modules_postcss_loader_dist_cjs_js_ProductForm_module_scss__WEBPACK_IMPORTED_MODULE_6__["default"] && _node_modules_css_loader_dist_cjs_js_ruleSet_1_rules_2_use_1_node_modules_sass_loader_dist_cjs_js_node_modules_postcss_loader_dist_cjs_js_ProductForm_module_scss__WEBPACK_IMPORTED_MODULE_6__["default"].locals ? _node_modules_css_loader_dist_cjs_js_ruleSet_1_rules_2_use_1_node_modules_sass_loader_dist_cjs_js_node_modules_postcss_loader_dist_cjs_js_ProductForm_module_scss__WEBPACK_IMPORTED_MODULE_6__["default"].locals : undefined);
+
+
+/***/ }),
+
 /***/ "./src/components/ProductList/ProductList.module.scss":
 /*!************************************************************!*\
   !*** ./src/components/ProductList/ProductList.module.scss ***!
@@ -6325,6 +6139,59 @@ var update = _node_modules_style_loader_dist_runtime_injectStylesIntoStyleTag_js
 
 
        /* harmony default export */ const __WEBPACK_DEFAULT_EXPORT__ = (_node_modules_css_loader_dist_cjs_js_ruleSet_1_rules_2_use_1_node_modules_sass_loader_dist_cjs_js_node_modules_postcss_loader_dist_cjs_js_ReviewList_module_scss__WEBPACK_IMPORTED_MODULE_6__["default"] && _node_modules_css_loader_dist_cjs_js_ruleSet_1_rules_2_use_1_node_modules_sass_loader_dist_cjs_js_node_modules_postcss_loader_dist_cjs_js_ReviewList_module_scss__WEBPACK_IMPORTED_MODULE_6__["default"].locals ? _node_modules_css_loader_dist_cjs_js_ruleSet_1_rules_2_use_1_node_modules_sass_loader_dist_cjs_js_node_modules_postcss_loader_dist_cjs_js_ReviewList_module_scss__WEBPACK_IMPORTED_MODULE_6__["default"].locals : undefined);
+
+
+/***/ }),
+
+/***/ "./src/components/ShopForm/ShopForm.module.scss":
+/*!******************************************************!*\
+  !*** ./src/components/ShopForm/ShopForm.module.scss ***!
+  \******************************************************/
+/***/ ((__unused_webpack_module, __webpack_exports__, __webpack_require__) => {
+
+/* harmony export */ __webpack_require__.d(__webpack_exports__, {
+/* harmony export */   "default": () => (__WEBPACK_DEFAULT_EXPORT__)
+/* harmony export */ });
+/* harmony import */ var _node_modules_style_loader_dist_runtime_injectStylesIntoStyleTag_js__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! !../../../node_modules/style-loader/dist/runtime/injectStylesIntoStyleTag.js */ "./node_modules/style-loader/dist/runtime/injectStylesIntoStyleTag.js");
+/* harmony import */ var _node_modules_style_loader_dist_runtime_injectStylesIntoStyleTag_js__WEBPACK_IMPORTED_MODULE_0___default = /*#__PURE__*/__webpack_require__.n(_node_modules_style_loader_dist_runtime_injectStylesIntoStyleTag_js__WEBPACK_IMPORTED_MODULE_0__);
+/* harmony import */ var _node_modules_style_loader_dist_runtime_styleDomAPI_js__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! !../../../node_modules/style-loader/dist/runtime/styleDomAPI.js */ "./node_modules/style-loader/dist/runtime/styleDomAPI.js");
+/* harmony import */ var _node_modules_style_loader_dist_runtime_styleDomAPI_js__WEBPACK_IMPORTED_MODULE_1___default = /*#__PURE__*/__webpack_require__.n(_node_modules_style_loader_dist_runtime_styleDomAPI_js__WEBPACK_IMPORTED_MODULE_1__);
+/* harmony import */ var _node_modules_style_loader_dist_runtime_insertBySelector_js__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! !../../../node_modules/style-loader/dist/runtime/insertBySelector.js */ "./node_modules/style-loader/dist/runtime/insertBySelector.js");
+/* harmony import */ var _node_modules_style_loader_dist_runtime_insertBySelector_js__WEBPACK_IMPORTED_MODULE_2___default = /*#__PURE__*/__webpack_require__.n(_node_modules_style_loader_dist_runtime_insertBySelector_js__WEBPACK_IMPORTED_MODULE_2__);
+/* harmony import */ var _node_modules_style_loader_dist_runtime_setAttributesWithoutAttributes_js__WEBPACK_IMPORTED_MODULE_3__ = __webpack_require__(/*! !../../../node_modules/style-loader/dist/runtime/setAttributesWithoutAttributes.js */ "./node_modules/style-loader/dist/runtime/setAttributesWithoutAttributes.js");
+/* harmony import */ var _node_modules_style_loader_dist_runtime_setAttributesWithoutAttributes_js__WEBPACK_IMPORTED_MODULE_3___default = /*#__PURE__*/__webpack_require__.n(_node_modules_style_loader_dist_runtime_setAttributesWithoutAttributes_js__WEBPACK_IMPORTED_MODULE_3__);
+/* harmony import */ var _node_modules_style_loader_dist_runtime_insertStyleElement_js__WEBPACK_IMPORTED_MODULE_4__ = __webpack_require__(/*! !../../../node_modules/style-loader/dist/runtime/insertStyleElement.js */ "./node_modules/style-loader/dist/runtime/insertStyleElement.js");
+/* harmony import */ var _node_modules_style_loader_dist_runtime_insertStyleElement_js__WEBPACK_IMPORTED_MODULE_4___default = /*#__PURE__*/__webpack_require__.n(_node_modules_style_loader_dist_runtime_insertStyleElement_js__WEBPACK_IMPORTED_MODULE_4__);
+/* harmony import */ var _node_modules_style_loader_dist_runtime_styleTagTransform_js__WEBPACK_IMPORTED_MODULE_5__ = __webpack_require__(/*! !../../../node_modules/style-loader/dist/runtime/styleTagTransform.js */ "./node_modules/style-loader/dist/runtime/styleTagTransform.js");
+/* harmony import */ var _node_modules_style_loader_dist_runtime_styleTagTransform_js__WEBPACK_IMPORTED_MODULE_5___default = /*#__PURE__*/__webpack_require__.n(_node_modules_style_loader_dist_runtime_styleTagTransform_js__WEBPACK_IMPORTED_MODULE_5__);
+/* harmony import */ var _node_modules_css_loader_dist_cjs_js_ruleSet_1_rules_2_use_1_node_modules_sass_loader_dist_cjs_js_node_modules_postcss_loader_dist_cjs_js_ShopForm_module_scss__WEBPACK_IMPORTED_MODULE_6__ = __webpack_require__(/*! !!../../../node_modules/css-loader/dist/cjs.js??ruleSet[1].rules[2].use[1]!../../../node_modules/sass-loader/dist/cjs.js!../../../node_modules/postcss-loader/dist/cjs.js!./ShopForm.module.scss */ "./node_modules/css-loader/dist/cjs.js??ruleSet[1].rules[2].use[1]!./node_modules/sass-loader/dist/cjs.js!./node_modules/postcss-loader/dist/cjs.js!./src/components/ShopForm/ShopForm.module.scss");
+
+      
+      
+      
+      
+      
+      
+      
+      
+      
+
+var options = {};
+
+options.styleTagTransform = (_node_modules_style_loader_dist_runtime_styleTagTransform_js__WEBPACK_IMPORTED_MODULE_5___default());
+options.setAttributes = (_node_modules_style_loader_dist_runtime_setAttributesWithoutAttributes_js__WEBPACK_IMPORTED_MODULE_3___default());
+
+      options.insert = _node_modules_style_loader_dist_runtime_insertBySelector_js__WEBPACK_IMPORTED_MODULE_2___default().bind(null, "head");
+    
+options.domAPI = (_node_modules_style_loader_dist_runtime_styleDomAPI_js__WEBPACK_IMPORTED_MODULE_1___default());
+options.insertStyleElement = (_node_modules_style_loader_dist_runtime_insertStyleElement_js__WEBPACK_IMPORTED_MODULE_4___default());
+
+var update = _node_modules_style_loader_dist_runtime_injectStylesIntoStyleTag_js__WEBPACK_IMPORTED_MODULE_0___default()(_node_modules_css_loader_dist_cjs_js_ruleSet_1_rules_2_use_1_node_modules_sass_loader_dist_cjs_js_node_modules_postcss_loader_dist_cjs_js_ShopForm_module_scss__WEBPACK_IMPORTED_MODULE_6__["default"], options);
+
+
+
+
+       /* harmony default export */ const __WEBPACK_DEFAULT_EXPORT__ = (_node_modules_css_loader_dist_cjs_js_ruleSet_1_rules_2_use_1_node_modules_sass_loader_dist_cjs_js_node_modules_postcss_loader_dist_cjs_js_ShopForm_module_scss__WEBPACK_IMPORTED_MODULE_6__["default"] && _node_modules_css_loader_dist_cjs_js_ruleSet_1_rules_2_use_1_node_modules_sass_loader_dist_cjs_js_node_modules_postcss_loader_dist_cjs_js_ShopForm_module_scss__WEBPACK_IMPORTED_MODULE_6__["default"].locals ? _node_modules_css_loader_dist_cjs_js_ruleSet_1_rules_2_use_1_node_modules_sass_loader_dist_cjs_js_node_modules_postcss_loader_dist_cjs_js_ShopForm_module_scss__WEBPACK_IMPORTED_MODULE_6__["default"].locals : undefined);
 
 
 /***/ }),

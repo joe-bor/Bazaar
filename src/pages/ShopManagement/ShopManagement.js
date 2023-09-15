@@ -1,16 +1,20 @@
 import { useState, useRef, useEffect } from 'react'
-import { Link, useLocation, useNavigate, useParams } from "react-router-dom"
+import { Link, useLocation, useNavigate, useParams } from 'react-router-dom'
 import * as shopsAPI from '../../utilities/shops-api'
 import styles from './ShopManagement.module.scss'
-import CreateShop from "../../components/CreateShop/CreateShop";
-import CreateProduct from "../../components/CreateProduct/CreateProduct";
-import ProductList from '../../components/ProductList/ProductList';
+import ShopForm from '../../components/ShopForm/ShopForm'
+import ProductForm from '../../components/ProductForm/ProductForm'
+import ProductList from '../../components/ProductList/ProductList'
 import EditProductForm from '../../components/EditProductForm/EditProductForm'
-import EditShopForm from '../../components/EditShopForm/EditShopForm'
 import shopIcon from '../../assets/images/shop-icon.svg'
 
-
-export default function ShopManagement({ user, setUser, userShop, setUserShop, categories }) {
+export default function ShopManagement({
+  user,
+  setUser,
+  userShop,
+  setUserShop,
+  categories
+}) {
   const [productModalOpen, setProductModalOpen] = useState(false)
   const [shopEditModalOpen, setShopEditModalOpen] = useState(false)
   const [productEditModalOpen, setProductEditModalOpen] = useState(false)
@@ -36,17 +40,22 @@ export default function ShopManagement({ user, setUser, userShop, setUserShop, c
     }
   }, [userShop])
 
-
   useEffect(() => {
-    productModalOpen ? productModalRef.current.showModal() : productModalRef.current.close()
+    productModalOpen
+      ? productModalRef.current.showModal()
+      : productModalRef.current.close()
   }, [productModalOpen])
 
   useEffect(() => {
-    shopEditModalOpen ? shopEditModalRef.current.showModal() : shopEditModalRef.current.close()
+    shopEditModalOpen
+      ? shopEditModalRef.current.showModal()
+      : shopEditModalRef.current.close()
   }, [shopEditModalOpen])
 
   useEffect(() => {
-    productEditModalOpen ? productEditModalRef.current.showModal() : shopEditModalRef.current.close()
+    productEditModalOpen
+      ? productEditModalRef.current.showModal()
+      : shopEditModalRef.current.close()
   }, [productEditModalOpen])
 
   function toggleCreateProduct() {
@@ -68,33 +77,69 @@ export default function ShopManagement({ user, setUser, userShop, setUserShop, c
     navigate('/account')
   }
 
-
-
   return (
     <div className={styles.ShopManagement}>
       <section className={styles.header}>
-        {userShop &&
+        {userShop && (
           <div className={styles.infoSection}>
-            <img className={userShop.heroImage ? styles.circle : ''} src={userShop.heroImage ? userShop.heroImage : shopIcon} />
+            <img
+              className={userShop.heroImage ? styles.circle : ''}
+              src={userShop.heroImage ? userShop.heroImage : shopIcon}
+            />
             <div className={styles.shopInfo}>
               <h1 className="title">{userShop.name}</h1>
               <p className={styles.description}>{userShop.description}</p>
             </div>
-          </div>}
+          </div>
+        )}
         <div className={`${styles.links} flex-col`}>
           <button onClick={toggleEditShop}>Edit Shop Info</button>
           <button onClick={toggleCreateProduct}>Add A Product</button>
           <button onClick={toggleEditProductForm}>Edit an Item</button>
           <button onClick={deleteUserShop}>Delete Shop</button>
-
         </div>
       </section>
       <div className={styles.products}>
         <h2 className={styles.productsHeading}>Products</h2>
-        {shopProducts.length > 0 ? <ProductList productItems={shopProducts} user={user} setUser={setUser} /> : null}
+        {shopProducts.length > 0 ? (
+          <ProductList
+            productItems={shopProducts}
+            user={user}
+            setUser={setUser}
+          />
+        ) : null}
       </div>
-      <dialog className={styles.dialog} ref={shopEditModalRef} onClose={toggleEditShop}><EditShopForm toggleEditShop={toggleEditShop} user={user} setUser={setUser} location={location} userShop={userShop} setUserShop={setUserShop} /></dialog>
-      <dialog className={styles.dialog} ref={productModalRef} onClose={toggleCreateProduct}><CreateProduct toggleCreateProduct={toggleCreateProduct} shopProducts={shopProducts} setShopProducts={setShopProducts} user={user} setUser={setUser} location={location} userShop={userShop} setUserShop={setUserShop} categories={categories} /></dialog>
+      <dialog
+        className={styles.dialog}
+        ref={shopEditModalRef}
+        onClose={toggleEditShop}
+      >
+        <ShopForm
+          toggleEditShop={toggleEditShop}
+          user={user}
+          setUser={setUser}
+          location={location}
+          userShop={userShop}
+          setUserShop={setUserShop}
+        />
+      </dialog>
+      <dialog
+        className={styles.dialog}
+        ref={productModalRef}
+        onClose={toggleCreateProduct}
+      >
+        <ProductForm
+          toggleCreateProduct={toggleCreateProduct}
+          shopProducts={shopProducts}
+          setShopProducts={setShopProducts}
+          user={user}
+          setUser={setUser}
+          location={location}
+          userShop={userShop}
+          setUserShop={setUserShop}
+          categories={categories}
+        />
+      </dialog>
       {/* <dialog ref={productEditModalRef} onClose={toggleEditProductForm}><EditProductForm toggleCreateProduct={toggleCreateProduct} user={user} categories={categories} /></dialog> */}
     </div>
   )

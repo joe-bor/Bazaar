@@ -5,7 +5,7 @@ import { useState, useRef, useEffect } from 'react'
 import { Link, useLocation, useNavigate } from "react-router-dom"
 import { deleteUser, getUser } from "../../utilities/users-service";
 import styles from './AccountPage.module.scss'
-import CreateShop from "../../components/CreateShop/CreateShop";
+import ShopForm from "../../components/ShopForm/ShopForm";
 import ProductList from "../../components/ProductList/ProductList";
 
 export default function AccountPage({ user, setUser, createGuestUser, userShop, setUserShop, favItems }) {
@@ -63,7 +63,7 @@ export default function AccountPage({ user, setUser, createGuestUser, userShop, 
     <div className={`${styles.AccountPage} flex-ctr-ctr flex-col`}>
       <section className={styles.header}>
         <div className={styles.infoSection}>
-          <img src={user.name === 'c186ec' || !user.imageUrl ? userIcon : user.imageUrl} />
+          <img src={user?.name === 'c186ec' || !user?.imageUrl ? userIcon : user?.imageUrl} />
           <div className={styles.infoDetails}>
             <h1 className="title">{user.name}</h1>
             <table>
@@ -108,7 +108,7 @@ export default function AccountPage({ user, setUser, createGuestUser, userShop, 
         ref={shopModalRef}
         onClose={toggleCreateShop}
         onSubmit={toggleCreateShop}>
-        <CreateShop
+        <ShopForm
           user={user}
           setUser={setUser}
           location={location}

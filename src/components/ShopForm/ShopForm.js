@@ -1,13 +1,13 @@
 import { useState } from 'react'
-import styles from './CreateShop.module.scss'
+import styles from './ShopForm.module.scss'
 import FormInput from '../FormInput/FormInput'
 import { useNavigate } from 'react-router-dom'
 import { shopPost, shopPut } from '../../utilities/image-upload'
 
-export default function CreateShop({ user, setUser, location, userShop, setUserShop, toggleEditShop }) {
+export default function ShopForm({ user, setUser, location, userShop, setUserShop, toggleEditShop }) {
   const [shopValues, setShopValues] = useState({
-    name: '',
-    description: ''
+    name: location.pathname === '/shopmgmt' ? userShop.name : '',
+    description: location.pathname === '/shopmgmt' ? userShop.descroption : ''
   })
   const [file, setFile] = useState(null)
   const [photoUrl, setPhotoUrl] = useState('')
@@ -64,23 +64,21 @@ export default function CreateShop({ user, setUser, location, userShop, setUserS
       }
       formData.append('token', localStorage.getItem('token'))
       // edit the shop in shop management
-      if (location.pathname === '/shopmgmt') {
+      if (location.pathname.includes('/shopmgmt')) {
         const updatedShop = await shopPut(userShop._id, formData)
         setUserShop(updatedShop)
         toggleEditShop()
         // create shop in account page
       } else {
         // send request to create shop
-        const { currentUser, newShop } = await shopPost(formData)
+        const data = await shopPost(formData)
         // set user state to have shop info
-        setUser(currentUser)
-        setUserShop(newShop)
-        navigate(`/shopmgmt/${newShop._id}`)
+        setUser(data.data.user)
+        setUserShop(data.data.newShop)
+        navigate(`/shopmgmt/${data.data.newShop._id}`)
       }
     } catch (error) {
       console.error(error)
-    } finally {
-
     }
   }
 
@@ -95,7 +93,7 @@ export default function CreateShop({ user, setUser, location, userShop, setUserS
   }
 
   return (
-    <div className={styles.CreateShop}>
+    <div className={styles.ShopForm}>
       <div>
         <h1 className={styles.h1}>{location.pathname === '/account' ? 'Create A Shop' : 'Edit Shop Details'}</h1>
 
