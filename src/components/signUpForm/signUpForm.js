@@ -3,7 +3,7 @@ import styles from './SignUpForm.module.scss'
 import FormInput from '../FormInput/FormInput'
 import { signUp } from '../../utilities/users-service'
 
-function SignUpForm({ setUser }) {
+function SignUpForm({ setUser, handleCloseAuthModal }) {
 
   const [values, setValues] = useState({
     name: "",
@@ -67,6 +67,7 @@ function SignUpForm({ setUser }) {
     delete formData.confirm
     const newUser = await signUp(formData)
     setUser(newUser)
+    handleCloseAuthModal()
   }
 
   return (

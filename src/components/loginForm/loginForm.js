@@ -3,7 +3,7 @@ import FormInput from "../FormInput/FormInput"
 import styles from './LoginForm.module.scss'
 import { login } from '../../utilities/users-service'
 
-export default function LoginForm({ setUser }) {
+export default function LoginForm({ setUser, handleCloseAuthModal}) {
 
     const [values, setValues] = useState({
         email: "",
@@ -13,7 +13,7 @@ export default function LoginForm({ setUser }) {
 
     const inputs = [
         {
-            id: 1,
+            id: "login-name",
             name: "email",
             type: "email",
             label: "Email",
@@ -22,7 +22,7 @@ export default function LoginForm({ setUser }) {
             required: true
         },
         {
-            id: 2,
+            id: "login-pw",
             name: "password",
             type: "password",
             label: "Password",
@@ -42,6 +42,7 @@ export default function LoginForm({ setUser }) {
         e.preventDefault()
         const loggedInUser = await login(values)
         setUser(loggedInUser)
+        handleCloseAuthModal()
     }
 
     return (

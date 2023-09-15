@@ -9,8 +9,8 @@ export default function CreateShop({ user, setUser, location, userShop, setUserS
   const [shopValues, setShopValues] = useState({
     name: '',
     description: '',
-    // logoImage: null
   })
+  const [file, setFile] = useState(null)
 
   const navigate = useNavigate()
 
@@ -54,13 +54,27 @@ export default function CreateShop({ user, setUser, location, userShop, setUserS
     setShopValues({ ...shopValues, [e.target.name]: e.target.value })
   }
 
-  // 🟥 function for handling image upload 🟥
+  const handleImageChange = () => {
+    e.preventDefault()
+    let reader = new FileReader()
+    let file = e.target.files[0]
+    reader.onloadend = () => {
+      setFile(file)
+    }
+    reader.readAsDataURL(file)
+  }
 
   async function handleShopSubmit(e) {
     e.preventDefault()
-    const formData = { ...shopValues }
     if (location.pathname === '/shopmgmt') {
-      // send request to update shop
+      const formData = new FormData()
+      formData.append('file', file)
+      for (let key in shopValues) {
+        if (key !== 'confirm') {
+          formData.append(key, shopValues[key])
+        }
+      }
+      //! send request to update shop - AXIOS instead
       const updatedShop = await editShopInfo(userShop._id, formData)
       setUserShop(updatedShop)
       toggleEditShop()
@@ -84,7 +98,7 @@ export default function CreateShop({ user, setUser, location, userShop, setUserS
       <div className="form-container">
         <h1 className={styles.h1}>{location.pathname === '/account' ? 'Create A Shop' : 'Edit Shop Details'}</h1>
         <form autoComplete="off" onSubmit={handleShopSubmit}>
-          {/* <FormInput {...logoInputProps} handleInputChange={handleImageChange} /> */}
+          <FormInput {...logoInputProps} handleInputChange={handleImageChange} />
           {shopInputs.map(input => <FormInput key={input.id} {...input} value={shopValues[input.name]} handleInputChange={handleShopInputChange} />)}
           <button formMethod='dialog'>{location.pathname === '/account' ? 'Create Shop' : 'Update Shop'}</button>
         </form>

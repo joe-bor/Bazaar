@@ -1,0 +1,17 @@
+.CategoryList {
+  font-weight: 600;
+  list-style: none;
+  padding: 0 3rem 0 0;
+  margin: 0;
+    li {
+    margin: 0 0 0 0.5rem; 
+    padding: 0;
+    }
+    li:hover {
+      color: var(--accent);
+      cursor: pointer;
+    }
+  .active {
+    color: var(--accent);
+  }
+}

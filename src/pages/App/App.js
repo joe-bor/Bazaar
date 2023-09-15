@@ -98,6 +98,7 @@ export default function App() {
 
   const handleCloseAuthModal = () => {
     setIsAuthModalOpen(false)
+    console.log('handleCloseAuthModal')
   }
 
   async function createGuestUser() {
@@ -142,7 +143,7 @@ export default function App() {
         {/* client-side route that renders the component instance if the patch matches the url in the address bar */}
         <Route path="/home" element={<Home items={items} className={styles.Home} categories={categoriesRef.current} setActiveCat={setActiveCat} setCart={setCart} />} />
         <Route path="/shop" element={<ShopPage className={styles.ShopPage} items={filteredItems} user={user} setUser={setUser} />} />
-        <Route path="/itemdetails/:itemId" element={<ItemDetails setCart={setCart} />} />
+        <Route path="/itemdetails/:itemId" element={<ItemDetails setCart={setCart} favItems={favItems} setFavItems={setFavItems} user={user} setUser={setUser} />} />
         <Route path="/account" element={<AccountPage className={styles.AccountPage} user={user} setUser={setUser} createGuestUser={createGuestUser} userShop={userShop} setUserShop={setUserShop} favItems={favItems} setFavItems={setFavItems} />} />
         <Route path="/favorites" element={<Favorites user={user} setUser={setUser} favItems={favItems} setFavItems={setFavItems} />} />
         <Route path="/cart" element={<Cart className={styles.Cart} cart={cart} setCart={setCart} cartTotals={cartTotals} />} />
