@@ -2,6 +2,15 @@
   display: grid;
   grid-template-columns: 70% 30%;
 
+  .cartSummary {
+    padding: 1rem 1rem 0 1rem;
+  }
+
+  .paymentInfo {
+    font-size: 1.5rem;
+    font-weight: 600;
+  }
+
   .checkoutText {
     display: flex;
   }
@@ -9,14 +18,24 @@
   .priceTotalText {
     text-align: left;
     font-weight: 600;
+    width: 50%;
+    font-size: 1.3rem;
   }
 
   .fakePmtInfo {
-    height: 6rem;
+    height: 30rem;
   }
 
   .totalPrice {
     text-align: right;
     font-weight: 600;
+    width: 50%;
+    font-size: 1.3rem;
+  }
+
+  .goToShop {
+    width: 100%;
+    margin: 0 auto;
+    height: 5vmin;
   }
 }
