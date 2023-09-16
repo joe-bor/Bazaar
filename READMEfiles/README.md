@@ -97,4 +97,4 @@
 
 ### Presentation
 
-![](<Etsy Project.jpg>)
+https://docs.google.com/presentation/d/1p6-ee9PhQaRb3GnyU9XlTNXTgxvGR9zAqTsCEdBJvts/edit#slide=id.gc6fa3c898_0_5
