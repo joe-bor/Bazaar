@@ -93,3 +93,8 @@
 
 ### Shop Management Page
 ![](ShopManagement.png)
+
+
+### Presentation
+
+![](<Etsy Project.jpg>)
