@@ -788,7 +788,8 @@ function Logo() {
 /* harmony export */ });
 /* harmony import */ var react__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! react */ "./node_modules/react/index.js");
 /* harmony import */ var react__WEBPACK_IMPORTED_MODULE_0___default = /*#__PURE__*/__webpack_require__.n(react__WEBPACK_IMPORTED_MODULE_0__);
-/* harmony import */ var react_router_dom__WEBPACK_IMPORTED_MODULE_8__ = __webpack_require__(/*! react-router-dom */ "./node_modules/react-router-dom/dist/index.js");
+/* harmony import */ var react_router_dom__WEBPACK_IMPORTED_MODULE_8__ = __webpack_require__(/*! react-router-dom */ "./node_modules/react-router/dist/index.js");
+/* harmony import */ var react_router_dom__WEBPACK_IMPORTED_MODULE_9__ = __webpack_require__(/*! react-router-dom */ "./node_modules/react-router-dom/dist/index.js");
 /* harmony import */ var _NavBar_module_scss__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! ./NavBar.module.scss */ "./src/components/NavBar/NavBar.module.scss");
 /* harmony import */ var _assets_images_user_icon_svg__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! ../../assets/images/user-icon.svg */ "./src/assets/images/user-icon.svg");
 /* harmony import */ var _assets_images_cart_icon_svg__WEBPACK_IMPORTED_MODULE_3__ = __webpack_require__(/*! ../../assets/images/cart-icon.svg */ "./src/assets/images/cart-icon.svg");
@@ -817,8 +818,14 @@ function NavBar(_ref) {
     cart,
     searchTerm,
     setSearchTerm,
-    cartTotals
+    cartTotals,
+    setActiveCat
   } = _ref;
+  const navigate = (0,react_router_dom__WEBPACK_IMPORTED_MODULE_8__.useNavigate)();
+  function handleCatClick(e) {
+    setActiveCat(e.target.innerText);
+    navigate('/shop');
+  }
   return /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default().createElement("nav", {
     className: _NavBar_module_scss__WEBPACK_IMPORTED_MODULE_1__["default"].NavBar
   }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default().createElement("div", {
@@ -834,15 +841,16 @@ function NavBar(_ref) {
     setSearchTerm: setSearchTerm,
     items: items,
     filteredItems: filteredItems,
-    setFilteredItems: setFilteredItems
+    setFilteredItems: setFilteredItems,
+    setActiveCat: setActiveCat
   })), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default().createElement("div", {
     className: _NavBar_module_scss__WEBPACK_IMPORTED_MODULE_1__["default"].icons
-  }, (user === null || user === void 0 ? void 0 : user.name) !== 'c186ec' ? /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default().createElement((react__WEBPACK_IMPORTED_MODULE_0___default().Fragment), null, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default().createElement(react_router_dom__WEBPACK_IMPORTED_MODULE_8__.Link, {
+  }, (user === null || user === void 0 ? void 0 : user.name) !== 'c186ec' ? /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default().createElement((react__WEBPACK_IMPORTED_MODULE_0___default().Fragment), null, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default().createElement(react_router_dom__WEBPACK_IMPORTED_MODULE_9__.Link, {
     to: "/favorites"
   }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default().createElement("div", null, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default().createElement("img", {
     src: _assets_images_fav_heart_svg__WEBPACK_IMPORTED_MODULE_4__,
     alt: "heart"
-  }))), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default().createElement(react_router_dom__WEBPACK_IMPORTED_MODULE_8__.Link, {
+  }))), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default().createElement(react_router_dom__WEBPACK_IMPORTED_MODULE_9__.Link, {
     to: "/account"
   }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default().createElement("div", null, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default().createElement("img", {
     className: user !== null && user !== void 0 && user.imageUrl ? _NavBar_module_scss__WEBPACK_IMPORTED_MODULE_1__["default"].userPhoto : '',
@@ -851,12 +859,12 @@ function NavBar(_ref) {
   })))) : /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default().createElement("div", {
     className: _NavBar_module_scss__WEBPACK_IMPORTED_MODULE_1__["default"].login,
     onClick: toggleAuthModal
-  }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default().createElement("p", null, "Log In")), (userShop === null || userShop === void 0 ? void 0 : userShop.name) !== 'Loading...' ? /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default().createElement(react_router_dom__WEBPACK_IMPORTED_MODULE_8__.Link, {
+  }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default().createElement("p", null, "Log In")), (userShop === null || userShop === void 0 ? void 0 : userShop.name) !== 'Loading...' ? /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default().createElement(react_router_dom__WEBPACK_IMPORTED_MODULE_9__.Link, {
     to: "/shopmgmt/".concat(user === null || user === void 0 ? void 0 : user._id)
   }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default().createElement("div", null, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default().createElement("img", {
     src: _assets_images_shop_icon_svg__WEBPACK_IMPORTED_MODULE_5__,
     alt: "store"
-  }))) : /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default().createElement((react__WEBPACK_IMPORTED_MODULE_0___default().Fragment), null), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default().createElement(react_router_dom__WEBPACK_IMPORTED_MODULE_8__.Link, {
+  }))) : /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default().createElement((react__WEBPACK_IMPORTED_MODULE_0___default().Fragment), null), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default().createElement(react_router_dom__WEBPACK_IMPORTED_MODULE_9__.Link, {
     to: "/cart"
   }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default().createElement("div", {
     className: _NavBar_module_scss__WEBPACK_IMPORTED_MODULE_1__["default"].cartContainer
@@ -869,6 +877,7 @@ function NavBar(_ref) {
     className: _NavBar_module_scss__WEBPACK_IMPORTED_MODULE_1__["default"].categories
   }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default().createElement("ul", null, categories.map((category, index) => /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default().createElement("li", {
     className: _NavBar_module_scss__WEBPACK_IMPORTED_MODULE_1__["default"].li,
+    onClick: handleCatClick,
     key: index
   }, category)))));
 }
@@ -1292,10 +1301,12 @@ function SearchBar(_ref) {
   let {
     className,
     items,
-    setFilteredItems
+    setFilteredItems,
+    setActiveCat
   } = _ref;
   const [searchTerm, setSearchTerm] = (0,react__WEBPACK_IMPORTED_MODULE_2__.useState)("");
   const navigate = (0,react_router_dom__WEBPACK_IMPORTED_MODULE_3__.useNavigate)();
+  const location = (0,react_router_dom__WEBPACK_IMPORTED_MODULE_3__.useLocation)();
 
   // properties to not include in search result
   const excludeProps = ["imageUrl", "publicId", "price", "reviews"];
@@ -1313,9 +1324,11 @@ function SearchBar(_ref) {
   const handleSubmit = evt => {
     // here is where the magic happens
     evt.preventDefault();
-    navigate('/shop', {
-      replace: true
-    });
+    if (location.pathname !== '/shop') {
+      navigate('/shop', {
+        replace: true
+      });
+    }
     let search = items.filter(searchFilter);
     setFilteredItems(search);
     console.log(evt.target.value);
@@ -1386,7 +1399,6 @@ function ShopForm(_ref) {
     description: ''
   });
   const [file, setFile] = (0,react__WEBPACK_IMPORTED_MODULE_0__.useState)(null);
-  const [photoUrl, setPhotoUrl] = (0,react__WEBPACK_IMPORTED_MODULE_0__.useState)('');
   const navigate = (0,react_router_dom__WEBPACK_IMPORTED_MODULE_4__.useNavigate)();
   (0,react__WEBPACK_IMPORTED_MODULE_0__.useEffect)(() => {
     if (user.shop) {
@@ -1408,20 +1420,20 @@ function ShopForm(_ref) {
     name: "name",
     type: "text",
     placeholder: "Shop Name",
-    value: location.pathname === "./shopmgmt/".concat(user.shop) ? userShop.name : shopValues.name,
+    value: shopValues.name,
     errorMessage: "Shop name is required and can't include special characters",
     label: "Shop Name",
     pattern: "^[A-Za-z0-9 ']+$",
-    required: true
+    required: location.pathname.includes('/shopmgmt') ? false : true
   }, {
     id: "shop-description",
     name: "description",
     type: "text",
     placeholder: "Shop Description",
-    value: location.pathname === "./shopmgmt/".concat(user.shop) ? userShop.description : shopValues.description,
+    value: shopValues.description,
     errorMessage: "Shop description is required",
     label: "Shop Description",
-    required: true
+    required: location.pathname.includes('/shopmgmt') ? false : true
   }];
   const logoInputProps = {
     id: "shop-logo",
@@ -1444,9 +1456,13 @@ function ShopForm(_ref) {
       e.preventDefault();
       try {
         const formData = new FormData();
-        formData.append('file', file);
+        if (file) {
+          formData.append('file', file);
+        }
         for (let key in shopValues) {
-          formData.append(key, shopValues[key]);
+          if (shopValues[key] !== '') {
+            formData.append(key, shopValues[key]);
+          }
         }
         formData.append('token', localStorage.getItem('token'));
         // edit the shop in shop management
@@ -1660,11 +1676,18 @@ function SignUpForm(_ref) {
 
 function UserLogOut(_ref) {
   let {
-    createGuestUser
+    createGuestUser,
+    setUserShop
   } = _ref;
   const navigate = (0,react_router_dom__WEBPACK_IMPORTED_MODULE_1__.useNavigate)();
   function handleLogOut() {
     (0,_utilities_users_service__WEBPACK_IMPORTED_MODULE_2__.logOut)();
+    setUserShop({
+      name: 'Loading...',
+      seller: {},
+      description: 'Loading...',
+      products: []
+    });
     // create a new guest user
     createGuestUser();
     navigate('/');
@@ -1825,7 +1848,8 @@ function AccountPage(_ref) {
     createGuestUser,
     userShop,
     setUserShop,
-    favItems
+    favItems,
+    setFavItems
   } = _ref;
   const [editModalOpen, setEditModalOpen] = (0,react__WEBPACK_IMPORTED_MODULE_3__.useState)(false);
   const [shopModalOpen, setShopModalOpen] = (0,react__WEBPACK_IMPORTED_MODULE_3__.useState)(false);
@@ -1879,6 +1903,12 @@ function AccountPage(_ref) {
   function _deleteUserAcc() {
     _deleteUserAcc = _asyncToGenerator(function* () {
       yield (0,_utilities_users_service__WEBPACK_IMPORTED_MODULE_8__.deleteUser)(user._id);
+      setUserShop({
+        name: 'Loading...',
+        seller: {},
+        description: 'Loading...',
+        products: []
+      });
       createGuestUser();
       navigate('/home');
     });
@@ -1913,7 +1943,8 @@ function AccountPage(_ref) {
   }, "Create a Shop"), /*#__PURE__*/React.createElement("button", {
     onClick: deleteUserAcc
   }, "Delete Account"), /*#__PURE__*/React.createElement(_components_UserLogOut_UserLogOut__WEBPACK_IMPORTED_MODULE_0__["default"], {
-    createGuestUser: createGuestUser
+    createGuestUser: createGuestUser,
+    setUserShop: setUserShop
   }))), /*#__PURE__*/React.createElement("div", {
     className: _AccountPage_module_scss__WEBPACK_IMPORTED_MODULE_4__["default"].favorites
   }, /*#__PURE__*/React.createElement("div", {
@@ -1925,7 +1956,10 @@ function AccountPage(_ref) {
     onClick: () => navigate('/favorites')
   }, "See All")), /*#__PURE__*/React.createElement(_components_ProductList_ProductList__WEBPACK_IMPORTED_MODULE_6__["default"], {
     productItems: favPreviewItems,
-    user: user
+    user: user,
+    setUser: setUser,
+    favItems: favItems,
+    setFavItems: setFavItems
   })), /*#__PURE__*/React.createElement("dialog", {
     className: _AccountPage_module_scss__WEBPACK_IMPORTED_MODULE_4__["default"].dialog,
     ref: editModalRef,
@@ -2151,6 +2185,8 @@ function App() {
     cart: cart,
     location: location,
     cartTotals: cartTotals,
+    activeCat: activeCat,
+    setActiveCat: setActiveCat,
     createGuestUser: createGuestUser
   }), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default().createElement(react_router_dom__WEBPACK_IMPORTED_MODULE_15__.Routes, null, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default().createElement(react_router_dom__WEBPACK_IMPORTED_MODULE_15__.Route, {
     path: "/home",
@@ -2829,7 +2865,8 @@ function ShopManagement(_ref) {
     getUserShop();
   }, [user]);
   (0,react__WEBPACK_IMPORTED_MODULE_0__.useEffect)(() => {
-    if (userShop && (userShop === null || userShop === void 0 ? void 0 : userShop.products.length) > 0 && (shopProducts === null || shopProducts === void 0 ? void 0 : shopProducts.length) === 0) {
+    var _userShop$products;
+    if (userShop && (userShop === null || userShop === void 0 || (_userShop$products = userShop.products) === null || _userShop$products === void 0 ? void 0 : _userShop$products.length) > 0 && (shopProducts === null || shopProducts === void 0 ? void 0 : shopProducts.length) === 0) {
       setShopProducts(userShop.products);
     }
   }, [userShop]);
@@ -2857,8 +2894,13 @@ function ShopManagement(_ref) {
   function _deleteUserShop() {
     _deleteUserShop = _asyncToGenerator(function* () {
       const user = yield _utilities_shops_api__WEBPACK_IMPORTED_MODULE_8__.deleteShop(userShop._id);
-      setUserShop(null);
       setUser(user);
+      setUserShop({
+        name: 'Loading...',
+        seller: {},
+        description: 'Loading...',
+        products: []
+      });
       navigate('/account');
     });
     return _deleteUserShop.apply(this, arguments);

@@ -35,7 +35,7 @@ export default function ShopManagement({
   }, [user])
 
   useEffect(() => {
-    if (userShop && userShop?.products.length > 0 && shopProducts?.length === 0) {
+    if (userShop && userShop?.products?.length > 0 && shopProducts?.length === 0) {
       setShopProducts(userShop.products)
     }
   }, [userShop])
@@ -72,8 +72,13 @@ export default function ShopManagement({
 
   async function deleteUserShop() {
     const user = await shopsAPI.deleteShop(userShop._id)
-    setUserShop(null)
     setUser(user)
+    setUserShop({
+      name: 'Loading...',
+      seller: {},
+      description: 'Loading...',
+      products: []
+    })
     navigate('/account')
   }
 

@@ -1,20 +1,22 @@
 import styles from '../searchbar/Searchbar.module.scss'
 import searchIcon from '../../assets/images/search-icon.svg'
 
-import { useEffect, useState } from "react";
-import { useNavigate } from 'react-router-dom';
+import { useEffect, useState } from "react"
+import { useNavigate, useLocation } from 'react-router-dom'
 
 
 export default function SearchBar({
   className,
   items,
-  setFilteredItems
+  setFilteredItems,
+  setActiveCat
 }) {
-  const [searchTerm, setSearchTerm] = useState("");
-  const navigate = useNavigate();
+  const [searchTerm, setSearchTerm] = useState("")
+  const navigate = useNavigate()
+  const location = useLocation()
 
   // properties to not include in search result
-  const excludeProps = ["imageUrl", "publicId", "price", "reviews"];
+  const excludeProps = ["imageUrl", "publicId", "price", "reviews"]
 
   function searchFilter(item) {
     return Object.keys(item).some((key) => {
@@ -23,22 +25,24 @@ export default function SearchBar({
         : item[key] // value
           .toString() // convert to string
           .toLowerCase() // lowercase string
-          .includes(searchTerm.toLowerCase().replace(/\s+/g, ''));
-    });
+          .includes(searchTerm.toLowerCase().replace(/\s+/g, ''))
+    })
   }
 
   const handleChange = (evt) => {
-    setSearchTerm(evt.target.value);
-  };
+    setSearchTerm(evt.target.value)
+  }
 
   const handleSubmit = (evt) => {
     // here is where the magic happens
-    evt.preventDefault();
-    navigate('/shop', { replace: true });
-    let search = items.filter(searchFilter);
-    setFilteredItems(search);
+    evt.preventDefault()
+    if (location.pathname !== '/shop') {
+      navigate('/shop', { replace: true })
+    }
+    let search = items.filter(searchFilter)
+    setFilteredItems(search)
     console.log(evt.target.value)
-  };
+  }
 
   return (
     <form
@@ -61,6 +65,6 @@ export default function SearchBar({
           alt="search" />
       </button>
     </form>
-  );
+  )
 }
 
