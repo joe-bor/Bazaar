@@ -1,8 +1,8 @@
 .OrderHistory{
+  margin: 2rem 2.5rem;
   background-color: #FBFBFA;
   display: grid;
-  grid-template-columns: 1.25fr 0.75fr;
-  padding: 0 0.5rem 1rem 0.5rem;
+  grid-template-columns: 1fr 1fr;
   .aside {
     padding-right: 1rem;
     border-right: .1vmin solid #000000;

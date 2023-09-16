@@ -21,7 +21,7 @@ export default function LineItem({ lineItem, isPaid, setCart }) {
         <div className={styles.itemDetails}>
           <div className={styles.itemInfo}>
             <div className={styles.itemName}>{lineItem.item.name}</div>
-            <div className={styles.itemDescription}>{lineItem.item.description}</div>
+            {location.pathname === '/cart' ? <div className={styles.itemDescription}>{lineItem.item.description}</div> : <></>}
           </div>
         </div>
 

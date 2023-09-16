@@ -1,8 +1,12 @@
 .Checkout {
+  padding: 2rem 2.5rem;
   display: flex;
   justify-content: space-between;
-  padding: 0 4rem;
-
+  .userInfo {
+    h1 {
+      margin: 0;
+    }
+  }
   .cartSummary {
     text-align: center;
   }
