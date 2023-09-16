@@ -1,7 +1,34 @@
 .categoryRow {
-    background-color: lightslategrey;
-    height: 20vh;
-    width: 98%;
-    margin: 1.5rem 0;
-    padding: .6rem;
+    overflow: auto;
+    .categoryHeading {
+        display: flex;
+        flex-direction: row;
+        align-items: center;
+        margin: 1.5rem 0 1rem 0;
+        p {
+            padding: 0;
+            margin: 0;
+        }
+        button {
+            margin: 0 0 0 1.5rem;
+            padding: 0.25rem;
+            background: none;
+            font-weight: 600;
+            background-color: var(--accent);
+            border: .1vmin solid var(--accent);
+            a {
+                text-decoration: none;
+                color: var(--lighter-bg);
+                font-size: 1.5vmin;
+            }
+        }
+        button:hover {
+            color: var(--accent);
+            background-color: var(--lighter-bg);
+            border: .1vmin solid var(--accent);
+            a {
+                color: var(--accent);
+            }
+        }
+    }
 }
