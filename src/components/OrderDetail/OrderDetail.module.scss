@@ -1,0 +1,19 @@
+.OrderDetail {
+    width: 100%;
+    margin: 1rem 0rem;
+    background-color: var(--darker-bg);
+    border-radius: 6px;
+
+    .shopName {
+        font-weight: 600;
+        font-size: 1.5rem;
+        margin: .4rem;
+        padding-left: 5.4rem;
+    }
+
+    .priceAdjustment {
+        text-align: center;
+        font-weight: 600;
+        font-size: 1.1rem;
+    }
+}

@@ -31,17 +31,23 @@ export default function Cart({ cart, setCart, cartTotals }) {
         {orders}
       </div>
       <div className={styles.cartSummary}>
+        <div>Payment Info</div>
+        <div className={styles.fakePmtInfo}></div>
         {cart.length > 0 ?
           <>
-            <div className={styles.totalItemQty}>{`Qty: ${cartTotals?.totalItemQty}`}</div>
-            <div className={styles.totalPrice}>{`Total: ${cartTotals?.totalPrice}`}</div>
-            <button onClick={handleGoToCheckout}>Go To Checkout</button>
+            <div className={styles.price}>
+              {/* <div className={styles.totalItemQty}>{`Qty: ${cartTotals?.totalItemQty}`}</div> */}
+              <div className={styles.checkoutText}>
+                <div className={styles.priceTotalText}>Total: </div>
+                <div className={styles.totalPrice}>{`${cartTotals?.totalPrice}`}</div>
+              </div>
+            </div>
+            <button onClick={handleGoToCheckout}>Checkout</button>
           </> :
           <>
             <div>Your Cart Is Empty</div>
             <button className={styles.goToShop} onClick={handleGoToShop}>Go To Shop</button>
           </>}
-
       </div>
     </div >
   )

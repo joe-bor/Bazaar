@@ -1,7 +1,22 @@
 .Cart {
-  display: flex;
-  flex-direction: row;
-  .cartOrders {
-    background-color: #EEEEEA;
+  display: grid;
+  grid-template-columns: 70% 30%;
+
+  .checkoutText {
+    display: flex;
+  }
+
+  .priceTotalText {
+    text-align: left;
+    font-weight: 600;
+  }
+
+  .fakePmtInfo {
+    height: 6rem;
+  }
+
+  .totalPrice {
+    text-align: right;
+    font-weight: 600;
   }
 }

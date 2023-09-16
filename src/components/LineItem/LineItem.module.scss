@@ -1,62 +1,79 @@
 .LineItem {
-  padding: 0.25rem 0;
   display: grid;
-  grid-template-columns: 1fr 1fr;
+  grid-template-columns: 30% 40% 30%;
+  margin: 1rem 0rem;
+
   .imgContainer {
-    background-color: var(--image-bg);
-    padding: 1.5rem;
-    width: 100%;
     display: flex;
     justify-content: center;
     align-items: center;
-    flex-grow: 1;
-    .itemImage {
-      width: 100%;
-      max-height: 100%;
-      object-fit: scale-down;
-    }
   }
-  .itemDetails {
-    padding-left: 0.5rem;
+
+  .itemImage {
+    width: 15rem;
+    height: 15rem;
+    border-radius: 7px;
+  }
+
+  .itemName {
+    font-weight: 600;
+    font-size: 1.5rem;
+    margin: 0rem 0rem 1rem 0rem;
+  }
+
+  .itemInfo {
+    padding: 0;
+  }
+
+  .itemDescription {
+    font-size: 1.1rem;
+    line-height: 2rem;
+  }
+
+  .qty {
     display: flex;
-    flex-direction: column;
-    justify-content: flex-start;
-    .itemInfo {
-      display: flex;
-      flex-direction: column;
-      justify-content: flex-start;
-      .itemName {
-        font-weight: 600;
-        font-size: 1.8vmin;
-      }
-      .itemPrice {
-        font-weight: 400;
-        font-size: 1.7vmin;
-      }
-    }
+    justify-content: space-evenly;
   }
-  .qty{
-    margin-top: 3vmin;
-    div{
-      display: flex;
-      align-items: center;
-      .qtyBtn { 
-        padding: 0.25rem 0.5rem;
-        font-size: 1.6vmin;
-        font-weight: 700;
-      }
-      span {
-        padding: 0 0.5rem;
-        font-size: 1.7vmin;
-        font-weight: 400;
-      }
-      span.paid {
-        padding: 0;
-      }
-    }
-    .extPrice {
-      font-weight: 600;
-      font-size: 1.8vmin;
-    }
+
+  .qtyContainer {
+    text-align: center;
+    width: 7rem;
+  }
+
+  .btnQty {
+    font-weight: 600;
+    font-size: 1.5rem;
+  }
+
+  .adjustBtn {
+    width: 100%;
+    display: flex;
+    justify-content: space-around;
+    align-items: center;
+  }
+
+  .qtyBtn {
+    background-color: var(--darker-bg);
+    color: black;
+    border-style: none;
+    font-size: 1.5rem;
+  }
+
+  .qtyBtn:hover {
+    color: var(--accent);
+  }
+
+  .extPrice {
+    text-align: center;
+  }
+
+  .extText {
+    font-weight: 600;
+    font-size: 1.5rem;
+  }
+
+  .paid {
+    font-size: 1.5rem;
+    text-align: center;
   }
 }
