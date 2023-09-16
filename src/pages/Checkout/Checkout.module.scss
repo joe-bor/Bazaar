@@ -1,4 +1,23 @@
 .Checkout {
+  padding: 2rem 2.5rem;
   display: flex;
-  flex-direction: row;
+  justify-content: space-between;
+  .userInfo {
+    h1 {
+      margin: 0;
+    }
+  }
+  .cartSummary {
+    text-align: center;
+  }
+
+  .orderSummary {
+    font-size: 2rem;
+    font-weight: 600;
+    text-align: center;
+  }
+
+  .checkoutBtn {
+    width: 100%;
+  }
 }

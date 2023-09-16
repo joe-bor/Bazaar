@@ -35,7 +35,7 @@ export default function ShopManagement({
   }, [user])
 
   useEffect(() => {
-    if (userShop && userShop?.products.length > 0 && shopProducts?.length === 0) {
+    if (userShop && userShop?.products?.length > 0 && shopProducts?.length === 0) {
       setShopProducts(userShop.products)
     }
   }, [userShop])
@@ -72,8 +72,13 @@ export default function ShopManagement({
 
   async function deleteUserShop() {
     const user = await shopsAPI.deleteShop(userShop._id)
-    setUserShop(null)
     setUser(user)
+    setUserShop({
+      name: 'Loading...',
+      seller: {},
+      description: 'Loading...',
+      products: []
+    })
     navigate('/account')
   }
 
@@ -95,7 +100,7 @@ export default function ShopManagement({
         <div className={`${styles.links} flex-col`}>
           <button onClick={toggleEditShop}>Edit Shop Info</button>
           <button onClick={toggleCreateProduct}>Add A Product</button>
-          <button onClick={toggleEditProductForm}>Edit an Item</button>
+          {/* <button onClick={toggleEditProductForm}>Edit an Item</button> */}
           <button onClick={deleteUserShop}>Delete Shop</button>
         </div>
       </section>
@@ -112,8 +117,7 @@ export default function ShopManagement({
       <dialog
         className={styles.dialog}
         ref={shopEditModalRef}
-        onClose={toggleEditShop}
-      >
+        onClose={toggleEditShop} >
         <ShopForm
           toggleEditShop={toggleEditShop}
           user={user}
@@ -126,8 +130,7 @@ export default function ShopManagement({
       <dialog
         className={styles.dialog}
         ref={productModalRef}
-        onClose={toggleCreateProduct}
-      >
+        onClose={toggleCreateProduct} >
         <ProductForm
           toggleCreateProduct={toggleCreateProduct}
           shopProducts={shopProducts}

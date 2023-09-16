@@ -24,24 +24,31 @@ export default function Cart({ cart, setCart, cartTotals }) {
     navigate('/shop')
   }
 
-
   return (
     <div className={styles.Cart}>
       <div className={`${styles.cartOrders} flex-ctr-ctr flex-col scroll-y`}>
         {orders}
       </div>
       <div className={styles.cartSummary}>
+        <div className={styles.paymentInfo}>Payment Info</div>
+        <div className={styles.fakePmtInfo}></div>
         {cart.length > 0 ?
           <>
-            <div className={styles.totalItemQty}>{`Qty: ${cartTotals?.totalItemQty}`}</div>
-            <div className={styles.totalPrice}>{`Total: ${cartTotals?.totalPrice}`}</div>
-            <button onClick={handleGoToCheckout}>Go To Checkout</button>
+            <div className={styles.price}>
+              {/* <div className={styles.totalItemQty}>{`Qty: ${cartTotals?.totalItemQty}`}</div> */}
+              <div className={styles.checkoutText}>
+                <div className={styles.priceTotalText}>Total: </div>
+                {cartTotals && 
+                <div className={styles.totalPrice}>
+                  {`$${cartTotals.totalPrice.toFixed(2)}`}</div>}
+              </div>
+            </div>
+            <button className={styles.goToShop} onClick={handleGoToCheckout}>Checkout</button>
           </> :
           <>
             <div>Your Cart Is Empty</div>
             <button className={styles.goToShop} onClick={handleGoToShop}>Go To Shop</button>
           </>}
-
       </div>
     </div >
   )

@@ -119,7 +119,9 @@ function CategorySection(_ref) {
     category,
     setActiveCat,
     favItems,
-    setFavItems
+    setFavItems,
+    user,
+    setUser
   } = _ref;
   // make an API call to the DB and query for all items that has the category === prop.category
 
@@ -132,13 +134,21 @@ function CategorySection(_ref) {
   }, [items]);
   return /*#__PURE__*/React.createElement("div", {
     className: _CategorySection_module_scss__WEBPACK_IMPORTED_MODULE_1__["default"].categoryRow
-  }, category, /*#__PURE__*/React.createElement(react_router_dom__WEBPACK_IMPORTED_MODULE_3__.Link, {
+  }, /*#__PURE__*/React.createElement("div", {
+    className: _CategorySection_module_scss__WEBPACK_IMPORTED_MODULE_1__["default"].categoryHeading
+  }, /*#__PURE__*/React.createElement("p", {
+    className: "subheading"
+  }, category), /*#__PURE__*/React.createElement("button", {
+    className: "small"
+  }, /*#__PURE__*/React.createElement(react_router_dom__WEBPACK_IMPORTED_MODULE_3__.Link, {
     to: "/shop",
     onClick: e => setActiveCat(category)
-  }, "\u27A1"), /*#__PURE__*/React.createElement(_ProductList_ProductList__WEBPACK_IMPORTED_MODULE_0__["default"], {
+  }, "View All"))), /*#__PURE__*/React.createElement(_ProductList_ProductList__WEBPACK_IMPORTED_MODULE_0__["default"], {
     productItems: firstFiveItems,
     favItems: favItems,
-    setFavItems: setFavItems
+    setFavItems: setFavItems,
+    user: user,
+    setUser: setUser
   }));
 }
 
@@ -619,7 +629,7 @@ function LineItem(_ref) {
     });
     return _handleChangeQty.apply(this, arguments);
   }
-  return /*#__PURE__*/React.createElement("div", {
+  return /*#__PURE__*/React.createElement(React.Fragment, null, /*#__PURE__*/React.createElement("div", {
     className: _LineItem_module_scss__WEBPACK_IMPORTED_MODULE_0__["default"].LineItem
   }, /*#__PURE__*/React.createElement("div", {
     className: _LineItem_module_scss__WEBPACK_IMPORTED_MODULE_0__["default"].imgContainer
@@ -631,26 +641,34 @@ function LineItem(_ref) {
     className: _LineItem_module_scss__WEBPACK_IMPORTED_MODULE_0__["default"].itemDetails
   }, /*#__PURE__*/React.createElement("div", {
     className: _LineItem_module_scss__WEBPACK_IMPORTED_MODULE_0__["default"].itemInfo
-  }, /*#__PURE__*/React.createElement("span", {
+  }, /*#__PURE__*/React.createElement("div", {
     className: _LineItem_module_scss__WEBPACK_IMPORTED_MODULE_0__["default"].itemName
-  }, lineItem.item.name), /*#__PURE__*/React.createElement("span", {
-    className: _LineItem_module_scss__WEBPACK_IMPORTED_MODULE_0__["default"].itemPrice
-  }, "$".concat(lineItem.item.price.toFixed(2)))), /*#__PURE__*/React.createElement("div", {
+  }, lineItem.item.name), location.pathname === '/cart' ? /*#__PURE__*/React.createElement("div", {
+    className: _LineItem_module_scss__WEBPACK_IMPORTED_MODULE_0__["default"].itemDescription
+  }, lineItem.item.description) : /*#__PURE__*/React.createElement(React.Fragment, null))), /*#__PURE__*/React.createElement("div", {
     className: _LineItem_module_scss__WEBPACK_IMPORTED_MODULE_0__["default"].qty,
     style: {
       justifyContent: isPaid && 'center'
     }
-  }, /*#__PURE__*/React.createElement("div", null, !isPaid && location.pathname !== '/checkout' && /*#__PURE__*/React.createElement("button", {
+  }, /*#__PURE__*/React.createElement("div", {
+    className: _LineItem_module_scss__WEBPACK_IMPORTED_MODULE_0__["default"].qtyContainer
+  }, /*#__PURE__*/React.createElement("div", {
+    className: _LineItem_module_scss__WEBPACK_IMPORTED_MODULE_0__["default"].btnQty
+  }, "Qty"), /*#__PURE__*/React.createElement("div", {
+    className: _LineItem_module_scss__WEBPACK_IMPORTED_MODULE_0__["default"].adjustBtn
+  }, !isPaid && location.pathname !== '/checkout' && /*#__PURE__*/React.createElement("button", {
     className: _LineItem_module_scss__WEBPACK_IMPORTED_MODULE_0__["default"].qtyBtn,
     onClick: () => handleChangeQty(lineItem.item._id, lineItem.qty - 1)
-  }, "-"), /*#__PURE__*/React.createElement("span", {
+  }, "-"), /*#__PURE__*/React.createElement("div", {
     className: isPaid ? _LineItem_module_scss__WEBPACK_IMPORTED_MODULE_0__["default"].paid : ''
   }, "".concat(isPaid ? 'qty: ' : '').concat(lineItem.qty)), !isPaid && location.pathname !== '/checkout' && /*#__PURE__*/React.createElement("button", {
     className: _LineItem_module_scss__WEBPACK_IMPORTED_MODULE_0__["default"].qtyBtn,
     onClick: () => handleChangeQty(lineItem.item._id, lineItem.qty + 1)
-  }, "+")), /*#__PURE__*/React.createElement("div", {
+  }, "+"))), /*#__PURE__*/React.createElement("div", {
     className: _LineItem_module_scss__WEBPACK_IMPORTED_MODULE_0__["default"].extPrice
-  }, "$", lineItem.extPrice.toFixed(2)))));
+  }, /*#__PURE__*/React.createElement("div", {
+    className: _LineItem_module_scss__WEBPACK_IMPORTED_MODULE_0__["default"].extText
+  }, "Price"), /*#__PURE__*/React.createElement("div", null, "$", lineItem.extPrice.toFixed(2))))));
 }
 
 /***/ }),
@@ -788,7 +806,8 @@ function Logo() {
 /* harmony export */ });
 /* harmony import */ var react__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! react */ "./node_modules/react/index.js");
 /* harmony import */ var react__WEBPACK_IMPORTED_MODULE_0___default = /*#__PURE__*/__webpack_require__.n(react__WEBPACK_IMPORTED_MODULE_0__);
-/* harmony import */ var react_router_dom__WEBPACK_IMPORTED_MODULE_8__ = __webpack_require__(/*! react-router-dom */ "./node_modules/react-router-dom/dist/index.js");
+/* harmony import */ var react_router_dom__WEBPACK_IMPORTED_MODULE_8__ = __webpack_require__(/*! react-router-dom */ "./node_modules/react-router/dist/index.js");
+/* harmony import */ var react_router_dom__WEBPACK_IMPORTED_MODULE_9__ = __webpack_require__(/*! react-router-dom */ "./node_modules/react-router-dom/dist/index.js");
 /* harmony import */ var _NavBar_module_scss__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! ./NavBar.module.scss */ "./src/components/NavBar/NavBar.module.scss");
 /* harmony import */ var _assets_images_user_icon_svg__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! ../../assets/images/user-icon.svg */ "./src/assets/images/user-icon.svg");
 /* harmony import */ var _assets_images_cart_icon_svg__WEBPACK_IMPORTED_MODULE_3__ = __webpack_require__(/*! ../../assets/images/cart-icon.svg */ "./src/assets/images/cart-icon.svg");
@@ -817,8 +836,14 @@ function NavBar(_ref) {
     cart,
     searchTerm,
     setSearchTerm,
-    cartTotals
+    cartTotals,
+    setActiveCat
   } = _ref;
+  const navigate = (0,react_router_dom__WEBPACK_IMPORTED_MODULE_8__.useNavigate)();
+  function handleCatClick(e) {
+    setActiveCat(e.target.innerText);
+    navigate('/shop');
+  }
   return /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default().createElement("nav", {
     className: _NavBar_module_scss__WEBPACK_IMPORTED_MODULE_1__["default"].NavBar
   }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default().createElement("div", {
@@ -834,15 +859,16 @@ function NavBar(_ref) {
     setSearchTerm: setSearchTerm,
     items: items,
     filteredItems: filteredItems,
-    setFilteredItems: setFilteredItems
+    setFilteredItems: setFilteredItems,
+    setActiveCat: setActiveCat
   })), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default().createElement("div", {
     className: _NavBar_module_scss__WEBPACK_IMPORTED_MODULE_1__["default"].icons
-  }, (user === null || user === void 0 ? void 0 : user.name) !== 'c186ec' ? /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default().createElement((react__WEBPACK_IMPORTED_MODULE_0___default().Fragment), null, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default().createElement(react_router_dom__WEBPACK_IMPORTED_MODULE_8__.Link, {
+  }, (user === null || user === void 0 ? void 0 : user.name) !== 'c186ec' ? /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default().createElement((react__WEBPACK_IMPORTED_MODULE_0___default().Fragment), null, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default().createElement(react_router_dom__WEBPACK_IMPORTED_MODULE_9__.Link, {
     to: "/favorites"
   }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default().createElement("div", null, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default().createElement("img", {
     src: _assets_images_fav_heart_svg__WEBPACK_IMPORTED_MODULE_4__,
     alt: "heart"
-  }))), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default().createElement(react_router_dom__WEBPACK_IMPORTED_MODULE_8__.Link, {
+  }))), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default().createElement(react_router_dom__WEBPACK_IMPORTED_MODULE_9__.Link, {
     to: "/account"
   }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default().createElement("div", null, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default().createElement("img", {
     className: user !== null && user !== void 0 && user.imageUrl ? _NavBar_module_scss__WEBPACK_IMPORTED_MODULE_1__["default"].userPhoto : '',
@@ -851,12 +877,12 @@ function NavBar(_ref) {
   })))) : /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default().createElement("div", {
     className: _NavBar_module_scss__WEBPACK_IMPORTED_MODULE_1__["default"].login,
     onClick: toggleAuthModal
-  }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default().createElement("p", null, "Log In")), (userShop === null || userShop === void 0 ? void 0 : userShop.name) !== 'Loading...' ? /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default().createElement(react_router_dom__WEBPACK_IMPORTED_MODULE_8__.Link, {
+  }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default().createElement("p", null, "Log In")), (userShop === null || userShop === void 0 ? void 0 : userShop.name) !== 'Loading...' ? /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default().createElement(react_router_dom__WEBPACK_IMPORTED_MODULE_9__.Link, {
     to: "/shopmgmt/".concat(user === null || user === void 0 ? void 0 : user._id)
   }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default().createElement("div", null, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default().createElement("img", {
     src: _assets_images_shop_icon_svg__WEBPACK_IMPORTED_MODULE_5__,
     alt: "store"
-  }))) : /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default().createElement((react__WEBPACK_IMPORTED_MODULE_0___default().Fragment), null), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default().createElement(react_router_dom__WEBPACK_IMPORTED_MODULE_8__.Link, {
+  }))) : /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default().createElement((react__WEBPACK_IMPORTED_MODULE_0___default().Fragment), null), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default().createElement(react_router_dom__WEBPACK_IMPORTED_MODULE_9__.Link, {
     to: "/cart"
   }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default().createElement("div", {
     className: _NavBar_module_scss__WEBPACK_IMPORTED_MODULE_1__["default"].cartContainer
@@ -869,6 +895,7 @@ function NavBar(_ref) {
     className: _NavBar_module_scss__WEBPACK_IMPORTED_MODULE_1__["default"].categories
   }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default().createElement("ul", null, categories.map((category, index) => /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default().createElement("li", {
     className: _NavBar_module_scss__WEBPACK_IMPORTED_MODULE_1__["default"].li,
+    onClick: handleCatClick,
     key: index
   }, category)))));
 }
@@ -904,13 +931,11 @@ function OrderDetail(_ref) {
   }));
   return /*#__PURE__*/React.createElement("div", {
     className: _OrderDetail_module_scss__WEBPACK_IMPORTED_MODULE_0__["default"].OrderDetail
-  }, /*#__PURE__*/React.createElement("div", null, shopName), /*#__PURE__*/React.createElement("div", {
-    className: "flex-ctr-ctr flex-col scroll-y"
-  }, lineItems), /*#__PURE__*/React.createElement("div", {
-    className: _OrderDetail_module_scss__WEBPACK_IMPORTED_MODULE_0__["default"].totalQty
-  }, "Qty: ".concat(order.totalQty)), /*#__PURE__*/React.createElement("div", {
-    className: _OrderDetail_module_scss__WEBPACK_IMPORTED_MODULE_0__["default"].totalPrice
-  }, "Total: $".concat(order.orderTotal)));
+  }, /*#__PURE__*/React.createElement("div", {
+    className: _OrderDetail_module_scss__WEBPACK_IMPORTED_MODULE_0__["default"].shopName
+  }, shopName), /*#__PURE__*/React.createElement("div", {
+    className: "random"
+  }, lineItems));
 }
 
 /***/ }),
@@ -1292,10 +1317,12 @@ function SearchBar(_ref) {
   let {
     className,
     items,
-    setFilteredItems
+    setFilteredItems,
+    setActiveCat
   } = _ref;
   const [searchTerm, setSearchTerm] = (0,react__WEBPACK_IMPORTED_MODULE_2__.useState)("");
   const navigate = (0,react_router_dom__WEBPACK_IMPORTED_MODULE_3__.useNavigate)();
+  const location = (0,react_router_dom__WEBPACK_IMPORTED_MODULE_3__.useLocation)();
 
   // properties to not include in search result
   const excludeProps = ["imageUrl", "publicId", "price", "reviews"];
@@ -1313,9 +1340,11 @@ function SearchBar(_ref) {
   const handleSubmit = evt => {
     // here is where the magic happens
     evt.preventDefault();
-    navigate('/shop', {
-      replace: true
-    });
+    if (location.pathname !== '/shop') {
+      navigate('/shop', {
+        replace: true
+      });
+    }
     let search = items.filter(searchFilter);
     setFilteredItems(search);
     console.log(evt.target.value);
@@ -1386,7 +1415,6 @@ function ShopForm(_ref) {
     description: ''
   });
   const [file, setFile] = (0,react__WEBPACK_IMPORTED_MODULE_0__.useState)(null);
-  const [photoUrl, setPhotoUrl] = (0,react__WEBPACK_IMPORTED_MODULE_0__.useState)('');
   const navigate = (0,react_router_dom__WEBPACK_IMPORTED_MODULE_4__.useNavigate)();
   (0,react__WEBPACK_IMPORTED_MODULE_0__.useEffect)(() => {
     if (user.shop) {
@@ -1408,20 +1436,20 @@ function ShopForm(_ref) {
     name: "name",
     type: "text",
     placeholder: "Shop Name",
-    value: location.pathname === "./shopmgmt/".concat(user.shop) ? userShop.name : shopValues.name,
+    value: shopValues.name,
     errorMessage: "Shop name is required and can't include special characters",
     label: "Shop Name",
     pattern: "^[A-Za-z0-9 ']+$",
-    required: true
+    required: location.pathname.includes('/shopmgmt') ? false : true
   }, {
     id: "shop-description",
     name: "description",
     type: "text",
     placeholder: "Shop Description",
-    value: location.pathname === "./shopmgmt/".concat(user.shop) ? userShop.description : shopValues.description,
+    value: shopValues.description,
     errorMessage: "Shop description is required",
     label: "Shop Description",
-    required: true
+    required: location.pathname.includes('/shopmgmt') ? false : true
   }];
   const logoInputProps = {
     id: "shop-logo",
@@ -1444,9 +1472,13 @@ function ShopForm(_ref) {
       e.preventDefault();
       try {
         const formData = new FormData();
-        formData.append('file', file);
+        if (file) {
+          formData.append('file', file);
+        }
         for (let key in shopValues) {
-          formData.append(key, shopValues[key]);
+          if (shopValues[key] !== '') {
+            formData.append(key, shopValues[key]);
+          }
         }
         formData.append('token', localStorage.getItem('token'));
         // edit the shop in shop management
@@ -1660,11 +1692,18 @@ function SignUpForm(_ref) {
 
 function UserLogOut(_ref) {
   let {
-    createGuestUser
+    createGuestUser,
+    setUserShop
   } = _ref;
   const navigate = (0,react_router_dom__WEBPACK_IMPORTED_MODULE_1__.useNavigate)();
   function handleLogOut() {
     (0,_utilities_users_service__WEBPACK_IMPORTED_MODULE_2__.logOut)();
+    setUserShop({
+      name: 'Loading...',
+      seller: {},
+      description: 'Loading...',
+      products: []
+    });
     // create a new guest user
     createGuestUser();
     navigate('/');
@@ -1749,11 +1788,13 @@ function ProductListItem(_ref) {
     alt: productItem.name
   }) : /*#__PURE__*/React.createElement("p", null, "No images available")), /*#__PURE__*/React.createElement("div", {
     className: _ProductListItem_module_scss__WEBPACK_IMPORTED_MODULE_1__["default"].favoriteOverlay
-  })), /*#__PURE__*/React.createElement(_FavoriteIcon_FavoriteIcon__WEBPACK_IMPORTED_MODULE_0__["default"], {
+  })), /*#__PURE__*/React.createElement("div", {
+    className: _ProductListItem_module_scss__WEBPACK_IMPORTED_MODULE_1__["default"].favoriteContainer
+  }, /*#__PURE__*/React.createElement(_FavoriteIcon_FavoriteIcon__WEBPACK_IMPORTED_MODULE_0__["default"], {
     className: _ProductListItem_module_scss__WEBPACK_IMPORTED_MODULE_1__["default"].FavoriteIcon,
     isFav: itemIsFav,
     handleFaveClick: handleFavClick
-  }), /*#__PURE__*/React.createElement("div", {
+  })), /*#__PURE__*/React.createElement("div", {
     className: _ProductListItem_module_scss__WEBPACK_IMPORTED_MODULE_1__["default"].itemInfo
   }, productItem && /*#__PURE__*/React.createElement(React.Fragment, null, /*#__PURE__*/React.createElement("div", {
     className: _ProductListItem_module_scss__WEBPACK_IMPORTED_MODULE_1__["default"].name,
@@ -1825,7 +1866,8 @@ function AccountPage(_ref) {
     createGuestUser,
     userShop,
     setUserShop,
-    favItems
+    favItems,
+    setFavItems
   } = _ref;
   const [editModalOpen, setEditModalOpen] = (0,react__WEBPACK_IMPORTED_MODULE_3__.useState)(false);
   const [shopModalOpen, setShopModalOpen] = (0,react__WEBPACK_IMPORTED_MODULE_3__.useState)(false);
@@ -1879,6 +1921,12 @@ function AccountPage(_ref) {
   function _deleteUserAcc() {
     _deleteUserAcc = _asyncToGenerator(function* () {
       yield (0,_utilities_users_service__WEBPACK_IMPORTED_MODULE_8__.deleteUser)(user._id);
+      setUserShop({
+        name: 'Loading...',
+        seller: {},
+        description: 'Loading...',
+        products: []
+      });
       createGuestUser();
       navigate('/home');
     });
@@ -1913,7 +1961,8 @@ function AccountPage(_ref) {
   }, "Create a Shop"), /*#__PURE__*/React.createElement("button", {
     onClick: deleteUserAcc
   }, "Delete Account"), /*#__PURE__*/React.createElement(_components_UserLogOut_UserLogOut__WEBPACK_IMPORTED_MODULE_0__["default"], {
-    createGuestUser: createGuestUser
+    createGuestUser: createGuestUser,
+    setUserShop: setUserShop
   }))), /*#__PURE__*/React.createElement("div", {
     className: _AccountPage_module_scss__WEBPACK_IMPORTED_MODULE_4__["default"].favorites
   }, /*#__PURE__*/React.createElement("div", {
@@ -1925,7 +1974,10 @@ function AccountPage(_ref) {
     onClick: () => navigate('/favorites')
   }, "See All")), /*#__PURE__*/React.createElement(_components_ProductList_ProductList__WEBPACK_IMPORTED_MODULE_6__["default"], {
     productItems: favPreviewItems,
-    user: user
+    user: user,
+    setUser: setUser,
+    favItems: favItems,
+    setFavItems: setFavItems
   })), /*#__PURE__*/React.createElement("dialog", {
     className: _AccountPage_module_scss__WEBPACK_IMPORTED_MODULE_4__["default"].dialog,
     ref: editModalRef,
@@ -2151,6 +2203,8 @@ function App() {
     cart: cart,
     location: location,
     cartTotals: cartTotals,
+    activeCat: activeCat,
+    setActiveCat: setActiveCat,
     createGuestUser: createGuestUser
   }), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default().createElement(react_router_dom__WEBPACK_IMPORTED_MODULE_15__.Routes, null, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default().createElement(react_router_dom__WEBPACK_IMPORTED_MODULE_15__.Route, {
     path: "/home",
@@ -2160,6 +2214,8 @@ function App() {
       categories: categoriesRef.current,
       setActiveCat: setActiveCat,
       setCart: setCart,
+      user: user,
+      setUser: setUser,
       favItems: favItems,
       setFavItems: setFavItems
     })
@@ -2301,13 +2357,22 @@ function Cart(_ref) {
     className: "".concat(_Cart_module_scss__WEBPACK_IMPORTED_MODULE_2__["default"].cartOrders, " flex-ctr-ctr flex-col scroll-y")
   }, orders), /*#__PURE__*/React.createElement("div", {
     className: _Cart_module_scss__WEBPACK_IMPORTED_MODULE_2__["default"].cartSummary
-  }, cart.length > 0 ? /*#__PURE__*/React.createElement(React.Fragment, null, /*#__PURE__*/React.createElement("div", {
-    className: _Cart_module_scss__WEBPACK_IMPORTED_MODULE_2__["default"].totalItemQty
-  }, "Qty: ".concat(cartTotals === null || cartTotals === void 0 ? void 0 : cartTotals.totalItemQty)), /*#__PURE__*/React.createElement("div", {
+  }, /*#__PURE__*/React.createElement("div", {
+    className: _Cart_module_scss__WEBPACK_IMPORTED_MODULE_2__["default"].paymentInfo
+  }, "Payment Info"), /*#__PURE__*/React.createElement("div", {
+    className: _Cart_module_scss__WEBPACK_IMPORTED_MODULE_2__["default"].fakePmtInfo
+  }), cart.length > 0 ? /*#__PURE__*/React.createElement(React.Fragment, null, /*#__PURE__*/React.createElement("div", {
+    className: _Cart_module_scss__WEBPACK_IMPORTED_MODULE_2__["default"].price
+  }, /*#__PURE__*/React.createElement("div", {
+    className: _Cart_module_scss__WEBPACK_IMPORTED_MODULE_2__["default"].checkoutText
+  }, /*#__PURE__*/React.createElement("div", {
+    className: _Cart_module_scss__WEBPACK_IMPORTED_MODULE_2__["default"].priceTotalText
+  }, "Total: "), cartTotals && /*#__PURE__*/React.createElement("div", {
     className: _Cart_module_scss__WEBPACK_IMPORTED_MODULE_2__["default"].totalPrice
-  }, "Total: ".concat(cartTotals === null || cartTotals === void 0 ? void 0 : cartTotals.totalPrice)), /*#__PURE__*/React.createElement("button", {
+  }, "$".concat(cartTotals.totalPrice.toFixed(2))))), /*#__PURE__*/React.createElement("button", {
+    className: _Cart_module_scss__WEBPACK_IMPORTED_MODULE_2__["default"].goToShop,
     onClick: handleGoToCheckout
-  }, "Go To Checkout")) : /*#__PURE__*/React.createElement(React.Fragment, null, /*#__PURE__*/React.createElement("div", null, "Your Cart Is Empty"), /*#__PURE__*/React.createElement("button", {
+  }, "Checkout")) : /*#__PURE__*/React.createElement(React.Fragment, null, /*#__PURE__*/React.createElement("div", null, "Your Cart Is Empty"), /*#__PURE__*/React.createElement("button", {
     className: _Cart_module_scss__WEBPACK_IMPORTED_MODULE_2__["default"].goToShop,
     onClick: handleGoToShop
   }, "Go To Shop"))));
@@ -2365,19 +2430,21 @@ function Checkout(_ref) {
     className: _Checkout_module_scss__WEBPACK_IMPORTED_MODULE_0__["default"].Checkout
   }, /*#__PURE__*/React.createElement("div", {
     className: _Checkout_module_scss__WEBPACK_IMPORTED_MODULE_0__["default"].userInfo
-  }, /*#__PURE__*/React.createElement("h1", null, "\uD83D\uDFE5 User Info Goes Here \uD83D\uDFE5")), /*#__PURE__*/React.createElement("div", {
+  }, /*#__PURE__*/React.createElement("h1", null, "Payment"), /*#__PURE__*/React.createElement("h1", null, "&"), /*#__PURE__*/React.createElement("h1", null, "Shipping Info")), /*#__PURE__*/React.createElement("div", {
     className: _Checkout_module_scss__WEBPACK_IMPORTED_MODULE_0__["default"].orderSummary
-  }, /*#__PURE__*/React.createElement("div", null, "Order Summary"), cart.length > 0 ? /*#__PURE__*/React.createElement(React.Fragment, null, /*#__PURE__*/React.createElement("div", {
-    className: "".concat(_Checkout_module_scss__WEBPACK_IMPORTED_MODULE_0__["default"].cartOrders, " flex-ctr-ctr flex-col scroll-y")
-  }, orders), /*#__PURE__*/React.createElement("div", {
+  }, /*#__PURE__*/React.createElement("div", {
+    className: _Checkout_module_scss__WEBPACK_IMPORTED_MODULE_0__["default"].orderSummary
+  }, "Order Summary"), cart.length > 0 ? /*#__PURE__*/React.createElement(React.Fragment, null, /*#__PURE__*/React.createElement("div", null, orders), /*#__PURE__*/React.createElement("div", {
     className: _Checkout_module_scss__WEBPACK_IMPORTED_MODULE_0__["default"].cartSummary
   }, /*#__PURE__*/React.createElement("div", {
     className: _Checkout_module_scss__WEBPACK_IMPORTED_MODULE_0__["default"].totalItemQty
-  }, "Qty: ".concat(cartTotals === null || cartTotals === void 0 ? void 0 : cartTotals.totalItemQty)), /*#__PURE__*/React.createElement("div", {
+  }, "Qty: ".concat(cartTotals === null || cartTotals === void 0 ? void 0 : cartTotals.totalItemQty)), cartTotals && /*#__PURE__*/React.createElement("div", {
     className: _Checkout_module_scss__WEBPACK_IMPORTED_MODULE_0__["default"].totalPrice
-  }, "Total: ".concat(cartTotals === null || cartTotals === void 0 ? void 0 : cartTotals.totalPrice)), /*#__PURE__*/React.createElement("button", {
+  }, "Total: ".concat(cartTotals.totalPrice.toFixed(2))), /*#__PURE__*/React.createElement("button", {
+    className: _Checkout_module_scss__WEBPACK_IMPORTED_MODULE_0__["default"].checkoutBtn,
     onClick: handleCheckout
   }, "Checkout"))) : /*#__PURE__*/React.createElement(React.Fragment, null, /*#__PURE__*/React.createElement("div", null, "Order Placed"), /*#__PURE__*/React.createElement("button", {
+    className: _Checkout_module_scss__WEBPACK_IMPORTED_MODULE_0__["default"].checkoutBtn,
     onClick: handleOrderHistBtn
   }, "View Order History"))));
 }
@@ -2439,6 +2506,8 @@ function Home(_ref) {
     items,
     categories,
     setActiveCat,
+    user,
+    setUser,
     favItems,
     setFavItems
   } = _ref;
@@ -2446,15 +2515,17 @@ function Home(_ref) {
     className: _Home_module_scss__WEBPACK_IMPORTED_MODULE_1__["default"].Home
   }, /*#__PURE__*/React.createElement("div", {
     className: _Home_module_scss__WEBPACK_IMPORTED_MODULE_1__["default"].hero
-  }, /*#__PURE__*/React.createElement("p", null, "Shop now"), /*#__PURE__*/React.createElement("p", null, "and explore"), /*#__PURE__*/React.createElement(react_router_dom__WEBPACK_IMPORTED_MODULE_2__.Link, {
+  }, /*#__PURE__*/React.createElement("p", null, "Shop now"), /*#__PURE__*/React.createElement("p", null, "and explore"), /*#__PURE__*/React.createElement("button", null, /*#__PURE__*/React.createElement(react_router_dom__WEBPACK_IMPORTED_MODULE_2__.Link, {
     to: "/shop"
-  }, "See More")), /*#__PURE__*/React.createElement("div", {
+  }, "See More"))), /*#__PURE__*/React.createElement("div", {
     className: _Home_module_scss__WEBPACK_IMPORTED_MODULE_1__["default"].itemGrid
   }, categories.map(category => /*#__PURE__*/React.createElement(_components_CategorySection_CategorySection__WEBPACK_IMPORTED_MODULE_0__["default"], {
     items: items,
     key: category,
     category: category,
     setActiveCat: setActiveCat,
+    user: user,
+    setUser: setUser,
     favItems: favItems,
     setFavItems: setFavItems
   }))));
@@ -2829,7 +2900,8 @@ function ShopManagement(_ref) {
     getUserShop();
   }, [user]);
   (0,react__WEBPACK_IMPORTED_MODULE_0__.useEffect)(() => {
-    if (userShop && (userShop === null || userShop === void 0 ? void 0 : userShop.products.length) > 0 && (shopProducts === null || shopProducts === void 0 ? void 0 : shopProducts.length) === 0) {
+    var _userShop$products;
+    if (userShop && (userShop === null || userShop === void 0 || (_userShop$products = userShop.products) === null || _userShop$products === void 0 ? void 0 : _userShop$products.length) > 0 && (shopProducts === null || shopProducts === void 0 ? void 0 : shopProducts.length) === 0) {
       setShopProducts(userShop.products);
     }
   }, [userShop]);
@@ -2857,8 +2929,13 @@ function ShopManagement(_ref) {
   function _deleteUserShop() {
     _deleteUserShop = _asyncToGenerator(function* () {
       const user = yield _utilities_shops_api__WEBPACK_IMPORTED_MODULE_8__.deleteShop(userShop._id);
-      setUserShop(null);
       setUser(user);
+      setUserShop({
+        name: 'Loading...',
+        seller: {},
+        description: 'Loading...',
+        products: []
+      });
       navigate('/account');
     });
     return _deleteUserShop.apply(this, arguments);
@@ -2885,8 +2962,6 @@ function ShopManagement(_ref) {
   }, "Edit Shop Info"), /*#__PURE__*/React.createElement("button", {
     onClick: toggleCreateProduct
   }, "Add A Product"), /*#__PURE__*/React.createElement("button", {
-    onClick: toggleEditProductForm
-  }, "Edit an Item"), /*#__PURE__*/React.createElement("button", {
     onClick: deleteUserShop
   }, "Delete Shop"))), /*#__PURE__*/React.createElement("div", {
     className: _ShopManagement_module_scss__WEBPACK_IMPORTED_MODULE_1__["default"].products
@@ -3674,15 +3749,43 @@ ___CSS_LOADER_EXPORT___.locals = {
 var ___CSS_LOADER_EXPORT___ = _node_modules_css_loader_dist_runtime_api_js__WEBPACK_IMPORTED_MODULE_1___default()((_node_modules_css_loader_dist_runtime_sourceMaps_js__WEBPACK_IMPORTED_MODULE_0___default()));
 // Module
 ___CSS_LOADER_EXPORT___.push([module.id, `.n2EL_wbvlH8E3w61dJMK {
-  background-color: lightslategrey;
-  height: 20vh;
-  width: 98%;
-  margin: 1.5rem 0;
-  padding: 0.6rem;
-}`, "",{"version":3,"sources":["webpack://./src/components/CategorySection/CategorySection.module.scss"],"names":[],"mappings":"AAAA;EACI,gCAAA;EACA,YAAA;EACA,UAAA;EACA,gBAAA;EACA,eAAA;AACJ","sourcesContent":[".categoryRow {\n    background-color: lightslategrey;\n    height: 20vh;\n    width: 98%;\n    margin: 1.5rem 0;\n    padding: .6rem;\n}"],"sourceRoot":""}]);
+  overflow: auto;
+}
+.n2EL_wbvlH8E3w61dJMK .rE1REYuOqjLqgKdVoZc7 {
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+  margin: 1.5rem 0 1rem 0;
+}
+.n2EL_wbvlH8E3w61dJMK .rE1REYuOqjLqgKdVoZc7 p {
+  padding: 0;
+  margin: 0;
+}
+.n2EL_wbvlH8E3w61dJMK .rE1REYuOqjLqgKdVoZc7 button {
+  margin: 0 0 0 1.5rem;
+  padding: 0.25rem;
+  background: none;
+  font-weight: 600;
+  background-color: var(--accent);
+  border: 0.1vmin solid var(--accent);
+}
+.n2EL_wbvlH8E3w61dJMK .rE1REYuOqjLqgKdVoZc7 button a {
+  text-decoration: none;
+  color: var(--lighter-bg);
+  font-size: 1.5vmin;
+}
+.n2EL_wbvlH8E3w61dJMK .rE1REYuOqjLqgKdVoZc7 button:hover {
+  color: var(--accent);
+  background-color: var(--lighter-bg);
+  border: 0.1vmin solid var(--accent);
+}
+.n2EL_wbvlH8E3w61dJMK .rE1REYuOqjLqgKdVoZc7 button:hover a {
+  color: var(--accent);
+}`, "",{"version":3,"sources":["webpack://./src/components/CategorySection/CategorySection.module.scss"],"names":[],"mappings":"AAAA;EACI,cAAA;AACJ;AAAI;EACI,aAAA;EACA,mBAAA;EACA,mBAAA;EACA,uBAAA;AAER;AADQ;EACI,UAAA;EACA,SAAA;AAGZ;AADQ;EACI,oBAAA;EACA,gBAAA;EACA,gBAAA;EACA,gBAAA;EACA,+BAAA;EACA,mCAAA;AAGZ;AAFY;EACI,qBAAA;EACA,wBAAA;EACA,kBAAA;AAIhB;AADQ;EACI,oBAAA;EACA,mCAAA;EACA,mCAAA;AAGZ;AAFY;EACI,oBAAA;AAIhB","sourcesContent":[".categoryRow {\n    overflow: auto;\n    .categoryHeading {\n        display: flex;\n        flex-direction: row;\n        align-items: center;\n        margin: 1.5rem 0 1rem 0;\n        p {\n            padding: 0;\n            margin: 0;\n        }\n        button {\n            margin: 0 0 0 1.5rem;\n            padding: 0.25rem;\n            background: none;\n            font-weight: 600;\n            background-color: var(--accent);\n            border: .1vmin solid var(--accent);\n            a {\n                text-decoration: none;\n                color: var(--lighter-bg);\n                font-size: 1.5vmin;\n            }\n        }\n        button:hover {\n            color: var(--accent);\n            background-color: var(--lighter-bg);\n            border: .1vmin solid var(--accent);\n            a {\n                color: var(--accent);\n            }\n        }\n    }\n}\n"],"sourceRoot":""}]);
 // Exports
 ___CSS_LOADER_EXPORT___.locals = {
-	"categoryRow": `n2EL_wbvlH8E3w61dJMK`
+	"categoryRow": `n2EL_wbvlH8E3w61dJMK`,
+	"categoryHeading": `rE1REYuOqjLqgKdVoZc7`
 };
 /* harmony default export */ const __WEBPACK_DEFAULT_EXPORT__ = (___CSS_LOADER_EXPORT___);
 
@@ -3900,81 +4003,86 @@ ___CSS_LOADER_EXPORT___.locals = {
 var ___CSS_LOADER_EXPORT___ = _node_modules_css_loader_dist_runtime_api_js__WEBPACK_IMPORTED_MODULE_1___default()((_node_modules_css_loader_dist_runtime_sourceMaps_js__WEBPACK_IMPORTED_MODULE_0___default()));
 // Module
 ___CSS_LOADER_EXPORT___.push([module.id, `.ZeRW57PNaWpYVsw6JlaC {
-  padding: 0.25rem 0;
   display: grid;
-  grid-template-columns: 1fr 1fr;
+  grid-template-columns: 30% 40% 30%;
+  margin: 1rem 0rem;
 }
 .ZeRW57PNaWpYVsw6JlaC ._PFTf149Fmz3xA2Z4wcL {
-  background-color: var(--image-bg);
-  padding: 1.5rem;
-  width: 100%;
   display: flex;
   justify-content: center;
   align-items: center;
-  flex-grow: 1;
 }
-.ZeRW57PNaWpYVsw6JlaC ._PFTf149Fmz3xA2Z4wcL .pBx_NH_CRMne_N2HFjWg {
-  width: 100%;
-  max-height: 100%;
-  -o-object-fit: scale-down;
-  object-fit: scale-down;
+.ZeRW57PNaWpYVsw6JlaC .pBx_NH_CRMne_N2HFjWg {
+  width: 15rem;
+  height: 15rem;
+  border-radius: 7px;
 }
-.ZeRW57PNaWpYVsw6JlaC .IFMSyv5w8TRX8bQEVfuR {
-  padding-left: 0.5rem;
-  display: flex;
-  flex-direction: column;
-  justify-content: flex-start;
-}
-.ZeRW57PNaWpYVsw6JlaC .IFMSyv5w8TRX8bQEVfuR .sBwkwlnu_4qJHy6kfGQD {
-  display: flex;
-  flex-direction: column;
-  justify-content: flex-start;
-}
-.ZeRW57PNaWpYVsw6JlaC .IFMSyv5w8TRX8bQEVfuR .sBwkwlnu_4qJHy6kfGQD .SlFLuhha4xQENSpwSoNW {
+.ZeRW57PNaWpYVsw6JlaC .SlFLuhha4xQENSpwSoNW {
   font-weight: 600;
-  font-size: 1.8vmin;
+  font-size: 1.5rem;
+  margin: 0rem 0rem 1rem 0rem;
 }
-.ZeRW57PNaWpYVsw6JlaC .IFMSyv5w8TRX8bQEVfuR .sBwkwlnu_4qJHy6kfGQD .U2ET11IVtP67ZzWq415c {
-  font-weight: 400;
-  font-size: 1.7vmin;
-}
-.ZeRW57PNaWpYVsw6JlaC .Z_MQzAiRjTlxboCrh9om {
-  margin-top: 3vmin;
-}
-.ZeRW57PNaWpYVsw6JlaC .Z_MQzAiRjTlxboCrh9om div {
-  display: flex;
-  align-items: center;
-}
-.ZeRW57PNaWpYVsw6JlaC .Z_MQzAiRjTlxboCrh9om div .xisuxqzRD620q8cXl08w {
-  padding: 0.25rem 0.5rem;
-  font-size: 1.6vmin;
-  font-weight: 700;
-}
-.ZeRW57PNaWpYVsw6JlaC .Z_MQzAiRjTlxboCrh9om div span {
-  padding: 0 0.5rem;
-  font-size: 1.7vmin;
-  font-weight: 400;
-}
-.ZeRW57PNaWpYVsw6JlaC .Z_MQzAiRjTlxboCrh9om div span.PfhYTW8sSUAWPk7s2mAu {
+.ZeRW57PNaWpYVsw6JlaC .sBwkwlnu_4qJHy6kfGQD {
   padding: 0;
 }
-.ZeRW57PNaWpYVsw6JlaC .Z_MQzAiRjTlxboCrh9om .iZ6oJDRJlBAjRnxPhUy5 {
+.ZeRW57PNaWpYVsw6JlaC .TzIXa9ULvMKyMXVoVXAF {
+  font-size: 1.1rem;
+  line-height: 2rem;
+}
+.ZeRW57PNaWpYVsw6JlaC .Z_MQzAiRjTlxboCrh9om {
+  display: flex;
+  justify-content: space-evenly;
+}
+.ZeRW57PNaWpYVsw6JlaC .HCSGTfRrLhfJRBGQb92L {
+  text-align: center;
+  width: 7rem;
+}
+.ZeRW57PNaWpYVsw6JlaC .Op1kBVhCK35KSJp9kIBv {
   font-weight: 600;
-  font-size: 1.8vmin;
-}`, "",{"version":3,"sources":["webpack://./src/components/LineItem/LineItem.module.scss"],"names":[],"mappings":"AAAA;EACE,kBAAA;EACA,aAAA;EACA,8BAAA;AACF;AAAE;EACE,iCAAA;EACA,eAAA;EACA,WAAA;EACA,aAAA;EACA,uBAAA;EACA,mBAAA;EACA,YAAA;AAEJ;AADI;EACE,WAAA;EACA,gBAAA;EACA,yBAAA;EACG,sBAAA;AAGT;AAAE;EACE,oBAAA;EACA,aAAA;EACA,sBAAA;EACA,2BAAA;AAEJ;AADI;EACE,aAAA;EACA,sBAAA;EACA,2BAAA;AAGN;AAFM;EACE,gBAAA;EACA,kBAAA;AAIR;AAFM;EACE,gBAAA;EACA,kBAAA;AAIR;AAAE;EACE,iBAAA;AAEJ;AADI;EACE,aAAA;EACA,mBAAA;AAGN;AAFM;EACE,uBAAA;EACA,kBAAA;EACA,gBAAA;AAIR;AAFM;EACE,iBAAA;EACA,kBAAA;EACA,gBAAA;AAIR;AAFM;EACE,UAAA;AAIR;AADI;EACE,gBAAA;EACA,kBAAA;AAGN","sourcesContent":[".LineItem {\n  padding: 0.25rem 0;\n  display: grid;\n  grid-template-columns: 1fr 1fr;\n  .imgContainer {\n    background-color: var(--image-bg);\n    padding: 1.5rem;\n    width: 100%;\n    display: flex;\n    justify-content: center;\n    align-items: center;\n    flex-grow: 1;\n    .itemImage {\n      width: 100%;\n      max-height: 100%;\n      -o-object-fit: scale-down;\n         object-fit: scale-down;\n    }\n  }\n  .itemDetails {\n    padding-left: 0.5rem;\n    display: flex;\n    flex-direction: column;\n    justify-content: flex-start;\n    .itemInfo {\n      display: flex;\n      flex-direction: column;\n      justify-content: flex-start;\n      .itemName {\n        font-weight: 600;\n        font-size: 1.8vmin;\n      }\n      .itemPrice {\n        font-weight: 400;\n        font-size: 1.7vmin;\n      }\n    }\n  }\n  .qty{\n    margin-top: 3vmin;\n    div{\n      display: flex;\n      align-items: center;\n      .qtyBtn { \n        padding: 0.25rem 0.5rem;\n        font-size: 1.6vmin;\n        font-weight: 700;\n      }\n      span {\n        padding: 0 0.5rem;\n        font-size: 1.7vmin;\n        font-weight: 400;\n      }\n      span.paid {\n        padding: 0;\n      }\n    }\n    .extPrice {\n      font-weight: 600;\n      font-size: 1.8vmin;\n    }\n  }\n}"],"sourceRoot":""}]);
+  font-size: 1.5rem;
+}
+.ZeRW57PNaWpYVsw6JlaC .JRTb7mNcC1xwaYM5kuoa {
+  width: 100%;
+  display: flex;
+  justify-content: space-around;
+  align-items: center;
+}
+.ZeRW57PNaWpYVsw6JlaC .xisuxqzRD620q8cXl08w {
+  background-color: var(--darker-bg);
+  color: black;
+  border-style: none;
+  font-size: 1.5rem;
+}
+.ZeRW57PNaWpYVsw6JlaC .xisuxqzRD620q8cXl08w:hover {
+  color: var(--accent);
+}
+.ZeRW57PNaWpYVsw6JlaC .iZ6oJDRJlBAjRnxPhUy5 {
+  text-align: center;
+}
+.ZeRW57PNaWpYVsw6JlaC .nS_HC3ctxDv2tO6QwkhR {
+  font-weight: 600;
+  font-size: 1.5rem;
+}
+.ZeRW57PNaWpYVsw6JlaC .PfhYTW8sSUAWPk7s2mAu {
+  font-size: 1.5rem;
+  text-align: center;
+}`, "",{"version":3,"sources":["webpack://./src/components/LineItem/LineItem.module.scss"],"names":[],"mappings":"AAAA;EACE,aAAA;EACA,kCAAA;EACA,iBAAA;AACF;AACE;EACE,aAAA;EACA,uBAAA;EACA,mBAAA;AACJ;AAEE;EACE,YAAA;EACA,aAAA;EACA,kBAAA;AAAJ;AAGE;EACE,gBAAA;EACA,iBAAA;EACA,2BAAA;AADJ;AAIE;EACE,UAAA;AAFJ;AAKE;EACE,iBAAA;EACA,iBAAA;AAHJ;AAME;EACE,aAAA;EACA,6BAAA;AAJJ;AAOE;EACE,kBAAA;EACA,WAAA;AALJ;AAQE;EACE,gBAAA;EACA,iBAAA;AANJ;AASE;EACE,WAAA;EACA,aAAA;EACA,6BAAA;EACA,mBAAA;AAPJ;AAUE;EACE,kCAAA;EACA,YAAA;EACA,kBAAA;EACA,iBAAA;AARJ;AAWE;EACE,oBAAA;AATJ;AAYE;EACE,kBAAA;AAVJ;AAaE;EACE,gBAAA;EACA,iBAAA;AAXJ;AAcE;EACE,iBAAA;EACA,kBAAA;AAZJ","sourcesContent":[".LineItem {\n  display: grid;\n  grid-template-columns: 30% 40% 30%;\n  margin: 1rem 0rem;\n\n  .imgContainer {\n    display: flex;\n    justify-content: center;\n    align-items: center;\n  }\n\n  .itemImage {\n    width: 15rem;\n    height: 15rem;\n    border-radius: 7px;\n  }\n\n  .itemName {\n    font-weight: 600;\n    font-size: 1.5rem;\n    margin: 0rem 0rem 1rem 0rem;\n  }\n\n  .itemInfo {\n    padding: 0;\n  }\n\n  .itemDescription {\n    font-size: 1.1rem;\n    line-height: 2rem;\n  }\n\n  .qty {\n    display: flex;\n    justify-content: space-evenly;\n  }\n\n  .qtyContainer {\n    text-align: center;\n    width: 7rem;\n  }\n\n  .btnQty {\n    font-weight: 600;\n    font-size: 1.5rem;\n  }\n\n  .adjustBtn {\n    width: 100%;\n    display: flex;\n    justify-content: space-around;\n    align-items: center;\n  }\n\n  .qtyBtn {\n    background-color: var(--darker-bg);\n    color: black;\n    border-style: none;\n    font-size: 1.5rem;\n  }\n\n  .qtyBtn:hover {\n    color: var(--accent);\n  }\n\n  .extPrice {\n    text-align: center;\n  }\n\n  .extText {\n    font-weight: 600;\n    font-size: 1.5rem;\n  }\n\n  .paid {\n    font-size: 1.5rem;\n    text-align: center;\n  }\n}"],"sourceRoot":""}]);
 // Exports
 ___CSS_LOADER_EXPORT___.locals = {
 	"LineItem": `ZeRW57PNaWpYVsw6JlaC`,
 	"imgContainer": `_PFTf149Fmz3xA2Z4wcL`,
 	"itemImage": `pBx_NH_CRMne_N2HFjWg`,
-	"itemDetails": `IFMSyv5w8TRX8bQEVfuR`,
-	"itemInfo": `sBwkwlnu_4qJHy6kfGQD`,
 	"itemName": `SlFLuhha4xQENSpwSoNW`,
-	"itemPrice": `U2ET11IVtP67ZzWq415c`,
+	"itemInfo": `sBwkwlnu_4qJHy6kfGQD`,
+	"itemDescription": `TzIXa9ULvMKyMXVoVXAF`,
 	"qty": `Z_MQzAiRjTlxboCrh9om`,
+	"qtyContainer": `HCSGTfRrLhfJRBGQb92L`,
+	"btnQty": `Op1kBVhCK35KSJp9kIBv`,
+	"adjustBtn": `JRTb7mNcC1xwaYM5kuoa`,
 	"qtyBtn": `xisuxqzRD620q8cXl08w`,
-	"paid": `PfhYTW8sSUAWPk7s2mAu`,
-	"extPrice": `iZ6oJDRJlBAjRnxPhUy5`
+	"extPrice": `iZ6oJDRJlBAjRnxPhUy5`,
+	"extText": `nS_HC3ctxDv2tO6QwkhR`,
+	"paid": `PfhYTW8sSUAWPk7s2mAu`
 };
 /* harmony default export */ const __WEBPACK_DEFAULT_EXPORT__ = (___CSS_LOADER_EXPORT___);
 
@@ -4063,7 +4171,11 @@ var ___CSS_LOADER_EXPORT___ = _node_modules_css_loader_dist_runtime_api_js__WEBP
 // Module
 ___CSS_LOADER_EXPORT___.push([module.id, `.EDeinQzfS2N2rVW_Z1GP img {
   height: 5vmin;
-}`, "",{"version":3,"sources":["webpack://./src/components/Logo/Logo.module.scss"],"names":[],"mappings":"AAAA;EACE,aAAA;AACF","sourcesContent":[".Logo img {\n  height: 5vmin;\n}"],"sourceRoot":""}]);
+}
+
+.EDeinQzfS2N2rVW_Z1GP img:hover {
+  cursor: pointer;
+}`, "",{"version":3,"sources":["webpack://./src/components/Logo/Logo.module.scss"],"names":[],"mappings":"AAAA;EACE,aAAA;AACF;;AACA;EACE,eAAA;AAEF","sourcesContent":[".Logo img {\n  height: 5vmin;\n}\n.Logo img:hover {\n  cursor: pointer;\n}"],"sourceRoot":""}]);
 // Exports
 ___CSS_LOADER_EXPORT___.locals = {
 	"Logo": `EDeinQzfS2N2rVW_Z1GP`
@@ -4124,6 +4236,9 @@ ___CSS_LOADER_EXPORT___.push([module.id, `.QpVD3qAS0nYBtoQqAYoe {
 .QpVD3qAS0nYBtoQqAYoe .qX3Jm8O2TDklTOBfqqeu {
   margin: 0rem 0.375rem;
 }
+.QpVD3qAS0nYBtoQqAYoe .qX3Jm8O2TDklTOBfqqeu:hover {
+  cursor: pointer;
+}
 .QpVD3qAS0nYBtoQqAYoe .LBVFPVGLZ99nx_pJh_n4 {
   display: flex;
   justify-content: space-between;
@@ -4169,7 +4284,7 @@ ___CSS_LOADER_EXPORT___.push([module.id, `.QpVD3qAS0nYBtoQqAYoe {
 .QpVD3qAS0nYBtoQqAYoe .LBVFPVGLZ99nx_pJh_n4 ._O_XE5GfXHdyMuZrTVOA:hover {
   cursor: pointer;
   color: var(--accent);
-}`, "",{"version":3,"sources":["webpack://./src/components/NavBar/NavBar.module.scss"],"names":[],"mappings":"AAAA;EACE,aAAA;EACA,YAAA;EACA,sBAAA;EACA,kCAAA;EACA,oCAAA;AACF;AAAE;EACE,aAAA;EACA,8BAAA;EACA,mBAAA;AAEJ;AAAE;EACE,4BAAA;EACA,UAAA;AAEJ;AAAE;EACE,aAAA;EACA,mBAAA;EACA,cAAA;EACA,mBAAA;EACA,gBAAA;EACA,SAAA;EACA,mBAAA;EACA,wBAAA;EACA,qBAAA;AAEJ;AAAE;EACE,aAAA;AAEJ;AAAE;EACE,qBAAA;AAEJ;AAAE;EACE,aAAA;EACA,8BAAA;AAEJ;AADI;EACE,aAAA;EACA,oBAAA;AAGN;AADI;EACE,eAAA;AAGN;AADI;EACE,kBAAA;AAGN;AADI;EACE,kBAAA;EACA,kBAAA;AAGN;AAFM;EACE,YAAA;EACA,aAAA;EACA,mBAAA;EACA,gBAAA;EACA,UAAA;EACA,kBAAA;EACA,UAAA;EACA,SAAA;EACA,qBAAA;EACA,mBAAA;AAIR;AADI;EACE,YAAA;EACA,cAAA;EAQA,oBAAA;AAJN;AAHM;EACE,mBAAA;EACA,kBAAA;EACA,sBAAA;EACA,mBAAA;EACA,gBAAA;AAKR;AADI;EACE,eAAA;EACA,oBAAA;AAGN","sourcesContent":[".NavBar {\n  display: flex;\n  width: 100vw;\n  flex-direction: column;\n  background-color: var(--darker-bg);\n  padding: 1.5rem 2.5rem 1.5rem 2.5rem;\n  .topLine {\n    display: flex;\n    justify-content: space-between;\n    align-items: center;\n  }\n  .searchbarContainer {\n    padding: 0.25rem 1rem 0 1rem;\n    width: 80%;\n  }\n  .categories ul {\n    display: flex;\n    flex-direction: row;\n    overflow: auto;\n    white-space: nowrap;\n    list-style: none;\n    margin: 0;\n    padding: 1rem 0 0 0;\n    -ms-overflow-style: none;\n    scrollbar-width: none;\n  }\n  .categories ul::-webkit-scrollbar {\n    display: none;\n  }\n  .li {\n    margin: 0rem 0.375rem;\n  }\n  .icons {\n    display: flex;\n    justify-content: space-between;\n    img {\n      height: 4vmin;\n      padding: 0rem 0.4rem;\n    }\n    img:hover{\n      cursor: pointer;\n    }\n    .userPhoto {\n      border-radius: 50%;\n    }\n    .cartContainer {\n      text-align: center;\n      position: relative;\n      .cartCount {\n        width: 2vmin;\n        height: 2vmin;\n        font-size: 1.25vmin;\n        font-weight: 600;\n        z-index: 2;\n        position: absolute;\n        top: 23.5%;\n        left: 37%;\n        text-decoration: none;\n        color: var(--black);\n      }\n    }\n    .login {\n      width: 7vmin;\n      display: table;\n      p {\n        display: table-cell;\n        text-align: center;\n        vertical-align: middle;\n        font-size: 1.75vmin;\n        font-weight: 600;\n      }\n      padding: 0rem 0.4rem;\n    }\n    .login:hover {\n      cursor: pointer;\n      color: var(--accent)\n    }\n  }\n}\n"],"sourceRoot":""}]);
+}`, "",{"version":3,"sources":["webpack://./src/components/NavBar/NavBar.module.scss"],"names":[],"mappings":"AAAA;EACE,aAAA;EACA,YAAA;EACA,sBAAA;EACA,kCAAA;EACA,oCAAA;AACF;AAAE;EACE,aAAA;EACA,8BAAA;EACA,mBAAA;AAEJ;AAAE;EACE,4BAAA;EACA,UAAA;AAEJ;AAAE;EACE,aAAA;EACA,mBAAA;EACA,cAAA;EACA,mBAAA;EACA,gBAAA;EACA,SAAA;EACA,mBAAA;EACA,wBAAA;EACA,qBAAA;AAEJ;AAAE;EACE,aAAA;AAEJ;AAAE;EACE,qBAAA;AAEJ;AAAE;EACE,eAAA;AAEJ;AAAE;EACE,aAAA;EACA,8BAAA;AAEJ;AADI;EACE,aAAA;EACA,oBAAA;AAGN;AADI;EACE,eAAA;AAGN;AADI;EACE,kBAAA;AAGN;AADI;EACE,kBAAA;EACA,kBAAA;AAGN;AAFM;EACE,YAAA;EACA,aAAA;EACA,mBAAA;EACA,gBAAA;EACA,UAAA;EACA,kBAAA;EACA,UAAA;EACA,SAAA;EACA,qBAAA;EACA,mBAAA;AAIR;AADI;EACE,YAAA;EACA,cAAA;EAQA,oBAAA;AAJN;AAHM;EACE,mBAAA;EACA,kBAAA;EACA,sBAAA;EACA,mBAAA;EACA,gBAAA;AAKR;AADI;EACE,eAAA;EACA,oBAAA;AAGN","sourcesContent":[".NavBar {\n  display: flex;\n  width: 100vw;\n  flex-direction: column;\n  background-color: var(--darker-bg);\n  padding: 1.5rem 2.5rem 1.5rem 2.5rem;\n  .topLine {\n    display: flex;\n    justify-content: space-between;\n    align-items: center;\n  }\n  .searchbarContainer {\n    padding: 0.25rem 1rem 0 1rem;\n    width: 80%;\n  }\n  .categories ul {\n    display: flex;\n    flex-direction: row;\n    overflow: auto;\n    white-space: nowrap;\n    list-style: none;\n    margin: 0;\n    padding: 1rem 0 0 0;\n    -ms-overflow-style: none;\n    scrollbar-width: none;\n  }\n  .categories ul::-webkit-scrollbar {\n    display: none;\n  }\n  .li {\n    margin: 0rem 0.375rem;\n  }\n  .li:hover {\n    cursor: pointer;\n  }\n  .icons {\n    display: flex;\n    justify-content: space-between;\n    img {\n      height: 4vmin;\n      padding: 0rem 0.4rem;\n    }\n    img:hover {\n      cursor: pointer;\n    }\n    .userPhoto {\n      border-radius: 50%;\n    }\n    .cartContainer {\n      text-align: center;\n      position: relative;\n      .cartCount {\n        width: 2vmin;\n        height: 2vmin;\n        font-size: 1.25vmin;\n        font-weight: 600;\n        z-index: 2;\n        position: absolute;\n        top: 23.5%;\n        left: 37%;\n        text-decoration: none;\n        color: var(--black);\n      }\n    }\n    .login {\n      width: 7vmin;\n      display: table;\n      p {\n        display: table-cell;\n        text-align: center;\n        vertical-align: middle;\n        font-size: 1.75vmin;\n        font-weight: 600;\n      }\n      padding: 0rem 0.4rem;\n    }\n    .login:hover {\n      cursor: pointer;\n      color: var(--accent);\n    }\n  }\n}\n"],"sourceRoot":""}]);
 // Exports
 ___CSS_LOADER_EXPORT___.locals = {
 	"NavBar": `QpVD3qAS0nYBtoQqAYoe`,
@@ -4206,9 +4321,29 @@ ___CSS_LOADER_EXPORT___.locals = {
 
 var ___CSS_LOADER_EXPORT___ = _node_modules_css_loader_dist_runtime_api_js__WEBPACK_IMPORTED_MODULE_1___default()((_node_modules_css_loader_dist_runtime_sourceMaps_js__WEBPACK_IMPORTED_MODULE_0___default()));
 // Module
-___CSS_LOADER_EXPORT___.push([module.id, ``, "",{"version":3,"sources":[],"names":[],"mappings":"","sourceRoot":""}]);
+___CSS_LOADER_EXPORT___.push([module.id, `.cPR75kdAXDGVxib0PszB {
+  width: 100%;
+  margin: 1rem 0rem;
+  background-color: var(--darker-bg);
+  border-radius: 6px;
+}
+.cPR75kdAXDGVxib0PszB .u2QrHec28J_MSXQzPseQ {
+  font-weight: 600;
+  font-size: 1.5rem;
+  margin: 0.4rem;
+  padding-left: 5.4rem;
+}
+.cPR75kdAXDGVxib0PszB .N0bUcu1n3GtvjewcqpHF {
+  text-align: center;
+  font-weight: 600;
+  font-size: 1.1rem;
+}`, "",{"version":3,"sources":["webpack://./src/components/OrderDetail/OrderDetail.module.scss"],"names":[],"mappings":"AAAA;EACI,WAAA;EACA,iBAAA;EACA,kCAAA;EACA,kBAAA;AACJ;AACI;EACI,gBAAA;EACA,iBAAA;EACA,cAAA;EACA,oBAAA;AACR;AAEI;EACI,kBAAA;EACA,gBAAA;EACA,iBAAA;AAAR","sourcesContent":[".OrderDetail {\n    width: 100%;\n    margin: 1rem 0rem;\n    background-color: var(--darker-bg);\n    border-radius: 6px;\n\n    .shopName {\n        font-weight: 600;\n        font-size: 1.5rem;\n        margin: .4rem;\n        padding-left: 5.4rem;\n    }\n\n    .priceAdjustment {\n        text-align: center;\n        font-weight: 600;\n        font-size: 1.1rem;\n    }\n}\n"],"sourceRoot":""}]);
 // Exports
-___CSS_LOADER_EXPORT___.locals = {};
+___CSS_LOADER_EXPORT___.locals = {
+	"OrderDetail": `cPR75kdAXDGVxib0PszB`,
+	"shopName": `u2QrHec28J_MSXQzPseQ`,
+	"priceAdjustment": `N0bUcu1n3GtvjewcqpHF`
+};
 /* harmony default export */ const __WEBPACK_DEFAULT_EXPORT__ = (___CSS_LOADER_EXPORT___);
 
 
@@ -4390,12 +4525,12 @@ var ___CSS_LOADER_EXPORT___ = _node_modules_css_loader_dist_runtime_api_js__WEBP
 // Module
 ___CSS_LOADER_EXPORT___.push([module.id, `.eSo75w8e3GU2Gn78rdST {
   width: 100%;
-  padding: 0 0.5rem 0.5rem 0.5rem;
+  /*padding: 0 0.5rem 0.5rem 0.5rem;*/
   display: grid;
   grid-template-columns: repeat(auto-fill, minmax(300px, 1fr));
   grid-auto-rows: minmax(40vh, 1fr);
   gap: 1rem;
-}`, "",{"version":3,"sources":["webpack://./src/components/ProductList/ProductList.module.scss"],"names":[],"mappings":"AAAA;EACE,WAAA;EACA,+BAAA;EACA,aAAA;EACA,4DAAA;EACA,iCAAA;EACA,SAAA;AACF","sourcesContent":[".ProductList {\n  width: 100%;\n  padding: 0 0.5rem 0.5rem 0.5rem;\n  display: grid;\n  grid-template-columns: repeat(auto-fill, minmax(300px, 1fr));\n  grid-auto-rows: minmax(40vh, 1fr);\n  gap: 1rem;\n}"],"sourceRoot":""}]);
+}`, "",{"version":3,"sources":["webpack://./src/components/ProductList/ProductList.module.scss"],"names":[],"mappings":"AAAA;EACE,WAAA;EACA,mCAAA;EACA,aAAA;EACA,4DAAA;EACA,iCAAA;EACA,SAAA;AACF","sourcesContent":[".ProductList {\n  width: 100%;\n  /*padding: 0 0.5rem 0.5rem 0.5rem;*/\n  display: grid;\n  grid-template-columns: repeat(auto-fill, minmax(300px, 1fr));\n  grid-auto-rows: minmax(40vh, 1fr);\n  gap: 1rem;\n}"],"sourceRoot":""}]);
 // Exports
 ___CSS_LOADER_EXPORT___.locals = {
 	"ProductList": `eSo75w8e3GU2Gn78rdST`
@@ -4625,53 +4760,38 @@ ___CSS_LOADER_EXPORT___.locals = {};
 
 var ___CSS_LOADER_EXPORT___ = _node_modules_css_loader_dist_runtime_api_js__WEBPACK_IMPORTED_MODULE_1___default()((_node_modules_css_loader_dist_runtime_sourceMaps_js__WEBPACK_IMPORTED_MODULE_0___default()));
 // Module
-___CSS_LOADER_EXPORT___.push([module.id, `/*.productImage {
-  height: 20vmin;
-  object-fit: cover;
-} */
-.L8vz6f_im7Imz1VpKIkf {
-  /* display: grid;
-  grid-template-rows: auto auto;
-  grid-template-columns:  1fr;
-  grid-gap: 10px;
-  align-items: center;
-  text-align: center;
-  padding: 16px;
-  border-radius: 8px;
-  margin: 8px; */
+___CSS_LOADER_EXPORT___.push([module.id, `.L8vz6f_im7Imz1VpKIkf {
   width: 100%;
+  padding: 1rem;
   height: 100%;
   -o-object-fit: cover;
   object-fit: cover;
   display: flex;
   flex-direction: column;
   justify-content: space-between;
-  align-items: flex-end;
-  flex-grow: 1;
-}
-.L8vz6f_im7Imz1VpKIkf ._qWNMNx3Kyn9aAKpktB6 {
-  background-color: var(--darker-bg);
-  -o-object-fit: cover;
-  object-fit: cover;
-  padding: 1.5rem;
-  width: 100%;
-  display: flex;
-  justify-content: center;
   align-items: center;
-  flex-grow: 1;
+  background-color: var(--darker-bg);
+  border-radius: 0.625rem;
+  position: relative;
 }
 .L8vz6f_im7Imz1VpKIkf ._qWNMNx3Kyn9aAKpktB6 .CD_7Bphi26jNmzj_TUUY {
+  border-radius: 0.625rem;
   -o-object-fit: cover;
   object-fit: cover;
-  max-height: 20vmin;
+  max-height: 35vmin;
+  max-width: 30vmin;
 }
 .L8vz6f_im7Imz1VpKIkf .Uvs9fUaBWckyAODdlE4g {
+  padding: 0.5rem;
   width: 100%;
   height: 8vh;
   display: flex;
   flex-direction: column;
-  justify-content: space-between;
+  justify-content: flex-end;
   align-items: flex-start;
+}
+.L8vz6f_im7Imz1VpKIkf .Uvs9fUaBWckyAODdlE4g .C3xSQ00hI9GnPMXi6G8j {
+  font-weight: 600;
 }
 
 .rl8kPoJpE_zAteZLIckq {
@@ -4690,40 +4810,39 @@ ___CSS_LOADER_EXPORT___.push([module.id, `/*.productImage {
 
 .hOVX_TKx5aWxo5ey7GEJ {
   position: absolute;
+  top: 0.75rem;
+  right: 0.75rem;
+  background-color: var(--darker-bg);
+  border-radius: 50%;
+  box-shadow: 0 0 2px 5px var(--darker-bg);
+  opacity: 0.8;
+  width: 2.5rem;
+  height: 2.5rem;
   display: flex;
   flex-direction: column;
   align-items: center;
   justify-content: center;
 }
-
-.vRLS4jaeorT8eu4RluFU {
-  position: absolute;
-  top: 50%;
-  left: 50%;
-  transform: translate(-50%, -50%);
+.hOVX_TKx5aWxo5ey7GEJ img {
+  height: 2.5rem;
+  padding-top: 0.25rem;
   z-index: 1;
   transition: opacity 0.3s ease-in;
-  opacity: 0;
+  opacity: 0.25;
 }
-
-.hOVX_TKx5aWxo5ey7GEJ:hover .vRLS4jaeorT8eu4RluFU {
+.hOVX_TKx5aWxo5ey7GEJ img:hover {
   opacity: 1;
-}
-
-.Uvs9fUaBWckyAODdlE4g {
-  margin-top: 10px;
-  text-align: center;
-}`, "",{"version":3,"sources":["webpack://./src/components/productListItem/ProductListItem.module.scss"],"names":[],"mappings":"AAAA;;;GAAA;AAKA;EACE;;;;;;;;gBAAA;EASA,WAAA;EACA,YAAA;EACA,oBAAA;EACG,iBAAA;EACH,aAAA;EACA,sBAAA;EACA,8BAAA;EACA,qBAAA;EACA,YAAA;AAAF;AACE;EACE,kCAAA;EACA,oBAAA;EACG,iBAAA;EACH,eAAA;EACA,WAAA;EACA,aAAA;EACA,uBAAA;EACA,mBAAA;EACA,YAAA;AACJ;AAAI;EACE,oBAAA;EACG,iBAAA;EACH,kBAAA;AAEN;AACE;EACE,WAAA;EACA,WAAA;EACA,aAAA;EACA,sBAAA;EACA,8BAAA;EACA,uBAAA;AACJ;;AAEA;EACE,aAAA;EACA,4DAAA;EACA,cAAA;EACA,gBAAA;AACF;;AAGA;EACE,kBAAA;EACA,YAAA;EACA,eAAA;EACA,eAAA;AAAF;;AAGA;EACE,kBAAA;EACA,aAAA;EACA,sBAAA;EACA,mBAAA;EACA,uBAAA;AAAF;;AAGA;EACE,kBAAA;EACA,QAAA;EACA,SAAA;EACA,gCAAA;EACA,UAAA;EACA,gCAAA;EACA,UAAA;AAAF;;AAGA;EACE,UAAA;AAAF;;AAGA;EACE,gBAAA;EACA,kBAAA;AAAF","sourcesContent":["/*.productImage {\n  height: 20vmin;\n  object-fit: cover;\n} */\n\n.ProductListItem {\n  /* display: grid;\n  grid-template-rows: auto auto;\n  grid-template-columns:  1fr;\n  grid-gap: 10px;\n  align-items: center;\n  text-align: center;\n  padding: 16px;\n  border-radius: 8px;\n  margin: 8px; */\n  width: 100%;\n  height: 100%;\n  -o-object-fit: cover;\n     object-fit: cover;\n  display: flex;\n  flex-direction: column;\n  justify-content: space-between;\n  align-items: flex-end;\n  flex-grow: 1;\n  .imageContainer {\n    background-color: var(--darker-bg);\n    -o-object-fit: cover;\n       object-fit: cover;\n    padding: 1.5rem;\n    width: 100%;\n    display: flex;\n    justify-content: center;\n    align-items: center;\n    flex-grow: 1;\n    .productImage {\n      -o-object-fit: cover;\n         object-fit: cover;\n      max-height: 20vmin; \n    }\n  }\n  .itemInfo {\n    width: 100%;\n    height: 8vh;\n    display: flex;\n    flex-direction: column;\n    justify-content: space-between;\n    align-items: flex-start;\n  }\n}\n.imageGallery {\n  display: grid;\n  grid-template-columns: repeat(auto-fill, minmax(150px, 1fr));\n  grid-gap: 10px;\n  overflow-x: auto;\n}\n\n\n.itemImage {\n  border-radius: 4px;\n  height: auto;\n  max-width: 100%;\n  cursor: pointer;\n}\n\n.favoriteContainer {\n  position: absolute;\n  display: flex;\n  flex-direction: column;\n  align-items: center;\n  justify-content: center;\n}\n\n.favoriteIcon {\n  position: absolute;\n  top: 50%;\n  left: 50%;\n  transform: translate(-50%, -50%);\n  z-index: 1;\n  transition: opacity 0.3s ease-in;\n  opacity: 0;\n}\n\n.favoriteContainer:hover .favoriteIcon {\n  opacity: 1;\n}\n\n.itemInfo {\n  margin-top: 10px;\n  text-align: center;\n}"],"sourceRoot":""}]);
+}`, "",{"version":3,"sources":["webpack://./src/components/productListItem/ProductListItem.module.scss"],"names":[],"mappings":"AAAA;EACE,WAAA;EACA,aAAA;EACA,YAAA;EACA,oBAAA;EACG,iBAAA;EACH,aAAA;EACA,sBAAA;EACA,8BAAA;EACA,mBAAA;EACA,kCAAA;EACA,uBAAA;EACA,kBAAA;AACF;AACI;EACE,uBAAA;EACA,oBAAA;EACG,iBAAA;EACH,kBAAA;EACA,iBAAA;AACN;AAEE;EACE,eAAA;EACA,WAAA;EACA,WAAA;EACA,aAAA;EACA,sBAAA;EACA,yBAAA;EACA,uBAAA;AAAJ;AACI;EACE,gBAAA;AACN;;AAGA;EACE,aAAA;EACA,4DAAA;EACA,cAAA;EACA,gBAAA;AAAF;;AAIA;EACE,kBAAA;EACA,YAAA;EACA,eAAA;EACA,eAAA;AADF;;AAIA;EACE,kBAAA;EACA,YAAA;EACA,cAAA;EACA,kCAAA;EACA,kBAAA;EACA,wCAAA;EACA,YAAA;EACA,aAAA;EACA,cAAA;EACA,aAAA;EACA,sBAAA;EACA,mBAAA;EACA,uBAAA;AADF;AAGE;EACE,cAAA;EACA,oBAAA;EACA,UAAA;EACA,gCAAA;EACA,aAAA;AADJ;AAGE;EACE,UAAA;AADJ","sourcesContent":[".ProductListItem {\n  width: 100%;\n  padding: 1rem;\n  height: 100%;\n  -o-object-fit: cover;\n     object-fit: cover;\n  display: flex;\n  flex-direction: column;\n  justify-content: space-between;\n  align-items: center;\n  background-color: var(--darker-bg);\n  border-radius: 0.625rem;\n  position: relative;\n  .imageContainer {\n    .productImage {\n      border-radius: 0.625rem;\n      -o-object-fit: cover;\n         object-fit: cover;\n      max-height: 35vmin;\n      max-width: 30vmin;\n    }\n  }\n  .itemInfo {\n    padding: 0.5rem;\n    width: 100%;\n    height: 8vh;\n    display: flex;\n    flex-direction: column;\n    justify-content: flex-end;\n    align-items: flex-start;\n    .name {\n      font-weight: 600;\n    }\n  }\n}\n.imageGallery {\n  display: grid;\n  grid-template-columns: repeat(auto-fill, minmax(150px, 1fr));\n  grid-gap: 10px;\n  overflow-x: auto;\n}\n\n\n.itemImage {\n  border-radius: 4px;\n  height: auto;\n  max-width: 100%;\n  cursor: pointer;\n}\n\n.favoriteContainer {\n  position: absolute;  \n  top: 0.75rem;\n  right: 0.75rem;\n  background-color: var(--darker-bg);\n  border-radius: 50%;\n  box-shadow: 0 0 2px 5px var(--darker-bg);\n  opacity: 0.8;\n  width: 2.5rem;\n  height: 2.5rem;\n  display: flex;\n  flex-direction: column;\n  align-items: center;\n  justify-content: center;\n\n  img {\n    height: 2.5rem;\n    padding-top: 0.25rem;\n    z-index: 1;\n    transition: opacity 0.3s ease-in;\n    opacity: 0.25;\n  }\n  img:hover{\n    opacity: 1;\n  }\n}"],"sourceRoot":""}]);
 // Exports
 ___CSS_LOADER_EXPORT___.locals = {
 	"ProductListItem": `L8vz6f_im7Imz1VpKIkf`,
 	"imageContainer": `_qWNMNx3Kyn9aAKpktB6`,
 	"productImage": `CD_7Bphi26jNmzj_TUUY`,
 	"itemInfo": `Uvs9fUaBWckyAODdlE4g`,
+	"name": `C3xSQ00hI9GnPMXi6G8j`,
 	"imageGallery": `rl8kPoJpE_zAteZLIckq`,
 	"itemImage": `kXy9Oa9Gz3VoUDoPFOXs`,
-	"favoriteContainer": `hOVX_TKx5aWxo5ey7GEJ`,
-	"favoriteIcon": `vRLS4jaeorT8eu4RluFU`
+	"favoriteContainer": `hOVX_TKx5aWxo5ey7GEJ`
 };
 /* harmony default export */ const __WEBPACK_DEFAULT_EXPORT__ = (___CSS_LOADER_EXPORT___);
 
@@ -4973,16 +5092,50 @@ ___CSS_LOADER_EXPORT___.locals = {
 var ___CSS_LOADER_EXPORT___ = _node_modules_css_loader_dist_runtime_api_js__WEBPACK_IMPORTED_MODULE_1___default()((_node_modules_css_loader_dist_runtime_sourceMaps_js__WEBPACK_IMPORTED_MODULE_0___default()));
 // Module
 ___CSS_LOADER_EXPORT___.push([module.id, `.yRuhxPxtNARML6yttWn3 {
-  display: flex;
-  flex-direction: row;
+  display: grid;
+  grid-template-columns: 70% 30%;
+  padding: 2rem 2.5rem;
 }
-.yRuhxPxtNARML6yttWn3 ._C_kQqsQ6na31tWWUzGM {
-  background-color: #EEEEEA;
-}`, "",{"version":3,"sources":["webpack://./src/pages/Cart/Cart.module.scss"],"names":[],"mappings":"AAAA;EACE,aAAA;EACA,mBAAA;AACF;AAAE;EACE,yBAAA;AAEJ","sourcesContent":[".Cart {\n  display: flex;\n  flex-direction: row;\n  .cartOrders {\n    background-color: #EEEEEA;\n  }\n}"],"sourceRoot":""}]);
+.yRuhxPxtNARML6yttWn3 .d_AzYMJOVRf5XuV29XPi {
+  padding: 1rem 1rem 0 1rem;
+}
+.yRuhxPxtNARML6yttWn3 .Nmlx6S6RlGCaLoSO1pFD {
+  font-size: 1.5rem;
+  font-weight: 600;
+}
+.yRuhxPxtNARML6yttWn3 .t7C6N3Gp5vRROz9yOA02 {
+  display: flex;
+}
+.yRuhxPxtNARML6yttWn3 .BNhQTrYw4VsuV4kFyPqQ {
+  text-align: left;
+  font-weight: 600;
+  width: 50%;
+  font-size: 1.3rem;
+}
+.yRuhxPxtNARML6yttWn3 .p_fiwIf7zBiwpK2eSPVv {
+  height: 30rem;
+}
+.yRuhxPxtNARML6yttWn3 ._iej7McD7cBn9lqtokAG {
+  text-align: right;
+  font-weight: 600;
+  width: 50%;
+  font-size: 1.3rem;
+}
+.yRuhxPxtNARML6yttWn3 ._9TmSjixZIJYhxQ6KWAfh {
+  width: 100%;
+  margin: 0 auto;
+  height: 5vmin;
+}`, "",{"version":3,"sources":["webpack://./src/pages/Cart/Cart.module.scss"],"names":[],"mappings":"AAAA;EACE,aAAA;EACA,8BAAA;EACA,oBAAA;AACF;AACE;EACE,yBAAA;AACJ;AAEE;EACE,iBAAA;EACA,gBAAA;AAAJ;AAGE;EACE,aAAA;AADJ;AAIE;EACE,gBAAA;EACA,gBAAA;EACA,UAAA;EACA,iBAAA;AAFJ;AAKE;EACE,aAAA;AAHJ;AAME;EACE,iBAAA;EACA,gBAAA;EACA,UAAA;EACA,iBAAA;AAJJ;AAOE;EACE,WAAA;EACA,cAAA;EACA,aAAA;AALJ","sourcesContent":[".Cart {\n  display: grid;\n  grid-template-columns: 70% 30%;\n  padding: 2rem 2.5rem;\n\n  .cartSummary {\n    padding: 1rem 1rem 0 1rem;\n  }\n\n  .paymentInfo {\n    font-size: 1.5rem;\n    font-weight: 600;\n  }\n\n  .checkoutText {\n    display: flex;\n  }\n\n  .priceTotalText {\n    text-align: left;\n    font-weight: 600;\n    width: 50%;\n    font-size: 1.3rem;\n  }\n\n  .fakePmtInfo {\n    height: 30rem;\n  }\n\n  .totalPrice {\n    text-align: right;\n    font-weight: 600;\n    width: 50%;\n    font-size: 1.3rem;\n  }\n\n  .goToShop {\n    width: 100%;\n    margin: 0 auto;\n    height: 5vmin;\n  }\n}"],"sourceRoot":""}]);
 // Exports
 ___CSS_LOADER_EXPORT___.locals = {
 	"Cart": `yRuhxPxtNARML6yttWn3`,
-	"cartOrders": `_C_kQqsQ6na31tWWUzGM`
+	"cartSummary": `d_AzYMJOVRf5XuV29XPi`,
+	"paymentInfo": `Nmlx6S6RlGCaLoSO1pFD`,
+	"checkoutText": `t7C6N3Gp5vRROz9yOA02`,
+	"priceTotalText": `BNhQTrYw4VsuV4kFyPqQ`,
+	"fakePmtInfo": `p_fiwIf7zBiwpK2eSPVv`,
+	"totalPrice": `_iej7McD7cBn9lqtokAG`,
+	"goToShop": `_9TmSjixZIJYhxQ6KWAfh`
 };
 /* harmony default export */ const __WEBPACK_DEFAULT_EXPORT__ = (___CSS_LOADER_EXPORT___);
 
@@ -5008,12 +5161,31 @@ ___CSS_LOADER_EXPORT___.locals = {
 var ___CSS_LOADER_EXPORT___ = _node_modules_css_loader_dist_runtime_api_js__WEBPACK_IMPORTED_MODULE_1___default()((_node_modules_css_loader_dist_runtime_sourceMaps_js__WEBPACK_IMPORTED_MODULE_0___default()));
 // Module
 ___CSS_LOADER_EXPORT___.push([module.id, `.bBsv5hzKOfd0l6B7Vw05 {
+  padding: 2rem 2.5rem;
   display: flex;
-  flex-direction: row;
-}`, "",{"version":3,"sources":["webpack://./src/pages/Checkout/Checkout.module.scss"],"names":[],"mappings":"AAAA;EACE,aAAA;EACA,mBAAA;AACF","sourcesContent":[".Checkout {\n  display: flex;\n  flex-direction: row;\n}"],"sourceRoot":""}]);
+  justify-content: space-between;
+}
+.bBsv5hzKOfd0l6B7Vw05 .aj7J8vdqrp1o_A7lzvfl h1 {
+  margin: 0;
+}
+.bBsv5hzKOfd0l6B7Vw05 .F6hc6rvldioCaz1w0rYU {
+  text-align: center;
+}
+.bBsv5hzKOfd0l6B7Vw05 .tiPicfGJEogVCMJQicbD {
+  font-size: 2rem;
+  font-weight: 600;
+  text-align: center;
+}
+.bBsv5hzKOfd0l6B7Vw05 .tkMAwnQqzBQHYVvf4thu {
+  width: 100%;
+}`, "",{"version":3,"sources":["webpack://./src/pages/Checkout/Checkout.module.scss"],"names":[],"mappings":"AAAA;EACE,oBAAA;EACA,aAAA;EACA,8BAAA;AACF;AACI;EACE,SAAA;AACN;AAEE;EACE,kBAAA;AAAJ;AAGE;EACE,eAAA;EACA,gBAAA;EACA,kBAAA;AADJ;AAIE;EACE,WAAA;AAFJ","sourcesContent":[".Checkout {\n  padding: 2rem 2.5rem;\n  display: flex;\n  justify-content: space-between;\n  .userInfo {\n    h1 {\n      margin: 0;\n    }\n  }\n  .cartSummary {\n    text-align: center;\n  }\n\n  .orderSummary {\n    font-size: 2rem;\n    font-weight: 600;\n    text-align: center;\n  }\n\n  .checkoutBtn {\n    width: 100%;\n  }\n}"],"sourceRoot":""}]);
 // Exports
 ___CSS_LOADER_EXPORT___.locals = {
-	"Checkout": `bBsv5hzKOfd0l6B7Vw05`
+	"Checkout": `bBsv5hzKOfd0l6B7Vw05`,
+	"userInfo": `aj7J8vdqrp1o_A7lzvfl`,
+	"cartSummary": `F6hc6rvldioCaz1w0rYU`,
+	"orderSummary": `tiPicfGJEogVCMJQicbD`,
+	"checkoutBtn": `tkMAwnQqzBQHYVvf4thu`
 };
 /* harmony default export */ const __WEBPACK_DEFAULT_EXPORT__ = (___CSS_LOADER_EXPORT___);
 
@@ -5038,9 +5210,13 @@ ___CSS_LOADER_EXPORT___.locals = {
 
 var ___CSS_LOADER_EXPORT___ = _node_modules_css_loader_dist_runtime_api_js__WEBPACK_IMPORTED_MODULE_1___default()((_node_modules_css_loader_dist_runtime_sourceMaps_js__WEBPACK_IMPORTED_MODULE_0___default()));
 // Module
-___CSS_LOADER_EXPORT___.push([module.id, ``, "",{"version":3,"sources":[],"names":[],"mappings":"","sourceRoot":""}]);
+___CSS_LOADER_EXPORT___.push([module.id, `.NN4qPNnrKiI2lwJsKvpx {
+  margin: 2rem 2.5rem;
+}`, "",{"version":3,"sources":["webpack://./src/pages/Favorites/Favorites.module.scss"],"names":[],"mappings":"AAAA;EACE,mBAAA;AACF","sourcesContent":[".Favorites {\n  margin: 2rem 2.5rem;\n}"],"sourceRoot":""}]);
 // Exports
-___CSS_LOADER_EXPORT___.locals = {};
+___CSS_LOADER_EXPORT___.locals = {
+	"Favorites": `NN4qPNnrKiI2lwJsKvpx`
+};
 /* harmony default export */ const __WEBPACK_DEFAULT_EXPORT__ = (___CSS_LOADER_EXPORT___);
 
 
@@ -5067,11 +5243,13 @@ var ___CSS_LOADER_EXPORT___ = _node_modules_css_loader_dist_runtime_api_js__WEBP
 ___CSS_LOADER_EXPORT___.push([module.id, `.djW0M0zpnz2xZ3wIl78g {
   display: flex;
   flex-direction: column;
+  margin: 2rem 2.5rem;
 }
 .djW0M0zpnz2xZ3wIl78g .qSE9Nr6bFYvs1gYi5b4H {
-  width: 98%;
-  background-color: grey;
-  height: 35vh;
+  width: 100%;
+  padding: 2rem;
+  background-color: var(--darker-bg);
+  border-radius: 0.625rem;
   align-self: center;
   display: flex;
   flex-direction: column;
@@ -5079,23 +5257,35 @@ ___CSS_LOADER_EXPORT___.push([module.id, `.djW0M0zpnz2xZ3wIl78g {
   align-items: flex-start;
 }
 .djW0M0zpnz2xZ3wIl78g .qSE9Nr6bFYvs1gYi5b4H p {
-  font-size: 6rem;
-  font-weight: 900;
+  font-size: 12vmin;
+  font-weight: 600;
   margin: 0;
   padding: 0;
 }
-.djW0M0zpnz2xZ3wIl78g .KuK_ekZircplvh7jfdU6 {
-  width: 98%;
-  background-color: lightgray;
-  height: 75vh;
-  align-self: center;
-  margin: 1.5rem 0;
-}`, "",{"version":3,"sources":["webpack://./src/pages/Home/Home.module.scss"],"names":[],"mappings":"AAAA;EACI,aAAA;EACA,sBAAA;AACJ;AACI;EACI,UAAA;EACA,sBAAA;EACA,YAAA;EACA,kBAAA;EACA,aAAA;EACA,sBAAA;EACA,uBAAA;EACA,uBAAA;AACR;AACQ;EACI,eAAA;EACA,gBAAA;EACA,SAAA;EACA,UAAA;AACZ;AAGI;EACI,UAAA;EACA,2BAAA;EACA,YAAA;EACA,kBAAA;EACA,gBAAA;AADR","sourcesContent":[".Home {\n    display: flex;\n    flex-direction: column;\n\n    .hero {\n        width: 98%;\n        background-color: grey;\n        height: 35vh;\n        align-self: center;\n        display: flex;\n        flex-direction: column;\n        justify-content: center;\n        align-items: flex-start;\n\n        p {\n            font-size: 6rem;\n            font-weight: 900;\n            margin: 0;\n            padding: 0;\n        }\n    }\n\n    .itemGrid {\n        width: 98%;\n        background-color: lightgray;\n        height: 75vh;\n        align-self: center;\n        margin: 1.5rem 0;\n    }\n}\n"],"sourceRoot":""}]);
+.djW0M0zpnz2xZ3wIl78g .qSE9Nr6bFYvs1gYi5b4H p:last-of-type {
+  padding-bottom: 2rem;
+}
+.djW0M0zpnz2xZ3wIl78g .qSE9Nr6bFYvs1gYi5b4H button {
+  width: 45vmin;
+  height: 5vmin;
+}
+.djW0M0zpnz2xZ3wIl78g .qSE9Nr6bFYvs1gYi5b4H button a {
+  text-decoration: none;
+  color: var(--lighter-bg);
+  width: 45vmin;
+  height: 5vmin;
+}
+.djW0M0zpnz2xZ3wIl78g .qSE9Nr6bFYvs1gYi5b4H button:hover {
+  background-color: var(--darker-bg);
+  color: var(--accent);
+}
+.djW0M0zpnz2xZ3wIl78g .qSE9Nr6bFYvs1gYi5b4H button:hover a {
+  color: var(--accent);
+}`, "",{"version":3,"sources":["webpack://./src/pages/Home/Home.module.scss"],"names":[],"mappings":"AAAA;EACI,aAAA;EACA,sBAAA;EACA,mBAAA;AACJ;AACI;EACI,WAAA;EACA,aAAA;EACA,kCAAA;EACA,uBAAA;EACA,kBAAA;EACA,aAAA;EACA,sBAAA;EACA,uBAAA;EACA,uBAAA;AACR;AAAQ;EACI,iBAAA;EACA,gBAAA;EACA,SAAA;EACA,UAAA;AAEZ;AAAQ;EACI,oBAAA;AAEZ;AAAQ;EACI,aAAA;EACA,aAAA;AAEZ;AADY;EACI,qBAAA;EACA,wBAAA;EACA,aAAA;EACA,aAAA;AAGhB;AAAQ;EACI,kCAAA;EACA,oBAAA;AAEZ;AADY;EACA,oBAAA;AAGZ","sourcesContent":[".Home {\n    display: flex;\n    flex-direction: column;\n    margin: 2rem 2.5rem;\n\n    .hero {\n        width: 100%;\n        padding: 2rem;\n        background-color: var(--darker-bg);\n        border-radius: 0.625rem;\n        align-self: center;\n        display: flex;\n        flex-direction: column;\n        justify-content: center;\n        align-items: flex-start;\n        p {\n            font-size: 12vmin;\n            font-weight: 600;\n            margin: 0;\n            padding: 0;\n        }\n        p:last-of-type {\n            padding-bottom: 2rem;\n        }\n        button {\n            width: 45vmin;\n            height: 5vmin;\n            a {\n                text-decoration: none;\n                color: var(--lighter-bg);\n                width: 45vmin;\n                height: 5vmin;\n            }\n        }\n        button:hover {\n            background-color: var(--darker-bg);\n            color: var(--accent);\n            a {\n            color: var(--accent);\n            }\n        }\n        \n    }\n}\n"],"sourceRoot":""}]);
 // Exports
 ___CSS_LOADER_EXPORT___.locals = {
 	"Home": `djW0M0zpnz2xZ3wIl78g`,
-	"hero": `qSE9Nr6bFYvs1gYi5b4H`,
-	"itemGrid": `KuK_ekZircplvh7jfdU6`
+	"hero": `qSE9Nr6bFYvs1gYi5b4H`
 };
 /* harmony default export */ const __WEBPACK_DEFAULT_EXPORT__ = (___CSS_LOADER_EXPORT___);
 
@@ -5132,10 +5322,13 @@ ___CSS_LOADER_EXPORT___.push([module.id, `.E96qHCO_PI33MM2upJRc {
   aspect-ratio: 1/1;
   border-radius: 1rem;
 }
+.E96qHCO_PI33MM2upJRc .ee8DpCvT02Ba0v9yRi7s {
+  margin-left: 1rem;
+}
 .E96qHCO_PI33MM2upJRc .ee8DpCvT02Ba0v9yRi7s .TiGDgf9iZtJTOnG8QX0u {
   font-size: 1.8rem;
   font-weight: 700;
-  margin: 1rem;
+  margin: 1rem 1rem 1rem 0;
 }
 .E96qHCO_PI33MM2upJRc .ee8DpCvT02Ba0v9yRi7s a {
   color: inherit;
@@ -5147,24 +5340,24 @@ ___CSS_LOADER_EXPORT___.push([module.id, `.E96qHCO_PI33MM2upJRc {
 .E96qHCO_PI33MM2upJRc .ee8DpCvT02Ba0v9yRi7s .xEpeA3G0ReJxP5JXtvDX {
   font-size: 1.1rem;
   font-weight: 700;
-  margin: 1rem;
+  margin: 1rem 1rem 1rem 0;
 }
 .E96qHCO_PI33MM2upJRc .ee8DpCvT02Ba0v9yRi7s .NshUwZ36jTSgQpwXtDiy {
-  margin: 1rem;
   font-style: italic;
+  margin: 1rem 1rem 1rem 0;
 }
 .E96qHCO_PI33MM2upJRc .ee8DpCvT02Ba0v9yRi7s .ZEGI3dM9SX6gizIbcFtU {
   font-size: 1.1rem;
-  margin: 1rem;
   font-weight: 700;
+  margin: 1rem 1rem 1rem 0;
 }
 .E96qHCO_PI33MM2upJRc .ee8DpCvT02Ba0v9yRi7s .uClg8hbz9_xxa3oznagM {
-  margin: 1rem;
   width: 85%;
+  margin: 1rem 1rem 1rem 0;
 }
 .E96qHCO_PI33MM2upJRc .ee8DpCvT02Ba0v9yRi7s .TkYKeqPx1me37TXZpYXw:hover {
   cursor: pointer;
-}`, "",{"version":3,"sources":["webpack://./src/pages/ItemDetails/ItemDetails.module.scss"],"names":[],"mappings":"AAAA;EACI,aAAA;EACA,8BAAA;AACJ;AACI;EACI,cAAA;AACR;AACQ;EACI,WAAA;EACA,iBAAA;EACA,mBAAA;AACZ;AAMQ;EACI,iBAAA;EACA,gBAAA;EACA,YAAA;AAJZ;AAOQ;EACI,cAAA;EACA,qBAAA;AALZ;AAQQ;EACI,eAAA;AANZ;AASQ;EACI,iBAAA;EACA,gBAAA;EACA,YAAA;AAPZ;AAUQ;EACI,YAAA;EACA,kBAAA;AARZ;AAWQ;EACI,iBAAA;EACA,YAAA;EACA,gBAAA;AATZ;AAaQ;EACI,YAAA;EACA,UAAA;AAXZ;AAcQ;EACI,eAAA;AAZZ","sourcesContent":[".ItemContainer {\n    display: grid;\n    grid-template-columns: 50% 50%;\n\n    .imageContainer {\n        margin: 1.8rem;\n\n        .itemImage {\n            width: 100%;\n            aspect-ratio: 1 / 1;\n            border-radius: 1rem;\n        }\n    }\n\n    .itemInfo {\n       \n        \n        .name {\n            font-size: 1.8rem;\n            font-weight: 700;\n            margin: 1rem;\n        }\n\n        a {\n            color: inherit;\n            text-decoration: none;\n        }\n\n        a:hover {\n            cursor: pointer;\n        }\n\n        .shopName {\n            font-size: 1.1rem;\n            font-weight: 700;\n            margin: 1rem;\n        }\n\n        .description {\n            margin: 1rem;\n            font-style: italic;\n        }\n\n        .price  {\n            font-size: 1.1rem;\n            margin: 1rem;\n            font-weight: 700;\n        }\n\n    \n        .addToCart {\n            margin: 1rem;\n            width: 85%;\n        }\n\n        .FavoriteIcon:hover {\n            cursor: pointer;\n        }\n    \n\n    }\n}"],"sourceRoot":""}]);
+}`, "",{"version":3,"sources":["webpack://./src/pages/ItemDetails/ItemDetails.module.scss"],"names":[],"mappings":"AAAA;EACI,aAAA;EACA,8BAAA;AACJ;AACI;EACI,cAAA;AACR;AACQ;EACI,WAAA;EACA,iBAAA;EACA,mBAAA;AACZ;AAGI;EACG,iBAAA;AADP;AAGQ;EACI,iBAAA;EACA,gBAAA;EACA,wBAAA;AADZ;AAIQ;EACI,cAAA;EACA,qBAAA;AAFZ;AAKQ;EACI,eAAA;AAHZ;AAMQ;EACI,iBAAA;EACA,gBAAA;EACA,wBAAA;AAJZ;AAOQ;EACI,kBAAA;EACA,wBAAA;AALZ;AAQQ;EACI,iBAAA;EACA,gBAAA;EACA,wBAAA;AANZ;AAUQ;EACI,UAAA;EACA,wBAAA;AARZ;AAWQ;EACI,eAAA;AATZ","sourcesContent":[".ItemContainer {\n    display: grid;\n    grid-template-columns: 50% 50%;\n\n    .imageContainer {\n        margin: 1.8rem;\n\n        .itemImage {\n            width: 100%;\n            aspect-ratio: 1 / 1;\n            border-radius: 1rem;\n        }\n    }\n\n    .itemInfo {\n       margin-left: 1rem;\n        \n        .name {\n            font-size: 1.8rem;\n            font-weight: 700;\n            margin: 1rem 1rem 1rem 0;\n        }\n\n        a {\n            color: inherit;\n            text-decoration: none;\n        }\n\n        a:hover {\n            cursor: pointer;\n        }\n\n        .shopName {\n            font-size: 1.1rem;\n            font-weight: 700;\n            margin: 1rem 1rem 1rem 0;\n        }\n\n        .description {\n            font-style: italic;\n            margin: 1rem 1rem 1rem 0;\n        }\n\n        .price  {\n            font-size: 1.1rem;\n            font-weight: 700;\n            margin: 1rem 1rem 1rem 0;\n        }\n\n    \n        .addToCart {\n            width: 85%;\n            margin: 1rem 1rem 1rem 0;\n        }\n\n        .FavoriteIcon:hover {\n            cursor: pointer;\n        }\n    }\n}"],"sourceRoot":""}]);
 // Exports
 ___CSS_LOADER_EXPORT___.locals = {
 	"ItemContainer": `E96qHCO_PI33MM2upJRc`,
@@ -5202,16 +5395,16 @@ ___CSS_LOADER_EXPORT___.locals = {
 var ___CSS_LOADER_EXPORT___ = _node_modules_css_loader_dist_runtime_api_js__WEBPACK_IMPORTED_MODULE_1___default()((_node_modules_css_loader_dist_runtime_sourceMaps_js__WEBPACK_IMPORTED_MODULE_0___default()));
 // Module
 ___CSS_LOADER_EXPORT___.push([module.id, `.kQbv7tzXQj9ktAQ1R55Z {
+  margin: 2rem 2.5rem;
   background-color: #FBFBFA;
   display: grid;
-  grid-template-columns: 1.25fr 0.75fr;
-  padding: 0 0.5rem 1rem 0.5rem;
+  grid-template-columns: 1fr 1fr;
 }
 .kQbv7tzXQj9ktAQ1R55Z .AVVTcJXuO_ZwuavhR37o {
   padding-right: 1rem;
   border-right: 0.1vmin solid #000000;
   margin-right: 1rem;
-}`, "",{"version":3,"sources":["webpack://./src/pages/OrderHistory/OrderHistory.module.scss"],"names":[],"mappings":"AAAA;EACE,yBAAA;EACA,aAAA;EACA,oCAAA;EACA,6BAAA;AACF;AAAE;EACE,mBAAA;EACA,mCAAA;EACA,kBAAA;AAEJ","sourcesContent":[".OrderHistory{\n  background-color: #FBFBFA;\n  display: grid;\n  grid-template-columns: 1.25fr 0.75fr;\n  padding: 0 0.5rem 1rem 0.5rem;\n  .aside {\n    padding-right: 1rem;\n    border-right: .1vmin solid #000000;\n    margin-right: 1rem;\n  }\n}"],"sourceRoot":""}]);
+}`, "",{"version":3,"sources":["webpack://./src/pages/OrderHistory/OrderHistory.module.scss"],"names":[],"mappings":"AAAA;EACE,mBAAA;EACA,yBAAA;EACA,aAAA;EACA,8BAAA;AACF;AAAE;EACE,mBAAA;EACA,mCAAA;EACA,kBAAA;AAEJ","sourcesContent":[".OrderHistory{\n  margin: 2rem 2.5rem;\n  background-color: #FBFBFA;\n  display: grid;\n  grid-template-columns: 1fr 1fr;\n  .aside {\n    padding-right: 1rem;\n    border-right: .1vmin solid #000000;\n    margin-right: 1rem;\n  }\n}"],"sourceRoot":""}]);
 // Exports
 ___CSS_LOADER_EXPORT___.locals = {
 	"OrderHistory": `kQbv7tzXQj9ktAQ1R55Z`,

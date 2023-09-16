@@ -5,21 +5,26 @@ import { useNavigate } from 'react-router-dom'
 import { toggleFavorites } from '../../utilities/users-service'
 import favHeart from '../../assets/images/fav-heart.svg'
 
-export default function ProductListItem({ productItem, user, setUser, favItems, setFavItems }) {
+export default function ProductListItem({
+  productItem,
+  user,
+  setUser,
+  favItems,
+  setFavItems
+}) {
   const [itemIsFav, setItemIsFav] = useState(false)
 
   const navigate = useNavigate()
 
   useEffect(() => {
     if (favItems && favItems.length > 0) {
-      if (favItems.find(favItem => favItem._id === productItem._id)) {
+      if (favItems.find((favItem) => favItem._id === productItem._id)) {
         setItemIsFav(true)
       } else {
         setItemIsFav(false)
       }
     }
   }, [favItems])
-
 
   function handleClick(e) {
     navigate(`/itemdetails/${productItem._id}`)
@@ -34,7 +39,6 @@ export default function ProductListItem({ productItem, user, setUser, favItems, 
 
   return (
     <div className={styles.ProductListItem}>
-      {/* 🟥 need a way to show multiple images 🟥 */}
       <div>
         <div className={styles.imageContainer}>
           {productItem?.images.length > 0 ? (
@@ -49,11 +53,15 @@ export default function ProductListItem({ productItem, user, setUser, favItems, 
           )}
         </div>
         {/* 🟥 add favorite button to show on hover 🟥 */}
-        <div className={styles.favoriteOverlay}>
-        </div>
+        <div className={styles.favoriteOverlay}></div>
       </div>
-
-      <FavoriteIcon className={styles.FavoriteIcon} isFav={itemIsFav} handleFaveClick={handleFavClick} />
+      <div className={styles.favoriteContainer}>
+        <FavoriteIcon
+          className={styles.FavoriteIcon}
+          isFav={itemIsFav}
+          handleFaveClick={handleFavClick}
+        />
+      </div>
       <div className={styles.itemInfo}>
         {productItem && (
           <>
