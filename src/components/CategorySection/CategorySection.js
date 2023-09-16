@@ -19,7 +19,7 @@ export default function CategorySection({ items, category, setActiveCat, favItem
 
     return (
         <div className={styles.categoryRow}>
-            {category}<Link to='/shop' onClick={e => setActiveCat(category)} >➡</Link>
+            <div className={styles.categoryHeading}><p className="subheading">{category}</p><button className="small"><Link to='/shop' onClick={e => setActiveCat(category)} >View All</Link></button></div>
             <ProductList productItems={firstFiveItems} favItems={favItems} setFavItems={setFavItems} />
         </div>
     )

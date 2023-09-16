@@ -100,7 +100,7 @@ export default function ShopManagement({
         <div className={`${styles.links} flex-col`}>
           <button onClick={toggleEditShop}>Edit Shop Info</button>
           <button onClick={toggleCreateProduct}>Add A Product</button>
-          <button onClick={toggleEditProductForm}>Edit an Item</button>
+          {/* <button onClick={toggleEditProductForm}>Edit an Item</button> */}
           <button onClick={deleteUserShop}>Delete Shop</button>
         </div>
       </section>
@@ -117,8 +117,7 @@ export default function ShopManagement({
       <dialog
         className={styles.dialog}
         ref={shopEditModalRef}
-        onClose={toggleEditShop}
-      >
+        onClose={toggleEditShop} >
         <ShopForm
           toggleEditShop={toggleEditShop}
           user={user}
@@ -131,8 +130,7 @@ export default function ShopManagement({
       <dialog
         className={styles.dialog}
         ref={productModalRef}
-        onClose={toggleCreateProduct}
-      >
+        onClose={toggleCreateProduct} >
         <ProductForm
           toggleCreateProduct={toggleCreateProduct}
           shopProducts={shopProducts}
