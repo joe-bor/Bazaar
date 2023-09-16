@@ -26,23 +26,28 @@ export default function Checkout({ cart, setCart, cartTotals }) {
 
   return (
     <div className={styles.Checkout}>
-      <div className={styles.userInfo}><h1>🟥 User Info Goes Here 🟥</h1></div>
+      <div className={styles.userInfo}>
+        <h1>Payment</h1>
+        <h1>&</h1>
+        <h1>Shipping Info</h1>
+      </div>
       <div className={styles.orderSummary}>
-        <div>Order Summary</div>
+        <div className={styles.orderSummary}>Order Summary</div>
         {cart.length > 0 ?
           <>
-            <div className={`${styles.cartOrders} flex-ctr-ctr flex-col scroll-y`}>
+            <div>
               {orders}
             </div>
+
             <div className={styles.cartSummary}>
               <div className={styles.totalItemQty}>{`Qty: ${cartTotals?.totalItemQty}`}</div>
-              <div className={styles.totalPrice}>{`Total: ${cartTotals?.totalPrice}`}</div>
-              <button onClick={handleCheckout}>Checkout</button>
+              <div className={styles.totalPrice}>{`Total: ${cartTotals?.totalPrice.toFixed(2)}`}</div>
+              <button className={styles.checkoutBtn} onClick={handleCheckout}>Checkout</button>
             </div>
           </> :
           <>
             <div>Order Placed</div>
-            <button onClick={handleOrderHistBtn}>View Order History</button>
+            <button className={styles.checkoutBtn} onClick={handleOrderHistBtn}>View Order History</button>
           </>
         }
 

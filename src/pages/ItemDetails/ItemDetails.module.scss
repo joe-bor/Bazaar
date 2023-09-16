@@ -13,12 +13,12 @@
     }
 
     .itemInfo {
-       
+       margin-left: 1rem;
         
         .name {
             font-size: 1.8rem;
             font-weight: 700;
-            margin: 1rem;
+            margin: 1rem 1rem 1rem 0;
         }
 
         a {
@@ -33,30 +33,28 @@
         .shopName {
             font-size: 1.1rem;
             font-weight: 700;
-            margin: 1rem;
+            margin: 1rem 1rem 1rem 0;
         }
 
         .description {
-            margin: 1rem;
             font-style: italic;
+            margin: 1rem 1rem 1rem 0;
         }
 
         .price  {
             font-size: 1.1rem;
-            margin: 1rem;
             font-weight: 700;
+            margin: 1rem 1rem 1rem 0;
         }
 
     
         .addToCart {
-            margin: 1rem;
             width: 85%;
+            margin: 1rem 1rem 1rem 0;
         }
 
         .FavoriteIcon:hover {
             cursor: pointer;
         }
-    
-
     }
 }
