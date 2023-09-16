@@ -16,7 +16,7 @@
 
 # Live Link
 - We proudly present our rendition of Etsy: 
-## ✨[Bazaar](INSERT_LIVE_LINK_HERE)✨.
+## ✨[Bazaar](https://bazaar.hlysllrs.me/home)✨.
 
 # ________________________________________________________
 
