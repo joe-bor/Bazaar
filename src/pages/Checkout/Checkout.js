@@ -41,7 +41,8 @@ export default function Checkout({ cart, setCart, cartTotals }) {
 
             <div className={styles.cartSummary}>
               <div className={styles.totalItemQty}>{`Qty: ${cartTotals?.totalItemQty}`}</div>
-              <div className={styles.totalPrice}>{`Total: ${cartTotals?.totalPrice.toFixed(2)}`}</div>
+              {cartTotals &&
+                <div className={styles.totalPrice}>{`Total: ${cartTotals.totalPrice.toFixed(2)}`}</div>}
               <button className={styles.checkoutBtn} onClick={handleCheckout}>Checkout</button>
             </div>
           </> :
