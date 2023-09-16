@@ -34,7 +34,6 @@ export default function ProductListItem({ productItem, user, setUser, favItems, 
 
   return (
     <div className={styles.ProductListItem}>
-      {/* 🟥 need a way to show multiple images 🟥 */}
       <div>
         <div className={styles.imageContainer}>
           {productItem?.images.length > 0 ? (
@@ -52,8 +51,9 @@ export default function ProductListItem({ productItem, user, setUser, favItems, 
         <div className={styles.favoriteOverlay}>
         </div>
       </div>
-
-      <FavoriteIcon className={styles.FavoriteIcon} isFav={itemIsFav} handleFaveClick={handleFavClick} />
+      <div className={styles.favoriteContainer}>
+        <FavoriteIcon className={styles.FavoriteIcon} isFav={itemIsFav} handleFaveClick={handleFavClick} />
+      </div>
       <div className={styles.itemInfo}>
         {productItem && (
           <>
