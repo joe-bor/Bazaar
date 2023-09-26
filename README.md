@@ -2,7 +2,7 @@
 
 # General Assembly Group Capstone Project (Donna/Frances Cohort)
 - Instructor: Arthur Bernier Jr
-- Instructional Assistants: (Donna) Teo Marcelo and Joshu Miller, (Frances) August McConnel and Magnardo Tavarez
+- Instructional Assistants: (Donna) Teo Marcelo and Joshua Miller, (Frances) August McConnel and Magnardo Tavarez
 - Our Team: 
     - Avary Mitchell | [github](https://github.com/Anmitchell) | [linkedIn](https://www.linkedin.com/in/avary-mitchell-6b493612a/)
     - Brendan Mohan | [github](https://github.com/MoHanSolo) | [linkedIn](https://www.linkedin.com/in/brendan-mohan/)
@@ -55,7 +55,7 @@
 - webpack: compiles modules to be served in the browser
 
 ## ERD
-![](ERD.png)
+![](./READMEfiles/ERD.png)
 
 ## USER STORIES
 - Click [here](https://github.com/users/MoHanSolo/projects/2/views/1) to view our user stories.
@@ -65,31 +65,34 @@
 
 ## WIREFRAMES
 ### Home Page
-![](HomePage.png)
+![](./READMEfiles/HomePage.png)
 
 ### Shop Page
-![](ShopPage.png)
+![](./READMEfiles/ShopPage.png)
 
 ### Seller Shop Page
-![](SellerShop.png)
+![](./READMEfiles/SellerShop.png)
 
 ### Item Detail Page
-![](ItemDetail.png)
+![](./READMEfiles/ItemDetail.png)
 
 ### Cart Page
-![](Cart.png)
+![](./READMEfiles/Cart.png)
 
 ### Checkout Page
-![](Checkout.png)
+![](./READMEfiles/Checkout.png)
 
 ### Order History Page
-![](OrderHistory.png)
+![](./READMEfiles/OrderHistory.png)
 
 ### User Profile Page
-![](UserProfile.png)
+![](./READMEfiles/UserProfile.png)
 
 ### Favorites Page
-![](Favorites.png)
+![](./READMEfiles/Favorites.png)
 
 ### Shop Management Page
-![](ShopManagement.png)
+![](./READMEfiles/ShopManagement.png)
+
+[Google Slides](https://docs.google.com/presentation/d/1p6-ee9PhQaRb3GnyU9XlTNXTgxvGR9zAqTsCEdBJvts/edit#slide=id.gc6fa3c898_0_5
+)
