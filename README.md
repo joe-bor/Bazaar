@@ -18,8 +18,6 @@
 - We proudly present our rendition of Etsy: 
 ## ✨[Bazaar](https://bazaar.hlysllrs.me/home)✨
 
-# ________________________________________________________
-
 ## SERVICES AND TECHNOLOGIES USED
 [![My Skills](https://skillicons.dev/icons?i=css,html,js)](https://skillicons.dev)
 - digitalOcean: developer-ready site hosting service
