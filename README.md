@@ -62,35 +62,22 @@
 - Click [here](https://github.com/users/hlysllrs/projects/2/views/1) to see the division of tasks.
 
 ## WIREFRAMES
-### Home Page
-![](./READMEfiles/HomePage.png)
+| Home Page | Shop Page | Seller Shop Page |
+|:---:|:---:|:---:|
+| <img src="./READMEfiles/HomePage.png" width="200" height="150" /> | <img src="./READMEfiles/ShopPage.png" width="200" height="150" /> | <img src="./READMEfiles/SellerShop.png" width="200" height="150" /> |
 
-### Shop Page
-![](./READMEfiles/ShopPage.png)
+| Item Detail Page | Cart Page | Checkout Page |
+|:---:|:---:|:---:|
+| <img src="./READMEfiles/ItemDetail.png" width="200" height="150" /> | <img src="./READMEfiles/Cart.png" width="200" height="150" /> | <img src="./READMEfiles/Checkout.png" width="200" height="150" /> |
 
-### Seller Shop Page
-![](./READMEfiles/SellerShop.png)
+| Order History Page | User Profile Page | Favorites Page |
+|:---:|:---:|:---:|
+| <img src="./READMEfiles/OrderHistory.png" width="200" height="150" /> | <img src="./READMEfiles/UserProfile.png" width="200" height="150" /> | <img src="./READMEfiles/Favorites.png" width="200" height="150" /> |
 
-### Item Detail Page
-![](./READMEfiles/ItemDetail.png)
+| Shop Management Page |
+|:---:|
+| <img src="./READMEfiles/ShopManagement.png" width="200" height="150" /> |
 
-### Cart Page
-![](./READMEfiles/Cart.png)
-
-### Checkout Page
-![](./READMEfiles/Checkout.png)
-
-### Order History Page
-![](./READMEfiles/OrderHistory.png)
-
-### User Profile Page
-![](./READMEfiles/UserProfile.png)
-
-### Favorites Page
-![](./READMEfiles/Favorites.png)
-
-### Shop Management Page
-![](./READMEfiles/ShopManagement.png)
 
 [Google Slides](https://docs.google.com/presentation/d/1p6-ee9PhQaRb3GnyU9XlTNXTgxvGR9zAqTsCEdBJvts/edit#slide=id.gc6fa3c898_0_5
 )
